@@ -1,0 +1,64 @@
+<div class="auth-wrapper aut-bg-img-side cotainer-fiuid align-items-stretch">
+    <div class="row align-items-center w-100 align-items-stretch bg-white">
+      <div class="d-none d-lg-flex col-lg-8 aut-bg-img align-items-center d-flex justify-content-center">
+        <div class="col-md-8">
+          <h1 class="text-white mb-5">Thai Npl</h1>
+          <p class="text-white">
+          Log in here to access the Thai Npl platform.This platform is for the Q&A portion of the process, and is manged by Baker Tilly Thailand.
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-4 align-items-stret h-100 align-items-center d-flex justify-content-center">
+        <div class="auth-content text-center">
+          <div class="mb-4">
+            <i class="feather icon-unlock auth-icon"></i>
+          </div>
+          <h3 class="mb-4">Login</h3>
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <div class="input-group mb-3">
+              <!-- <label class="form-label">Email address / Username</label> -->
+              <input
+                type="text"
+                [(ngModel)]="usernameValue"
+                formControlName="email"
+                class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f?.['email'].errors }"
+              />
+              <div *ngIf="submitted && f?.['email'].errors" class="invalid-feedback">
+              
+              </div>
+            </div>
+            <div class="input-group mb-4">
+              <!-- <label class="form-label">Password</label> -->
+              <input
+                type="password"
+                [(ngModel)]="userPassword"
+                id="password"
+                formControlName="password"
+                class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f?.['password'].errors }"
+                value="123456"
+              />
+              <i class="ti ti-eye" id="togglePassword"></i>
+              <div *ngIf="submitted && f?.['password'].errors" class="invalid-feedback">
+              
+              </div>
+            </div>
+            <div class="form-group text-left">
+              <div class="checkbox checkbox-fill d-inline">
+                <input type="checkbox" name="checkbox-fill-1" id="checkbox-fill-a1" checked="" />
+                <label for="checkbox-fill-a1" class="cr"> Save credentials</label>
+              </div>
+            </div>
+            <div class="d-grid mt-4">
+              <button class="btn btn-primary"> Login </button>
+            </div>
+            <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{ error }}</div>
+          </form>
+          <p class="mb-2 text-muted">Forgot password? <a [routerLink]="['/auth/reset-passwordv2']">Reset</a></p>
+          <p class="mb-0 text-muted">Don’t have an account? <a [routerLink]="['/auth/signupv2']">Sign up</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  

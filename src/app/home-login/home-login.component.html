@@ -1,0 +1,29 @@
+<div class="custom-page">
+	<div class="login-section row">
+		<div class="login-form mpt-5">
+			<div class="row-md-auto">
+			<div>
+					Username
+					<input matInput [formControl]="Username">
+				</div>
+			</div>
+			<div class="row-md-auto">
+				<div>
+					<label>Password</label>
+					<input matInput [type]="hide ? 'password' : 'text'" [formControl]="Password">
+                </div>
+			</div>
+
+			<div class="row login-button">
+				<div class="col-md-10">
+					<button mat-button class="btn btn-custom" (click)="onSubmit()">
+						<a class="text-btn">Log in</a>
+					</button>
+				</div>
+			</div>
+			<div class="mt-30 mr-60 login-form">
+				<a [routerLink]="[]" (click)="onForgotPasswordClick()">forgot password?</a>
+			</div>
+		</div>
+	</div>
+</div>

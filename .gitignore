@@ -1,0 +1,46 @@
+# Node dependencies
+/node_modules
+
+# Compiled output
+/dist
+
+# Angular generated files
+/*.js
+/*.js.map
+/*.d.ts
+/*.js.map
+
+# Compiled Sass and CSS files
+/styles.css
+/*.css
+*.css.map
+
+# Angular config files
+/angular.json
+/tsconfig.json
+/tsconfig.app.json
+/tsconfig.spec.json
+/tslint.json
+# cache
+.angular/cache/
+cache/
+# IDE and editor files
+/.vscode
+/.idea
+*.iml
+
+# Environment-specific configuration files
+/src/environments/environment.ts
+/src/environments/environment.prod.ts
+
+# Logs and testing results
+/*.log
+/coverage
+
+# Dependency directories
+/pnpm-debug.log*
+/yarn-debug.log*
+/yarn-error.log*
+
+# macOS files
+.DS_Store

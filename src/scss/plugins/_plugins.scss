@@ -1,0 +1,143 @@
+@import '~@angular/cdk/overlay-prebuilt.css';
+
+// advance-notification
+@import '../../../node_modules/angular-notifier/styles';
+@import '../../../node_modules/angular-archwizard/styles/archwizard';
+
+// data table css
+@import 'node_modules/datatables.net-dt/css/jquery.dataTables.css';
+@import 'node_modules/datatables.net-buttons-dt/css/buttons.dataTables.css';
+@import 'node_modules/datatables.net-colreorder-dt/css/colReorder.dataTables.css';
+@import 'node_modules/datatables.net-responsive-dt/css/responsive.dataTables.css';
+@import 'node_modules/datatables.net-select-dt/css/select.dataTables.css';
+
+// ui-switch
+@import 'node_modules/ngx-ui-switch/ui-switch.component.css';
+
+// toasts component
+@import 'node_modules/ngx-toastr/toastr.css';
+
+// morris js chart
+@import 'node_modules/morris.js/morris.css';
+
+@import 'css-animator';
+@import 'angular-morris-js';
+@import 'ks-modal-gallery';
+@import 'angular-6-datatable';
+@import 'angular-datatables';
+@import 'ngx-chips';
+@import 'angular-archwizard';
+@import 'ng-select';
+@import 'sweatalert';
+
+// table css
+.dataTables_wrapper .dataTables_length {
+  margin-bottom: 15px;
+}
+
+.dataTables_wrapper .dataTables_paginate {
+  padding: 10px 0;
+}
+
+.dataTables_wrapper .dataTables_info {
+  padding: 20px 0;
+}
+
+table.dataTable {
+  width: 100% !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+  color: $primary-color !important;
+}
+
+.br-movie .br-unit-inner {
+  width: 55px;
+}
+
+// dark mode data table
+body.datta-dark {
+  .table {
+    --bs-table-striped-color: $dark-layout-font;
+    color: $dark-layout-font;
+  }
+
+  mark,
+  .mark {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: $dark-layout-font;
+  }
+}
+
+dp-day-calendar .dp-weekdays {
+  font-size: 13px !important;
+}
+
+.tag-chips .tag__text {
+  line-height: 1.75 !important;
+}
+
+.switch {
+  border: none !important;
+}
+
+app-form-switch .switch {
+  label {
+    margin-bottom: 0.5rem;
+    margin-right: 5px;
+  }
+}
+
+.bs-tooltip-top .tooltip-arrow {
+  bottom: 3px !important;
+}
+
+// switch
+
+.switch {
+  &.switch-small,
+  &.switch-medium,
+  &.switch-large {
+    margin-bottom: 10px;
+  }
+}
+
+// rtl mode wizard forms css
+body.datta-rtl {
+  .was-validated .form-select:invalid:not([multiple]):not([size]),
+  .was-validated .form-control:invalid {
+    background-position: left 0.75rem center, center left 2.25rem;
+  }
+
+  aw-wizard-navigation-bar.horizontal.small ul.steps-indicator li:not(:last-child):after {
+    left: calc(50% - 177px);
+  }
+
+  aw-wizard-navigation-bar.horizontal.large-empty-symbols ul.steps-indicator li:not(:last-child):after,
+  aw-wizard-navigation-bar.horizontal.large-filled-symbols ul.steps-indicator li:not(:last-child):after {
+    left: calc(50% - 219px);
+  }
+
+  aw-wizard-navigation-bar.vertical.small ul.steps-indicator {
+    padding: 5px 19px 5px 75px;
+  }
+
+  aw-wizard-navigation-bar.vertical ul.steps-indicator li a {
+    display: block;
+  }
+
+  @media only screen and (max-width: 1200px) {
+    aw-wizard-navigation-bar.horizontal.small ul.steps-indicator li:not(:last-child):after {
+      left: calc(50% - 85px);
+    }
+
+    aw-wizard-navigation-bar.horizontal.large-empty-symbols ul.steps-indicator li:not(:last-child):after,
+    aw-wizard-navigation-bar.horizontal.large-filled-symbols ul.steps-indicator li:not(:last-child):after {
+      left: calc(50% - 98px);
+    }
+  }
+
+  .form-select {
+    background-position: left 0.75rem center;
+  }
+}
