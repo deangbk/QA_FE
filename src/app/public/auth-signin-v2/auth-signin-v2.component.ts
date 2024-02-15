@@ -80,7 +80,7 @@ export class AuthSigninV2Component implements OnInit {
     this.securityService.tryLogin(this.usernameValue ?? '', this.userPassword ?? '').subscribe({
 			next: x => {
 				this.securityService.saveLoginToken(x);
-				this.router.navigate(['/sample-page']);
+				this.router.navigate(['/main']);
 			},
 			error: x => console.log(x),
 		});
