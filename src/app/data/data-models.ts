@@ -1,31 +1,77 @@
 
 export interface ReqBodyLogin {
-	Email: string,
-	Password: string,
+	email: string,
+	password: string,
 }
+
 export interface ReqBodyCreateProject {
-	Name: string,
-	Company: string,
-	DateStart: string,
-	DateEnd: string,
-	Tranches: string,
+	name: string,
+	company: string,
+	date_start: string,
+	date_end: string,
+	tranches: string,
+}
+
+export interface ReqBodyAddNote {
+	text: string,
+	description: string,
+	category?: string,
+	sticky?: boolean,
+}
+
+export interface ReqBodyCreateAccount {
+	tranche: string,
+	number: number,
+	name: string,
+}
+export interface ReqBodyEditAccount {
+	tranche?: string,
+	number?: number,
+	name?: string,
 }
 
 export interface ReqBodyGetPosts {
-	Search?: string,		// Search term
-	Tranche?: string,		// Search in specific tranche
-	
-	TicketID?: number,
-	PosterID?: number,
-	
-	DateFrom?: string,
-	DateTo?: string,
-	
-	Answered?: boolean,
+	search?: string,		// Search term
+	tranche?: string,		// Search in specific tranche
+
+	account?: number,
+	id?: number,
+
+	post_by?: number,
+
+	date_from?: string,
+	date_to?: string,
+
+	has_answer?: boolean,
+	approved?: boolean,
+
+	type?: string,
+	category?: string,
 }
 export interface ReqBodyPaginate {
-	Count?: number,			// Count per page
-	Page?: number,			// Page number
+	per_page?: number,		// Count per page
+	page?: number,			// Page number
+}
+export interface ReqBodyCreatePost {
+	account?: number,
+	text: string,
+	category?: string,
+}
+export interface ReqBodySetAnswer {
+	text: string,
+}
+export interface ReqBodyEditPost {
+	text: string,
+	category?: string,
+}
+
+export interface ReqBodySetApproval {
+	approve: boolean,
+	questions: number[],
+}
+
+export interface ReqBodyAddComment {
+	text: string,
 }
 
 export interface ReqBodyUploadDocument {
@@ -38,97 +84,133 @@ export interface ReqBodyUploadDocument {
 // -----------------------------------------------------
 
 export interface RespLoginToken {
-	Token: string,
-	Expiration: string,
+	token: string,
+	expiration: string,
 }
 
-export interface RespProjectInfo {
+export interface RespBulkUserCreate {
+	id: number,
+	user: string,
+	pass: string,
+}
+
+export interface RespGetPostPage {
+	count_total: number,
+	posts: RespPostData[],
+}
+
+// -----------------------------------------------------
+
+export interface RespProjectData {
 	id: number,
 	name: string,
 	display_name: string,
 	date_start: string,
 	date_end: string,
-	
+
 	// -----------------------------
-	
+
 	description?: string,
 	company?: string,
 	url_logo?: string,
 	url_banner?: string,
-	
+
 	// -----------------------------
-	
-	tranches?: string[],
+
+	tranches?: RespTrancheData[],
 }
-export interface RespUserInfo {
+
+export interface RespTrancheData {
+	id: number,
+	name: string,
+}
+
+export interface RespUserData {
 	id: number,
 	display_name: string,
-	
+
 	// -----------------------------
-	
+
 	user_name?: string,
 	date_created?: string,
 }
-export interface RespQuestionInfo {
+
+export interface RespPostData {
 	q_num: number,
 	type: number,
-	tranche?: string,
-	account?: number,
-	
+	category: string,
+
+	account?: RespAccountData,
+
 	q_text: string,
 	a_text?: string,
-	
-	post_by: RespUserInfo,
-	
-	date_post?: string,
-	date_edit?: string,
-	
-	attachments: RespDocumentInfo[],
-	
+
+	post_by: RespUserData,
+
+	date_post: string,
+	date_edit: string,
+
+	attachments: RespDocumentData[],
+
 	// -----------------------------
-	
-	answer_by_id?: number,
-	answer_by?: string,
-	
-	q_approve_by_id?: number,
-	q_approve_by?: string,
-	a_approve_by_id?: number,
-	a_approve_by?: string,
-	
-	edit_by_id?: number,
-	edit_by?: string,
-	
+
+	answer_by?: RespUserData,
+	q_approve_by?: RespUserData,
+	a_approve_by?: RespUserData,
+	edit_by?: RespUserData,
+
 	date_q_approve?: string,
 	date_a_approve?: string,
 }
-export interface RespDocumentInfo {
+
+export interface RespDocumentData {
 	id: number,
 	name: string,
 	date_upload: string,
-	
+
 	// -----------------------------
-	
+
 	url?: string,
 	//doc_type?: number,
 	hidden?: boolean,
 	allow_print?: boolean,
-	
-	assoc_post?: number,
-	assoc_account?: number,
-	
+
+	assoc_post?: number | RespPostData,
+	assoc_account?: number | RespAccountData,
+
 	// -----------------------------
-	
+
 	description?: string,
 	file_type?: string,
 	upload_by?: number,
 }
-export interface RespCommentInfo {
+
+export interface RespCommentData {
 	num: number,
 	text: string,
 	date_post: string,
-	
+
 	// -----------------------------
-	
-	post_by_id?: number,
-	post_by?: string,
+
+	post_by?: RespUserData,
+}
+
+export interface RespAccountData {
+	id: number,
+	no: number,
+	name: string,
+	tranche: RespTrancheData,
+}
+
+export interface RespNoteData {
+	num: number,
+	text: string,
+	description: string,
+	category: string,
+	date_post: string,
+	sticky: boolean,
+
+	// -----------------------------
+
+	post_by?: RespUserData,
 }

@@ -11,6 +11,14 @@ export class Helpers {
 		})
 		return form;
 	}
+	public static bodyCombine(...bodies: any[]) {
+		var res: any = {};
+		bodies.forEach(x => {
+			var bodyEntries = Object.entries(x).map(([k, v]) => [k, <any>v]);
+			res = { ...res, ...bodyEntries };
+		});
+		return res;
+	}
 	public static bodyToHttpQueryString(body: any, ...more: [string, any][]) {
 		var bodyAsAny = Object.entries(body).map(([k, v]) => [k, <any>v]);
 		var values = bodyAsAny.concat(more)
@@ -18,24 +26,24 @@ export class Helpers {
 			.map(([k, v]) => `${k}=${String(v)}`);
 		return values.join('&');
 	}
-	
+
 	public static parseJwt(token: string) {
 		var base64Payload = token.split('.')[1];
 		var payload = Buffer.from(base64Payload, 'base64');
 		return JSON.parse(payload.toString());
 	}
-	
+
 	// -----------------------------------------------------
-	
+
 	public static arrayBufferToByteArray(buffer: ArrayBuffer) {
 		const textDecoder = new TextDecoder('utf-8');
 		const decodedBase64 = textDecoder.decode(buffer);
 		return Uint8Array.from(
 			atob(decodedBase64), c => c.charCodeAt(0))
 	}
-	
+
 	// -----------------------------------------------------
-	
+
 	public static waitUntil(cond: Function): Promise<any> {
 		const poll = (resolve: any) => {
 			if (cond()) resolve();
@@ -46,9 +54,9 @@ export class Helpers {
 	public static timeout(ms: number): Promise<any> {
 		return new Promise(resolve => setTimeout(resolve, ms));
 	}
-	
+
 	// -----------------------------------------------------
-	
+
 	public static lerp(from: any, to: any, x: number) {
 		return from + x * (to - from);
 	}
@@ -58,9 +66,9 @@ export class Helpers {
 		var b = this.lerp(rgb1[2], rgb2[2], x);
 		return `rgb(${r}, ${g}, ${b})`
 	}
-	
+
 	// -----------------------------------------------------
-	
+
 	public static chunkString(str: string, chunk: number) {
 		const size = Math.floor(str.length / chunk)
 		var res: string[] = [];
