@@ -50,11 +50,11 @@ export class QuestionsService {
 	}
 
 	public postGet(projectId: number,
-		filter: Models.ReqBodyGetPosts, paginate: Models.ReqBodyPaginate,
+		filter: Models.ReqBodyGetPosts, page: Models.ReqBodyPaginate,
 		details: number = 0) {
 		var query = Helpers.bodyToHttpQueryString({},
 			["details", details]);
-		var body = Helpers.bodyCombine(filter, paginate);
+		var body = Helpers.bodyCombine(filter, page);
 		return <Observable<Models.RespGetPostPage>>
 			this._post(`post/page/${projectId}?${query}`, body);
 	}
