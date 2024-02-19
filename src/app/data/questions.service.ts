@@ -46,7 +46,17 @@ export class QuestionsService {
 		var query = Helpers.bodyToHttpQueryString(filter,
 			["details", details]);
 		return <Observable<Models.RespPostData[]>>
-			this._get(`post/get_posts/${projectId}?${query}`);
+			this._post(`post/page/${projectId}?${query}`);
+	}
+
+	public postGet(projectId: number,
+		filter: Models.ReqBodyGetPosts, paginate: Models.ReqBodyPaginate,
+		details: number = 0) {
+		var query = Helpers.bodyToHttpQueryString({},
+			["details", details]);
+		var body = Helpers.bodyCombine(filter, paginate);
+		return <Observable<Models.RespGetPostPage>>
+			this._post(`post/page/${projectId}?${query}`, body);
 	}
 
 }
