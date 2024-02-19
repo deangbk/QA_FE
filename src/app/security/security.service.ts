@@ -85,8 +85,8 @@ export class SecurityService {
 		
 		//console.log('Storing tokens...'+authRes.Token+' '+authRes.Expiration);
 		
-		localStorage.setItem('l-token', authRes.Token);
-		localStorage.setItem('l-expire', authRes.Expiration);
+		localStorage.setItem('l-token', authRes.token);
+		localStorage.setItem('l-expire', authRes.expiration);
 	}
 	public removeLoginToken() {
 		console.log('Removing stored tokens...');

@@ -8,7 +8,7 @@ import * as Models from "../data/data-models"; // Import your models
   styleUrls: ['./questions-display.component.scss']
 })
 export class QuestionsDisplayComponent implements OnInit {
-  questions: Models.RespQuestionInfo[];
+  questions: Models.RespPostData[];
 
 
   constructor(private dataService: QuestionsService) { }
@@ -20,7 +20,7 @@ export class QuestionsDisplayComponent implements OnInit {
     const details = 0; // Replace with your actual details value
 
     this.dataService.questionGet(projectId, filter, details).subscribe(
-      (data: Models.RespQuestionInfo[]) => {
+      (data: Models.RespPostData[]) => {
         this.questions = data;
         console.log(this.questions);
       },

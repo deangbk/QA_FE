@@ -7,20 +7,20 @@ import { Helpers } from "../helpers";
 import * as Models from "./data-models";
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root'
 })
 export class QuestionsService {
-  baseUrl: string = '';
-	
+	baseUrl: string = '';
+
 	constructor(private http: HttpClient) {
 		this.baseUrl = 'https://localhost:7203/api';
 	}
-  private handleError(error: HttpErrorResponse) {
+	private handleError(error: HttpErrorResponse) {
 		console.log(error);
 		const err = new Error('Http error.')
 		return throwError(() => err);
 	}
-  private _get(url: string) {
+	private _get(url: string) {
 		return this.http
 			.get(`${this.baseUrl}/${url}`)
 			.pipe(catchError(this.handleError));
@@ -41,11 +41,11 @@ export class QuestionsService {
 			.pipe(catchError(this.handleError));
 	}
 
-  ////questions
+	////questions
 	public questionGet(projectId: number, filter: Models.ReqBodyGetPosts, details: number = 0) {
 		var query = Helpers.bodyToHttpQueryString(filter,
 			["details", details]);
-		return <Observable<Models.RespQuestionInfo[]>>
+		return <Observable<Models.RespPostData[]>>
 			this._get(`post/get_posts/${projectId}?${query}`);
 	}
 

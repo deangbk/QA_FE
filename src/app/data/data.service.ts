@@ -1,4 +1,3 @@
-
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
@@ -12,19 +11,19 @@ import * as Models from "./data-models";
 })
 export class DataService {
 	baseUrl: string = '';
-	
+
 	constructor(private http: HttpClient) {
 		this.baseUrl = 'https://localhost:7203/api';
 	}
-	
+
 	// -----------------------------------------------------
-	
+
 	private handleError(error: HttpErrorResponse) {
 		console.log(error);
 		const err = new Error('Http error.')
 		return throwError(() => err);
 	}
-	
+
 	private _get(url: string) {
 		return this.http
 			.get(`${this.baseUrl}/${url}`)
@@ -45,7 +44,7 @@ export class DataService {
 			.delete(`${this.baseUrl}/${url}`)
 			.pipe(catchError(this.handleError));
 	}
-	
+
 	private _post_as_form(url: string, body?: any) {
 		var form = body != null ? Helpers.bodyToHttpFormData(body) : null;
 		return this.http
@@ -58,95 +57,88 @@ export class DataService {
 			.put(`${this.baseUrl}/${url}`, form)
 			.pipe(catchError(this.handleError));
 	}
-	
+
 	// -----------------------------------------------------
 	// Auth
-	
+
 	public login(username: string, password: string) {
 		var body: Models.ReqBodyLogin = {
-			Email: username,
-			Password: password,
+			email: username,
+			password: password,
 		};
 		return <Observable<Models.RespLoginToken>>
 			this._post(`auth/login`, body);
 	}
-	
+
 	// -----------------------------------------------------
 	// Admin
-	
+
 	public adminGrantRole(userId: number, role: string) {
-		return this._put(`admin/grant_role/${userId}/${role}`);
+		return this._put(`admin/grant/role/${userId}/${role}`);
 	}
 	public adminRemoveRole(userId: number, role: string) {
-		return this._delete(`admin/remove_role/${userId}/${role}`);
+		return this._delete(`admin/ungrant/role/${userId}/${role}`);
 	}
-	
-	public adminCreateProject(create: Models.ReqBodyCreateProject) {
-		return <Observable<number>>
-			this._post(`admin/create_project`, create);
-	}
-	
+
 	public adminGrantManager(projectId: number, userId: number) {
 		return <Observable<number>>
-			this._put(`admin/grant_manage/${projectId}/${userId}`);
+			this._put(`admin/grant/manage/${projectId}/${userId}`);
 	}
 	public adminGrantManagerFromFile(projectId: number, file: File) {
 		var form = new FormData();
 		form.append('file', file, file.name);
 		return <Observable<number>>
-			this._put(`admin/grant_manage_withfile/${projectId}`, form);
+			this._put(`admin/grant/manage/file/${projectId}`, form);
 	}
+
 	public adminRemoveManager(projectId: number, userId: number) {
 		return <Observable<number>>
-			this._delete(`admin/remove_manage/${projectId}/${userId}`);
+			this._delete(`admin/ungrant/manage/${projectId}/${userId}`);
 	}
-	/*
-	public adminRemoveManagerFromFile(projectId: number, file: File) {
-		var form = new FormData();
-		form.append('file', file, file.name);
-		return this.http
-			.delete(`${this.baseUrl}admin/remove_manage_withfile/${projectId}`, form)
-			.pipe(catchError(this.handleError));
-	}
-	*/
 
 	// -----------------------------------------------------
 	// Manager
-	
+
 	public managerGrantAccess(trancheId: number, userId: number) {
 		return <Observable<number>>
-			this._put(`manage/grant_access/${trancheId}/${userId}`);
+			this._put(`manage/grant/access/${trancheId}/${userId}`);
 	}
 	public managerGrantAccessFromFile(trancheId: number, file: File) {
 		var form = new FormData();
 		form.append('file', file, file.name);
 		return <Observable<number>>
-			this._put(`manage/grant_access_withfile/${trancheId}`, form);
+			this._put(`manage/grant/access/file/${trancheId}`, form);
 	}
+
 	public managerRemoveAccess(trancheId: number, userId: number) {
 		return <Observable<number>>
-			this._delete(`manage/remove_access/${trancheId}/${userId}`);
+			this._delete(`manage/ungrant/access/${trancheId}/${userId}`);
 	}
-	
+
 	public managerBulkAddUsers(projectId: number, file: File) {
 		var form = new FormData();
 		form.append('file', file, file.name);
-		return <Observable<number[]>>
-			this._post(`manage/add_project_users/${projectId}`, form);
+		return <Observable<Models.RespBulkUserCreate[]>>
+			this._post(`manage/bulk/create_user/${projectId}`, form);
 	}
-	
+
+	public managerGetPosts(projectId: number, filter: Models.ReqBodyGetPosts, details: number = 0) {
+		var query = Helpers.bodyToHttpQueryString({},
+			["details", details]);
+		return <Observable<Models.RespPostData[]>>
+			this._post(`manager/post/${projectId}?${query}`, filter);
+	}
+
 	// -----------------------------------------------------
 	// User
-	
-	public logout() {
-		return this._post(`user/logout`);
-	}
-	
+
+
+
 	// -----------------------------------------------------
 	// Project
-	
+
 	public projectGetInfo(projectId: number) {
-		return <Observable<Models.RespProjectInfo>>
+		return <Observable<Models.RespProjectData>>
 			this._get(`project/get/${projectId}`);
 	}
 	public projectGetUsers(projectId: number) {
@@ -157,94 +149,184 @@ export class DataService {
 		return <Observable<number[]>>
 			this._get(`project/managers/${projectId}`);
 	}
-	
-	
-	
+	public projectCountContent(projectId: number) {
+		return <Observable<number[]>>
+			this._get(`project/content/${projectId}`);
+	}
+
+	public projectCreate(create: Models.ReqBodyCreateProject) {
+		return <Observable<number>>
+			this._post(`project/create`, create);
+	}
+
+	// -----------------------------------------------------
+	// Note
+
+	public noteGetInProject(projectId: number) {
+		return <Observable<Models.RespNoteData[]>>
+			this._get(`note/${projectId}`);
+	}
+	public noteAdd(projectId: number, add: Models.ReqBodyAddNote) {
+		return <Observable<number>>
+			this._post(`note/${projectId}`, add);
+	}
+	public noteDelete(projectId: number, num: number) {
+		var query = Helpers.bodyToHttpQueryString({},
+			["num", num]);
+		return <Observable<number>>
+			this._delete(`note/${projectId}?${query}`);
+	}
+
 	// -----------------------------------------------------
 	// Account
-	
-	
-	
-	// -----------------------------------------------------
-	// Question
 
-	public questionGet(projectId: number, filter: Models.ReqBodyGetPosts, details: number = 0) {
-		var query = Helpers.bodyToHttpQueryString(filter,
+	public accountGetInfo(accountId: number, details: number = 0) {
+		var query = Helpers.bodyToHttpQueryString({},
 			["details", details]);
-		return <Observable<Models.RespQuestionInfo[]>>
-			this._get(`post/get_post/${projectId}?${query}`);
+		return <Observable<Models.RespAccountData>>
+			this._get(`account/${accountId}?${query}`);
 	}
-	public questionGetPaginate(projectId: number,
+	public accountCreate(accountId: number, create: Models.ReqBodyCreateAccount) {
+		return <Observable<Models.RespAccountData>>
+			this._post(`account/${accountId}`, create);
+	}
+	public accountEdit(accountId: number, edit: Models.ReqBodyEditAccount) {
+		return this._put(`account/edit/${accountId}`, edit);
+	}
+	public accountDelete(accountId: number) {
+		return this._delete(`account/${accountId}`);
+	}
+
+	// -----------------------------------------------------
+	// Post
+
+	public postGet(projectId: number,
 		filter: Models.ReqBodyGetPosts, paginate: Models.ReqBodyPaginate,
 		details: number = 0) {
-		
-		var queryFilter = Helpers.bodyToHttpQueryString(filter);
-		var queryPaginate = Helpers.bodyToHttpQueryString(paginate);
-		var query = [queryFilter, queryPaginate].join('&');
-		return <Observable<Models.RespQuestionInfo[]>>
-			this._get(`post/get_post/${projectId}?${query}`);
+		var query = Helpers.bodyToHttpQueryString({},
+			["details", details]);
+		var body = Helpers.bodyCombine(filter, paginate);
+		return <Observable<Models.RespGetPostPage>>
+			this._post(`post/page/${projectId}?${query}`, body);
 	}
-	
-	public questionGetComments(questionId: number) {
-		return <Observable<Models.RespCommentInfo[]>>
-			this._get(`post/get_comments/${questionId}`);
+
+	public postCreateAsGeneral(projectId: number, create: Models.ReqBodyCreatePost) {
+		return <Observable<number>>
+			this._post(`post/general/${projectId}`, create);
 	}
-	
+	public postCreateAsAccount(projectId: number, create: Models.ReqBodyCreatePost) {
+		return <Observable<number>>
+			this._post(`post/account/${projectId}`, create);
+	}
+
+	public postSetAnswer(postID: number, set: Models.ReqBodySetAnswer) {
+		return this._put(`post/answer/${postID}`, set);
+	}
+	public postEdit(postID: number, edit: Models.ReqBodyEditPost) {
+		return this._put(`post/edit/${postID}`, edit);
+	}
+
+	public postApproveQuestion(postID: number, approve: Models.ReqBodySetApproval) {
+		return this._put(`approve/q/${postID}`, approve);
+	}
+	public postApproveAnswer(postID: number, approve: Models.ReqBodySetApproval) {
+		return this._put(`approve/a/${postID}`, approve);
+	}
+
+	public postBulkCreateAsGeneral(projectId: number, creates: Models.ReqBodyCreatePost[]) {
+		return <Observable<number[]>>
+			this._post(`post/bulk/general/${projectId}`, creates);
+	}
+	public postBulkCreateAsAccount(projectId: number, creates: Models.ReqBodyCreatePost[]) {
+		return <Observable<number[]>>
+			this._post(`post/bulk/account/${projectId}`, creates);
+	}
+	public postBulkEdit(postID: number, edits: Models.ReqBodyEditPost[]) {
+		return this._put(`post/bulk/edit/${postID}`, edits);
+	}
+	public postBulkAnswer(postID: number, edits: Models.ReqBodySetAnswer[]) {
+		return this._put(`post/bulk/edit/${postID}`, edits);
+	}
+
+	// -----------------------------------------------------
+	// Comment
+
+	public commentGetInPost(postID: number) {
+		return <Observable<Models.RespCommentData[]>>
+			this._get(`comment/${postID}`);
+	}
+	public commentAdd(postID: number, add: Models.ReqBodyAddComment) {
+		return <Observable<number>>
+			this._post(`comment/${postID}`, add);
+	}
+	public commentDelete(postID: number, num: number) {
+		var query = Helpers.bodyToHttpQueryString({},
+			["num", num]);
+		return <Observable<number>>
+			this._delete(`comment/${postID}?${query}`);
+	}
+	public commentClear(postID: number) {
+		return <Observable<number>>
+			this._delete(`comment/all/${postID}`);
+	}
+
 	// -----------------------------------------------------
 	// Document
-	
+
 	public documentGetInfo(documentId: number, details: number = 0) {
-		return <Observable<Models.RespDocumentInfo>>
-			this._get(`document/get_info/${documentId}?details=${details}`);
+		var query = Helpers.bodyToHttpQueryString({},
+			["details", details]);
+		return <Observable<Models.RespDocumentData>>
+			this._get(`document/info/${documentId}?${query}`);
 	}
 	public documentGetFileData(documentId: number) {
 		const httpOptions = {
-			'responseType' : 'arraybuffer' as 'json'
+			'responseType': 'arraybuffer' as 'json'
 		};
 		let res = this.http
-			.get(`${this.baseUrl}/document/get/${documentId}`, httpOptions)
+			.get(`${this.baseUrl}/document/stream/${documentId}`, httpOptions)
 			.pipe(catchError(this.handleError));
 		return <Observable<ArrayBuffer>>res;
 	}
-	
-	public documentGetProjectGeneralDocuments(projectId: number, details: number = 0) {
-		return <Observable<Models.RespDocumentInfo[]>>
-			this._get(`document/with_proj/${projectId}?details=${details}`);
+
+	public documentGetInProject(projectId: number, details: number = 0) {
+		var query = Helpers.bodyToHttpQueryString({},
+			["details", details]);
+		return <Observable<Models.RespDocumentData[]>>
+			this._get(`document/with/project/${projectId}?${query}`);
 	}
-	public documentGetAccountDocuments(accountId: number, details: number = 0) {
-		return <Observable<Models.RespDocumentInfo[]>>
-			this._get(`document/with_acc/${accountId}?details=${details}`);
+	public documentGetInPost(postID: number, details: number = 0) {
+		var query = Helpers.bodyToHttpQueryString({},
+			["details", details]);
+		return <Observable<Models.RespDocumentData[]>>
+			this._get(`document/with/post/${postID}?${query}`);
 	}
-	public documentGetQuestionDocuments(questionId: number, details: number = 0) {
-		return <Observable<Models.RespDocumentInfo[]>>
-			this._get(`document/with_post/${questionId}?details=${details}`);
+	public documentGetInAccount(accountId: number, details: number = 0) {
+		var query = Helpers.bodyToHttpQueryString({},
+			["details", details]);
+		return <Observable<Models.RespDocumentData[]>>
+			this._get(`document/with/account/${accountId}?${query}`);
 	}
-	
-	public documentUploadGeneralDocument(projectId: number, data: Models.ReqBodyUploadDocument) {
+
+	public documentUploadToProject(projectId: number, data: Models.ReqBodyUploadDocument) {
 		return <Observable<number>>
-			this._post(`document/upload_proj/${projectId}`, data);
+			this._post(`document/upload/project/${projectId}`, data);
 	}
-	public documentUploadAccountDocument(accountId: number, data: Models.ReqBodyUploadDocument) {
+	public documentUploadToPost(postID: number, data: Models.ReqBodyUploadDocument) {
 		return <Observable<number>>
-			this._post(`document/upload_acc/${accountId}`, data);
+			this._post(`document/upload/post/${postID}`, data);
 	}
-	public documentUploadQuestionDocument(questionId: number, data: Models.ReqBodyUploadDocument) {
+	public documentUploadToAccount(accountId: number, data: Models.ReqBodyUploadDocument) {
 		return <Observable<number>>
-			this._post(`document/upload_post/${questionId}`, data);
+			this._post(`document/upload/account/${accountId}`, data);
 	}
-	
-	
-	
-	
-	public getUserPassword(username: string, password: string) {
-		return this.http
-		.get(`${this.baseUrl}/auth/login/Email=${username}&Password=${password}`)
-		.pipe(catchError(this.handleError));
-	}
-	
+
+	// -----------------------------------------------------
+
 	public getQuestions() {
-		return this.http
+		/* return this.http
 		.get(`${this.baseUrl}/post/get_page/1`)
-		.pipe(catchError(this.handleError));
+		.pipe(catchError(this.handleError)); */
+		return this.postGet(1, {}, {});
 	}
 }
