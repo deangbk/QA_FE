@@ -30,8 +30,8 @@ cache/
 *.iml
 
 # Environment-specific configuration files
-/src/environments/environment.ts
-/src/environments/environment.prod.ts
+# /src/environments/environment.ts
+# /src/environments/environment.prod.ts
 
 # Logs and testing results
 /*.log
