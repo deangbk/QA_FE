@@ -41,7 +41,7 @@ export class QuestionsService {
 			.pipe(catchError(this.handleError));
 	}
 
-	////questions
+	/* ////questions
 	public questionGet(projectId: number, filter: Models.ReqBodyGetPosts, details: number = 0) {
 		var query = Helpers.bodyToHttpQueryString(filter,
 			["details", details]);
@@ -54,9 +54,9 @@ export class QuestionsService {
 		details: number = 0) {
 		var query = Helpers.bodyToHttpQueryString({},
 			["details", details]);
-		var body = Helpers.bodyCombine(filter, page);
-		return <Observable<Models.RespGetPostPage>>
+		var body = Helpers.bodyCombine(filter, paginate);
+		return <Observable<Models.RespGetPost>>
 			this._post(`post/page/${projectId}?${query}`, body);
-	}
+	} */
 
 }
