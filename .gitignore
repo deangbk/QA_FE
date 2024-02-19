@@ -5,6 +5,7 @@
 /integration/bazel/bazel-*
 *.log
 /node_modules/
+yarn.lock
 
 # CircleCI temporary file for cache key computation.
 # See `save_month_to_file` in `.circleci/config.yml`.
@@ -19,6 +20,7 @@ pubspec.lock
 !.devcontainer/recommended-devcontainer.json
 !.devcontainer/recommended-Dockerfile
 .settings/
+.vs/
 .vscode/launch.json
 .vscode/settings.json
 .vscode/tasks.json
@@ -48,19 +50,8 @@ yarn-error.log
 # User specific ng-dev settings
 .ng-dev.user*
 
-# Angular config files
-# /angular.json
-# /tsconfig.json
-# /tsconfig.app.json
-# /tsconfig.spec.json
-# /tslint.json
-# cache
-.angular/cache/
-cache/
-# IDE and editor files
-/.vscode
-/.idea
-*.iml
+.notes.md
+baseline.json
 
 # Ignore .history for the xyz.local-history VSCode extension
 .history
