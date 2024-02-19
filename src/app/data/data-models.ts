@@ -38,8 +38,8 @@ export interface ReqBodyUploadDocument {
 // -----------------------------------------------------
 
 export interface RespLoginToken {
-	token: string,
-	expiration: string,
+	Token: string,
+	Expiration: string,
 }
 
 export interface RespProjectInfo {
