@@ -15,7 +15,7 @@ export class DataService {
 	constructor(private http: HttpClient) {
 		this.baseUrl = 'https://localhost:7203/api';
 	}
-
+	
 	// -----------------------------------------------------
 
 	private handleError(error: HttpErrorResponse) {
@@ -95,7 +95,7 @@ export class DataService {
 		return <Observable<number>>
 			this._delete(`admin/ungrant/manage/${projectId}/${userId}`);
 	}
-
+	
 	// -----------------------------------------------------
 	// Manager
 
@@ -201,12 +201,16 @@ export class DataService {
 	// Post
 
 	public postGet(projectId: number,
-		filter: Models.ReqBodyGetPosts, paginate: Models.ReqBodyPaginate,
-		details: number = 0) {
+		filter: Models.ReqBodyGetPosts, paginate?: Models.ReqBodyPaginate,
+		details: number = 0)
+	{
 		var query = Helpers.bodyToHttpQueryString({},
 			["details", details]);
-		var body = Helpers.bodyCombine(filter, paginate);
-		return <Observable<Models.RespGetPostPage>>
+		var body: Models.ReqBodyGetPostsWithPaginate = {
+			filter: filter,
+			paginate: paginate,
+		};
+		return <Observable<Models.RespGetPost>>
 			this._post(`post/page/${projectId}?${query}`, body);
 	}
 
@@ -327,6 +331,6 @@ export class DataService {
 		/* return this.http
 		.get(`${this.baseUrl}/post/get_page/1`)
 		.pipe(catchError(this.handleError)); */
-		return this.postGet(1, {}, {});
+		return this.postGet(1, {}, null);
 	}
 }

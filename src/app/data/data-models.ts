@@ -34,14 +34,14 @@ export interface ReqBodyGetPosts {
 	search?: string,		// Search term
 	tranche?: string,		// Search in specific tranche
 
-	account?: number,
-	id?: number,
-
-	post_by?: number,
-
-	date_from?: string,
+	account?: number,		// Filter by account, [type] must be "account"
+	id?: number,			// Filter by question ID
+	
+	post_by?: number,		// Filter by poster ID
+	
+	date_from?: string,		// Filter by date
 	date_to?: string,
-
+	
 	has_answer?: boolean,
 	approved?: boolean,
 
@@ -49,9 +49,14 @@ export interface ReqBodyGetPosts {
 	category?: string,
 }
 export interface ReqBodyPaginate {
-	per_page?: number,		// Count per page
-	page?: number,			// Page number
+	per_page: number,		// Count per page
+	page: number,			// Page number
 }
+export interface ReqBodyGetPostsWithPaginate {
+	filter: ReqBodyGetPosts,
+	paginate?: ReqBodyPaginate,
+}
+
 export interface ReqBodyCreatePost {
 	account?: number,
 	text: string,
@@ -94,7 +99,7 @@ export interface RespBulkUserCreate {
 	pass: string,
 }
 
-export interface RespGetPostPage {
+export interface RespGetPost {
 	count_total: number,
 	posts: RespPostData[],
 }
