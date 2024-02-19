@@ -79,12 +79,14 @@ export class SecurityService {
 	
 	public saveLoginToken(authRes: Models.RespLoginToken) {
 		// Remove existing token storage
+		//console.log(authRes['Token']);
+	//	console.log("savToken-"+ authRes.Token);
 		this.removeLoginToken();
 		
-		console.log('Storing tokens...');
+		//console.log('Storing tokens...'+authRes.Token+' '+authRes.Expiration);
 		
-		localStorage.setItem('l-token', authRes.token);
-		localStorage.setItem('l-expire', authRes.expiration);
+		localStorage.setItem('l-token', authRes.Token);
+		localStorage.setItem('l-expire', authRes.Expiration);
 	}
 	public removeLoginToken() {
 		console.log('Removing stored tokens...');

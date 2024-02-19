@@ -36,7 +36,8 @@ export class HomeLoginComponent implements OnInit {
 		this.securityService.tryLogin(this.Username.value ?? '', this.Password.value ?? '').subscribe({
 			next: x => {
 				this.securityService.saveLoginToken(x);
-				this.router.navigate(['/sample-page']);
+				//console.log(x);
+				//this.router.navigate(['/sample-page']);
 			},
 			error: x => console.log(x),
 		});
