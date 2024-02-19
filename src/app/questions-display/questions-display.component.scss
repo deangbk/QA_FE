@@ -1,0 +1,35 @@
+ /* Custom CSS to set max width for table column */
+ .max-width-column th,
+ .max-width-column td {
+     max-width: 20%; /* Adjust the max width as per your requirement */
+     overflow: hidden; /* Optional: hide overflow content */
+     text-overflow: ellipsis; /* Optional: show ellipsis for overflow content */
+     white-space: nowrap; /* Optional: prevent text wrapping */
+ }
+ .w-5{
+    width: 5%;
+  }
+  
+  .w-10{
+    width: 10%;
+  }
+  
+  .w-15{
+    width: 15%;
+  }
+  
+  .w-20{
+    width: 20%;
+  }
+  
+  .w-30{
+    width: 30%;
+  }
+  
+  .w-5 input{
+    width:100%;
+  }
+  
+  .w-20 select{
+    width:100%;
+  }
