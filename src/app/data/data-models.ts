@@ -187,7 +187,7 @@ export interface RespDocumentData {
 
 	description?: string,
 	file_type?: string,
-	upload_by?: number,
+	upload_by?: RespUserData,
 }
 
 export interface RespCommentData {
