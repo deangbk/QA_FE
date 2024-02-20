@@ -34,6 +34,8 @@ import { HomeLoginComponent } from './home-login/home-login.component';
 import { DocumentViewerComponent } from './document-viewer/document-viewer.component';
 
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { SearchPipe } from './Pipes/search.pipe';
+import { SearchBasicPipe } from './Pipes/search-basic.pipe';
 
 @NgModule({
 	declarations: [
@@ -58,6 +60,8 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 		QuestionsDisplayComponent,
 		HomeLoginComponent,
 		DocumentViewerComponent,
+  SearchPipe,
+  SearchBasicPipe,
 		
 	],
 	providers: [NavigationItem,

@@ -10,7 +10,8 @@ import * as Models from "../data/data-models"; // Import your models
 })
 export class QuestionsDisplayComponent implements OnInit {
   questions: Models.RespPostData[];
-
+searchText: string;
+qfilter:Models.QuestionFilter;
 
   constructor(private dataService: DataService) { }
 
@@ -19,6 +20,12 @@ export class QuestionsDisplayComponent implements OnInit {
     const projectId = 1; // Replace with your actual projectId
     const filter: Models.ReqBodyGetPosts = {}; // Replace with your actual filter
     const details = 0; // Replace with your actual details value
+    this.qfilter = {
+      answered: null,
+      category: null,
+      account: null,
+      tranche: null
+    };
 	
 	const paginate: Models.ReqBodyPaginate = null;
     

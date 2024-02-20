@@ -1,6 +1,20 @@
 <div class="col-xl-12">
     <app-card cardTitle="Hover Table" [options]="false" blockClass="table-border-style">
       <div class="">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="searchText">
+              </div>
+              </div>
+              <div class="col-md-3">
+                <select class="form-control" [(ngModel)]="qfilter.answered">
+                  <option [ngValue]="null" selected>Select Answered Status</option>
+                  <option [ngValue]="true">Answered</option>
+                  <option [ngValue]="false">Not Answered</option>
+                </select>
+                </div>
+                </div>
         <table class="table table-hover">
           <thead>
             <tr>
@@ -14,7 +28,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let q of questions">
+            <tr *ngFor="let q of questions | search: searchText : qfilter.answered">
             <td>{{q.q_num}}</td>
             <td>{{q.account.id}}</td>
             <td>{{q.date_post | date}}</td>
