@@ -1,3 +1,7 @@
+import { Result, Err, Ok } from 'ts-results';
+
+import { Observable, lastValueFrom } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 import { Buffer } from 'buffer';
 
@@ -54,7 +58,17 @@ export class Helpers {
 	public static timeout(ms: number): Promise<any> {
 		return new Promise(resolve => setTimeout(resolve, ms));
 	}
-
+	
+	public static async observableAsPromise<T>(ob: Observable<T>): Promise<Result<T, any>> {
+		try {
+			var data = await lastValueFrom(ob);
+			return new Ok(data);
+		}
+		catch (e) {
+			return new Err(e);
+		}
+	}
+	
 	// -----------------------------------------------------
 
 	public static lerp(from: any, to: any, x: number) {
