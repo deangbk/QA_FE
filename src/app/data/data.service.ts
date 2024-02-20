@@ -18,40 +18,40 @@ export class DataService {
 	
 	// -----------------------------------------------------
 
-	private handleError(error: HttpErrorResponse) {
+	protected handleError(error: HttpErrorResponse) {
 		console.log(error);
 		const err = new Error('Http error.')
 		return throwError(() => err);
 	}
-
-	private _get(url: string) {
+	
+	protected _get(url: string) {
 		return this.http
 			.get(`${this.baseUrl}/${url}`)
 			.pipe(catchError(this.handleError));
 	}
-	private _post(url: string, body?: any) {
+	protected _post(url: string, body?: any) {
 		return this.http
 			.post(`${this.baseUrl}/${url}`, body)
 			.pipe(catchError(this.handleError));
 	}
-	private _put(url: string, body?: any) {
+	protected _put(url: string, body?: any) {
 		return this.http
 			.put(`${this.baseUrl}/${url}`, body)
 			.pipe(catchError(this.handleError));
 	}
-	private _delete(url: string) {
+	protected _delete(url: string) {
 		return this.http
 			.delete(`${this.baseUrl}/${url}`)
 			.pipe(catchError(this.handleError));
 	}
 
-	private _post_as_form(url: string, body?: any) {
+	protected _post_as_form(url: string, body?: any) {
 		var form = body != null ? Helpers.bodyToHttpFormData(body) : null;
 		return this.http
 			.post(`${this.baseUrl}/${url}`, form)
 			.pipe(catchError(this.handleError));
 	}
-	private _put_as_form(url: string, body?: any) {
+	protected _put_as_form(url: string, body?: any) {
 		var form = body != null ? Helpers.bodyToHttpFormData(body) : null;
 		return this.http
 			.put(`${this.baseUrl}/${url}`, form)
