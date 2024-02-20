@@ -32,6 +32,8 @@ import { JwtInterceptorService } from './security/jwt-interceptor.service';
 
 import { HomeLoginComponent } from './home-login/home-login.component';
 
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -66,6 +68,11 @@ import { HomeLoginComponent } from './home-login/home-login.component';
 		}
   ],
   bootstrap: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, SharedModule, BrowserAnimationsModule, BreadcrumbModule, HttpClientModule]
+	imports: [
+		BrowserModule, AppRoutingModule, SharedModule,
+		BrowserAnimationsModule, BreadcrumbModule,
+		HttpClientModule,
+		PdfViewerModule,
+	]
 })
 export class AppModule {}
