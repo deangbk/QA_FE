@@ -6,41 +6,44 @@ import { QuestionsDisplayComponent } from './questions-display/questions-display
 import { HomeLoginComponent } from './home-login/home-login.component';
 import {AuthSigninV2Component} from './public/auth-signin-v2/auth-signin-v2.component';
 import { AuthGuard } from './Guards/auth.guard';
-const routes: Routes = [
-  {
-    path: '',
-    component: AdminComponent,
-    canActivate: [AuthGuard],
-    children: [
-      { path: '', redirectTo: 'sign', pathMatch: 'full' },
-    
-      {
-        path: 'main',
-        loadComponent: () => import('./demo/sample-page/sample-page.component')
-      },
-      { path: 'question/:id', component: QuestionsDisplayComponent },
-     
-    ]
-  },
-  {
-    path: '',
-    component: GuestComponent,
-    children: [
-      { path: 'login', component: HomeLoginComponent },
+import { DocumentViewerComponent } from './document-viewer/document-viewer.component';
 
-      // {
-     
-      //   loadChildren: () => import('./public/public.module').then((m) => m.PublicModule)
-      // },
-      {
-        path: 'sign',component: AuthSigninV2Component
-      },
-      {
-        path: 'maintenance',
-      //  loadChildren: () => import('./demo/pages/maintenance/maintenance.module').then((m) => m.MaintenanceModule)
-      },
-    ]
-  }
+const routes: Routes = [
+	{
+		path: '',
+		component: AdminComponent,
+		canActivate: [AuthGuard],
+		children: [
+			{ path: '', redirectTo: 'sign', pathMatch: 'full' },
+			
+			{
+				path: 'main',
+				loadComponent: () => import('./demo/sample-page/sample-page.component')
+			},
+			{ path: 'question/:id', component: QuestionsDisplayComponent },
+			
+			{ path: 'test/document', component: DocumentViewerComponent },
+		]
+	},
+	{
+		path: '',
+		component: GuestComponent,
+		children: [
+			{ path: 'login', component: HomeLoginComponent },
+			
+			// {
+			
+			//   loadChildren: () => import('./public/public.module').then((m) => m.PublicModule)
+			// },
+			{
+				path: 'sign',component: AuthSigninV2Component
+			},
+			{
+				path: 'maintenance',
+			//  loadChildren: () => import('./demo/pages/maintenance/maintenance.module').then((m) => m.MaintenanceModule)
+			},
+		]
+	}
 ];
 
 @NgModule({

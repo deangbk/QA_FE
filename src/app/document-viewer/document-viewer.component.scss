@@ -1,0 +1,12 @@
+
+.view {
+	display: flex;
+	align-items: stretch;
+	justify-content: center;
+	
+	filter: drop-shadow(0 0 0.5rem #172557);
+}
+
+pdf-viewer {
+	height: 100vh;
+}

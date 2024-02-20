@@ -31,43 +31,45 @@ import { SecurityService } from './security/security.service';
 import { JwtInterceptorService } from './security/jwt-interceptor.service';
 
 import { HomeLoginComponent } from './home-login/home-login.component';
+import { DocumentViewerComponent } from './document-viewer/document-viewer.component';
 
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    AdminComponent,
-    GuestComponent,
-    ConfigurationComponent,
-    NavBarComponent,
-    NavigationComponent,
-    NavContentComponent,
-    NavLogoComponent,
-    NavCollapseComponent,
-    NavGroupComponent,
-    NavItemComponent,
-    NavLeftComponent,
-    NavRightComponent,
-    NavSearchComponent,
-    ChatMsgComponent,
-    ChatUserListComponent,
-    FriendComponent,
-    ToggleFullScreenDirective,
-    QuestionsDisplayComponent,
-    HomeLoginComponent,
-    
-  ],
-  providers: [NavigationItem,
-    DataService,
-		SecurityService,
-		{
-			provide: HTTP_INTERCEPTORS,
-			useClass: JwtInterceptorService,
-			multi: true,
-		}
-  ],
-  bootstrap: [AppComponent],
+	declarations: [
+		AppComponent,
+		AdminComponent,
+		GuestComponent,
+		ConfigurationComponent,
+		NavBarComponent,
+		NavigationComponent,
+		NavContentComponent,
+		NavLogoComponent,
+		NavCollapseComponent,
+		NavGroupComponent,
+		NavItemComponent,
+		NavLeftComponent,
+		NavRightComponent,
+		NavSearchComponent,
+		ChatMsgComponent,
+		ChatUserListComponent,
+		FriendComponent,
+		ToggleFullScreenDirective,
+		QuestionsDisplayComponent,
+		HomeLoginComponent,
+		DocumentViewerComponent,
+		
+	],
+	providers: [NavigationItem,
+		DataService,
+			SecurityService,
+			{
+				provide: HTTP_INTERCEPTORS,
+				useClass: JwtInterceptorService,
+				multi: true,
+			}
+	],
+	bootstrap: [AppComponent],
 	imports: [
 		BrowserModule, AppRoutingModule, SharedModule,
 		BrowserAnimationsModule, BreadcrumbModule,
