@@ -60,17 +60,16 @@ export class Helpers {
 	}
 	
 	public static async observableAsPromise<T>(ob: Observable<T>): Promise<Result<T, any>> {
-		try {
-			var data = await lastValueFrom(ob);
-			return new Ok(data);
-		}
-		catch (e) {
-			return new Err(e);
-		}
+		return new Promise((rs) => {
+			ob.subscribe({
+				next: (x) => rs(new Ok(x)),
+				error: (e) => rs(new Err(e)),
+			});
+		});
 	}
 	
 	// -----------------------------------------------------
-
+	
 	public static lerp(from: any, to: any, x: number) {
 		return from + x * (to - from);
 	}
