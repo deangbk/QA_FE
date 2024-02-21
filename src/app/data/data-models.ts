@@ -206,13 +206,6 @@ export interface RespAccountData {
 	name: string,
 	tranche: RespTrancheData,
 }
-export interface QuestionFilter {
-	answered: string,
-	category: number,
-	account: string,
-	tranche: string,
-	
-}
 export interface RespNoteData {
 	num: number,
 	text: string,

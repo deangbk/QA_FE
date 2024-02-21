@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class SearchPipe implements PipeTransform {
 
-  transform(items: any[], searchText: string='', answered: string='false'): any[] {
+  transform(items: any[], searchText: string = '', answered: boolean | null = false): any[] {
    
     if (!items) return [];
     //if (!searchText) return items;
@@ -14,9 +14,9 @@ export class SearchPipe implements PipeTransform {
     return items.filter(it => {
       // Filter based on the 'answered' value
       const answeredFilter = (
-        (String(answered) === 'true' && it.a_text !== null) ||
-        (String(answered) === 'false' && it.a_text === null) ||
-        (String(answered) === '' || String(answered) === 'null' || String(answered) === 'undefined')
+        (answered == true && it.a_text !== null) ||
+        (answered == false && it.a_text === null) ||
+        (answered == null)
       );
     
       // Filter based on the search text

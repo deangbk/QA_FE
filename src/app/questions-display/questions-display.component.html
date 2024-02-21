@@ -1,69 +1,44 @@
 <div class="col-xl-12">
-    <app-card cardTitle="Hover Table" [options]="false" blockClass="table-border-style">
-      <div class="">
-        <div class="row">
-          <div class="col-md-4">
-            <div class="form-group">
-              <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="searchText">
-              </div>
-              </div>
-              <div class="col-md-3">
-                <select class="form-control" [(ngModel)]="qfilter.answered">
-                  <option [ngValue]="null" selected>Select Answered Status</option>
-                  <option [ngValue]="true">Answered</option>
-                  <option [ngValue]="false">Not Answered</option>
-                </select>
-                </div>
-                </div>
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <th >#</th>
-              <th >Account</th>
-              <th >Date Posted</th>
-              <th class="w-30">Questions</th>
-            
-              <th style="width:30%">Answer</th>
-              <th >Date Answered</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let q of questions | search: searchText : qfilter.answered">
-            <td>{{q.q_num}}</td>
-            <td>{{q.account.id}}</td>
-            <td>{{q.date_post | date}}</td>
-            <td >{{q.q_text}}</td>
-           
-            <td>{{q.a_text}}</td>
-            <td></td>
-        </tr>
-           <!--   <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>Mark</td>
-              <td>Otto</td>
-            
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-              <td>Mark</td>
-              <td>Otto</td>
-           
-            </tr>
-           
-            <tr>
-              <th scope="row">3</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td>@twitter</td>
-            </tr> -->
-          </tbody>
-        </table>
-      </div>
-    </app-card>
-  </div>
+	<app-card cardTitle="Hover Table" [options]="false" blockClass="table-border-style">
+		<div class="">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Search..." [(ngModel)]="searchText">
+					</div>
+				</div>
+				<div class="col-md-3">
+					<select class="form-control" [(ngModel)]="qfilter.has_answer">
+						<option [ngValue]="null" selected>Select Answered Status</option>
+						<option [ngValue]="true">Answered</option>
+						<option [ngValue]="false">Not Answered</option>
+					</select>
+				</div>
+			</div>
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th >#</th>
+						<th >Account</th>
+						<th >Date Posted</th>
+						<th class="w-30">Questions</th>
+						
+						<th style="width:30%">Answer</th>
+						<th >Date Answered</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let q of questions | search: searchText : qfilter.has_answer">
+						<td>{{q.q_num}}</td>
+						<td>{{q.account.id}}</td>
+						<td>{{q.date_post | date}}</td>
+						<td >{{q.q_text}}</td>
+					
+						<td>{{q.a_text}}</td>
+						<td></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</app-card>
+</div>
