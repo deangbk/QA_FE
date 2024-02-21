@@ -141,6 +141,7 @@ export interface RespUserData {
 }
 
 export interface RespPostData {
+	id: number,
 	q_num: number,
 	type: number,
 	category: string,
@@ -182,7 +183,7 @@ export interface RespDocumentData {
 
 	assoc_post?: number | RespPostData,
 	assoc_account?: number | RespAccountData,
-
+	
 	// -----------------------------
 
 	description?: string,
