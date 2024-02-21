@@ -3,6 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AdminComponent } from './theme/layout/admin/admin.component';
@@ -60,8 +63,8 @@ import { SearchBasicPipe } from './Pipes/search-basic.pipe';
 		QuestionsDisplayComponent,
 		HomeLoginComponent,
 		DocumentViewerComponent,
-  SearchPipe,
-  SearchBasicPipe,
+		SearchPipe,
+		SearchBasicPipe,
 		
 	],
 	providers: [NavigationItem,
@@ -79,6 +82,8 @@ import { SearchBasicPipe } from './Pipes/search-basic.pipe';
 		BrowserAnimationsModule, BreadcrumbModule,
 		HttpClientModule,
 		PdfViewerModule,
+		
+		MatIconModule, MatButtonModule, 
 	]
 })
 export class AppModule {}
