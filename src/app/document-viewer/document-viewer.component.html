@@ -1,16 +1,23 @@
-
+<div class="row">
+	<div class="col-lg-9">
 <div class="view" *ngIf="documentReady">
+	
+			
+		
 	<div class="container" oncontextmenu="return false;" *ngIf="pdfReady">
 		<pdf-viewer [src]="pdfSource" 
 			[original-size]="true" [fit-to-page]="true"
-			[render-text]="false" [render-text-mode]="0"
-			style="width: 50vw; height: 80vh">
+			[render-text]="false" [render-text-mode]="0">
+			<!-- style="width: 50vw; height: 80vh"> -->
 		</pdf-viewer>
 	</div>
-	
-	<app-card cardTitle="{{documentInfo.name}}" style="width: 100%" [options]="false">
+
+</div>
+</div>
+<div class="col-md-3">
+	 <app-card cardTitle="{{documentInfo.name}}" style="width: 100%" [options]="false">
 		<p>
 			Lorem ipsum dolor sit amet
 		</p>
-	</app-card>
-</div>
+	</app-card> 
+	</div>
