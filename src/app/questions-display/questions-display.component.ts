@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { DataService } from '../data/data.service';
 import * as Models from "../data/data-models"; // Import your models
+import { has } from 'lodash';
 
 @Component({
   selector: 'app-questions-display',
@@ -12,7 +13,8 @@ export class QuestionsDisplayComponent implements OnInit {
 	questions: Models.RespPostData[];
 	searchText: string;
 	qfilter: Models.ReqBodyGetPosts;
-	
+	//has_answer: boolean;
+	filter2:any;
 	constructor(private dataService: DataService) { }
 	
 	ngOnInit() {
@@ -25,6 +27,12 @@ export class QuestionsDisplayComponent implements OnInit {
 			account: null,
 			tranche: null
 		};
+		this.filter2 = {
+			category: 'general'
+			
+		};
+	
+		//this.has_answer = null;
 		
 		const paginate: Models.ReqBodyPaginate = null;
 		
@@ -37,5 +45,12 @@ export class QuestionsDisplayComponent implements OnInit {
 				console.error('There was an error!', e);
 			}
 		});
+	}
+	updateFilter() {
+		//console.log(key+":key");
+		//console.log(value+":value");
+		this.filter2 = {
+			'category':this.filter2.category
+		};
 	}
 }
