@@ -13,14 +13,20 @@ const routes: Routes = [
 		path: '',
 		component: AdminComponent,
 		canActivate: [AuthGuard],
+		data: { roles: ['admin', 'manager', 'user'] },
+		
 		children: [
 			{ path: '', redirectTo: 'sign', pathMatch: 'full' },
 			
 			{
 				path: 'main',
-				loadComponent: () => import('./demo/sample-page/sample-page.component')
+				loadComponent: () => import('./demo/sample-page/sample-page.component'),
+				
 			},
-			{ path: 'question/:id', component: QuestionsDisplayComponent },
+			{ path: 'question/:id', component: QuestionsDisplayComponent,
+		//	canActivate: [AuthGuard],
+		//data: { roles: ['admin', 'manager'] }
+	 },
 			
 			{ path: 'test/document', component: DocumentViewerComponent },
 		]

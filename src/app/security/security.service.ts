@@ -66,6 +66,9 @@ export class SecurityService {
 	public isManager() {
 		return this.hasRole('manager');
 	}
+	public isUser() {
+		return this.hasRole('user');
+	}
 	public isStaff() {
 		return this.isAdmin() || this.isManager();
 	}

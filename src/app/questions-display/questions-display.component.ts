@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { DataService } from '../data/data.service';
+import { SecurityService } from '../security/security.service';
 import * as Models from "../data/data-models"; // Import your models
 import { has } from 'lodash';
 
@@ -15,7 +16,9 @@ export class QuestionsDisplayComponent implements OnInit {
 	qfilter: Models.ReqBodyGetPosts;
 	//has_answer: boolean;
 	filter2:any;
-	constructor(private dataService: DataService) { }
+	isManager:boolean;
+	isUser:boolean;
+	constructor(private dataService: DataService, private sService: SecurityService) { }
 	
 	ngOnInit() {
 
@@ -31,7 +34,10 @@ export class QuestionsDisplayComponent implements OnInit {
 			category: 'general'
 			
 		};
-	
+		this.isManager=this.sService.isManager();
+		this.isUser=this.sService.isUser();
+	console.log("Is Manager:"+this.isManager);
+	console.log("Is User:"+this.isUser);
 		//this.has_answer = null;
 		
 		const paginate: Models.ReqBodyPaginate = null;
