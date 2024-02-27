@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Input, Output } from '@angular/core';
-
+import { ActivatedRoute } from '@angular/router';
 
 
 import { Md5 } from 'ts-md5';
@@ -28,11 +28,13 @@ export class DocumentViewerComponent implements OnInit {
 	constructor(
 		private dataService: DataService,
 		private securityService: SecurityService,
-		private changeDetector: ChangeDetectorRef) { }
+		private changeDetector: ChangeDetectorRef,
+		private route: ActivatedRoute) { }
 	
 	documentReady = false;
 	documentInfo: Models.RespDocumentData;
 	dateDisplay: Date;
+	docId: string = "";
 	
 	descText: string = "";
 	
@@ -44,7 +46,11 @@ export class DocumentViewerComponent implements OnInit {
 			this.documentId = 2002;
 		}
 		console.log(this.prevDocument, this.nextDocument);
-		
+		this.route.paramMap.subscribe(params => {
+			this.docId  = params.get('id');
+			console.log(this.docId);
+		  });
+		this.documentId= this.docId !=""?parseInt(this.docId):0;
 		this.fetchPdf();
 	}
 	

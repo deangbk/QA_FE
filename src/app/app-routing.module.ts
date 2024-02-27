@@ -29,6 +29,7 @@ const routes: Routes = [
 	 },
 			
 			{ path: 'test/document', component: DocumentViewerComponent },
+			{ path: 'docs/pdf/:id', component: DocumentViewerComponent },
 		]
 	},
 	{
