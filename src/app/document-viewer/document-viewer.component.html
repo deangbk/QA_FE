@@ -1,73 +1,62 @@
 <div class="row">
 	<div class="col-md-9">
-		
-
-<div class="view" *ngIf="documentReady">
-	
-			
-		
-	<div class="container" oncontextmenu="return false;" *ngIf="pdfReady">
-		<pdf-viewer [src]="pdfSource" 
-			[original-size]="true" [fit-to-page]="true"
-			[render-text]="false" [render-text-mode]="0">
-			<!-- style="width: 50vw; height: 80vh"> -->
-		</pdf-viewer>
-	</div>
-
-</div>
-</div>
-
-	 <div class="col-md-3" > <!--*ngIf="!pdfReady"> -->
-	
-	
-
-			<app-card cardTitle="{{documentInfo.name}}" [options]="false">
-				<p *ngIf="documentInfo.description != null">
-					<i>{{documentInfo.description}}</i>
-				</p>
-				<div *ngIf="documentInfo.description == null">
-					<p><i>No description provided</i></p>
-				</div>
-			</app-card>
-			<app-card [options]="false" [hidHeader]="true" id="desc-card">
-				<div class="desc-para">
-					<p>Uploaded by 
-						<a href="#" (click)="callbackClickUsername($event)"><i>
-							{{documentInfo.upload_by.display_name}}
-						</i></a>
-					</p>
-					<p>at {{dateDisplay.toLocaleString()}}</p>
-				</div>
-				<div class="desc-para" *ngIf="descText.length > 0">
-					<br>
-					<p [innerHtml]="descText"></p>
-				</div>
-			</app-card>
-		
-		
-		<app-card [options]="false" [hidHeader]="true" id="buttons-card">
-			<div class="icons-div">
-				<button mat-icon-button aria-label="Previous Document"
-					(click)="callbackArrow(false)"
-					[disabled]="prevDocument == undefined">
-					<mat-icon>keyboard_arrow_left</mat-icon>
-				</button>
-				
-				<ng-container *ngIf="documentInfo.allow_print">
-					<button mat-icon-button aria-label="Print Document"
-						(click)="callbackPrint()">
-						<mat-icon>print</mat-icon>
-					</button>
-				</ng-container>
-				
-				<button mat-icon-button aria-label="Next Document"
-					(click)="callbackArrow(true)"
-					[disabled]="nextDocument == undefined">
-					<mat-icon>keyboard_arrow_right</mat-icon>
-				</button>
+		<div class="view" *ngIf="documentReady">
+			<div class="container" oncontextmenu="return false;" *ngIf="pdfReady">
+				<pdf-viewer [src]="pdfSource" [original-size]="true" [fit-to-page]="true" [render-text]="false"
+					[render-text-mode]="0">
+					<!-- style="width: 50vw; height: 80vh"> -->
+				</pdf-viewer>
 			</div>
-		</app-card>
+		</div>
 	</div>
+	
+	<div class="col-md-3"> <!--*ngIf="!pdfReady"> -->
+		<div class="doc-side">
+			<div>
+				<app-card cardTitle="{{documentInfo.name}}" [options]="false">
+					<p *ngIf="documentInfo.description != null">
+						<i>{{documentInfo.description}}</i>
+					</p>
+					<div *ngIf="documentInfo.description == null">
+						<p><i>No description provided</i></p>
+					</div>
+				</app-card>
+				
+				<app-card [options]="false" [hidHeader]="true" id="desc-card">
+					<div class="desc-para">
+						<p>Uploaded by
+							<a href="#" (click)="callbackClickUsername($event)">
+								<i>{{documentInfo.upload_by.display_name}}</i>
+							</a>
+						</p>
+						<p>at {{documentInfo.date_upload | date:'yyyy-MM-dd, HH:mm'}}</p>
+					</div>
+					<div class="desc-para" *ngIf="descText.length > 0">
+						<br>
+						<p [innerHtml]="descText"></p>
+					</div>
+				</app-card>
+			</div>
+			
+			<app-card [options]="false" [hidHeader]="true" id="buttons-card">
+				<div class="icons-div">
+					<button mat-icon-button aria-label="Previous Document" (click)="callbackArrow(false)"
+						[disabled]="prevDocument == undefined">
+						<mat-icon>keyboard_arrow_left</mat-icon>
+					</button>
 
+					<ng-container *ngIf="documentInfo.allow_print">
+						<button mat-icon-button aria-label="Print Document" (click)="callbackPrint()">
+							<mat-icon>print</mat-icon>
+						</button>
+					</ng-container>
+
+					<button mat-icon-button aria-label="Next Document" (click)="callbackArrow(true)"
+						[disabled]="nextDocument == undefined">
+						<mat-icon>keyboard_arrow_right</mat-icon>
+					</button>
+				</div>
+			</app-card>
+		</div>
+	</div>
 </div>
-
