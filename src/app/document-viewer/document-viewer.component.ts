@@ -3,8 +3,6 @@ import { Input, Output } from '@angular/core';
 
 
 
-import { lastValueFrom } from 'rxjs';
-import { catchError } from 'rxjs/operators';
 import { Md5 } from 'ts-md5';
 
 import { DataService } from '../data/data.service';
