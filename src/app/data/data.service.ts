@@ -311,6 +311,13 @@ export class DataService {
 		return <Observable<Models.RespDocumentData[]>>
 			this._get(`document/with/account/${accountId}?${query}`);
 	}
+	
+	public documentGetRecents(projectId: number, details: number = 0) {
+		var query = Helpers.bodyToHttpQueryString({},
+			["details", details]);
+		return <Observable<Models.RespDocumentData[]>>
+			this._get(`document/recent/${projectId}?${query}`);
+	}
 
 	public documentUploadToProject(projectId: number, data: Models.ReqBodyUploadDocument) {
 		return <Observable<number>>
