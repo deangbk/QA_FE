@@ -39,7 +39,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr *ngFor="let q of questions | search: searchText : qfilter.has_answer:  filter2">
+					<tr *ngFor="let q of questions | search: searchText : qfilter.has_answer:  filter2"    (click)="openMyModal('modal-16',q)" role="button">
 						<td>{{q.q_num}}</td>
 						<td>{{q.account.id}}</td>
 						<td>{{q.date_post | date}}</td>
@@ -57,3 +57,92 @@
 		</div>
 	</app-card>
 </div>
+
+<div class="col-md-6">
+	<app-animation-modal [modalID]="'modal-16'" [modalClass]="'md-effect-16'">
+		<ng-container *ngTemplateOutlet="modalContents"></ng-container>
+	  </app-animation-modal>
+    <!-- <app-card cardTitle="Advance" [options]="false">
+      <div class="btn-page">
+        <button
+          data-pc-animate="fade-in-scale"
+          type="button"
+          class="btn btn-primary me-2"
+          data-bs-toggle="modal"
+          data-modal="modal-16"
+          (click)="openMyModal('modal-16')"
+        >
+          Blur
+        </button>
+        <app-animation-modal [modalID]="'modal-16'" [modalClass]="'md-effect-16'">
+          <ng-container *ngTemplateOutlet="modalContents"></ng-container>
+        </app-animation-modal>
+        <button
+          data-pc-animate="fade-in-scale"
+          type="button"
+          class="btn btn-primary me-2"
+          data-bs-toggle="modal"
+          data-modal="modal-17"
+          (click)="openMyModal('modal-17')"
+        >
+          Let Me In
+        </button>
+     <app-animation-modal [modalID]="'modal-17'" [modalClass]="'md-effect-17'">
+          <ng-container *ngTemplateOutlet="modalContents"></ng-container>
+        </app-animation-modal> 
+        <button
+          data-pc-animate="fade-in-scale"
+          type="button"
+          class="btn btn-primary me-2"
+          data-bs-toggle="modal"
+          data-modal="modal-18"
+          (click)="openMyModal('modal-18')"
+        >
+          Make Way!
+        </button>
+       <app-animation-modal [modalID]="'modal-18'" [modalClass]="'md-effect-18'">
+          <ng-container *ngTemplateOutlet="modalContents"></ng-container>
+        </app-animation-modal>
+        <button
+          data-pc-animate="fade-in-scale"
+          type="button"
+          class="btn btn-primary"
+          data-bs-toggle="modal"
+          data-modal="modal-19"
+          (click)="openMyModal('modal-19')"
+        >
+          Slip from top
+        </button>
+         <app-animation-modal [modalID]="'modal-19'" [modalClass]="'md-effect-19'">
+          <ng-container *ngTemplateOutlet="modalContents"></ng-container>
+        </app-animation-modal> 
+      </div>
+    </app-card> -->
+  </div>
+
+
+  <ng-template #modalContents>
+	<div class="modal-header bg-dark">
+	  <h4 class="modal-title text-white"> Question Num: #{{singleQuestion.q_num}} - <span class="small">Last edited: {{singleQuestion.date_edit | date}} 
+	<br> </span>
+	</h4>
+	  <p></p>
+	  <button type=" button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+	</div>
+	<div class="modal-body">
+		<p>Account Number: {{singleQuestion.account.id}}</p>
+		<p ><strong>Category:</strong> {{singleQuestion.category | uppercase}}</p>
+	  <h4 class="text-black">Question  <span class="small">  - <i>Date Posted: {{singleQuestion.date_post | date}} </i></span></h4>
+	  <p class="text-muted mb-4">{{singleQuestion.q_text}}</p>
+	  <h4 class="text-black">Answer  <span class="small">  - <i>Date Answered: {{singleQuestion.date_a_approve | date}} </i></span></h4>
+	  <p class="text-muted "> {{singleQuestion.a_text}}</p>
+
+	  <h4 class="text-black">Documents</h4>
+	  <div *ngFor="let doc of singleQuestion.attachments"><p>
+		<a href="/docs/pdf/{{doc.id}}" target="_blank">{{doc.name}}</a></p></div>
+	</div>
+	<div class="modal-footer">
+	  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" (click)="closeMyModal($event)"> Close </button>
+	  <button type="button" class="btn btn-primary shadow-2" (click)="closeMyModal($event)"> Save changes </button>
+	</div>
+  </ng-template>
