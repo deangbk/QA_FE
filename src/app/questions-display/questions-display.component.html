@@ -35,6 +35,7 @@
 						
 						<th style="width:30%">Answer</th>
 						<th >Date Answered</th>
+						<th>docs</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -46,6 +47,10 @@
 					
 						<td>{{q.a_text}}</td>
 						<td>{{q.d}}</td>
+						<td>
+							<span *ngFor="let doc of q.attachments">
+								<a href="/docs/pdf/{{doc.id}}" target="_blank">{{doc.name}}</a></span>
+						</td>
 					</tr>
 				</tbody>
 			</table>
