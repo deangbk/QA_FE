@@ -1,7 +1,10 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import {
+	Component, OnInit, ChangeDetectorRef,
+	ElementRef, ViewChild, AfterViewInit, AfterViewChecked,
+	HostListener,
+} from '@angular/core';
 import { Input, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
 
 import { Md5 } from 'ts-md5';
 
@@ -17,7 +20,7 @@ import { Helpers } from '../helpers';
 	templateUrl: './document-viewer.component.html',
 	styleUrls: ['./document-viewer.component.scss'],
 })
-export class DocumentViewerComponent implements OnInit {
+export class DocumentViewerComponent implements OnInit, AfterViewInit {
 	/* @Input() */ documentId: number = undefined;
 	@Input() prevDocument: number = undefined;
 	@Input() nextDocument: number = undefined;
@@ -33,7 +36,6 @@ export class DocumentViewerComponent implements OnInit {
 	
 	documentReady = false;
 	documentInfo: Models.RespDocumentData;
-	dateDisplay: Date;
 	
 	descText: string = "";
 	
@@ -56,6 +58,9 @@ export class DocumentViewerComponent implements OnInit {
 		this.fetchPdf();
 	}
 	
+	ngAfterViewInit(): void {
+	}
+	
 	async fetchPdf() {
 		if (this.documentId != undefined) {
 			const info = await Helpers.observableAsPromise(
@@ -68,8 +73,6 @@ export class DocumentViewerComponent implements OnInit {
 				console.log(this.documentInfo);
 				
 				{
-					this.dateDisplay = new Date(this.documentInfo.date_upload);
-					
 					this.descText = "Document is from post "
 						+ `<i>#42069</i>`;
 					/* if (this.documentInfo.assoc_post != null) {
@@ -132,5 +135,10 @@ export class DocumentViewerComponent implements OnInit {
 			// TODO: Maybe bring up the print menu without opening the pdf in another window
 			window.open(this.pdfSource);
 		}
+	}
+	
+	@HostListener('window:scroll', ['$event']) 
+	callbackScroll(event) {
+		
 	}
 }
