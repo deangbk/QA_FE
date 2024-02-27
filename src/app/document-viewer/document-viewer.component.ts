@@ -1,10 +1,11 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import {
+	Component, OnInit, ChangeDetectorRef,
+	ElementRef, ViewChild, AfterViewInit, AfterViewChecked,
+	HostListener,
+} from '@angular/core';
 import { Input, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-
-import { lastValueFrom } from 'rxjs';
-import { catchError } from 'rxjs/operators';
 import { Md5 } from 'ts-md5';
 
 import { DataService } from '../data/data.service';
@@ -19,8 +20,8 @@ import { Helpers } from '../helpers';
 	templateUrl: './document-viewer.component.html',
 	styleUrls: ['./document-viewer.component.scss'],
 })
-export class DocumentViewerComponent implements OnInit {
-	@Input() documentId: number = undefined;
+export class DocumentViewerComponent implements OnInit, AfterViewInit {
+	/* @Input() */ documentId: number = undefined;
 	@Input() prevDocument: number = undefined;
 	@Input() nextDocument: number = undefined;
 	
@@ -35,8 +36,6 @@ export class DocumentViewerComponent implements OnInit {
 	
 	documentReady = false;
 	documentInfo: Models.RespDocumentData;
-	dateDisplay: Date;
-	docId: string = "";
 	
 	descText: string = "";
 	
@@ -47,13 +46,19 @@ export class DocumentViewerComponent implements OnInit {
 		if (this.documentId == undefined) {
 			this.documentId = 2002;
 		}
-		console.log(this.prevDocument, this.nextDocument);
+		//console.log(this.prevDocument, this.nextDocument);
+		
 		this.route.paramMap.subscribe(params => {
-			this.docId  = params.get('id');
-			console.log(this.docId);
-		  });
-		this.documentId= this.docId !=""?parseInt(this.docId):0;
+			var idFromRoute = params.get('id');
+			this.documentId = idFromRoute != "" ? parseInt(idFromRoute) : undefined;
+			
+			console.log(this.documentId);
+		});
+		
 		this.fetchPdf();
+	}
+	
+	ngAfterViewInit(): void {
 	}
 	
 	async fetchPdf() {
@@ -68,8 +73,6 @@ export class DocumentViewerComponent implements OnInit {
 				console.log(this.documentInfo);
 				
 				{
-					this.dateDisplay = new Date(this.documentInfo.date_upload);
-					
 					this.descText = "Document is from post "
 						+ `<i>#42069</i>`;
 					/* if (this.documentInfo.assoc_post != null) {
@@ -132,5 +135,10 @@ export class DocumentViewerComponent implements OnInit {
 			// TODO: Maybe bring up the print menu without opening the pdf in another window
 			window.open(this.pdfSource);
 		}
+	}
+	
+	@HostListener('window:scroll', ['$event']) 
+	callbackScroll(event) {
+		
 	}
 }

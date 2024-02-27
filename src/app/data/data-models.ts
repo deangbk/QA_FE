@@ -49,7 +49,7 @@ export interface ReqBodyGetPosts {
 	category?: string,
 }
 export interface ReqBodyPaginate {
-	per_page: number,		// Count per page
+	per_page?: number,		// Count per page
 	page: number,			// Page number
 }
 export interface ReqBodyGetPostsWithPaginate {
@@ -80,10 +80,18 @@ export interface ReqBodyAddComment {
 }
 
 export interface ReqBodyUploadDocument {
-	Url: string,
-	Description?: string,
-	Hidden?: boolean,
-	Printable?: boolean,
+	name?: string,
+	url: string,
+	description?: string,
+	hidden?: boolean,
+	printable?: boolean,
+}
+export interface ReqBodyEditDocument {
+	name?: string,
+	url?: string,
+	description?: string,
+	hidden?: boolean,
+	printable?: boolean,
 }
 
 // -----------------------------------------------------

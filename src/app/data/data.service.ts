@@ -311,6 +311,13 @@ export class DataService {
 		return <Observable<Models.RespDocumentData[]>>
 			this._get(`document/with/account/${accountId}?${query}`);
 	}
+	
+	public documentGetRecents(projectId: number, paginate?: Models.ReqBodyPaginate, details: number = 0) {
+		var query = Helpers.bodyToHttpQueryString({},
+			["details", details]);
+		return <Observable<Models.RespDocumentData[]>>
+			this._post(`document/recent/${projectId}?${query}`, paginate);
+	}
 
 	public documentUploadToProject(projectId: number, data: Models.ReqBodyUploadDocument) {
 		return <Observable<number>>
@@ -323,6 +330,10 @@ export class DataService {
 	public documentUploadToAccount(accountId: number, data: Models.ReqBodyUploadDocument) {
 		return <Observable<number>>
 			this._post(`document/upload/account/${accountId}`, data);
+	}
+	
+	public documentEdit(documentId: number, data: Models.ReqBodyEditDocument) {
+		return this._put(`document/edit/${documentId}`, data);
 	}
 
 	// -----------------------------------------------------

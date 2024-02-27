@@ -1,0 +1,31 @@
+
+<div class="col-xl-12">
+	<app-card cardTitle="Recent Documents" [options]="false" blockClass="table-border-style">
+		<div class="" *ngIf="listReady()">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>Uploaded</th>
+						<th>Name</th>
+						<th>Description</th>
+						<th>From</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let d of listDocuments">
+						<td>
+							<a href="#" (click)="callbackNavigateToDocView(d.id)">
+								{{d.id}}
+							</a>
+						</td>
+						<td>{{d.date_upload | date:'yyyy-MM-dd, HH:mm'}}</td>
+						<td>{{d.name}}</td>
+						<td>{{shortDesc(d.description)}}</td>
+						<td [innerHtml]="getFromDesc(d)"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</app-card>
+</div>

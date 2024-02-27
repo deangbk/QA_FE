@@ -7,6 +7,7 @@ import { HomeLoginComponent } from './home-login/home-login.component';
 import {AuthSigninV2Component} from './public/auth-signin-v2/auth-signin-v2.component';
 import { AuthGuard } from './Guards/auth.guard';
 import { DocumentViewerComponent } from './document-viewer/document-viewer.component';
+import { RecentDocumentsComponent } from './recent-documents/recent-documents.component';
 
 const routes: Routes = [
 	{
@@ -28,8 +29,9 @@ const routes: Routes = [
 		//data: { roles: ['admin', 'manager'] }
 	 },
 			
-			{ path: 'test/document', component: DocumentViewerComponent },
+			//{ path: 'test/document', component: DocumentViewerComponent },
 			{ path: 'docs/pdf/:id', component: DocumentViewerComponent },
+			{ path: 'docs/recent', component: RecentDocumentsComponent },
 		]
 	},
 	{
