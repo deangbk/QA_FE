@@ -18,7 +18,7 @@ import { Helpers } from '../helpers';
 	styleUrls: ['./document-viewer.component.scss'],
 })
 export class DocumentViewerComponent implements OnInit {
-	@Input() documentId: number = undefined;
+	/* @Input() */ documentId: number = undefined;
 	@Input() prevDocument: number = undefined;
 	@Input() nextDocument: number = undefined;
 	
@@ -34,7 +34,6 @@ export class DocumentViewerComponent implements OnInit {
 	documentReady = false;
 	documentInfo: Models.RespDocumentData;
 	dateDisplay: Date;
-	docId: string = "";
 	
 	descText: string = "";
 	
@@ -45,12 +44,15 @@ export class DocumentViewerComponent implements OnInit {
 		if (this.documentId == undefined) {
 			this.documentId = 2002;
 		}
-		console.log(this.prevDocument, this.nextDocument);
+		//console.log(this.prevDocument, this.nextDocument);
+		
 		this.route.paramMap.subscribe(params => {
-			this.docId  = params.get('id');
-			console.log(this.docId);
-		  });
-		this.documentId= this.docId !=""?parseInt(this.docId):0;
+			var idFromRoute = params.get('id');
+			this.documentId = idFromRoute != "" ? parseInt(idFromRoute) : undefined;
+			
+			console.log(this.documentId);
+		});
+		
 		this.fetchPdf();
 	}
 	
