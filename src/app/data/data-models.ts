@@ -93,6 +93,25 @@ export interface ReqBodyEditDocument {
 	hidden?: boolean,
 	printable?: boolean,
 }
+export interface ReqBodyFilterGetDocument {
+	search?: string,		// Search term
+	category?: string,		// Category, can be "account", "question", or "general" (default)
+	
+	upload_by?: number,		// Filter by uploader ID
+	
+	date_from?: string,		// Filter by date
+	date_to?: string,
+	
+	printable?: boolean,
+	
+	in_post?: number,		// In a specific question
+	in_tranche?: string,	// In a specific tranche
+	in_account?: number,	// In a specific account
+}
+export interface ReqBodyGetDocument {
+	filter?: ReqBodyFilterGetDocument,
+	paginate?: ReqBodyPaginate,
+}
 
 // -----------------------------------------------------
 

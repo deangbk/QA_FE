@@ -312,11 +312,18 @@ export class DataService {
 			this._get(`document/with/account/${accountId}?${query}`);
 	}
 	
-	public documentGetRecents(projectId: number, paginate?: Models.ReqBodyPaginate, details: number = 0) {
+	public documentGetRecents(projectId: number, 
+		filter?: Models.ReqBodyFilterGetDocument, paginate?: Models.ReqBodyPaginate, 
+		details: number = 0)
+	{
 		var query = Helpers.bodyToHttpQueryString({},
 			["details", details]);
+		var body: Models.ReqBodyGetDocument = {
+			filter: filter,
+			paginate: paginate,
+		};
 		return <Observable<Models.RespDocumentData[]>>
-			this._post(`document/recent/${projectId}?${query}`, paginate);
+			this._post(`document/recent/${projectId}?${query}`, body);
 	}
 
 	public documentUploadToProject(projectId: number, data: Models.ReqBodyUploadDocument) {

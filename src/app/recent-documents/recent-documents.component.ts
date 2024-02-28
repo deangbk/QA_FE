@@ -36,7 +36,7 @@ export class RecentDocumentsComponent {
 			//per_page: 0,
 			page: 0
 		};
-		this.dataService.documentGetRecents(this.projectId, page, 2).subscribe({
+		this.dataService.documentGetRecents(this.projectId, null, page, -1).subscribe({
 			next: data => {
 				this.listDocuments = data;
 				console.log(data);
