@@ -15,14 +15,23 @@
 				<tbody>
 					<tr *ngFor="let d of listDocuments">
 						<td>
-							<a href="#" (click)="callbackNavigateToDocView(d.id)">
+							<a href="/docs/pdf/{{d.id}}">
 								{{d.id}}
 							</a>
 						</td>
 						<td>{{d.date_upload | date:'yyyy-MM-dd, HH:mm'}}</td>
 						<td>{{d.name}}</td>
 						<td>{{shortDesc(d.description)}}</td>
-						<td [innerHtml]="getFromDesc(d)"></td>
+						
+						<td *ngIf="d.assoc_post === undefined && d.assoc_account === undefined">
+							This project
+						</td>
+						<td *ngIf="d.assoc_post !== undefined">
+							Question <i><a href="#" (click)="callbackNavigateToQuestion(d)">#{{getIdText(d)}}</a></i>
+						</td>
+						<td *ngIf="d.assoc_account !== undefined">
+							Account <i>#{{getIdText(d)}}</i>
+						</td>
 					</tr>
 				</tbody>
 			</table>

@@ -1,6 +1,12 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { Input, Output } from '@angular/core';
+import {
+	Component, OnInit, ChangeDetectorRef,
+	Input, Output, Injector
+} from '@angular/core';
 import { Router } from '@angular/router';
+
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
+import { QuestionModalData, QuestionModalComponent } from '../question-modal/question-modal.component';
 
 import { DataService } from '../data/data.service';
 import { SecurityService } from '../security/security.service';
@@ -23,6 +29,7 @@ export class RecentDocumentsComponent {
 		private securityService: SecurityService,
 		private changeDetector: ChangeDetectorRef,
 		private router: Router,
+		public modalService: NgbModal,
 	) { }
 	
 	listDocuments: Models.RespDocumentData[] = null;
@@ -58,22 +65,54 @@ export class RecentDocumentsComponent {
 		return s;
 	}
 	
-	getFromDesc(data: Models.RespDocumentData): string {
+	/* getFromDesc(data: Models.RespDocumentData): string {
 		if (data.assoc_post !== undefined) {
-			var id = <number>data.assoc_post;
-			return `Question <i>#${id}</i>`;
+			var id = (<Models.RespPostData>data.assoc_post).id;
+			return `Question <i (click)="callbackNavigateToQuestion(d)">#${id}</i>`;
 		}
 		else if (data.assoc_account !== undefined) {
-			var id = <number>data.assoc_account;
-			return `Account <i>#${id}</i>`;
+			var id = (<Models.RespAccountData>data.assoc_account).id;
+			return `Account <i>${id}</i>`;
 		}
 		return 'This project';
+	} */
+	getIdText(data: Models.RespDocumentData): string {
+		if (data.assoc_post !== undefined) {
+			var id = (<Models.RespPostData>data.assoc_post).id;
+			return `${id}`;
+		}
+		else if (data.assoc_account !== undefined) {
+			var id = (<Models.RespAccountData>data.assoc_account).id;
+			return `${id}`;
+		}
+		return '';
 	}
 	
 	// -----------------------------------------------------
 	
 	callbackNavigateToDocView(id: number) {
 		this.router.navigate([`/docs/pdf/${id}`]);
+		return false;
+	}
+	
+	callbackNavigateToQuestion(data: Models.RespDocumentData) {
+		/* const modalRef = this.modalService.open(QuestionModalComponent, {
+			injector: Injector.create([{
+				provide: QuestionModalData, useValue: { 
+					question: <Models.RespPostData>data.assoc_post, }
+			}])
+		}); */
+		const modalRef = this.modalService.open(QuestionModalComponent);
+		modalRef.componentInstance.question = <Models.RespPostData>data.assoc_post;
+		
+		console.log(data);
+		
+		/* modalRef.result.then((result) => {
+			if (result) {
+				console.log(result);
+			}
+		}); */
+		
 		return false;
 	}
 }
