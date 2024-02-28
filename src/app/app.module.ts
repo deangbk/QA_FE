@@ -6,6 +6,8 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AdminComponent } from './theme/layout/admin/admin.component';
@@ -85,7 +87,9 @@ import { RecentDocumentsComponent } from './recent-documents/recent-documents.co
 		HttpClientModule,
 		PdfViewerModule,
 		
+		NgbModule,
+		
 		MatIconModule, MatButtonModule, 
-	]
+	],
 })
 export class AppModule {}
