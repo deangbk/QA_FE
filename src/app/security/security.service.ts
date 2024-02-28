@@ -105,7 +105,7 @@ export class SecurityService {
 		const tokenData = Helpers.parseJwt(this.getToken());
 		this.tokenData = tokenData;
 
-		console.log('Identity claims: ' + JSON.stringify(this.tokenData));
+		//console.log('Identity claims: ' + JSON.stringify(this.tokenData));
 	}
 	
 	public getTokenField(field: string) {
