@@ -42,6 +42,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { SearchPipe } from './Pipes/search.pipe';
 import { SearchBasicPipe } from './Pipes/search-basic.pipe';
 import { RecentDocumentsComponent } from './recent-documents/recent-documents.component';
+import { QuestionModalComponent } from './question-modal/question-modal.component';
 
 @NgModule({
 	declarations: [
@@ -69,6 +70,7 @@ import { RecentDocumentsComponent } from './recent-documents/recent-documents.co
 		SearchPipe,
 		SearchBasicPipe,
   RecentDocumentsComponent,
+  QuestionModalComponent,
 		
 	],
 	providers: [NavigationItem,
