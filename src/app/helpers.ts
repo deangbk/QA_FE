@@ -1,4 +1,4 @@
-import { Result, Err, Ok } from 'ts-results';
+import { Result, Err, Ok, Option, Some, None } from 'ts-results';
 
 import { Observable, lastValueFrom } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -66,6 +66,15 @@ export class Helpers {
 				error: (e) => rs(new Err(e)),
 			});
 		});
+	}
+	
+	// -----------------------------------------------------
+	
+	public static parseInt(s: string, radix?: number): Option<number> {
+		if (s == null || s.length == 0)
+			return None;
+		var n = parseInt(s, radix);
+		return isNaN(n) ? None : new Some(n);
 	}
 	
 	// -----------------------------------------------------
