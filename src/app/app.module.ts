@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -91,6 +92,7 @@ import { QuestionModalComponent } from './question-modal/question-modal.componen
 		PdfViewerModule,
 		NgSelectModule,
 		NgbModule,
+		NgbPaginationModule,
 		
 		MatIconModule, MatButtonModule, 
 	],

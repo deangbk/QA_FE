@@ -67,9 +67,9 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr *ngFor="let q of questions | search:searchText : accountList : qfilter.has_answer:  filter2"    (click)="openMyModal('modal-16',q)" role="button">
+					<tr *ngFor="let q of questions | search:searchText : accountList : qfilter.has_answer:  filter2; let indexOfelement=index;"    (click)="openMyModal('modal-16',q)" role="button">
 						<td>{{q.q_num}}</td>
-						<td>{{q.account.id}}</td>
+						<td>{{q.account.id}} - # {{indexOfelement}}</td>
 						<td>{{q.date_post | date}}</td>
 						<td >{{q.q_text}}</td>
 					
@@ -82,7 +82,9 @@
 					</tr>
 				</tbody>
 			</table>
+			<ngb-pagination [collectionSize]="filteredQuestionsCount" [(page)]="page" [boundaryLinks]="true"  [pageSize]="3" />
 		</div>
+		<pre>Current page: {{ page }}</pre>
 	</app-card>
 </div>
 
@@ -181,7 +183,7 @@
 			  </ng-template>
 			</ng-select>
 		  </div> -->
-
+{{filteredQuestionsCount}}
   </div>
 
 
