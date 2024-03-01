@@ -10,6 +10,8 @@ import { createDefaultRespPostData } from '../data/model-initializers';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { Observable, of } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
   selector: 'app-questions-display',
@@ -32,6 +34,10 @@ export class QuestionsDisplayComponent implements OnInit {
 	accountList:string[]=[];
 	accountList$:Observable<string[]> | undefined;
 	accountList2:string[]=[];
+	filteredQuestionsCount: number;
+	indexOfelement:number;
+	page = 1;
+
 	//modalContents: TemplateRef<any>;
 	constructor(private dataService: DataService, private sService: SecurityService) { }
 	
@@ -61,6 +67,7 @@ export class QuestionsDisplayComponent implements OnInit {
 		this.dataService.postGet(projectId, this.qfilter, paginate).subscribe({
 			next: (data: Models.RespGetPost) => {
 				this.questions = data.posts;
+				this.filteredQuestionsCount = data.posts.length;
 				console.log(this.questions);
 			},
 			error: e => {
