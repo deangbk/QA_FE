@@ -2,6 +2,37 @@
 <div class="col-xl-12">
 	<app-card cardTitle="Recent Documents" [options]="false" blockClass="table-border-style">
 		<div class="" *ngIf="listReady()">
+			<div class="row">
+				<input type="text" class="form-control bg-transparent" 
+					placeholder="Search by file name" 
+					[(ngModel)]="filter.searchText" (change)="callbackUpdateList()">
+			</div>
+			<br>
+			<div class="row filter-text-row">
+				<div class="col-md-4">
+					<label for="formGroupTypeFilter">Filter by type</label>
+					<ng-select [items]="typeSelectLabels" 
+						bindLabel="label" bindValue="value" [(ngModel)]="filter.type"
+						[clearable]="false" [searchable]="false" 
+						(change)="callbackUpdateList()">
+					</ng-select>
+				</div>
+				
+				<div class="col-md-8 " *ngIf="filter.type == 1">
+					<br>
+					<input type="text" class="form-control bg-transparent" 
+						placeholder="Filter by question ID" 
+						[(ngModel)]="filter.questionId" (change)="callbackUpdateList()">
+				</div>
+				<div class="col-md-8" *ngIf="filter.type == 2">
+					<br>
+					<input type="text" class="form-control bg-transparent" 
+						placeholder="Filter by account name" 
+						[(ngModel)]="filter.accountName" (change)="callbackUpdateList()">
+				</div>
+			</div>
+			<br><hr>
+			
 			<table class="table table-hover">
 				<thead>
 					<tr>
@@ -13,7 +44,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr *ngFor="let d of listDocuments">
+					<tr *ngFor="let d of listDocumentDisplay">
 						<td>
 							<a href="/docs/pdf/{{d.id}}">
 								{{d.id}}
@@ -23,13 +54,13 @@
 						<td>{{d.name}}</td>
 						<td>{{shortDesc(d.description)}}</td>
 						
-						<td *ngIf="d.assoc_post === undefined && d.assoc_account === undefined">
+						<td *ngIf="d.assoc_post == null && d.assoc_account == null">
 							This project
 						</td>
-						<td *ngIf="d.assoc_post !== undefined">
+						<td *ngIf="d.assoc_post != null">
 							Question <i><a href="#" (click)="callbackNavigateToQuestion(d)">#{{getIdText(d)}}</a></i>
 						</td>
-						<td *ngIf="d.assoc_account !== undefined">
+						<td *ngIf="d.assoc_account != null">
 							Account <i>#{{getIdText(d)}}</i>
 						</td>
 					</tr>
