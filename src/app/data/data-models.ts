@@ -229,7 +229,7 @@ export interface RespCommentData {
 }
 
 export interface RespAccountData {
-	id: number,
+	id: string,
 	no: number,
 	name: string,
 	tranche: RespTrancheData,
