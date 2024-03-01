@@ -7,6 +7,9 @@ import { CommonModule } from '@angular/common';
 import * as Models from "../data/data-models"; // Import your models
 import { has } from 'lodash';
 import { createDefaultRespPostData } from '../data/model-initializers';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { Observable, of } from 'rxjs';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-questions-display',
@@ -24,10 +27,16 @@ export class QuestionsDisplayComponent implements OnInit {
 	isManager:boolean;
 	isUser:boolean;
 	singleQuestion: Models.RespPostData;
+	accountFilter:string;
+	selectedPeople = [];
+	accountList:string[]=[];
+	accountList$:Observable<string[]> | undefined;
+	accountList2:string[]=[];
 	//modalContents: TemplateRef<any>;
 	constructor(private dataService: DataService, private sService: SecurityService) { }
 	
 	ngOnInit() {
+		this.accountList$ = this.getAccounts();
 		this.singleQuestion= createDefaultRespPostData();
 		const projectId = 1; // Replace with your actual projectId
 		
@@ -80,4 +89,9 @@ export class QuestionsDisplayComponent implements OnInit {
 	  closeMyModal(event) {
 		event.target.parentElement.parentElement.parentElement.classList.remove('md-show');
 	  }
+	  getAccounts():Observable<string[]>{
+		const aList=["A_0001","A_0002","A_0003","A_0004","A_0005"];
+		return of(aList);
+	  }
+
 }
