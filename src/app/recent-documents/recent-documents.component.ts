@@ -45,14 +45,15 @@ export class RecentDocumentsComponent {
 	) { 
 		this.filter = {
 			searchText: '',
-			type: 0,
+			type: -1,
 			questionId: '',
 			accountName: '',
 		};
 	}
 	
 	typeSelectLabels = [
-		{ value: 0, label: 'All' },
+		{ value: -1, label: 'All' },
+		{ value: 0, label: 'General' },
 		{ value: 1, label: 'Question' },
 		{ value: 2, label: 'Account' }
 	];
@@ -111,37 +112,52 @@ export class RecentDocumentsComponent {
 		console.log(this.filter);
 		var listRes: Models.RespDocumentData[];
 		
-		if (this.filter.type == 1) {
-			// Question documents only
-			listRes = this.listDocuments
-				.filter(x => x.assoc_post != null);
-			
-			{
-				const res = Helpers.parseInt(this.filter.questionId);
-				if (res.some) {
-					const id = res.val;
-					listRes = listRes
-						.filter(x => (<Models.RespPostData>x.assoc_post).id == id);
+		switch (this.filter.type) {
+			case 0: {
+				// General documents only
+				
+				listRes = this.listDocuments
+					.filter(x => x.assoc_post == null && x.assoc_account == null);
+				
+				break;
+			}
+			case 1: {
+				// Question documents only
+				
+				listRes = this.listDocuments
+					.filter(x => x.assoc_post != null);
+				
+				{
+					const res = Helpers.parseInt(this.filter.questionId);
+					if (res.some) {
+						const id = res.val;
+						listRes = listRes
+							.filter(x => (<Models.RespPostData>x.assoc_post).id == id);
+					}
 				}
+				
+				break;
 			}
-		}
-		else if (this.filter.type == 2) {
-			// Account documents only
-			listRes = this.listDocuments
-				.filter(x => x.assoc_account != null);
-			
-			if (this.filter.accountName != '') {
-				const search = this.filter.accountName.toLowerCase();
-				listRes = listRes
-					.filter(x => {
-						const account = <Models.RespAccountData>x.assoc_account;
-						return account.name.toLowerCase().includes(search)
-							|| account.id.toLowerCase().includes(search);
-					});
+			case 2: {
+				// Account documents only
+				
+				listRes = this.listDocuments
+					.filter(x => x.assoc_account != null);
+				
+				if (this.filter.accountName != '') {
+					const search = this.filter.accountName.toLowerCase();
+					listRes = listRes
+						.filter(x => {
+							const account = <Models.RespAccountData>x.assoc_account;
+							return account.name.toLowerCase().includes(search)
+								|| account.id.toLowerCase().includes(search);
+						});
+				}
+				
+				break;
 			}
-		}
-		else {
-			listRes = this.listDocuments;
+			default:
+				listRes = this.listDocuments;
 		}
 		
 		if (this.filter.searchText != '') {
