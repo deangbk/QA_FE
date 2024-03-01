@@ -2,7 +2,7 @@
 	<app-card cardTitle="Hover Table" [options]="false" blockClass="table-border-style">
 		<div class="">
 			<div class="row">
-				<div class="col-md-4">
+				<div class="col-md-3">
 					<div class="form-group">
 						<input type="text" class="form-control" placeholder="Search..." [(ngModel)]="searchText">
 					</div>
@@ -23,7 +23,35 @@
 						<option [ngValue]="'litigation'">Litigation</option>
 						
 					</select>
+					
 				</div>
+				<div class="col-md-3">
+
+					<ng-select [items]="accountList$ | async" [multiple]="true" bindLabel="login" bindValue="login" [clearable]="false" [(ngModel)]="accountList">
+						<ng-template ng-label-tmp let-item="item" let-clear="clear">
+						  <span class="ng-value-label"> {{ item }}</span>
+						  <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span> 
+						</ng-template>
+			
+						<ng-template ng-option-tmp let-item="item">
+						   {{ item }}
+						</ng-template>
+					  </ng-select>
+					<!-- <input type="text" class="form-control" placeholder="Account" [(ngModel)]="accountFilter"> -->
+					<!-- <ng-select
+				
+					[items]="accountList$ | async"
+					[multiple]="true"
+					[closeOnSelect]="false"
+					[clearable]="false"
+					[searchable]="false"
+					bindLabel="name"
+					placeholder="Select Account"
+					[(ngModel)]="accountList"
+					
+				  >
+				  </ng-select> -->
+					</div>
 			</div>
 			<table class="table table-hover">
 				<thead>
@@ -39,7 +67,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr *ngFor="let q of questions | search: searchText : qfilter.has_answer:  filter2"    (click)="openMyModal('modal-16',q)" role="button">
+					<tr *ngFor="let q of questions | search:searchText : accountList : qfilter.has_answer:  filter2"    (click)="openMyModal('modal-16',q)" role="button">
 						<td>{{q.q_num}}</td>
 						<td>{{q.account.id}}</td>
 						<td>{{q.date_post | date}}</td>
@@ -118,6 +146,42 @@
         </app-animation-modal> 
       </div>
     </app-card> -->
+
+	<!-- <div class="col-sm-12">
+		<app-card cardTitle="Advance Select" [options]="false">
+		  <div class="row">
+			<div class="col-sm-12 col-xl-12">
+			  <h4 class="sub-title">Multi Select</h4>
+			  <ng-select
+				[items]="accountList$ | async"
+				[multiple]="true"
+				[closeOnSelect]="false"
+				[clearable]="false"
+				[searchable]="false"
+				bindLabel="name"
+				placeholder="Select people"
+				[(ngModel)]="accountList"
+			  >
+			  </ng-select>
+			</div>
+			</div>
+		</app-card>
+		</div> -->
+
+		<!-- <div class="col-sm-12 col-xl-4 m-b-30">
+			<h4 class="sub-title">Custom selected item template</h4>
+			<ng-select [items]="accountList$ | async" [multiple]="true" bindLabel="login" bindValue="login" [clearable]="false" [(ngModel)]="accountList2">
+			  <ng-template ng-label-tmp let-item="item" >
+				<span class="ng-value-label"> {{ item }}</span>
+				 <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span> 
+			  </ng-template>
+  
+			  <ng-template ng-option-tmp let-item="item">
+				 {{ item }}
+			  </ng-template>
+			</ng-select>
+		  </div> -->
+
   </div>
 
 

@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class SearchPipe implements PipeTransform {
 
-  transform(items: any[], searchText: string = '', answered: boolean | null = false, filters: any = {}): any[] {
+  transform(items: any[], searchText: string = '',accountText:string[]=[], answered: boolean | null = false, filters: any = {}): any[] {
     if (!items) return [];
     searchText = searchText.toLowerCase();
     return items.filter(it => {
@@ -40,8 +40,38 @@ export class SearchPipe implements PipeTransform {
             });
         }
 
+        // const accountFilter = () => {
+        //     return Object.values(it).some(val => {
+        //         if (val != null){
+        //             if (typeof val === 'object' && val.hasOwnProperty('account')) {
+        //                 return String(val['account']['id']).toLowerCase().includes(accountText);
+        //             }
+        //             return String(val).toLowerCase().includes(accountText);
+        //         }
+        //         return false;
+        //     });
+        // }
+        // const accountFilter = () => {
+        //     if (it.account && it.account.id) {
+        //         return String(it.account.id).toLowerCase().includes(accountText.toLowerCase());
+        //     }
+        //     return false;
+        // }
+       
+        const accountFilter = (accountTexts: string[]) => {
+            if (accountText.length==0) {
+                return true;
+            }
+           else if (it.account && it.account.id) {
+                return accountTexts.some(accountText => 
+                    String(it.account.id).toLowerCase().includes(accountText.toLowerCase())
+                );
+            }
+            return false;
+        }
+
         // Return true if the item passes all filters
-        return answeredFilter && filtersPassed && searchTextFilter();
+        return answeredFilter && filtersPassed && searchTextFilter() && accountFilter(accountText);
     });
 }
 }

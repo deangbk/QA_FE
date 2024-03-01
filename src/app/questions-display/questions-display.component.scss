@@ -36,3 +36,23 @@
   .small{
     font-size: 80%;
   }
+  .custom-select {
+   
+    height: 30px;
+  }
+
+ 
+
+  .ng-select .ng-select-container {
+    min-height: 30px;
+  }
+  
+  .ng-select.ng-select-single .ng-select-container {
+    height: 30px !important;
+  }
+  ::ng-deep .ng-select-container {
+   // min-height: 40px !important;
+   // height: 40px !important;
+  height: calc(2.55rem + 2px);
+   // font-size: 0.8em!important;
+  }
