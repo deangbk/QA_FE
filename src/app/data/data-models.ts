@@ -87,6 +87,7 @@ export interface ReqBodyUploadDocument {
 	printable?: boolean,
 }
 export interface ReqBodyEditDocument {
+	id: number,
 	name?: string,
 	url?: string,
 	description?: string,

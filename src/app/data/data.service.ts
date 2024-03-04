@@ -341,8 +341,12 @@ export class DataService {
 			this._post(`document/upload/account/${accountId}`, data);
 	}
 	
-	public documentEdit(documentId: number, data: Models.ReqBodyEditDocument) {
-		return this._put(`document/edit/${documentId}`, data);
+	public documentEdit(edit: Models.ReqBodyEditDocument) {
+		return this._put(`document/edit`, edit);
+	}
+	public documentBulkEdit(projectId: number, edits: Models.ReqBodyEditDocument[]) {
+		return <Observable<number>>
+			this._put(`document/bulk/edit/${projectId}`, edits);
 	}
 
 	// -----------------------------------------------------
