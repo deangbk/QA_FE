@@ -1,27 +1,27 @@
 import { Injectable } from '@angular/core';
 
 export interface NavigationItem {
-  id: string;
-  title: string;
-  type: 'item' | 'collapse' | 'group';
-  translate?: string;
-  icon?: string;
-  hidden?: boolean;
-  url?: string;
-  classes?: string;
-  exactMatch?: boolean;
-  external?: boolean;
-  target?: boolean;
-  breadcrumbs?: boolean;
-  badge?: {
-    title?: string;
-    type?: string;
-  };
-  children?: Navigation[];
+	id: string;
+	title: string;
+	type: 'item' | 'collapse' | 'group';
+	translate?: string;
+	icon?: string;
+	hidden?: boolean;
+	url?: string;
+	classes?: string;
+	exactMatch?: boolean;
+	external?: boolean;
+	target?: boolean;
+	breadcrumbs?: boolean;
+	badge?: {
+		title?: string;
+		type?: string;
+	};
+	children?: Navigation[];
 }
 
 export interface Navigation extends NavigationItem {
-  children?: NavigationItem[];
+	children?: NavigationItem[];
 }
 
 const NavigationItems = [
@@ -55,6 +55,14 @@ const NavigationItems = [
         classes: 'nav-item',
         icon: 'feather icon-clipboard'
       },
+      {
+				id: 'recent-docs',
+				title: 'Recent Documents',
+				type: 'item',
+				url: '/docs/recent',
+				classes: 'nav-item',
+				icon: 'feather icon-list'
+			},
       {
         id: 'home-login',
         title: 'User Login',
@@ -105,7 +113,7 @@ const NavigationItems = [
 
 @Injectable()
 export class NavigationItem {
-  get() {
-    return NavigationItems;
-  }
+	get() {
+		return NavigationItems;
+	}
 }

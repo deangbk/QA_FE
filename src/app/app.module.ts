@@ -45,8 +45,12 @@ import { SearchPipe } from './Pipes/search.pipe';
 import { SearchBasicPipe } from './Pipes/search-basic.pipe';
 import { RecentDocumentsComponent } from './recent-documents/recent-documents.component';
 import { QuestionModalComponent } from './question-modal/question-modal.component';
+
 import { QuestionsGeneralComponent } from './questions-general/questions-general.component';
 import { QuestionsAccountComponent } from './questions-account/questions-account.component';
+
+import { ConfirmDeleteModalComponent } from './recent-documents/confirm-delete-modal/confirm-delete-modal.component';
+
 
 @NgModule({
 	declarations: [
@@ -75,8 +79,12 @@ import { QuestionsAccountComponent } from './questions-account/questions-account
 		SearchBasicPipe,
   RecentDocumentsComponent,
   QuestionModalComponent,
+
   QuestionsGeneralComponent,
   QuestionsAccountComponent,
+
+  ConfirmDeleteModalComponent,
+
 		
 	],
 	providers: [NavigationItem,

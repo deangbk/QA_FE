@@ -246,10 +246,12 @@ export class DataService {
 			this._post(`post/bulk/account/${projectId}`, creates);
 	}
 	public postBulkEdit(postID: number, edits: Models.ReqBodyEditPost[]) {
-		return this._put(`post/bulk/edit/${postID}`, edits);
+		return <Observable<number>>
+			this._put(`post/bulk/edit/${postID}`, edits);
 	}
 	public postBulkAnswer(postID: number, edits: Models.ReqBodySetAnswer[]) {
-		return this._put(`post/bulk/edit/${postID}`, edits);
+		return <Observable<number>>
+			this._put(`post/bulk/edit/${postID}`, edits);
 	}
 
 	// -----------------------------------------------------
@@ -339,8 +341,17 @@ export class DataService {
 			this._post(`document/upload/account/${accountId}`, data);
 	}
 	
-	public documentEdit(documentId: number, data: Models.ReqBodyEditDocument) {
-		return this._put(`document/edit/${documentId}`, data);
+	public documentBulkEdit(projectId: number, edits: Models.ReqBodyEditDocument[]) {
+		return <Observable<number>>
+			this._put(`document/bulk/edit/${projectId}`, edits);
+	}
+	public documentDelete(projectId: number, deleteId: number) {
+		return <Observable<number>>
+			this._delete(`document/${projectId}/${deleteId}`);
+	}
+	public documentBulkDelete(projectId: number, deleteIds: number[]) {
+		return <Observable<number>>
+			this._post(`document/bulk/delete/${projectId}`, deleteIds);
 	}
 
 	// -----------------------------------------------------

@@ -3,10 +3,10 @@ import {
 	Input, Output, Injector
 } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { QuestionModalData, QuestionModalComponent } from '../question-modal/question-modal.component';
+import { ConfirmDeleteModalComponent } from './confirm-delete-modal/confirm-delete-modal.component';
 
 import { DataService } from '../data/data.service';
 import { SecurityService } from '../security/security.service';
@@ -22,6 +22,10 @@ class SearchFilter {
 	public questionId: string;
 	public accountName: string;
 }
+class ListItem {
+	data: Models.RespDocumentData;
+	selected: boolean;
+}
 
 @Component({
 	selector: 'recent-documents',
@@ -33,8 +37,10 @@ export class RecentDocumentsComponent {
 	projectId = 1;
 	
 	listDocuments: Models.RespDocumentData[] = null;
-	listDocumentDisplay: Models.RespDocumentData[] = [];
+	listDocumentDisplay: ListItem[] = [];
 	filter: SearchFilter;
+	
+	enableModifyData: boolean;
 	
 	constructor(
 		private dataService: DataService,
@@ -49,6 +55,8 @@ export class RecentDocumentsComponent {
 			questionId: '',
 			accountName: '',
 		};
+		
+		this.enableModifyData = securityService.isStaff();
 	}
 	
 	typeSelectLabels = [
@@ -58,6 +66,8 @@ export class RecentDocumentsComponent {
 		{ value: 2, label: 'Account' }
 	];
 	
+	buttonLoading = '';
+	
 	// -----------------------------------------------------
 	
 	ngOnInit(): void {
@@ -65,6 +75,8 @@ export class RecentDocumentsComponent {
 	}
 	
 	async fetchData() {
+		this.listDocuments = null;
+		
 		const page: Models.ReqBodyPaginate = {
 			per_page: 100,
 			page: 0
@@ -83,7 +95,7 @@ export class RecentDocumentsComponent {
 	// -----------------------------------------------------
 	
 	listReady(): boolean {
-		return this.listDocuments !== null;
+		return this.listDocuments != null;
 	}
 	
 	shortDesc(s: string): string {
@@ -166,7 +178,85 @@ export class RecentDocumentsComponent {
 				.filter(x => x.name.toLowerCase().includes(search));
 		}
 		
-		this.listDocumentDisplay = listRes;
+		this.listDocumentDisplay = listRes.map(d => ({
+			data: d,
+			selected: false,
+		}));
+	}
+	
+	callbackSetItemSelected(item: ListItem) {
+		item.selected = !item.selected;
+	}
+	
+	async callbackUpdatePrintable(newState: boolean) {
+		let selectedItems = this.listDocumentDisplay
+			.filter(x => x.selected)
+			.map(x => x.data);
+		if (selectedItems.length == 0)
+			return;
+		
+		this.buttonLoading = 'print';
+		
+		var edits = selectedItems
+			.map(d => ({
+				id: d.id,
+				printable: newState,
+			} as Models.ReqBodyEditDocument));
+		
+		let res = await Helpers.observableAsPromise(
+			this.dataService.documentBulkEdit(this.projectId, edits));
+		if (res.ok) {
+			selectedItems.forEach(d => {
+				d.allow_print = newState;
+			});
+			
+			this.callbackUpdateList();
+			
+			console.log(`Updated printable state: ${res.val} documents affected`);
+		}
+		else {
+			console.log(res.val);
+		}
+		
+		this.buttonLoading = '';
+	}
+	callbackDeleteDocuments() {
+		let selectedItems = this.listDocumentDisplay
+			.filter(x => x.selected)
+			.map(x => x.data);
+		if (selectedItems.length == 0)
+			return;
+		
+		const modalRef = this.modalService.open(ConfirmDeleteModalComponent);
+		modalRef.componentInstance.deleteCount = selectedItems.length;
+		
+		modalRef.componentInstance.result.subscribe((result) => {
+			if (result)
+				this.deleteDocuments(selectedItems);
+		});
+	}
+	async deleteDocuments(items: Models.RespDocumentData[]) {
+		this.buttonLoading = 'delete';
+
+		var deleteIds = items
+			.map(d => d.id);
+
+		let res = await Helpers.observableAsPromise(
+			this.dataService.documentBulkDelete(this.projectId, deleteIds));
+		if (res.ok) {
+			/* this.listDocuments = this.listDocuments
+				.filter(x => deleteIds.findIndex(y => y == x.id) == -1)
+			
+			this.callbackUpdateList(); */
+			await this.fetchData();
+
+			console.log(`Deleted ${res.val} documents`);
+		}
+		else {
+			console.log(res.val);
+		}
+
+		this.buttonLoading = '';
 	}
 	
 	callbackNavigateToDocView(id: number) {
@@ -176,14 +266,7 @@ export class RecentDocumentsComponent {
 	
 	callbackNavigateToQuestion(data: Models.RespDocumentData) {
 		const modalRef = this.modalService.open(QuestionModalComponent);
-		modalRef.componentInstance.question = <Models.RespPostData>data.assoc_post;
-		
-		//console.log(data);
-		/* modalRef.result.then((result) => {
-			if (result) {
-				console.log(result);
-			}
-		}); */
+		modalRef.componentInstance.question = data.assoc_post as Models.RespPostData;
 		
 		return false;
 	}
