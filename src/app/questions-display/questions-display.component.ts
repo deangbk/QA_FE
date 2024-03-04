@@ -37,6 +37,9 @@ export class QuestionsDisplayComponent implements OnInit {
 	filteredQuestionsCount: number;
 	indexOfelement:number;
 	page = 1;
+	listStart=0;
+	listEnd=2000;
+	pageSize: number = 6;
 
 	//modalContents: TemplateRef<any>;
 	constructor(private dataService: DataService, private sService: SecurityService) { }
@@ -74,6 +77,7 @@ export class QuestionsDisplayComponent implements OnInit {
 				console.error('There was an error!', e);
 			}
 		});
+		this.onPageChange(this.page);
 
 		//this.modalContents="<div class="md-content"><div _ngcontent-ng-c859799317="" class="modal-header bg-dark ng-star-inserted" style=""><h5 _ngcontent-ng-c859799317="" class="modal-title text-white"> Animate Modal : fade-in-scale </h5><button _ngcontent-ng-c859799317="" type=" button" data-bs-dismiss="modal" aria-label="Close" class="btn-close btn-close-white" fdprocessedid="55o0n8"></button></div><div _ngcontent-ng-c859799317="" class="modal-body ng-star-inserted" style=""><h5 _ngcontent-ng-c859799317="">This is a modal window</h5><p _ngcontent-ng-c859799317="">You can do the following things with it:</p><p _ngcontent-ng-c859799317=""><b _ngcontent-ng-c859799317="">Read:</b> modal windows will probably tell you something important so don't forget to read what they say. </p><p _ngcontent-ng-c859799317=""><b _ngcontent-ng-c859799317="">Look:</b> a modal window enjoys a certain kind of attention; just look at it and appreciate its presence. </p><p _ngcontent-ng-c859799317=""><b _ngcontent-ng-c859799317="">Close:</b> click on the button below to close the modal.</p></div><div _ngcontent-ng-c859799317="" class="modal-footer ng-star-inserted" style=""><button _ngcontent-ng-c859799317="" type="button" data-bs-dismiss="modal" class="btn btn-outline-secondary" fdprocessedid="6a0sf"> Close </button><button _ngcontent-ng-c859799317="" type="button" class="btn btn-primary shadow-2" fdprocessedid="prmbbd"> Save changes </button></div><!----></div>"
 	}
@@ -99,6 +103,12 @@ export class QuestionsDisplayComponent implements OnInit {
 	  getAccounts():Observable<string[]>{
 		const aList=["A_0001","A_0002","A_0003","A_0004","A_0005"];
 		return of(aList);
+	  }
+
+	  onPageChange(page: number) {
+		this.listStart =page==1?0: (page-1 ) * this.pageSize;
+		this.listEnd = ((page ) * this.pageSize)-1;
+		// The page has changed. You can do something here.
 	  }
 
 }
