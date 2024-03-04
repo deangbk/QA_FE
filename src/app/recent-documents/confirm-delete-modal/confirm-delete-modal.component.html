@@ -1,0 +1,19 @@
+
+<div class="modal-header">
+	<h2 class="modal-title" id="modal-basic-title">Confirm document deletion?</h2>
+	<button type="button" class="btn-close" aria-label="Close" 
+		(click)="callbackAction(false)"></button>
+</div>
+<div class="modal-body">
+	<h3>{{deleteCount}} items will be deleted.</h3>
+	<h3 style="color: red;">This action cannot be undone.</h3>
+	
+	<div class="d-flex justify-content-center align-items-center">
+		<button type="button" class="btn btn-primary" (click)="callbackAction(false)">
+			Cancel
+		</button>
+		<button type="button" class="btn btn-danger" (click)="callbackAction(true)">
+			Confirm
+		</button>
+	</div>
+</div>
