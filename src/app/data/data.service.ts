@@ -341,12 +341,17 @@ export class DataService {
 			this._post(`document/upload/account/${accountId}`, data);
 	}
 	
-	public documentEdit(edit: Models.ReqBodyEditDocument) {
-		return this._put(`document/edit`, edit);
-	}
 	public documentBulkEdit(projectId: number, edits: Models.ReqBodyEditDocument[]) {
 		return <Observable<number>>
 			this._put(`document/bulk/edit/${projectId}`, edits);
+	}
+	public documentDelete(projectId: number, deleteId: number) {
+		return <Observable<number>>
+			this._delete(`document/${projectId}/${deleteId}`);
+	}
+	public documentBulkDelete(projectId: number, deleteIds: number[]) {
+		return <Observable<number>>
+			this._post(`document/bulk/delete/${projectId}`, deleteIds);
 	}
 
 	// -----------------------------------------------------
