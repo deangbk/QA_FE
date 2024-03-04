@@ -1,5 +1,5 @@
 <div class="col-xl-12">
-	<app-card cardTitle="Hover Table" [options]="false" blockClass="table-border-style">
+	<app-card cardTitle="Account Questions" [options]="false" blockClass="table-border-style">
 		<div class="">
 			<div class="row">
 				<div class="col-md-3">
@@ -66,10 +66,11 @@
 						<th>docs</th>
 					</tr>
 				</thead>
-				<tbody>
-					<tr *ngFor="let q of questions | search:searchText : accountList : qfilter.has_answer:  filter2; let indexOfelement=index;"    (click)="openMyModal('modal-16',q)" role="button">
+			<tbody>
+					<ng-container *ngFor="let q of questions | search:searchText : accountList : qfilter.has_answer:  filter2; let indexOfelement=index;">
+					<tr     (click)="openMyModal('modal-16',q)" role="button" *ngIf="indexOfelement >= listStart && indexOfelement <= listEnd">
 						<td>{{q.q_num}}</td>
-						<td>{{q.account.id}} - # {{indexOfelement}}</td>
+						<td>{{q.account.id}}</td>
 						<td>{{q.date_post | date}}</td>
 						<td >{{q.q_text}}</td>
 					
@@ -80,11 +81,12 @@
 								<a href="/docs/pdf/{{doc.id}}" target="_blank">{{doc.name}}</a></span>
 						</td>
 					</tr>
-				</tbody>
+				</ng-container>
+			</tbody>
 			</table>
-			<ngb-pagination [collectionSize]="filteredQuestionsCount" [(page)]="page" [boundaryLinks]="true"  [pageSize]="3" />
+			<ngb-pagination [collectionSize]="filteredQuestionsCount" [(page)]="page" [boundaryLinks]="true"  [pageSize]="pageSize" (pageChange)="onPageChange($event)"/>
 		</div>
-		<pre>Current page: {{ page }}</pre>
+		<!-- <pre>list start: {{ listStart}} - {{ listEnd}}</pre> -->
 	</app-card>
 </div>
 
@@ -183,7 +185,7 @@
 			  </ng-template>
 			</ng-select>
 		  </div> -->
-{{filteredQuestionsCount}}
+<!-- {{filteredQuestionsCount}} -->
   </div>
 
 
