@@ -21,6 +21,10 @@ class SearchFilter {
 	public questionId: string;
 	public accountName: string;
 }
+class ListItem {
+	data: Models.RespDocumentData;
+	selected: boolean;
+}
 
 @Component({
 	selector: 'recent-documents',
@@ -32,11 +36,10 @@ export class RecentDocumentsComponent {
 	projectId = 1;
 	
 	listDocuments: Models.RespDocumentData[] = null;
-	listDocumentDisplay: Models.RespDocumentData[] = [];
+	listDocumentDisplay: ListItem[] = [];
 	filter: SearchFilter;
 	
-	enablePrintCheckbox: boolean;
-	printableChanged: Map<number, boolean> = new Map();
+	enableModifyData: boolean;
 	
 	constructor(
 		private dataService: DataService,
@@ -52,7 +55,7 @@ export class RecentDocumentsComponent {
 			accountName: '',
 		};
 		
-		this.enablePrintCheckbox = securityService.isStaff();
+		this.enableModifyData = securityService.isStaff();
 	}
 	
 	typeSelectLabels = [
@@ -62,7 +65,7 @@ export class RecentDocumentsComponent {
 		{ value: 2, label: 'Account' }
 	];
 	
-	printableUpdateLoading = false;
+	buttonLoading = '';
 	
 	// -----------------------------------------------------
 	
@@ -71,6 +74,8 @@ export class RecentDocumentsComponent {
 	}
 	
 	async fetchData() {
+		this.listDocuments = null;
+		
 		const page: Models.ReqBodyPaginate = {
 			per_page: 100,
 			page: 0
@@ -172,39 +177,39 @@ export class RecentDocumentsComponent {
 				.filter(x => x.name.toLowerCase().includes(search));
 		}
 		
-		this.listDocumentDisplay = listRes;
+		this.listDocumentDisplay = listRes.map(d => ({
+			data: d,
+			selected: false,
+		}));
 	}
 	
-	callbackChangePrintable(data: Models.RespDocumentData) {
-		data.allow_print = !data.allow_print;
-		
-		this.printableChanged.set(data.id, data.allow_print);
-		
-		//console.log(this.printableChanged);
+	callbackSetItemSelected(item: ListItem) {
+		item.selected = !item.selected;
 	}
-	async callbackUpdatePrintable() {
-		if (this.printableChanged.size == 0)
+	
+	async callbackUpdatePrintable(newState: boolean) {
+		let selectedItems = this.listDocumentDisplay
+			.filter(x => x.selected)
+			.map(x => x.data);
+		if (selectedItems.length == 0)
 			return;
 		
-		this.printableUpdateLoading = true;
+		this.buttonLoading = 'print';
 		
-		var edits = [...this.printableChanged]
-			.map(([id, state]) => ({
-				id: id,
-				printable: state,
+		var edits = selectedItems
+			.map(d => ({
+				id: d.id,
+				printable: newState,
 			} as Models.ReqBodyEditDocument));
 		
 		let res = await Helpers.observableAsPromise(
 			this.dataService.documentBulkEdit(this.projectId, edits));
-		
 		if (res.ok) {
-			this.printableChanged.forEach((state, id) => {
-				let d = this.listDocuments.find(x => x.id == id)
-				d.allow_print = state;
+			selectedItems.forEach(d => {
+				d.allow_print = newState;
 			});
 			
 			this.callbackUpdateList();
-			this.printableChanged.clear();
 			
 			console.log(`Updated printable state: ${res.val} documents affected`);
 		}
@@ -212,7 +217,8 @@ export class RecentDocumentsComponent {
 			console.log(res.val);
 		}
 		
-		this.printableUpdateLoading = false;
+		this.buttonLoading = '';
+	}
 	}
 	
 	callbackNavigateToDocView(id: number) {
@@ -222,7 +228,7 @@ export class RecentDocumentsComponent {
 	
 	callbackNavigateToQuestion(data: Models.RespDocumentData) {
 		const modalRef = this.modalService.open(QuestionModalComponent);
-		modalRef.componentInstance.question = <Models.RespPostData>data.assoc_post;
+		modalRef.componentInstance.question = data.assoc_post as Models.RespPostData;
 		
 		//console.log(data);
 		/* modalRef.result.then((result) => {

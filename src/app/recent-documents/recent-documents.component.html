@@ -43,55 +43,81 @@
 			<table class="table table-hover">
 				<thead>
 					<tr>
+						<ng-container *ngIf="enableModifyData">
+							<th></th>
+						</ng-container>
+						
 						<th>#</th>
 						<th>Uploaded</th>
 						<th>Name</th>
 						<th>Description</th>
 						<th>From</th>
-						<ng-container *ngIf="enablePrintCheckbox">
+						
+						<ng-container *ngIf="enableModifyData">
 							<th>Printable</th>
 						</ng-container>
 					</tr>
 				</thead>
 				<tbody>
-					<tr *ngFor="let d of listDocumentDisplay">
-						<td>
-							<a href="/docs/pdf/{{d.id}}">
-								{{d.id}}
-							</a>
-						</td>
-						<td>{{d.date_upload | date:'yyyy-MM-dd, HH:mm'}}</td>
-						<td>{{d.name}}</td>
-						<td>{{shortDesc(d.description)}}</td>
-						
-						<td *ngIf="d.assoc_post == null && d.assoc_account == null">
-							This project
-						</td>
-						<td *ngIf="d.assoc_post != null">
-							Question <i><a href="#" (click)="callbackNavigateToQuestion(d)">#{{getIdText(d)}}</a></i>
-						</td>
-						<td *ngIf="d.assoc_account != null">
-							Account <i>#{{getIdText(d)}}</i>
-						</td>
-						
-						<td *ngIf="enablePrintCheckbox">
+					<tr *ngFor="let i of listDocumentDisplay">
+						<td *ngIf="enableModifyData">
 							<div class="form-check">
 								<input type="checkbox" 
-									(change)="callbackChangePrintable(d)" 
-									[checked]="d.allow_print">
+									(change)="callbackSetItemSelected(i)" 
+									[checked]="false">
+							</div>
+						</td>
+						
+						<td>
+							<a href="/docs/pdf/{{i.data.id}}">
+								{{i.data.id}}
+							</a>
+						</td>
+						<td>{{i.data.date_upload | date:'yyyy-MM-dd, HH:mm'}}</td>
+						<td>{{i.data.name}}</td>
+						<td>{{shortDesc(i.data.description)}}</td>
+						
+						<td *ngIf="i.data.assoc_post == null && i.data.assoc_account == null">
+							This project
+						</td>
+						<td *ngIf="i.data.assoc_post != null">
+							Question <i><a href="#" (click)="callbackNavigateToQuestion(i.data)">
+								#{{getIdText(i.data)}}</a></i>
+						</td>
+						<td *ngIf="i.data.assoc_account != null">
+							Account <i>#{{getIdText(i.data)}}</i>
+						</td>
+						
+						<td *ngIf="enableModifyData">
+							<div class="d-flex justify-content-center align-items-center">
+								<i style="color: green;" class="feather icon-check" *ngIf="i.data.allow_print"></i>
+								<i style="color: red;" class="feather icon-x" *ngIf="!i.data.allow_print"></i>
 							</div>
 						</td>
 					</tr>
 				</tbody>
 			</table>
 			
-			<div style="float: right;" *ngIf="enablePrintCheckbox">
-				<div *ngIf="!printableUpdateLoading">
-					<button type="button" class="btn btn-primary" (click)="callbackUpdatePrintable()">
-						Update Printable
-					</button>
+			<p>Selected items action</p>
+			<div *ngIf="enableModifyData" id="actions-box">
+				<div *ngIf="buttonLoading != 'print'">
+					<div ngbDropdown class="d-inline-block">
+						<button type="button" class="btn btn-outline-primary" id="ddSetPrintable" ngbDropdownToggle>
+							Change printable
+						</button>
+						<div ngbDropdownMenu aria-labelledby="ddSetPrintable">
+							<button ngbDropdownItem
+								(click)="callbackUpdatePrintable(true)">
+								Set to true
+							</button>
+							<button ngbDropdownItem
+								(click)="callbackUpdatePrintable(false)">
+								Set to false
+							</button>
+						</div>
+					</div>
 				</div>
-				<div *ngIf="printableUpdateLoading">
+				<div *ngIf="buttonLoading == 'print'">
 					<button class="btn btn-primary" type="button" disabled>
 						<span class="spinner-border spinner-border-sm" 
 							role="status" aria-hidden="true"></span>
@@ -101,4 +127,6 @@
 			</div>
 		</div>
 	</app-card>
+	
+	<br><br>
 </div>
