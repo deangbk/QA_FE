@@ -1,5 +1,5 @@
 <div class="col-xl-12">
-	<app-card cardTitle="Account Questions" [options]="false" blockClass="table-border-style">
+	<app-card [cardTitle]="getCardTitle()" [options]="false" blockClass="table-border-style">
 		<div class="">
 			<div class="row">
 				<div class="col-md-3">
@@ -27,7 +27,7 @@
 				</div>
 				<div class="col-md-3">
 
-					<ng-select [items]="accountList$ | async" [multiple]="true" bindLabel="login" bindValue="login" [clearable]="false" [(ngModel)]="accountList">
+					<ng-select [items]="accountList$" [multiple]="true" bindLabel="login" bindValue="login" [clearable]="false" [(ngModel)]="accountList" [hidden]="qType === 'general'">
 						<ng-template ng-label-tmp let-item="item" let-clear="clear">
 						  <span class="ng-value-label"> {{ item }}</span>
 						  <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span> 
@@ -51,13 +51,14 @@
 					
 				  >
 				  </ng-select> -->
+		
 					</div>
 			</div>
 			<table class="table table-hover">
 				<thead>
 					<tr>
 						<th >#</th>
-						<th >Account</th>
+						<th *ngIf="qType === 'account'">Account</th>
 						<th >Date Posted</th>
 						<th class="w-30">Questions</th>
 						
@@ -70,7 +71,7 @@
 					<ng-container *ngFor="let q of questions | search:searchText : accountList : qfilter.has_answer:  filter2; let indexOfelement=index;">
 					<tr     (click)="openMyModal('modal-16',q)" role="button" *ngIf="indexOfelement >= listStart && indexOfelement <= listEnd">
 						<td>{{q.q_num}}</td>
-						<td>{{q.account.id}}</td>
+						<td *ngIf="qType === 'account'">{{q.account.id}}</td>
 						<td>{{q.date_post | date}}</td>
 						<td >{{q.q_text}}</td>
 					

@@ -40,12 +40,20 @@ const NavigationItems = [
         icon: 'feather icon-home'
       },
       {
-        id: 'account-questions',
+        id: 'questions-account',
         title: 'Account Questions',
         type: 'item',
-        url: '/question/2',
+        url: '/questions/account',
         classes: 'nav-item',
         icon: 'feather icon-layers'
+      },
+      {
+        id: 'questions-general',
+        title: 'General Questions',
+        type: 'item',
+        url: '/questions/general',
+        classes: 'nav-item',
+        icon: 'feather icon-clipboard'
       },
       {
         id: 'home-login',

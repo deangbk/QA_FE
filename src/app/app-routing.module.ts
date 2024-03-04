@@ -8,6 +8,8 @@ import {AuthSigninV2Component} from './public/auth-signin-v2/auth-signin-v2.comp
 import { AuthGuard } from './Guards/auth.guard';
 import { DocumentViewerComponent } from './document-viewer/document-viewer.component';
 import { RecentDocumentsComponent } from './recent-documents/recent-documents.component';
+import { QuestionsAccountComponent } from './questions-account/questions-account.component';
+import { QuestionsGeneralComponent } from './questions-general/questions-general.component';
 
 const routes: Routes = [
 	{
@@ -28,6 +30,8 @@ const routes: Routes = [
 		//	canActivate: [AuthGuard],
 		//data: { roles: ['admin', 'manager'] }
 	 },
+	 { path: 'questions/account', component: QuestionsAccountComponent },
+	 { path: 'questions/general', component: QuestionsGeneralComponent },
 			
 			//{ path: 'test/document', component: DocumentViewerComponent },
 			{ path: 'docs/pdf/:id', component: DocumentViewerComponent },

@@ -45,6 +45,8 @@ import { SearchPipe } from './Pipes/search.pipe';
 import { SearchBasicPipe } from './Pipes/search-basic.pipe';
 import { RecentDocumentsComponent } from './recent-documents/recent-documents.component';
 import { QuestionModalComponent } from './question-modal/question-modal.component';
+import { QuestionsGeneralComponent } from './questions-general/questions-general.component';
+import { QuestionsAccountComponent } from './questions-account/questions-account.component';
 
 @NgModule({
 	declarations: [
@@ -73,6 +75,8 @@ import { QuestionModalComponent } from './question-modal/question-modal.componen
 		SearchBasicPipe,
   RecentDocumentsComponent,
   QuestionModalComponent,
+  QuestionsGeneralComponent,
+  QuestionsAccountComponent,
 		
 	],
 	providers: [NavigationItem,
