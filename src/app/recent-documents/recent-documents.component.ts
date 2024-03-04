@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { QuestionModalData, QuestionModalComponent } from '../question-modal/question-modal.component';
+import { ConfirmDeleteModalComponent } from './confirm-delete-modal/confirm-delete-modal.component';
 
 import { DataService } from '../data/data.service';
 import { SecurityService } from '../security/security.service';
@@ -219,6 +220,43 @@ export class RecentDocumentsComponent {
 		
 		this.buttonLoading = '';
 	}
+	callbackDeleteDocuments() {
+		let selectedItems = this.listDocumentDisplay
+			.filter(x => x.selected)
+			.map(x => x.data);
+		if (selectedItems.length == 0)
+			return;
+		
+		const modalRef = this.modalService.open(ConfirmDeleteModalComponent);
+		modalRef.componentInstance.deleteCount = selectedItems.length;
+		
+		modalRef.componentInstance.result.subscribe((result) => {
+			if (result)
+				this.deleteDocuments(selectedItems);
+		});
+	}
+	async deleteDocuments(items: Models.RespDocumentData[]) {
+		this.buttonLoading = 'delete';
+
+		var deleteIds = items
+			.map(d => d.id);
+
+		let res = await Helpers.observableAsPromise(
+			this.dataService.documentBulkDelete(this.projectId, deleteIds));
+		if (res.ok) {
+			/* this.listDocuments = this.listDocuments
+				.filter(x => deleteIds.findIndex(y => y == x.id) == -1)
+			
+			this.callbackUpdateList(); */
+			await this.fetchData();
+
+			console.log(`Deleted ${res.val} documents`);
+		}
+		else {
+			console.log(res.val);
+		}
+
+		this.buttonLoading = '';
 	}
 	
 	callbackNavigateToDocView(id: number) {
@@ -229,13 +267,6 @@ export class RecentDocumentsComponent {
 	callbackNavigateToQuestion(data: Models.RespDocumentData) {
 		const modalRef = this.modalService.open(QuestionModalComponent);
 		modalRef.componentInstance.question = data.assoc_post as Models.RespPostData;
-		
-		//console.log(data);
-		/* modalRef.result.then((result) => {
-			if (result) {
-				console.log(result);
-			}
-		}); */
 		
 		return false;
 	}

@@ -124,6 +124,21 @@
 						Updating data...
 					</button>
 				</div>
+				
+				<div *ngIf="buttonLoading != 'delete'">
+					<button type="button" class="btn btn-danger" 
+						(click)="callbackDeleteDocuments()">
+						Delete document
+					</button>
+				</div>
+				<div *ngIf="buttonLoading == 'delete'">
+					<button class="btn btn-danger" type="button" disabled>
+						<span class="spinner-border spinner-border-sm" 
+							role="status" aria-hidden="true"></span>
+						Deleting data...
+					</button>
+				</div>
+				
 			</div>
 		</div>
 	</app-card>
