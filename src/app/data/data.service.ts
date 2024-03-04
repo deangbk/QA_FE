@@ -246,10 +246,12 @@ export class DataService {
 			this._post(`post/bulk/account/${projectId}`, creates);
 	}
 	public postBulkEdit(postID: number, edits: Models.ReqBodyEditPost[]) {
-		return this._put(`post/bulk/edit/${postID}`, edits);
+		return <Observable<number>>
+			this._put(`post/bulk/edit/${postID}`, edits);
 	}
 	public postBulkAnswer(postID: number, edits: Models.ReqBodySetAnswer[]) {
-		return this._put(`post/bulk/edit/${postID}`, edits);
+		return <Observable<number>>
+			this._put(`post/bulk/edit/${postID}`, edits);
 	}
 
 	// -----------------------------------------------------
