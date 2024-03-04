@@ -3,7 +3,6 @@ import {
 	Input, Output, Injector
 } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { QuestionModalData, QuestionModalComponent } from '../question-modal/question-modal.component';
@@ -36,6 +35,9 @@ export class RecentDocumentsComponent {
 	listDocumentDisplay: Models.RespDocumentData[] = [];
 	filter: SearchFilter;
 	
+	enablePrintCheckbox: boolean;
+	printableChanged: Map<number, boolean> = new Map();
+	
 	constructor(
 		private dataService: DataService,
 		private securityService: SecurityService,
@@ -49,6 +51,8 @@ export class RecentDocumentsComponent {
 			questionId: '',
 			accountName: '',
 		};
+		
+		this.enablePrintCheckbox = securityService.isStaff();
 	}
 	
 	typeSelectLabels = [
@@ -167,6 +171,39 @@ export class RecentDocumentsComponent {
 		}
 		
 		this.listDocumentDisplay = listRes;
+	}
+	
+	callbackChangePrintable(data: Models.RespDocumentData) {
+		data.allow_print = !data.allow_print;
+		
+		this.printableChanged.set(data.id, data.allow_print);
+		
+		//console.log(this.printableChanged);
+	}
+	async callbackUpdatePrintable() {
+		var edits = [...this.printableChanged]
+			.map(([id, state]) => ({
+				id: id,
+				printable: state,
+			} as Models.ReqBodyEditDocument));
+		
+		let res = await Helpers.observableAsPromise(
+			this.dataService.documentBulkEdit(this.projectId, edits));
+		
+		if (res.ok) {
+			this.printableChanged.forEach((state, id) => {
+				let d = this.listDocuments.find(x => x.id == id)
+				d.allow_print = state;
+			});
+			
+			this.callbackUpdateList();
+			this.printableChanged.clear();
+			
+			console.log(`Updated printable state: ${res.val} documents affected`);
+		}
+		else {
+			console.log(res.val);
+		}
 	}
 	
 	callbackNavigateToDocView(id: number) {

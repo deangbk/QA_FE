@@ -41,6 +41,9 @@
 						<th>Name</th>
 						<th>Description</th>
 						<th>From</th>
+						<ng-container *ngIf="enablePrintCheckbox">
+							<th>Printable</th>
+						</ng-container>
 					</tr>
 				</thead>
 				<tbody>
@@ -63,9 +66,23 @@
 						<td *ngIf="d.assoc_account != null">
 							Account <i>#{{getIdText(d)}}</i>
 						</td>
+						
+						<td *ngIf="enablePrintCheckbox">
+							<div class="form-check">
+								<input type="checkbox" 
+									(change)="callbackChangePrintable(d)" 
+									[checked]="d.allow_print">
+							</div>
+						</td>
 					</tr>
 				</tbody>
 			</table>
+			
+			<div style="float: right;" *ngIf="enablePrintCheckbox">
+				<button type="button" class="btn btn-primary" (click)="callbackUpdatePrintable()">
+					Update Printable
+				</button>
+			</div>
 		</div>
 	</app-card>
 </div>
