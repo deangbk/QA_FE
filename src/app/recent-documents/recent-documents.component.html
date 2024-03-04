@@ -1,6 +1,13 @@
 
 <div class="col-xl-12">
 	<app-card cardTitle="Recent Documents" [options]="false" blockClass="table-border-style">
+		<div *ngIf="!listReady()">
+			<div class="d-flex justify-content-center">
+				<div class="spinner-border" role="status">
+					<span class="sr-only">Fetching data...</span>
+				</div>
+			</div>
+		</div>
 		<div class="" *ngIf="listReady()">
 			<div class="row">
 				<input type="text" class="form-control bg-transparent" 
@@ -79,9 +86,18 @@
 			</table>
 			
 			<div style="float: right;" *ngIf="enablePrintCheckbox">
-				<button type="button" class="btn btn-primary" (click)="callbackUpdatePrintable()">
-					Update Printable
-				</button>
+				<div *ngIf="!printableUpdateLoading">
+					<button type="button" class="btn btn-primary" (click)="callbackUpdatePrintable()">
+						Update Printable
+					</button>
+				</div>
+				<div *ngIf="printableUpdateLoading">
+					<button class="btn btn-primary" type="button" disabled>
+						<span class="spinner-border spinner-border-sm" 
+							role="status" aria-hidden="true"></span>
+						Updating data...
+					</button>
+				</div>
 			</div>
 		</div>
 	</app-card>

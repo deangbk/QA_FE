@@ -62,6 +62,8 @@ export class RecentDocumentsComponent {
 		{ value: 2, label: 'Account' }
 	];
 	
+	printableUpdateLoading = false;
+	
 	// -----------------------------------------------------
 	
 	ngOnInit(): void {
@@ -87,7 +89,7 @@ export class RecentDocumentsComponent {
 	// -----------------------------------------------------
 	
 	listReady(): boolean {
-		return this.listDocuments !== null;
+		return this.listDocuments != null;
 	}
 	
 	shortDesc(s: string): string {
@@ -181,6 +183,11 @@ export class RecentDocumentsComponent {
 		//console.log(this.printableChanged);
 	}
 	async callbackUpdatePrintable() {
+		if (this.printableChanged.size == 0)
+			return;
+		
+		this.printableUpdateLoading = true;
+		
 		var edits = [...this.printableChanged]
 			.map(([id, state]) => ({
 				id: id,
@@ -204,6 +211,8 @@ export class RecentDocumentsComponent {
 		else {
 			console.log(res.val);
 		}
+		
+		this.printableUpdateLoading = false;
 	}
 	
 	callbackNavigateToDocView(id: number) {
