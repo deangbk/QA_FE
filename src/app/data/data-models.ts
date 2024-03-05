@@ -48,6 +48,25 @@ export interface ReqBodyGetPosts {
 	type?: string,
 	category?: string,
 }
+export interface QuestionExcelUser{
+	Tranche?: string,		
+
+	Account_Number?: string,		
+	id?: number,			
+	
+	Date_Answered		// Filter by poster ID
+	
+	Date_Posted?: string,		// Filter by date
+	
+	Is_Answered?: boolean,
+	Question: string,
+	Answer: string,
+	PDF_Attached?: number,
+	Question_Number?: string,
+
+	Question_Type?: string,
+	Category?: string,
+}
 export interface ReqBodyPaginate {
 	per_page?: number,		// Count per page
 	page: number,			// Page number

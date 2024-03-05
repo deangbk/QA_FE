@@ -58,6 +58,7 @@ export class SearchPipe implements PipeTransform {
   
       // Update the component property with the number of items
       this.component.filteredQuestionsCount = filteredItems.length;
+      this.component.filteredQuestions=filteredItems;
   
       return filteredItems;
     }
