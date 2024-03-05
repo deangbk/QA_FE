@@ -12,6 +12,7 @@ import { DataService } from '../data/data.service';
 import { SecurityService } from '../security/security.service';
 
 import * as Models from "../data/data-models";
+import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { Helpers } from '../helpers';
 
@@ -39,7 +40,15 @@ export class RecentDocumentsComponent {
 	listDocuments: Models.RespDocumentData[] = null;
 	listDocumentDisplay: ListItem[] = [];
 	filter: SearchFilter;
-	
+
+	//pagination variables
+	indexOfelement:number;
+	page = 1;
+	listStart=0;
+	listEnd=2000;
+	pageSize: number = 10;
+	paginate: Models.ReqBodyPaginate = null;
+
 	enableModifyData: boolean;
 	
 	constructor(
@@ -72,6 +81,7 @@ export class RecentDocumentsComponent {
 	
 	ngOnInit(): void {
 		this.fetchData();
+		this.listEnd=this.pageSize-1;
 	}
 	
 	async fetchData() {
@@ -97,7 +107,11 @@ export class RecentDocumentsComponent {
 	listReady(): boolean {
 		return this.listDocuments != null;
 	}
-	
+	onPageChange(page: number) {
+		this.listStart =page==1?0: (page-1 ) * this.pageSize;
+		this.listEnd = ((page ) * this.pageSize)-1;
+		// The page has changed. You can do something here.
+	  }
 	shortDesc(s: string): string {
 		if (s === null) return '';
 		if (s.length > 28) {
