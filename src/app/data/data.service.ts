@@ -5,6 +5,7 @@ import { catchError } from 'rxjs/operators';
 
 import { Helpers } from "../helpers";
 import * as Models from "./data-models";
+import { createDefaultRespPostData } from '../data/model-initializers';
 
 @Injectable({
 	providedIn: 'root'
@@ -356,10 +357,11 @@ export class DataService {
 
 	// -----------------------------------------------------
 
-	public getQuestions() {
+	public getQuestions(filter: Models.ReqBodyGetPosts, projectId: number): Observable<Models.RespGetPost> {
 		/* return this.http
 		.get(`${this.baseUrl}/post/get_page/1`)
 		.pipe(catchError(this.handleError)); */
+     
 		return this.postGet(1, {}, null);
 	}
 }

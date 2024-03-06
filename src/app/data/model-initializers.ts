@@ -1,5 +1,5 @@
 
-import { RespPostData, RespAccountData, RespUserData, RespDocumentData, RespTrancheData } from './data-models';
+import { RespPostData, RespAccountData, RespUserData, RespDocumentData, RespTrancheData,ReqBodyGetPosts } from './data-models';
 
 export function createDefaultRespPostData(): RespPostData {
   return {
@@ -30,5 +30,21 @@ export function createDefaultRespTrancheData(): RespTrancheData {
       no: 0,
       name: '',
       tranche: createDefaultRespTrancheData(), // Initialize the tranche property
+    };
+  }
+
+  export function initReqBodyGetPosts(): ReqBodyGetPosts {
+    return {
+      search: '',      // Initialize to empty string or any default value
+      tranche: '',     // Initialize to empty string or any default value
+      account: null,   // Initialize to null or any default value
+      id: null,        // Initialize to null or any default value
+      post_by: null,   // Initialize to null or any default value
+      date_from: '',   // Initialize to empty string or any default value
+      date_to: '',     // Initialize to empty string or any default value
+      has_answer: null,// Initialize to null or any default value
+      approved: null,  // Initialize to null or any default value
+      type: '',        // Initialize to empty string or any default value
+      category: ''     // Initialize to empty string or any default value
     };
   }

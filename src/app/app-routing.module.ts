@@ -10,6 +10,7 @@ import { DocumentViewerComponent } from './document-viewer/document-viewer.compo
 import { RecentDocumentsComponent } from './recent-documents/recent-documents.component';
 import { QuestionsAccountComponent } from './questions-account/questions-account.component';
 import { QuestionsGeneralComponent } from './questions-general/questions-general.component';
+import { QuestionApproveComponent } from './staff-section/question-approve/question-approve.component';
 
 const routes: Routes = [
 	{
@@ -32,10 +33,19 @@ const routes: Routes = [
 	 },
 	 { path: 'questions/account', component: QuestionsAccountComponent },
 	 { path: 'questions/general', component: QuestionsGeneralComponent },
-			
+	 
+	
 			//{ path: 'test/document', component: DocumentViewerComponent },
-			{ path: 'docs/pdf/:id', component: DocumentViewerComponent },
-			{ path: 'docs/recent', component: RecentDocumentsComponent },
+			{ path: 'docs/pdf/:id', component: DocumentViewerComponent},
+
+			///paths that should be protected staff and admin only
+			{ path: 'docs/recent', component: RecentDocumentsComponent,
+			canActivate: [AuthGuard],
+			data: { roles: ['admin', 'manager'] } },
+			{ path: 'staff/qapprove', component: QuestionApproveComponent,
+			canActivate: [AuthGuard],
+			data: { roles: ['admin', 'manager'] } },
+
 		]
 	},
 	{

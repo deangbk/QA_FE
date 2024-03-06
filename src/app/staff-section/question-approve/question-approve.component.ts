@@ -1,12 +1,12 @@
 import { Component, OnInit, TemplateRef, Input } from '@angular/core';
 
-import { DataService } from '../data/data.service';
-import { SecurityService } from '../security/security.service';
+import { DataService } from '../../data/data.service';
+import { SecurityService } from '../../security/security.service';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { CommonModule } from '@angular/common';
-import * as Models from "../data/data-models"; // Import your models
+import * as Models from "../../data/data-models"; // Import your models
 import { has } from 'lodash';
-import { createDefaultRespPostData, initReqBodyGetPosts } from '../data/model-initializers';
+import { createDefaultRespPostData, initReqBodyGetPosts } from '../../data/model-initializers';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { Observable, of,switchMap,tap } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -14,16 +14,14 @@ import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import * as XLSX from 'xlsx';
 
 @Component({
-  selector: 'app-questions-display',
-  templateUrl: './questions-display.component.html',
-//  standalone: true,
-//  imports: [CommonModule, SharedModule],
-  styleUrls: ['./questions-display.component.scss']
+  selector: 'app-question-approve',
+  templateUrl: './question-approve.component.html',
+  styleUrls: ['./question-approve.component.scss']
 })
-export class QuestionsDisplayComponent implements OnInit {
-	@Input() qType: string;
-	@Input() description: string;
-	questions: Models.RespPostData[];
+export class QuestionApproveComponent {
+
+
+  questions: Models.RespPostData[];
 	searchText: string;
 	qfilter: Models.ReqBodyGetPosts;
 	//has_answer: boolean;
@@ -46,15 +44,13 @@ export class QuestionsDisplayComponent implements OnInit {
 	projectId: number = 1;
 	paginate: Models.ReqBodyPaginate = null;
 
-	
-	constructor(private dataService: DataService, private sService: SecurityService) { }
-	
-	ngOnInit() {
+  constructor(private dataService: DataService, private sService: SecurityService) { }
+  ngOnInit() {
 		
 		this.singleQuestion= createDefaultRespPostData();
 		//this.qfilter=initReqBodyGetPosts();
 		this.projectId = 1; // Replace with your actual projectId
-		console.log(this.qType);
+		
 		this.qfilter = {
 			has_answer: null,
 			category: null,
@@ -117,32 +113,22 @@ export class QuestionsDisplayComponent implements OnInit {
 		this.listEnd = ((page ) * this.pageSize)-1;
 		// The page has changed. You can do something here.
 	  }
-	  getCardTitle(){
-		switch (this.qType) {
-			case 'account': return 'Account Questions';
-			case 'general': return 'General Questions';
-			// Add more cases as needed...
-			default: return 'Default Title';
-		  }
-	  }
+	 
 	
 
 	  getQuestions(paginate: Models.ReqBodyPaginate, projectId: number): Observable<Models.RespGetPost> {
-		this.qfilter.type = this.qType;
+
 		return this.dataService.postGet(projectId, this.qfilter, paginate);
 	  }
 
 	
 
 		getAccounts(): void {
-			if (this.qType=="account")
-			{
-			this.accountList$=this.questions.map(q=>q.account.id).sort();
-			}
-			else
-			{
-				this.accountList$=[];
-			}
+			this.accountList$ = this.questions
+      .filter(q => q.account !== null && q.account !== undefined)
+      .map(q => q.account.id)
+      .sort();
+		
 			
 		  }
 

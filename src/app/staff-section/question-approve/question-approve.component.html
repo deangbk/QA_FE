@@ -1,5 +1,5 @@
 <div class="col-xl-12">
-	<app-card [cardTitle]="getCardTitle()" [options]="false" blockClass="table-border-style">
+	<app-card cardTitle="Manage and Respond to Questions" [options]="false" blockClass="table-border-style">
 		<div class="">
 			<div class="row">
 				<div class="col-md-3">
@@ -27,7 +27,7 @@
 				</div>
 				<div class="col-md-3">
 
-					<ng-select [items]="accountList$" [multiple]="true" bindLabel="login" bindValue="login" [clearable]="false" [(ngModel)]="accountList" [hidden]="qType === 'general'">
+					<ng-select [items]="accountList$" [multiple]="true" bindLabel="login" bindValue="login" [clearable]="false" [(ngModel)]="accountList" >
 						<ng-template ng-label-tmp let-item="item" let-clear="clear">
 						  <span class="ng-value-label"> {{ item }}</span>
 						  <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span> 
@@ -58,7 +58,7 @@
 				<thead>
 					<tr>
 						<th >#</th>
-						<th *ngIf="qType === 'account'">Account</th>
+						<th >Account</th>
 						<th >Date Posted</th>
 						<th class="w-30">Questions</th>
 						
@@ -68,12 +68,12 @@
 					</tr>
 				</thead>
 			<tbody>
-					<!-- <ng-container *ngFor="let q of questions | search:searchText : accountList : qfilter.has_answer:  filter2; let indexOfelement=index;">-->
-						<ng-container *ngFor="let q of questions | search:searchText : accountList : qfilter.has_answer :  filter2; let indexOfelement=index;"> 
-					
+					<ng-container *ngFor="let q of questions;  let indexOfelement=index;">
+						<!-- <ng-container *ngFor="let q of questions | search:searchText : accountList : qfilter.has_answer :  filter2; let indexOfelement=index;"> 
+					 -->
 						<tr     (click)="openMyModal('modal-16',q)" role="button" *ngIf="indexOfelement >= listStart && indexOfelement <= listEnd">
 						<td>{{q.q_num}}</td>
-						<td *ngIf="qType === 'account'">{{q.account.id}}</td>
+						<td >{{q.account.id}}</td>
 						<td>{{q.date_post | date}}</td>
 						<td >{{q.q_text}}</td>
 					
@@ -104,98 +104,7 @@
 	<app-animation-modal [modalID]="'modal-16'" [modalClass]="'md-effect-16'">
 		<ng-container *ngTemplateOutlet="modalContents"></ng-container>
 	  </app-animation-modal>
-    <!-- <app-card cardTitle="Advance" [options]="false">
-      <div class="btn-page">
-        <button
-          data-pc-animate="fade-in-scale"
-          type="button"
-          class="btn btn-primary me-2"
-          data-bs-toggle="modal"
-          data-modal="modal-16"
-          (click)="openMyModal('modal-16')"
-        >
-          Blur
-        </button>
-        <app-animation-modal [modalID]="'modal-16'" [modalClass]="'md-effect-16'">
-          <ng-container *ngTemplateOutlet="modalContents"></ng-container>
-        </app-animation-modal>
-        <button
-          data-pc-animate="fade-in-scale"
-          type="button"
-          class="btn btn-primary me-2"
-          data-bs-toggle="modal"
-          data-modal="modal-17"
-          (click)="openMyModal('modal-17')"
-        >
-          Let Me In
-        </button>
-     <app-animation-modal [modalID]="'modal-17'" [modalClass]="'md-effect-17'">
-          <ng-container *ngTemplateOutlet="modalContents"></ng-container>
-        </app-animation-modal> 
-        <button
-          data-pc-animate="fade-in-scale"
-          type="button"
-          class="btn btn-primary me-2"
-          data-bs-toggle="modal"
-          data-modal="modal-18"
-          (click)="openMyModal('modal-18')"
-        >
-          Make Way!
-        </button>
-       <app-animation-modal [modalID]="'modal-18'" [modalClass]="'md-effect-18'">
-          <ng-container *ngTemplateOutlet="modalContents"></ng-container>
-        </app-animation-modal>
-        <button
-          data-pc-animate="fade-in-scale"
-          type="button"
-          class="btn btn-primary"
-          data-bs-toggle="modal"
-          data-modal="modal-19"
-          (click)="openMyModal('modal-19')"
-        >
-          Slip from top
-        </button>
-         <app-animation-modal [modalID]="'modal-19'" [modalClass]="'md-effect-19'">
-          <ng-container *ngTemplateOutlet="modalContents"></ng-container>
-        </app-animation-modal> 
-      </div>
-    </app-card> -->
-
-	<!-- <div class="col-sm-12">
-		<app-card cardTitle="Advance Select" [options]="false">
-		  <div class="row">
-			<div class="col-sm-12 col-xl-12">
-			  <h4 class="sub-title">Multi Select</h4>
-			  <ng-select
-				[items]="accountList$ | async"
-				[multiple]="true"
-				[closeOnSelect]="false"
-				[clearable]="false"
-				[searchable]="false"
-				bindLabel="name"
-				placeholder="Select people"
-				[(ngModel)]="accountList"
-			  >
-			  </ng-select>
-			</div>
-			</div>
-		</app-card>
-		</div> -->
-
-		<!-- <div class="col-sm-12 col-xl-4 m-b-30">
-			<h4 class="sub-title">Custom selected item template</h4>
-			<ng-select [items]="accountList$ | async" [multiple]="true" bindLabel="login" bindValue="login" [clearable]="false" [(ngModel)]="accountList2">
-			  <ng-template ng-label-tmp let-item="item" >
-				<span class="ng-value-label"> {{ item }}</span>
-				 <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span> 
-			  </ng-template>
-  
-			  <ng-template ng-option-tmp let-item="item">
-				 {{ item }}
-			  </ng-template>
-			</ng-select>
-		  </div> -->
-<!-- {{filteredQuestionsCount}} -->
+ 
   </div>
 
 
@@ -224,3 +133,4 @@
 	  <button type="button" class="btn btn-primary shadow-2" (click)="closeMyModal($event)"> Save changes </button>
 	</div>
   </ng-template>
+

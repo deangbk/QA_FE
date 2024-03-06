@@ -78,10 +78,10 @@ const NavigationItems = [
         icon: 'feather icon-menu',
         children: [
           {
-            id: 'menu-level-2.1',
-            title: 'Menu Level 2.1',
+            id: 'question-approve',
+            title: 'Manage Questions',
             type: 'item',
-            url: 'javascript:',
+            url: 'staff/qapprove',          
             external: true
           },
           {

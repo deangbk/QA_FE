@@ -50,6 +50,14 @@ import { QuestionsGeneralComponent } from './questions-general/questions-general
 import { QuestionsAccountComponent } from './questions-account/questions-account.component';
 
 import { ConfirmDeleteModalComponent } from './recent-documents/confirm-delete-modal/confirm-delete-modal.component';
+import { QuestionApproveComponent } from './staff-section/question-approve/question-approve.component';
+import { UploadDocumentsComponent } from './staff-section/upload-documents/upload-documents.component';
+import { AddUsersComponent } from './staff-section/add-users/add-users.component';
+//import { QApprovePipe } from './pipes/q-approve.pipe';
+
+
+
+
 
 
 @NgModule({
@@ -84,6 +92,13 @@ import { ConfirmDeleteModalComponent } from './recent-documents/confirm-delete-m
   QuestionsAccountComponent,
 
   ConfirmDeleteModalComponent,
+     QuestionApproveComponent,
+    UploadDocumentsComponent,
+    AddUsersComponent,
+   // QApprovePipe,
+
+
+
 
 		
 	],
