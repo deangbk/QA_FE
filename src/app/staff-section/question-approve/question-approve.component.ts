@@ -9,9 +9,10 @@ import { has } from 'lodash';
 import { createDefaultRespPostData, initReqBodyGetPosts } from '../../data/model-initializers';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { Observable, of,switchMap,tap } from 'rxjs';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import * as XLSX from 'xlsx';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-question-approve',
@@ -44,7 +45,7 @@ export class QuestionApproveComponent {
 	projectId: number = 1;
 	paginate: Models.ReqBodyPaginate = null;
 
-  constructor(private dataService: DataService, private sService: SecurityService) { }
+  constructor(private dataService: DataService, private sService: SecurityService,private router: Router) { }
   ngOnInit() {
 		
 		this.singleQuestion= createDefaultRespPostData();
@@ -130,6 +131,17 @@ export class QuestionApproveComponent {
       .sort();
 		
 			
+		  }
+		  uploadPage(qId: number) {
+			console.log(qId);
+		  }
+		  editQuestion(question: Models.RespPostData) {
+			this.router.navigate(['manage/question'], { state: { data: question } });
+		  }
+		  displayDocNames(docs: Models.RespDocumentData[]) {
+			var docNames = docs.map(doc => doc.name).join(', ');
+			docNames = docNames.length > 0 ? docNames+' --- Click to Upload More' : 'No attachments, click to upload.';
+			return docNames;
 		  }
 
 		  /// export to excel

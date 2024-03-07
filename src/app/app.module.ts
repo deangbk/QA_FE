@@ -53,6 +53,7 @@ import { ConfirmDeleteModalComponent } from './recent-documents/confirm-delete-m
 import { QuestionApproveComponent } from './staff-section/question-approve/question-approve.component';
 import { UploadDocumentsComponent } from './staff-section/upload-documents/upload-documents.component';
 import { AddUsersComponent } from './staff-section/add-users/add-users.component';
+import { EditQuestionComponent } from './staff-section/edit-question/edit-question.component';
 //import { QApprovePipe } from './pipes/q-approve.pipe';
 
 
@@ -95,6 +96,7 @@ import { AddUsersComponent } from './staff-section/add-users/add-users.component
      QuestionApproveComponent,
     UploadDocumentsComponent,
     AddUsersComponent,
+    EditQuestionComponent,
    // QApprovePipe,
 
 

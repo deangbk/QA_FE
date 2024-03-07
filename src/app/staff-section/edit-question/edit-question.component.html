@@ -1,0 +1,60 @@
+<div class="card">
+  <div class="card-header">
+    <h5>Update Question</h5>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-6">
+        <form>
+          <div class="form-group">
+            <div class="row">
+            <div class="col-md-4">
+            <label class="form-label" for="questDesc">Question</label>
+            </div>
+            <div class="col-md-4"><i class="feather icon-calendar"> Date Posed: {{question.date_post | date}}</i></div>
+            <div class="col-md-4">Approved: {{question.Approved}}</div>
+              </div>
+            <textarea class="form-control" id="questDesc" rows="3">{{question.q_text}}</textarea>
+      
+            </div>
+          
+          <div class="form-group mt-3">
+            <div class="row">
+                <div class="col-md-4">
+            <label class="form-label" for="Answer">Answer</label>
+            </div>
+            <div class="col-md-4"><i class="feather icon-calendar"> Date Posed: {{question.date_post | date}}</i></div>
+            <div class="col-md-4">Approved: {{question.Approved}}</div>
+        </div>
+            <textarea class="form-control" id="Answer" rows="3">{{question.a_text}}</textarea>
+           </div>
+          <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1" />
+            <label for="exampleCheck1">Check me out</label>
+          </div>
+          <button type="submit" class="btn btn-primary mb-4" fdprocessedid="3ceojl">Submit</button>
+        </form>
+      </div>
+      <div class="col-md-6">
+      
+          <div >
+            <h4 >Documents <i class="feather icon-pdf"></i></h4>
+           <div class="row" *ngFor="let d of question.attachments">
+            <div class="col-md-6">
+                <a href="/docs/pdf/{{d.id}}" target="_blank">{{d.name}}</a>
+            </div>
+            <div class="col-md-3">
+                <button class="button btn-sm btn-warning"><i class="feather icon-trash"></i></button>
+            </div>
+            <div class="col-md-3">
+                <!-- <button class="button btn btn-warning"><i class="feather icon-trash"></i></button> -->
+            </div>
+           </div>
+          </div>
+         
+         <h4>Other Details</h4>
+      
+      </div>
+    </div>
+  </div>
+</div>

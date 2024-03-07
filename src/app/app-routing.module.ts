@@ -11,6 +11,7 @@ import { RecentDocumentsComponent } from './recent-documents/recent-documents.co
 import { QuestionsAccountComponent } from './questions-account/questions-account.component';
 import { QuestionsGeneralComponent } from './questions-general/questions-general.component';
 import { QuestionApproveComponent } from './staff-section/question-approve/question-approve.component';
+import { EditQuestionComponent } from './staff-section/edit-question/edit-question.component';
 
 const routes: Routes = [
 	{
@@ -39,12 +40,16 @@ const routes: Routes = [
 			{ path: 'docs/pdf/:id', component: DocumentViewerComponent},
 
 			///paths that should be protected staff and admin only
+			{ path: 'manage/question', component: EditQuestionComponent,
+			canActivate: [AuthGuard],
+			data: { roles: ['admin', 'manager'] } },
 			{ path: 'docs/recent', component: RecentDocumentsComponent,
 			canActivate: [AuthGuard],
 			data: { roles: ['admin', 'manager'] } },
 			{ path: 'staff/qapprove', component: QuestionApproveComponent,
 			canActivate: [AuthGuard],
 			data: { roles: ['admin', 'manager'] } },
+			
 
 		]
 	},

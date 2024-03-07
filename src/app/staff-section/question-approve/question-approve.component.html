@@ -57,22 +57,22 @@
 			<table class="table table-hover">
 				<thead>
 					<tr>
-						<th >#</th>
+						<th >Edit</th>
 						<th >Account</th>
 						<th >Date Posted</th>
 						<th class="w-30">Questions</th>
 						
 						<th style="width:30%">Answer</th>
 						<th >Date Answered</th>
-						<th>docs</th>
+						<th>Upload Docs</th>
 					</tr>
 				</thead>
 			<tbody>
 					<ng-container *ngFor="let q of questions;  let indexOfelement=index;">
 						<!-- <ng-container *ngFor="let q of questions | search:searchText : accountList : qfilter.has_answer :  filter2; let indexOfelement=index;"> 
 					 -->
-						<tr     (click)="openMyModal('modal-16',q)" role="button" *ngIf="indexOfelement >= listStart && indexOfelement <= listEnd">
-						<td>{{q.q_num}}</td>
+						<tr  *ngIf="indexOfelement >= listStart && indexOfelement <= listEnd">
+						<td><button class="btn btn-sm btn-primary" (click)="editQuestion(q)"><i class="feather icon-edit"></i>{{q.q_num}}</button></td>
 						<td >{{q.account.id}}</td>
 						<td>{{q.date_post | date}}</td>
 						<td >{{q.q_text}}</td>
@@ -81,8 +81,13 @@
 						<!-- <td>{{q.d}}</td> -->
 						<td></td>
 						<td>
-							<span *ngFor="let doc of q.attachments">
-								<a href="/docs/pdf/{{doc.id}}" target="_blank">{{doc.name}}</a></span>
+							<button class="btn btn-sm btn-primary" (click)="uploadPage(q.id)" 	><i class="feather icon-upload"></i> </button> <i *ngIf="q.attachments && q.attachments.length > 0" class="feather icon-paperclip text-black" [ngbPopover]="displayDocNames(q.attachments)"
+								[openDelay]="100"
+								[closeDelay]="200"
+								popoverTitle="Documents Attached"
+								triggers="mouseenter:mouseleave"></i>
+							<!-- <span *ngFor="let doc of q.attachments">
+								<a href="/docs/pdf/{{doc.id}}" target="_blank">{{doc.name}}</a></span> -->
 						</td>
 					</tr>
 				</ng-container>
