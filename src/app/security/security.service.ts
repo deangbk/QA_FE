@@ -40,11 +40,17 @@ export class SecurityService {
 		return localStorage.getItem('l-token') ?? '';
 	}
 	
+	public getProjectId(): number {
+		if (!this.isAuthenticated()) return -1;
+		
+		var idProj = this.getTokenField('project');
+		return Number(idProj);
+	}
 	public getUserID(): number {
 		if (!this.isAuthenticated()) return -1;
 
 		var idClaim = this.getTokenField('id');
-		return idClaim;
+		return Number(idClaim);
 	}
 	public hasRole(role: string): boolean {
 		if (!this.isAuthenticated()) return false;
