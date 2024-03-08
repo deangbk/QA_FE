@@ -33,7 +33,7 @@ class ListItem {
 	templateUrl: './recent-documents.component.html',
 	styleUrls: ['./recent-documents.component.scss']
 })
-export class RecentDocumentsComponent {
+export class RecentDocumentsComponent implements OnInit {
 	// TODO: Replace with your actual projectId
 	projectId = 1;
 	
