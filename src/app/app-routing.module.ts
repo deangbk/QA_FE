@@ -52,7 +52,6 @@ const routes: Routes = [
 			},
 
 			///paths that should be protected staff and admin only
-
 			{
 				path: 'staff',
 				canActivate: [AuthGuard],
@@ -62,13 +61,13 @@ const routes: Routes = [
 						'manager'
 					]
 				},
-
+				
 				children: [
 					{
 						path: 'addusers', component: AddUsersComponent,
 					},
 					{
-						path: 'qmanage', component: EditQuestionComponent,
+						path: 'qmanage/:id', component: EditQuestionComponent,
 					},
 					{
 						path: 'qapprove', component: QuestionApproveComponent,
