@@ -62,13 +62,13 @@ export class DataService {
 	// -----------------------------------------------------
 	// Auth
 
-	public login(username: string, password: string) {
+	public login(projectId: number, username: string, password: string) {
 		var body: Models.ReqBodyLogin = {
 			email: username,
 			password: password,
 		};
 		return <Observable<Models.RespLoginToken>>
-			this._post(`auth/login`, body);
+			this._post(`auth/login/${projectId}`, body);
 	}
 
 	// -----------------------------------------------------

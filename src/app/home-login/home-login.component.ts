@@ -11,6 +11,8 @@ import * as Models from "../data/data-models";
   styleUrls: ['./home-login.component.scss']
 })
 export class HomeLoginComponent implements OnInit {
+	// TODO: Replace with the actual projectId
+	projectId = 1;
 	
 	constructor(private router: Router, private dataService: DataService,
 		private securityService: SecurityService) { }
@@ -18,9 +20,9 @@ export class HomeLoginComponent implements OnInit {
 	hide = true;
 	userType: string = '';
 
-	Username = new FormControl('0@test.admin');
-	Password = new FormControl('pasaworda55');
-	Token: object;
+	username = new FormControl('0@test.admin');
+	password = new FormControl('pasaworda55');
+	token: object;
 	
 	ngOnInit(): void {
 		console.log(this.securityService.getToken());
@@ -33,14 +35,17 @@ export class HomeLoginComponent implements OnInit {
 	onSubmit() {
 		//console.log(this.Username.value, this.Password.value);
 		
-		this.securityService.tryLogin(this.Username.value ?? '', this.Password.value ?? '').subscribe({
-			next: x => {
-				this.securityService.saveLoginToken(x);
-				//console.log(x);
-				//this.router.navigate(['/sample-page']);
-			},
-			error: x => console.log(x),
-		});
+		if (this.username != null && this.password != null) {
+			this.securityService.tryLogin(this.projectId, this.username.value, this.password.value)
+				.subscribe({
+					next: x => {
+						this.securityService.saveLoginToken(x);
+						//console.log(x);
+						//this.router.navigate(['/sample-page']);
+					},
+					error: x => console.log(x),
+				});
+		}
 	}
 	
 	onForgotPasswordClick() {

@@ -20,6 +20,9 @@ import { first } from 'rxjs/operators';
   styleUrls: ['./auth-signin-v2.component.scss']
 })
 export class AuthSigninV2Component implements OnInit {
+	// TODO: Replace with the actual projectId
+	projectId = 1;
+	
   // public method
   usernameValue = '0@test.admin';
   userPassword = 'pasaworda55';
@@ -77,7 +80,7 @@ export class AuthSigninV2Component implements OnInit {
 
     this.error = '';
     this.loading = true;
-    this.securityService.tryLogin(this.usernameValue ?? '', this.userPassword ?? '').subscribe({
+	  this.securityService.tryLogin(this.projectId, this.usernameValue ?? '', this.userPassword ?? '').subscribe({
 			next: x => {
 				this.securityService.saveLoginToken(x);
 				this.router.navigate(['/main']);
