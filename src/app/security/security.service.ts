@@ -73,8 +73,10 @@ export class SecurityService {
 		return this.isAdmin() || this.isManager();
 	}
 	
-	public tryLogin(username: string, password: string) : Observable<Models.RespLoginToken> {
-		return this.dataService.login(username, password);
+	public tryLogin(projectId: number, username: string, password: string):
+		Observable<Models.RespLoginToken>
+	{
+		return this.dataService.login(projectId, username, password);
 	}
 	public logout() {
 		this.removeLoginToken();

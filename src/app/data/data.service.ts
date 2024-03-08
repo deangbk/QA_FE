@@ -62,13 +62,13 @@ export class DataService {
 	// -----------------------------------------------------
 	// Auth
 
-	public login(username: string, password: string) {
+	public login(projectId: number, username: string, password: string) {
 		var body: Models.ReqBodyLogin = {
 			email: username,
 			password: password,
 		};
 		return <Observable<Models.RespLoginToken>>
-			this._post(`auth/login`, body);
+			this._post(`auth/login/${projectId}`, body);
 	}
 
 	// -----------------------------------------------------
@@ -127,13 +127,13 @@ export class DataService {
 		var query = Helpers.bodyToHttpQueryString({},
 			["details", details]);
 		return <Observable<Models.RespPostData[]>>
-			this._post(`manager/post/${projectId}?${query}`, filter);
+			this._post(`manage/post/${projectId}?${query}`, filter);
 	}
-
+	
 	// -----------------------------------------------------
 	// User
-
-
+	
+	
 
 	// -----------------------------------------------------
 	// Project

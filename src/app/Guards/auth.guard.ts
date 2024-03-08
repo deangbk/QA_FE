@@ -5,21 +5,30 @@ import { SecurityService } from '../security/security.service';
 import { ActivatedRouteSnapshot, RouterStateSnapshot,UrlTree } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
 
-  constructor(private authService:  SecurityService, private router: Router) {}
+	constructor(private securityService: SecurityService, private router: Router) { }
 
-  canActivate(  next: ActivatedRouteSnapshot,state: RouterStateSnapshot) :Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree  {
-    const topLevel=this.authService.isManager()?'manager':'user';
-    const routeRoles =next.data['roles'] as Array<string>;
-    console.log("Top Level:"+topLevel);
-    if (this.authService.isAuthenticated() && routeRoles.includes(topLevel)) {
-      return true;
-    } else {
-      this.router.navigate(['/sign']);
-      return false;
-    }
-  }
+	canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot):
+		Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
+	{
+		// Early return if authentication is invalid, redirect to login
+		if (!this.securityService.isAuthenticated()) {
+			this.router.navigate(['/sign']);
+			return false;
+		}
+		
+		// Must have any of the provided roles to be granted access
+		const expectRoles = next.data['roles'] as string[];
+		
+		for (let role of expectRoles) {
+			if (this.securityService.hasRole(role))
+				return true;
+		}
+		
+		this.router.navigate(['/sign']);
+		return false;
+	}
 }
