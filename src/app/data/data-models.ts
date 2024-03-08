@@ -12,6 +12,13 @@ export interface ReqBodyCreateProject {
 	tranches: string,
 }
 
+export interface ReqBodyCreateUser {
+	email: string,
+	name: string,
+	company?: string,
+	tranches?: string[],
+}
+
 export interface ReqBodyAddNote {
 	text: string,
 	description: string,
