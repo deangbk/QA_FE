@@ -40,7 +40,7 @@ const routes: Routes = [
 			{ path: 'docs/pdf/:id', component: DocumentViewerComponent},
 
 			///paths that should be protected staff and admin only
-			{ path: 'manage/question', component: EditQuestionComponent,
+			{ path: 'manage/question/:id', component: EditQuestionComponent,
 			canActivate: [AuthGuard],
 			data: { roles: ['admin', 'manager'] } },
 			{ path: 'docs/recent', component: RecentDocumentsComponent,

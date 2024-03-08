@@ -364,4 +364,11 @@ export class DataService {
      
 		return this.postGet(1, {}, null);
 	}
+	public getQuestionss(filter: Models.ReqBodyGetPosts, projectId: number): Observable<Models.RespGetPost> {
+		/* return this.http
+		.get(`${this.baseUrl}/post/get_page/1`)
+		.pipe(catchError(this.handleError)); */
+     
+		return this.postGet(1, {}, null);
+	}
 }

@@ -47,6 +47,7 @@ export interface ReqBodyGetPosts {
 
 	type?: string,
 	category?: string,
+	
 }
 export interface QuestionExcelUser{
 	Tranche?: string,		
