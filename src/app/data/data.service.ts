@@ -127,13 +127,13 @@ export class DataService {
 		var query = Helpers.bodyToHttpQueryString({},
 			["details", details]);
 		return <Observable<Models.RespPostData[]>>
-			this._post(`manager/post/${projectId}?${query}`, filter);
+			this._post(`manage/post/${projectId}?${query}`, filter);
 	}
-
+	
 	// -----------------------------------------------------
 	// User
-
-
+	
+	
 
 	// -----------------------------------------------------
 	// Project
