@@ -1,1 +1,14 @@
-<p>add-users works!</p>
+
+<div class="col-xl-12">
+	<app-card cardTitle="Add users from .xlsx" [options]="false" blockClass="table-border-style">
+		<div class="upload-box" (click)="callbackClickUpload()">
+			<i class="feather icon-file-text"></i>
+			<h3>Click to upload file</h3>
+		</div>
+	</app-card>
+</div>
+
+<input type="file" style="display: none;" 
+	accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" 
+	(change)="callbackGetUploadFile($event)" 
+	#file />
