@@ -12,6 +12,7 @@ import { QuestionsAccountComponent } from './questions-account/questions-account
 import { QuestionsGeneralComponent } from './questions-general/questions-general.component';
 import { QuestionApproveComponent } from './staff-section/question-approve/question-approve.component';
 import { EditQuestionComponent } from './staff-section/edit-question/edit-question.component';
+import { AddUsersComponent } from './staff-section/add-users/add-users.component';
 
 const routes: Routes = [
 	{
@@ -19,38 +20,60 @@ const routes: Routes = [
 		component: AdminComponent,
 		canActivate: [AuthGuard],
 		data: { roles: ['admin', 'manager', 'user'] },
-		
+
 		children: [
-			{ path: '', redirectTo: 'sign', pathMatch: 'full' },
+			{
+				path: '',
+				redirectTo: 'sign',
+				pathMatch: 'full'
+			},
 			
 			{
 				path: 'main',
 				loadComponent: () => import('./demo/sample-page/sample-page.component'),
-				
 			},
-			{ path: 'question/:id', component: QuestionsDisplayComponent,
-		//	canActivate: [AuthGuard],
-		//data: { roles: ['admin', 'manager'] }
-	 },
-	 { path: 'questions/account', component: QuestionsAccountComponent },
-	 { path: 'questions/general', component: QuestionsGeneralComponent },
-	 
-	
-			//{ path: 'test/document', component: DocumentViewerComponent },
-			{ path: 'docs/pdf/:id', component: DocumentViewerComponent},
+			{
+				path: 'question/:id', component: QuestionsDisplayComponent,
+				//	canActivate: [AuthGuard],
+				//data: { roles: ['admin', 'manager'] }
+			},
+			{
+				path: 'questions/account', component: QuestionsAccountComponent
+			},
+			{
+				path: 'questions/general', component: QuestionsGeneralComponent
+			},
+			
+			{
+				path: 'docs/pdf/:id', component: DocumentViewerComponent
+			},
+			{
+				path: 'docs/recent', component: RecentDocumentsComponent,
+			},
 
 			///paths that should be protected staff and admin only
-			{ path: 'manage/question/:id', component: EditQuestionComponent,
-			canActivate: [AuthGuard],
-			data: { roles: ['admin', 'manager'] } },
-			{ path: 'docs/recent', component: RecentDocumentsComponent,
-			canActivate: [AuthGuard],
-			data: { roles: ['admin', 'manager'] } },
-			{ path: 'staff/qapprove', component: QuestionApproveComponent,
-			canActivate: [AuthGuard],
-			data: { roles: ['admin', 'manager'] } },
-			
-
+			{
+				path: 'staff',
+				canActivate: [AuthGuard],
+				data: {
+					roles: [
+						'admin',
+						'manager'
+					]
+				},
+				
+				children: [
+					{
+						path: 'addusers', component: AddUsersComponent,
+					},
+					{
+						path: 'qmanage/:id', component: EditQuestionComponent,
+					},
+					{
+						path: 'qapprove', component: QuestionApproveComponent,
+					},
+				],
+			},
 		]
 	},
 	{

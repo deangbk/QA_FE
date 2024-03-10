@@ -25,37 +25,37 @@ export interface Navigation extends NavigationItem {
 }
 
 const NavigationItems = [
-  {
-    id: 'other',
-    title: 'Other',
-    type: 'group',
-    icon: 'icon-other',
-    children: [
-      {
-        id: 'Main',
-        title: 'Main',
-        type: 'item',
-        url: '/main',
-        classes: 'nav-item',
-        icon: 'feather icon-home'
-      },
-      {
-        id: 'questions-account',
-        title: 'Account Questions',
-        type: 'item',
-        url: '/questions/account',
-        classes: 'nav-item',
-        icon: 'feather icon-layers'
-      },
-      {
-        id: 'questions-general',
-        title: 'General Questions',
-        type: 'item',
-        url: '/questions/general',
-        classes: 'nav-item',
-        icon: 'feather icon-clipboard'
-      },
-      {
+	{
+		id: 'other',
+		title: 'Other',
+		type: 'group',
+		icon: 'icon-other',
+		children: [
+			{
+				id: 'Main',
+				title: 'Main',
+				type: 'item',
+				url: '/main',
+				classes: 'nav-item',
+				icon: 'feather icon-home'
+			},
+			{
+				id: 'questions-account',
+				title: 'Account Questions',
+				type: 'item',
+				url: '/questions/account',
+				classes: 'nav-item',
+				icon: 'feather icon-layers'
+			},
+			{
+				id: 'questions-general',
+				title: 'General Questions',
+				type: 'item',
+				url: '/questions/general',
+				classes: 'nav-item',
+				icon: 'feather icon-clipboard'
+			},
+			{
 				id: 'recent-docs',
 				title: 'Recent Documents',
 				type: 'item',
@@ -63,52 +63,66 @@ const NavigationItems = [
 				classes: 'nav-item',
 				icon: 'feather icon-list'
 			},
-      {
-        id: 'home-login',
-        title: 'User Login',
-        type: 'item',
-        url: '/login',
-        classes: 'nav-item',
-        icon: 'user icon-sidebar'
-      },
-      {
-        id: 'staff-access',
-        title: 'Staff Access',
-        type: 'collapse',
-        icon: 'feather icon-menu',
-        children: [
-          {
-            id: 'question-approve',
-            title: 'Manage Questions',
-            type: 'item',
-            url: 'staff/qapprove',          
-            external: true
-          },
-          {
-            id: 'menu-level-2.2',
-            title: 'Menu Level 2.2',
-            type: 'collapse',
-            children: [
-              {
-                id: 'menu-level-2.2.1',
-                title: 'Menu Level 2.2.1',
-                type: 'item',
-                url: 'javascript:',
-                external: true
-              },
-              {
-                id: 'menu-level-2.2.2',
-                title: 'Menu Level 2.2.2',
-                type: 'item',
-                url: 'javascript:',
-                external: true
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  }
+			{
+				id: 'home-login',
+				title: 'User Login',
+				type: 'item',
+				url: '/login',
+				classes: 'nav-item',
+				icon: 'user icon-sidebar'
+			},
+			{
+				id: 'staff-access',
+				title: 'Staff Access',
+				type: 'collapse',
+				icon: 'feather icon-menu',
+				children: [
+					{
+						id: 'app-add-users',
+						title: 'Create Project Users',
+						type: 'item',
+						url: 'staff/addusers',
+						external: true
+					},
+					{
+						id: 'question-approve',
+						title: 'Approve Questions',
+						type: 'item',
+						url: 'staff/qapprove',
+						external: true
+					},
+					{
+						id: 'question-manage',
+						title: 'Manage Questions',
+						type: 'item',
+						url: 'staff/qmanage',
+						external: true
+					},
+					{
+						id: 'menu-level-2.2',
+						title: 'Menu Level 2.2',
+						type: 'collapse',
+						children: [
+							{
+								id: 'menu-level-2.2.1',
+								title: 'Menu Level 2.2.1',
+								type: 'item',
+								url: 'javascript:',
+								external: true
+							},
+							{
+								id: 'menu-level-2.2.2',
+								title: 'Menu Level 2.2.2',
+								type: 'item',
+								url: 'javascript:',
+								external: true
+							}
+						]
+					}
+				]
+			}
+		]
+	}
 ];
 
 @Injectable()

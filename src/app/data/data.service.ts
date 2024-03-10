@@ -116,13 +116,17 @@ export class DataService {
 			this._delete(`manage/ungrant/access/${trancheId}/${userId}`);
 	}
 
-	public managerBulkAddUsers(projectId: number, file: File) {
+	public managerBulkAddUsersFromFile(projectId: number, file: File) {
 		var form = new FormData();
 		form.append('file', file, file.name);
 		return <Observable<Models.RespBulkUserCreate[]>>
 			this._post(`manage/bulk/create_user/${projectId}`, form);
 	}
-
+	public managerBulkAddUsers(projectId: number, users: Models.ReqBodyCreateUser[]) {
+		return <Observable<Models.RespBulkUserCreate[]>>
+			this._post(`manage/bulk/create_user/json/${projectId}`, users);
+	}
+	
 	public managerGetPosts(projectId: number, filter: Models.ReqBodyGetPosts, details: number = 0) {
 		var query = Helpers.bodyToHttpQueryString({},
 			["details", details]);
