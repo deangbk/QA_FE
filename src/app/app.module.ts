@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -54,9 +55,49 @@ import { QuestionApproveComponent } from './staff-section/question-approve/quest
 import { UploadDocumentsComponent } from './staff-section/upload-documents/upload-documents.component';
 import { AddUsersComponent } from './staff-section/add-users/add-users.component';
 import { EditQuestionComponent } from './staff-section/edit-question/edit-question.component';
+import { NotifierModule, NotifierOptions } from 'angular-notifier';
 //import { QApprovePipe } from './pipes/q-approve.pipe';
 
-
+const customNotifierOptions: NotifierOptions = {
+	position: {
+	  horizontal: {
+		position: 'right',
+		distance: 12
+	  },
+	  vertical: {
+		position: 'top',
+		distance: 12,
+		gap: 10
+	  }
+	},
+	theme: 'material',
+	behaviour: {
+	  autoHide: 5000,
+	  onClick: 'hide',
+	  onMouseover: 'pauseAutoHide',
+	  showDismissButton: true,
+	  stacking: 4
+	},
+	animations: {
+	  enabled: true,
+	  show: {
+		preset: 'slide',
+		speed: 300,
+		easing: 'ease'
+	  },
+	  hide: {
+		preset: 'fade',
+		speed: 300,
+		easing: 'ease',
+		offset: 50
+	  },
+	  shift: {
+		speed: 300,
+		easing: 'ease'
+	  },
+	  overlap: 150
+	}
+  };
 
 
 
@@ -122,8 +163,10 @@ import { EditQuestionComponent } from './staff-section/edit-question/edit-questi
 		NgSelectModule,
 		NgbModule,
 		NgbPaginationModule,
+		FormsModule,
 		
 		MatIconModule, MatButtonModule, 
+		NotifierModule.withConfig(customNotifierOptions)
 	],
 })
 export class AppModule {}

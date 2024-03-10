@@ -1,20 +1,21 @@
+<notifier-container></notifier-container>
 <div class="card">
   <div class="card-header">
-    <h5>Update Question</h5>
+    <h5>Update Question </h5>
   </div>
   <div class="card-body">
     <div class="row">
       <div class="col-md-6">
-        <form>
+        <form #editQuestion="ngForm">
           <div class="form-group">
             <div class="row">
             <div class="col-md-4">
             <label class="form-label" for="questDesc">Question</label>
             </div>
             <div class="col-md-4"><i class="feather icon-calendar"> Date Posed: {{question.date_post | date}}</i></div>
-            <div class="col-md-4">Approved: {{question.id}}</div>
+            <div class="col-md-4">Approved:  {{ question.q_approve_by == null || question.q_approve_by.id == 0 ? 'No' : 'Yes' }}</div>
               </div>
-            <textarea class="form-control" id="questDesc" rows="3">{{question.q_text}}</textarea>
+            <textarea class="form-control" id="questDesc" rows="3" [(ngModel)]="question.q_text" name="q_text"></textarea>
       
             </div>
           
@@ -24,27 +25,33 @@
             <label class="form-label" for="Answer">Answer</label>
             </div>
             <div class="col-md-4"><i class="feather icon-calendar"> Date Posed: {{question.date_post | date}}</i></div>
-            <div class="col-md-4">Approved: {{question.id}}</div>
+            <div class="col-md-4">Approved:  {{ question.a_approve_by == null || question.a_approve_by.id == 0 ? 'No' : 'Yes' }}</div>
         </div>
-            <textarea class="form-control" id="Answer" rows="3">{{question.a_text}}</textarea>
+        <textarea class="form-control" id="Answer" rows="3" [(ngModel)]="question.a_text" nam="a_text"></textarea>
            </div>
-          <div class="form-group form-check">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-            <label for="exampleCheck1">Check me out</label>
+          <div class="form-group mt-2">
+            <label class="form-selet-label" for="categorySelect">Category</label>
+            <select class="form-control  mt-1" id="categorySelect" name="category" [(ngModel)]="question.category" >
+              <option value="''">No Category</option>
+              <option value="general">General</option>
+              <option value="'collateral'">Collateral</option>
+              <option value="'guarantor'">Guarantor</option>
+              <option value="'litigation'">Litigation</option>
+              </select>
           </div>
-          <button type="submit" class="btn btn-primary mb-4" fdprocessedid="3ceojl">Submit</button>
+          <button type="submit" class="btn btn-primary mb-4 mt-2" (click)="submitQuestion()">Submit <i class="fa fa-spin fa-spinner" *ngIf="loading"></i></button>
         </form>
       </div>
       <div class="col-md-6">
       
           <div >
             <h4 >Documents <i class="feather icon-pdf"></i></h4>
-           <div class="row" *ngFor="let d of question.attachments">
+           <div class="row" *ngFor="let d of question.attachments" >
             <div class="col-md-6">
                 <a href="/docs/pdf/{{d.id}}" target="_blank"><i class="feather icon-file"></i> {{d.name}}</a>
             </div>
             <div class="col-md-3">
-                <button class="button btn-sm btn-warning"><i class="feather icon-trash"></i></button>
+                <button class="btn btn-danger"><i class="feather icon-trash-2"></i> Delete</button>
             </div>
             <div class="col-md-3">
                 <!-- <button class="button btn btn-warning"><i class="feather icon-trash"></i></button> -->
@@ -53,8 +60,35 @@
           </div>
          
          <h4 class="mt-2">Other Details</h4>
+         <div class="row">
+          <div class="col-md-6">
+            <h4><span class="badge rounded-pill bg-primary"> Queston Id: {{question.id}}</span> </h4>
+         </div>
+         <div class="col-md-6">
+          <h4><span class="badge rounded-pill bg-success">Question Num #{{question.q_num}}</span></h4>
+       </div>
+          <div class="col-md-6">
+
+            <h4><strong> Question Type </strong> <span *ngIf="question.type==1" class="badge bg-primary"> Account</span><span *ngIf="question.type==2">General</span></h4>
+         </div>
+         <div class="col-md-6">
+          <h4 *ngIf="question.type==1"><strong> Account </strong> <span class="badge bg-dark">{{question.account.id}}</span> </h4>
+       </div>
+          <div class="col-md-6">
+            <p><strong> Posted By:</strong> {{question.post_by.display_name}}</p>
+         </div>
+         <div class="col-md-6">
+          <p><strong> Date </strong> <i class="feather icon-calendar"></i> {{question.date_post | date}}</p>
+       </div>
+       <div class="col-md-6">
+        <p><strong>Last Edited By </strong>  {{question.edit_by.display_name}}</p>
+     </div>
+     <div class="col-md-6">
+      <p><strong> Last Edited </strong> <i class="feather icon-calendar"></i> {{question.date_edit | date}}</p>
+   </div>
       
       </div>
     </div>
   </div>
 </div>
+

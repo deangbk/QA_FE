@@ -23,8 +23,10 @@ export class QuestionsService{
 		return throwError(() => err);
 	}
 	protected _post(url: string, body?: any) {
+		const headers = { 'content-type': 'application/json' };
+  
 		return this.http
-			.post(`${this.baseUrl}/${url}`, body)
+			.post(`${this.baseUrl}/${url}`, body, { 'headers': headers })
 			.pipe(catchError(this.handleError));
 	}
 	protected _put(url: string, body?: any) {
@@ -33,10 +35,22 @@ export class QuestionsService{
 			.pipe(catchError(this.handleError));
 	}
 
+	public questionEdit(postID: number, edit: Models.RespPostData) {
+		const qUpdate ={
+			id: postID,
+			q_num: edit.q_num,
+			type: edit.type,
+			category: edit.category,
+			q_text: edit.q_text,
+			a_text: edit.a_text,
+		}
+		return this._post(`manage/editq`, qUpdate);
+	}
+
 	///get questions as manager
 	public postGet(projectId: number,
 		filter: Models.ReqBodyGetPosts, paginate?: Models.ReqBodyPaginate,
-		details: number = 0)
+		details: number = 1)
 	{
 		var query = Helpers.bodyToHttpQueryString({},
 			["details", details]);
@@ -45,6 +59,23 @@ export class QuestionsService{
 		
 		return <Observable<Models.RespGetPost>>
 			this._post(`manage/post/${projectId}?${query}`, body);
+	}
+
+	public postQ(edit: Models.RespPostData)
+	{
+		
+		var body= { "id": edit.id,"category": edit.category, "q_text": edit.q_text, "a_text": edit.a_text}
+		// var body= {
+		// 	"id": edit.id,
+		// 	"q_num": edit.q_num,
+		// 	"type": edit.type,
+		// 	"category": edit.category,
+		// 	"q_text": edit.q_text,
+		// 	"a_text": edit.a_text,
+		// }
+		
+		return <Observable<Models.RespGetPost>>
+			this._post(`manage/editq`, body);
 	}
 	/* ////questions
 	public questionGet(projectId: number, filter: Models.ReqBodyGetPosts, details: number = 0) {
@@ -63,7 +94,7 @@ export class QuestionsService{
 		return <Observable<Models.RespGetPost>>
 			this._post(`post/page/${projectId}?${query}`, body);
 	} */
-// get questions as manager
+// get questions as manager, not being used
 	public getQuestions(filter: Models.ReqBodyGetPosts, projectId: number): Observable<Models.RespGetPost> {
 		/* return this.http
 		.get(`${this.baseUrl}/post/get_page/1`)

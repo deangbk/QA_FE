@@ -136,7 +136,7 @@ export class QuestionApproveComponent {
 			console.log(qId);
 		  }
 		  editQuestion(question: Models.RespPostData) {
-			this.router.navigate(['manage/question'], { state: { data: question } });
+			this.router.navigate(['manage/question/'+question.id]);
 		  }
 		  displayDocNames(docs: Models.RespDocumentData[]) {
 			var docNames = docs.map(doc => doc.name).join(', ');

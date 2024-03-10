@@ -26,6 +26,8 @@
 
 @import 'scss/layout/layout';
 @import 'scss/custom';
+//@import '~/angular-notifier/styles';
+@import '../node_modules/angular-notifier/styles';
 
 // toast module
 //@import '../node_modules/ngx-toastr/toastr';

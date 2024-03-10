@@ -216,7 +216,19 @@ export interface RespPostData {
 	date_q_approve?: string,
 	date_a_approve?: string,
 }
+export interface updateQuest {
+	id: number,
+	q_num: number,
+	type: number,
+	category: string,
 
+	//account?: RespAccountData,
+
+	q_text: string,
+	a_text?: string,
+
+	
+}
 export interface RespDocumentData {
 	id: number,
 	name: string,
