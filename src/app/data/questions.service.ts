@@ -57,7 +57,7 @@ export class QuestionsService{
 		var body= filter;
 	//	var body= { "id": 34 }
 		
-		return <Observable<Models.RespGetPost>>
+		return <Observable<Models.RespPostData[]>>
 			this._post(`manage/post/${projectId}?${query}`, body);
 	}
 
@@ -95,7 +95,7 @@ export class QuestionsService{
 			this._post(`post/page/${projectId}?${query}`, body);
 	} */
 // get questions as manager, not being used
-	public getQuestions(filter: Models.ReqBodyGetPosts, projectId: number): Observable<Models.RespGetPost> {
+	public getQuestions(filter: Models.ReqBodyGetPosts, projectId: number): Observable<Models.RespPostData[]> {
 		/* return this.http
 		.get(`${this.baseUrl}/post/get_page/1`)
 		.pipe(catchError(this.handleError)); */

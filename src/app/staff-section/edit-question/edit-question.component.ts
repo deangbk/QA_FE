@@ -47,7 +47,7 @@ export class EditQuestionComponent {
     console.log(this.question);
     this.question = createDefaultRespPostData();
     this.getQuestions(this.paginate, this.projectId).subscribe({
-      next: (data: Models.RespGetPost) => {
+      next: (data: Models.RespPostData[]) => {
 
 
         this.question = data[0];
@@ -76,7 +76,7 @@ export class EditQuestionComponent {
     this.notifier.notify(type, message);
   }
 
-  getQuestions(paginate: Models.ReqBodyPaginate, projectId: number): Observable<Models.RespGetPost> {
+  getQuestions(paginate: Models.ReqBodyPaginate, projectId: number): Observable<Models.RespPostData[]> {
     this.qFilter.id = this.questionId;
     this.qFilter.type = "question";
     return this.qService.postGet(projectId, this.qFilter, paginate);

@@ -1,6 +1,7 @@
 import { Component, OnInit, TemplateRef, Input } from '@angular/core';
 
 import { DataService } from '../../data/data.service';
+import { QuestionsService } from '../../data/questions.service';
 import { SecurityService } from '../../security/security.service';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { CommonModule } from '@angular/common';
@@ -41,11 +42,11 @@ export class QuestionApproveComponent {
 	page = 1;
 	listStart=0;
 	listEnd=2000;
-	pageSize: number = 3;
+	pageSize: number = 10;
 	projectId: number = 1;
 	paginate: Models.ReqBodyPaginate = null;
 
-  constructor(private dataService: DataService, private sService: SecurityService,private router: Router) { }
+  constructor(private dataService: DataService,private qService: QuestionsService, private sService: SecurityService,private router: Router) { }
   ngOnInit() {
 		
 		this.singleQuestion= createDefaultRespPostData();
@@ -69,11 +70,11 @@ export class QuestionApproveComponent {
 	console.log("Is User:"+this.isUser);
 
 	this.getQuestions(this.paginate, this.projectId).subscribe({
-		next: (data: Models.RespGetPost) => {
-		  this.questions = data.posts;
-		  this.filteredQuestions= 	[...data.posts];
-		  this.filteredQuestionsCount = data.posts.length;
-		  console.log(this.questions);
+		next: ( data: Models.RespPostData[]) => {
+		  this.questions = data;
+		  this.filteredQuestions= 	[...data];
+		 this.filteredQuestionsCount = data.length;
+		  console.log(data);
 		  this.getAccounts();
 		},
 		error: e => {
@@ -117,18 +118,27 @@ export class QuestionApproveComponent {
 	 
 	
 
-	  getQuestions(paginate: Models.ReqBodyPaginate, projectId: number): Observable<Models.RespGetPost> {
+	  getQuestions(paginate: Models.ReqBodyPaginate, projectId: number): Observable<Models.RespPostData[]> {
 
-		return this.dataService.postGet(projectId, this.qfilter, paginate);
+		//return this.dataService.postGet(projectId, this.qfilter, paginate);
+		return this.qService.postGet(projectId, this.qfilter, paginate);
 	  }
 
 	
 
 		getAccounts(): void {
-			this.accountList$ = this.questions
-      .filter(q => q.account !== null && q.account !== undefined)
-      .map(q => q.account.id)
-      .sort();
+	// 		this.accountList$ = this.questions
+    //   .filter(q => q.account !== null && q.account !== undefined)
+    //   .map(q => q.account.id)
+    //   .sort();
+
+	  this.accountList$ =  Array.from(
+		new Set(
+		  this.questions
+			.filter(q => q.account !== null && q.account !== undefined)
+			.map(q => q.account.id)
+		)
+	  ).sort();
 		
 			
 		  }
@@ -146,7 +156,7 @@ export class QuestionApproveComponent {
 		  }
 		  displayDocNames(docs: Models.RespDocumentData[]) {
 			var docNames = docs.map(doc => doc.name).join(', ');
-			docNames = docNames.length > 0 ? docNames+' --- Click to Upload More' : 'No attachments, click to upload.';
+			docNames = docNames.length > 0 ? docNames+'' : 'No attachments';
 			return docNames;
 		  }
 
