@@ -146,13 +146,17 @@ export class DataService {
 		return <Observable<Models.RespProjectData>>
 			this._get(`project/get/${projectId}`);
 	}
-	public projectGetUsers(projectId: number) {
-		return <Observable<number[]>>
-			this._get(`project/users/${projectId}`);
+	public projectGetUsers(projectId: number, details = 0) {
+		var query = Helpers.bodyToHttpQueryString({},
+			["details", details]);
+		return <Observable<number[]> | Observable<Models.RespUserData[]>>
+			this._get(`project/users/${projectId}?${query}`);
 	}
-	public projectGetManagers(projectId: number) {
-		return <Observable<number[]>>
-			this._get(`project/managers/${projectId}`);
+	public projectGetManagers(projectId: number, details = 0) {
+		var query = Helpers.bodyToHttpQueryString({},
+			["details", details]);
+		return <Observable<number[]> | Observable<Models.RespUserData[]>>
+			this._get(`project/managers/${projectId}?${query}`);
 	}
 	public projectCountContent(projectId: number) {
 		return <Observable<number[]>>

@@ -78,6 +78,13 @@ const NavigationItems = [
 				icon: 'feather icon-menu',
 				children: [
 					{
+						id: 'app-view-users',
+						title: 'View Project Users',
+						type: 'item',
+						url: 'staff/viewusers',
+						external: true
+					},
+					{
 						id: 'app-add-users',
 						title: 'Create Project Users',
 						type: 'item',

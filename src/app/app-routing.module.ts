@@ -13,6 +13,7 @@ import { QuestionsGeneralComponent } from './questions-general/questions-general
 import { QuestionApproveComponent } from './staff-section/question-approve/question-approve.component';
 import { EditQuestionComponent } from './staff-section/edit-question/edit-question.component';
 import { AddUsersComponent } from './staff-section/add-users/add-users.component';
+import { ViewUsersComponent } from './staff-section/view-users/view-users.component';
 
 const routes: Routes = [
 	{
@@ -50,7 +51,7 @@ const routes: Routes = [
 			{
 				path: 'docs/recent', component: RecentDocumentsComponent,
 			},
-
+			
 			///paths that should be protected staff and admin only
 			{
 				path: 'staff',
@@ -63,6 +64,9 @@ const routes: Routes = [
 				},
 				
 				children: [
+					{
+						path: 'viewusers', component: ViewUsersComponent,
+					},
 					{
 						path: 'addusers', component: AddUsersComponent,
 					},

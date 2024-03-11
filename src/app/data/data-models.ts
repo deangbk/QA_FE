@@ -194,6 +194,10 @@ export interface RespUserData {
 
 	user_name?: string,
 	date_created?: string,
+	
+	// -----------------------------
+	
+	tranches?: RespTrancheData[],
 }
 
 export interface RespPostData {
