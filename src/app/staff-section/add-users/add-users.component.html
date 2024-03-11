@@ -1,11 +1,103 @@
 
 <div class="col-xl-12">
-	<app-card cardTitle="Add users from .xlsx" [options]="false" blockClass="table-border-style">
-		<div class="upload-box" (click)="callbackClickUpload()">
-			<i class="feather icon-file-text"></i>
-			<h3>Click to upload file</h3>
-		</div>
-	</app-card>
+	<div class="row">
+		<app-card cardTitle="Add users from .xlsx" [options]="false" blockClass="table-border-style">
+			<div class="upload-box" (click)="callbackClickUpload()">
+				<i class="feather icon-file-text"></i>
+				<h3>Click to upload file</h3>
+			</div>
+		</app-card>
+	</div>
+	
+	<div class="row" *ngIf="uploaded">
+		<app-card cardTitle="Preview Data" [options]="false" blockClass="table-border-style">
+			<div *ngIf="listUsersDTO.length == 0">
+				<div class="d-flex justify-content-center">
+					<div class="spinner-border" role="status">
+						<span class="sr-only">Reading data...</span>
+					</div>
+				</div>
+			</div>
+			<div *ngIf="listUsersDTO.length > 0">
+				<div class="row">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>Email</th>
+								<th>Name</th>
+								<th>Company</th>
+								<th>Tranches</th>
+								
+								<ng-container *ngIf="enableStaff()">
+									<th>Add as Staff</th>
+								</ng-container>
+							</tr>
+						</thead>
+						<tbody>
+							<tr *ngFor="let i of listUsersDTO;">
+								<td>{{i.email}}</td>
+								<td>{{i.name}}</td>
+								<td>{{i.company}}</td>
+								<td>{{i.tranches.toString()}}</td>
+								
+								<td *ngIf="enableStaff()">
+									<div class="d-flex align-items-center">
+										<i style="color: green;" class="feather icon-check" *ngIf="i.staff"></i>
+										<i style="color: red;" class="feather icon-x" *ngIf="!i.staff"></i>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="row">
+					<div *ngIf="buttonLoading != 'add'">
+						<button type="button" class="btn btn-primary" (click)="callbackAddUsers()">
+							Add Users to Project
+						</button>
+					</div>
+					<div *ngIf="buttonLoading == 'add'">
+						<button class="btn btn-primary" type="button" disabled>
+							<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+							Adding users...
+						</button>
+					</div>
+				</div>
+			</div>
+		</app-card>
+	</div>
+	<div class="row" *ngIf="addReady">
+		<app-card cardTitle="Added Users" [options]="false" blockClass="table-border-style">
+			<div class="err-div" *ngIf="addError != null">
+				<h2>An error has occured:</h2>
+				<h3>{{addError}}</h3>
+			</div>
+			<div *ngIf="addError == null">
+				<h4><a href="#" (click)="callbackCopyData()">
+					Data copied to clipboard, click this text to copy again.
+				</a></h4>
+				
+				<div class="row">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>User ID</th>
+								<th>Username</th>
+								<th>Password</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr *ngFor="let i of listAddedUsersData;">
+								<td>{{i.id}}</td>
+								<td>{{i.user}}</td>
+								<td>{{i.pass}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</app-card>
+	</div>
 </div>
 
 <input type="file" style="display: none;" 
