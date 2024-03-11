@@ -78,10 +78,10 @@
 						<td >{{q.account.id}}</td>
 						<td>{{q.date_post | date}}</td>
 						<td >{{q.q_text}}</td>
-						<td><button class="btn btn-sm btn-warning">No</button></td>
+						<td><button class="btn btn-sm btn-success" *ngIf="q.q_approve_by; else noQApproval" [ngbPopover]="'UnApprove Question'" triggers="mouseenter:mouseleave" (click)="setApprovals(q.id,false,'question')">Yes</button> <ng-template #noQApproval> <button class="btn btn-sm btn-warning" popoverClass="custom-popover" [ngbPopover]="'Approve Question'" triggers="mouseenter:mouseleave" (click)="setApprovals(q.id,true,'question')">No</button></ng-template></td>
 					
 						<td>{{q.a_text}}</td>
-						<td><button class="btn btn-sm btn-success">Yes</button></td>
+						<td><button class="btn btn-sm btn-success" *ngIf="q.a_approve_by; else noAApproval" [ngbPopover]="'UnApprove Answer'" triggers="mouseenter:mouseleave" (click)="setApprovals(q.id,false,'answer')">Yes</button> <ng-template #noAApproval> <button class="btn btn-sm btn-warning" [ngbPopover]="'Approve Answer'" triggers="mouseenter:mouseleave" (click)="setApprovals(q.id,true,'answer')">No</button></ng-template></td>
 						<!-- <td>{{q.d}}</td> -->
 						<td></td>
 						<td>
@@ -144,4 +144,6 @@
 	  <button type="button" class="btn btn-primary shadow-2" (click)="closeMyModal($event)"> Save changes </button>
 	</div>
   </ng-template>
+
+  <notifier-container></notifier-container>
 
