@@ -17,6 +17,7 @@ export interface ReqBodyCreateUser {
 	name: string,
 	company?: string,
 	tranches?: string[],
+	staff?: boolean,
 }
 
 export interface ReqBodyAddNote {
@@ -94,7 +95,9 @@ export interface ReqBodySetAnswer {
 	text: string,
 }
 export interface ReqBodyEditPost {
-	text: string,
+	id: number,
+	q_text?: string,
+	a_text?: string,
 	category?: string,
 }
 
