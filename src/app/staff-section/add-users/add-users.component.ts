@@ -21,6 +21,7 @@ interface ExcelDataRow {
 	name: string;
 	company: string;
 	tranches: string;
+	staff: boolean;
 }
 
 @Component({
@@ -42,10 +43,21 @@ export class AddUsersComponent implements OnInit {
 		this.projectId = securityService.getProjectId();
 	}
 	
+	uploaded = false;
+	listUsersDTO: Models.ReqBodyCreateUser[] = [];
 	
-
+	buttonLoading = '';
+	
+	listAddedUsersData: Models.RespBulkUserCreate[] = [];
+	addReady = false;
+	addError: string = null;
+	
+	enableStaff() {
+		return this.securityService.isAdmin();
+	}
+	
 	// -----------------------------------------------------
-
+	
 	ngOnInit(): void {
 		
 	}
@@ -58,6 +70,13 @@ export class AddUsersComponent implements OnInit {
 	callbackGetUploadFile(event: any): void {
 		const file: File = event.target.files[0];
 		
+		this.uploaded = true;
+		this.listUsersDTO = [];
+		
+		this.listAddedUsersData = [];
+		this.addReady = false;
+		this.addError = null;
+		
 		var reader = new FileReader();
 		reader.onload = (e: ProgressEvent<FileReader>) => {
 			var workbook = XLSX.read(e.target.result, { type: 'binary' });
@@ -65,16 +84,75 @@ export class AddUsersComponent implements OnInit {
 			var sheet = workbook.Sheets[workbook.SheetNames[0]];
 			var sheetData = XLSX.utils.sheet_to_json<ExcelDataRow>(sheet);
 			
-			var listReqDto = sheetData
+			this.listUsersDTO = sheetData
 				.map(x => ({
 					email: x.email,
 					name: x.name,
 					company: x.company ?? null,
-					tranches: x.tranches == null ? ""
+					tranches: x.tranches == null ? []
 						: x.tranches.split(','),
+					staff: x.staff ?? false,
 				} as Models.ReqBodyCreateUser));
-			console.log(listReqDto);
+			
+			if (!this.enableStaff()) {
+				for (let u of this.listUsersDTO) {
+					u.staff = false;
+				}
+			}
+			
+			console.log(this.listUsersDTO);
 		};
-		reader.readAsBinaryString(file);
+		setTimeout(() => reader.readAsBinaryString(file), 400);
+	}
+	
+	async callbackAddUsers() {
+		if (this.listUsersDTO.length == 0)
+			return;
+		
+		this.buttonLoading = 'add';
+		
+		this.listAddedUsersData = [];
+		this.addReady = false;
+		this.addError = null;
+		
+		{
+			await (new Promise(resolve => setTimeout(resolve, 500)));
+			
+			this.listAddedUsersData = this.listUsersDTO
+				.map((x, i) => ({
+					id: i + 1,
+					user: x.email,
+					pass: 'password',
+				}))
+			this.callbackCopyData();
+			//this.addError = 'Error';
+		}
+		/* let res = await Helpers.observableAsPromise(
+			this.dataService.managerBulkAddUsers(this.projectId, this.listUsersDTO));
+		if (res.ok) {
+			this.listAddedUsersData = res.val;
+			
+			this.callbackCopyData();
+		}
+		else {
+			console.log(res.val);
+			this.addError = res.val;
+		} */
+		
+		this.addReady = true;
+		this.buttonLoading = '';
+	}
+	callbackCopyData() {
+		// I hate JavaScript
+		let str = this.listAddedUsersData.map(x => (
+			'{\n' +
+			`    id:       ${x.id},\n` +
+			`    username: ${x.user},\n` +
+			`    password: ${x.pass}\n` +
+			'}'
+		)).join(',\n');
+		navigator.clipboard.writeText(str);
+		
+		return false;
 	}
 }

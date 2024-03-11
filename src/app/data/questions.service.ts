@@ -36,15 +36,23 @@ export class QuestionsService{
 	}
 
 	public questionEdit(postID: number, edit: Models.RespPostData) {
-		const qUpdate ={
+		/* const qUpdate ={
 			id: postID,
 			q_num: edit.q_num,
 			type: edit.type,
 			category: edit.category,
 			q_text: edit.q_text,
 			a_text: edit.a_text,
+		} 
+		return this._post(`manage/editq`, qUpdate); */
+		
+		const qUpdate: Models.ReqBodyEditPost = {
+			id: postID,
+			category: edit.category,
+			q_text: edit.q_text,
+			a_text: edit.a_text,
 		}
-		return this._post(`manage/editq`, qUpdate);
+		return this._post(`post/edit`, qUpdate);
 	}
 
 	///get questions as manager
@@ -64,18 +72,18 @@ export class QuestionsService{
 	public postQ(edit: Models.RespPostData)
 	{
 		
-		var body= { "id": edit.id,"category": edit.category, "q_text": edit.q_text, "a_text": edit.a_text}
-		// var body= {
-		// 	"id": edit.id,
-		// 	"q_num": edit.q_num,
-		// 	"type": edit.type,
-		// 	"category": edit.category,
-		// 	"q_text": edit.q_text,
-		// 	"a_text": edit.a_text,
-		// }
+		//var body= { "id": edit.id,"category": edit.category, "q_text": edit.q_text, "a_text": edit.a_text}
 		
-		return <Observable<Models.RespGetPost>>
-			this._post(`manage/editq`, body);
+		//return <Observable<Models.RespGetPost>>
+		//	this._post(`manage/editq`, body);
+		
+		const qUpdate: Models.ReqBodyEditPost = {
+			id: edit.id,
+			category: edit.category,
+			q_text: edit.q_text,
+			a_text: edit.a_text,
+		}
+		return this._post(`post/edit`, qUpdate);
 	}
 	/* ////questions
 	public questionGet(projectId: number, filter: Models.ReqBodyGetPosts, details: number = 0) {

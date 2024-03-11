@@ -146,13 +146,17 @@ export class DataService {
 		return <Observable<Models.RespProjectData>>
 			this._get(`project/get/${projectId}`);
 	}
-	public projectGetUsers(projectId: number) {
-		return <Observable<number[]>>
-			this._get(`project/users/${projectId}`);
+	public projectGetUsers(projectId: number, details = 0) {
+		var query = Helpers.bodyToHttpQueryString({},
+			["details", details]);
+		return <Observable<number[]> | Observable<Models.RespUserData[]>>
+			this._get(`project/users/${projectId}?${query}`);
 	}
-	public projectGetManagers(projectId: number) {
-		return <Observable<number[]>>
-			this._get(`project/managers/${projectId}`);
+	public projectGetManagers(projectId: number, details = 0) {
+		var query = Helpers.bodyToHttpQueryString({},
+			["details", details]);
+		return <Observable<number[]> | Observable<Models.RespUserData[]>>
+			this._get(`project/managers/${projectId}?${query}`);
 	}
 	public projectCountContent(projectId: number) {
 		return <Observable<number[]>>
@@ -228,20 +232,20 @@ export class DataService {
 			this._post(`post/account/${projectId}`, create);
 	}
 
-	public postSetAnswer(postID: number, set: Models.ReqBodySetAnswer) {
-		return this._put(`post/answer/${postID}`, set);
+	public postSetAnswer(projectId: number, set: Models.ReqBodySetAnswer) {
+		return this._put(`post/answer/${projectId}`, set);
 	}
-	public postEdit(postID: number, edit: Models.ReqBodyEditPost) {
-		return this._put(`post/edit/${postID}`, edit);
-	}
-
-	public postApproveQuestion(postID: number, approve: Models.ReqBodySetApproval) {
-		return this._put(`approve/q/${postID}`, approve);
-	}
-	public postApproveAnswer(postID: number, approve: Models.ReqBodySetApproval) {
-		return this._put(`approve/a/${postID}`, approve);
+	public postEdit(projectId: number, edit: Models.ReqBodyEditPost) {
+		return this._put(`post/edit/${projectId}`, edit);
 	}
 
+	public postApproveQuestion(projectId: number, approve: Models.ReqBodySetApproval) {
+		return this._put(`approve/q/${projectId}`, approve);
+	}
+	public postApproveAnswer(projectId: number, approve: Models.ReqBodySetApproval) {
+		return this._put(`approve/a/${projectId}`, approve);
+	}
+	
 	public postBulkCreateAsGeneral(projectId: number, creates: Models.ReqBodyCreatePost[]) {
 		return <Observable<number[]>>
 			this._post(`post/bulk/general/${projectId}`, creates);
@@ -250,13 +254,13 @@ export class DataService {
 		return <Observable<number[]>>
 			this._post(`post/bulk/account/${projectId}`, creates);
 	}
-	public postBulkEdit(postID: number, edits: Models.ReqBodyEditPost[]) {
+	public postBulkEdit(projectId: number, edits: Models.ReqBodyEditPost[]) {
 		return <Observable<number>>
-			this._put(`post/bulk/edit/${postID}`, edits);
+			this._put(`post/bulk/edit/${projectId}`, edits);
 	}
-	public postBulkAnswer(postID: number, edits: Models.ReqBodySetAnswer[]) {
+	public postBulkAnswer(projectId: number, edits: Models.ReqBodySetAnswer[]) {
 		return <Observable<number>>
-			this._put(`post/bulk/edit/${postID}`, edits);
+			this._put(`post/bulk/edit/${projectId}`, edits);
 	}
 
 	// -----------------------------------------------------
