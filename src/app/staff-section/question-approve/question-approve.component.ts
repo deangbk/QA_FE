@@ -136,7 +136,13 @@ export class QuestionApproveComponent {
 			console.log(qId);
 		  }
 		  editQuestion(question: Models.RespPostData) {
-			this.router.navigate(['manage/question/'+question.id]);
+			//this.router.navigate(['staff/qmanage/'+question.id]);
+
+			let url = this.router.serializeUrl(
+				this.router.createUrlTree(['staff/qmanage/' + question.id])
+			  );
+			  
+			  window.open(url, '_blank');
 		  }
 		  displayDocNames(docs: Models.RespDocumentData[]) {
 			var docNames = docs.map(doc => doc.name).join(', ');
