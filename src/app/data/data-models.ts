@@ -90,6 +90,7 @@ export interface ReqBodyCreatePost {
 	category?: string,
 }
 export interface ReqBodySetAnswer {
+	id: number,
 	text: string,
 }
 export interface ReqBodyEditPost {
