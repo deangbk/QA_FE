@@ -43,27 +43,30 @@ const NavigationItems: NavigationItem[] = [
 		id: 'gr-main',
 		title: 'Main',
 		type: 'group',
-		icon: 'feather icon-book',
 		children: [
 			NavigationItem.createItem('Project Home', '/main', 'feather icon-home'),
 			NavigationItem.createItem('User Login', '/login', 'user icon-sidebar'),
-			
+		]
+	},
+	{
+		id: 'gr-questions',
+		title: 'Questions',
+		type: 'group',
+		children: [
+			NavigationItem.createItem('General Questions', '/questions/general', 'feather icon-clipboard'),
+			NavigationItem.createItem('Account Questions', '/questions/account', 'feather icon-layers'),
+			NavigationItem.createItem('Submit a Question', '/questions/submit', 'bi bi-question'),
+
+			NavigationItem.createItem('Recent Documents', '/docs/recent', 'bi bi-file-earmark'),
+		]
+	},
+	{
+		id: 'gr-staff',
+		title: 'Site Management',
+		type: 'group',
+		children: [
 			{
-				id: 'gr-questions',
-				title: 'Questions',
-				type: 'group',
-				icon: 'bi bi-question',
-				children: [
-					NavigationItem.createItem('General Questions', '/questions/general', 'feather icon-clipboard'),
-					NavigationItem.createItem('Account Questions', '/questions/account', 'feather icon-layers'),
-					NavigationItem.createItem('Submit a Question', '/questions/submit', 'bi bi-question'),
-					
-					NavigationItem.createItem('Recent Documents', '/docs/recent', 'bi bi-collection'),
-				]
-			},
-			
-			{
-				id: 'gr-staff',
+				id: 'cl-staff',
 				title: 'Staff Section',
 				type: 'collapse',
 				icon: 'bi bi-database-fill',
@@ -71,13 +74,13 @@ const NavigationItems: NavigationItem[] = [
 				children: [
 					NavigationItem.createItem('View Project Users', '/staff/viewusers', null),
 					NavigationItem.createItem('Create Project Users', '/staff/addusers', null),
-					
+
 					NavigationItem.createItem('Approve Questions', '/staff/qapprove', null),
 					NavigationItem.createItem('Manage Question', '/staff/qmanage', null),
 				]
 			},
 		]
-	}
+	},
 ];
 
 /* const NavigationItems: NavigationItem[] = [
