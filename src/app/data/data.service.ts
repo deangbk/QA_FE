@@ -137,8 +137,19 @@ export class DataService {
 	// -----------------------------------------------------
 	// User
 	
+	public userGetSelfData(details: number = 0) {
+		var query = Helpers.bodyToHttpQueryString({},
+			["details", details]);
+		return <Observable<Models.RespUserData>>
+			this._get(`user?${query}`);
+	}
+	public userGetData(userId: number, details: number = 0) {
+		var query = Helpers.bodyToHttpQueryString({},
+			["details", details]);
+		return <Observable<Models.RespUserData>>
+			this._get(`user/${userId}?${query}`);
+	}
 	
-
 	// -----------------------------------------------------
 	// Project
 
