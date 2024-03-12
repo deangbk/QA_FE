@@ -20,7 +20,7 @@ export class BreadcrumbComponent {
 
   // Constructor
   constructor(private _router: Router, public nav: NavigationItem, private titleService: Title) {
-    this.navigation = this.nav.get();
+    this.navigation = NavigationItem.get();
     this.setBreadcrumb();
     this.type = 'theme2';
   }
