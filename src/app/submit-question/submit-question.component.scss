@@ -5,5 +5,24 @@
 }
 
 .input-radio .radio-control-input {
-	margin: 0.5em;
+	margin: 1em;
+}
+
+/* .select-type-group {
+	margin-bottom: 1em;
+} */
+
+.question-add-entry i.card-close {
+	color: salmon;
+	font-size: 1.2em;
+	
+	text-align: center;
+	
+	cursor: pointer;
+}
+.question-add-entry h4 {
+	margin-bottom: 0.5em;
+}
+.question-add-entry .input-group-category {
+	margin-bottom: 1em;
 }
