@@ -146,6 +146,10 @@ export class DataService {
 		return <Observable<Models.RespProjectData>>
 			this._get(`project/get/${projectId}`);
 	}
+	public projectGetTranches() {
+		return <Observable<Models.RespTrancheData[]>>
+			this._get(`project/tranches`);
+	}
 	public projectGetUsers(projectId: number, details = 0) {
 		var query = Helpers.bodyToHttpQueryString({},
 			["details", details]);
@@ -188,7 +192,7 @@ export class DataService {
 
 	// -----------------------------------------------------
 	// Account
-
+	
 	public accountGetInfo(accountId: number, details: number = 0) {
 		var query = Helpers.bodyToHttpQueryString({},
 			["details", details]);

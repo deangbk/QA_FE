@@ -187,6 +187,10 @@ export interface RespProjectData {
 export interface RespTrancheData {
 	id: number,
 	name: string,
+	
+	// -----------------------------
+
+	accounts?: RespAccountData[],
 }
 
 export interface RespUserData {
