@@ -1,0 +1,51 @@
+
+<div class="col-xl-12">
+	
+	<div *ngIf="!headerLoaded">
+		<div class="row">
+			<div class="d-flex justify-content-center">
+				<div class="spinner-border" role="status">
+					<span class="sr-only">Loading...</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div *ngIf="headerLoaded">
+		<div class="row">
+			<app-card cardTitle="Post a question" [options]="false" 
+				blockClass="table-border-style" class="card-question-info-select">
+				
+				<h3>Submit your inqueries here. We will respond to you as soon as possible.</h3>
+				
+				<p>Placeholder description.</p>
+				
+				<hr>
+				<div>
+					<h3>Select question type</h3>
+					<div class="radio-group">
+						<form>
+							<div class="input-radio">
+								<input class="radio-control-input" type="radio" name="selectType" 
+									id="general" checked
+									(change)="callbackRadioChange(0)">
+								<label class="radio-control-label" for="general">
+									General Question
+								</label>
+							</div>
+							<div class="input-radio">
+								<input class="radio-control-input" type="radio" name="selectType" 
+									id="account" 
+									(change)="callbackRadioChange(1)">
+								<label class="radio-control-label" for="account">
+									Account Question
+								</label>
+							</div>
+						</form>
+					</div>
+				</div>
+			</app-card>
+			
+			
+		</div>
+	</div>
+</div>

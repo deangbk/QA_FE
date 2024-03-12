@@ -14,6 +14,7 @@ import { QuestionApproveComponent } from './staff-section/question-approve/quest
 import { EditQuestionComponent } from './staff-section/edit-question/edit-question.component';
 import { AddUsersComponent } from './staff-section/add-users/add-users.component';
 import { ViewUsersComponent } from './staff-section/view-users/view-users.component';
+import { SubmitQuestionComponent } from './submit-question/submit-question.component';
 
 const routes: Routes = [
 	{
@@ -43,6 +44,10 @@ const routes: Routes = [
 			},
 			{
 				path: 'questions/general', component: QuestionsGeneralComponent
+			},
+			
+			{
+				path: 'questions/submit', component: SubmitQuestionComponent
 			},
 			
 			{
