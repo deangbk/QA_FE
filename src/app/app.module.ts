@@ -44,6 +44,7 @@ import { DocumentViewerComponent } from './document-viewer/document-viewer.compo
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { SearchPipe } from './Pipes/search.pipe';
 import { SearchBasicPipe } from './Pipes/search-basic.pipe';
+import { QApprovePipe } from './Pipes/q-approve.pipe';
 import { RecentDocumentsComponent } from './recent-documents/recent-documents.component';
 import { QuestionModalComponent } from './question-modal/question-modal.component';
 
@@ -129,6 +130,7 @@ const customNotifierOptions: NotifierOptions = {
 		DocumentViewerComponent,
 		SearchPipe,
 		SearchBasicPipe,
+		QApprovePipe ,
   RecentDocumentsComponent,
   QuestionModalComponent,
 

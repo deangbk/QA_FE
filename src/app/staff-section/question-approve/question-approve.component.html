@@ -61,23 +61,27 @@
 						<th >Account</th>
 						<th >Date Posted</th>
 						<th class="w-30">Questions</th>
+						<th >Approved</th>
 						
 						<th style="width:30%">Answer</th>
+						<th >Approved</th>
 						<th >Date Answered</th>
 						<th>Upload Docs</th>
 					</tr>
 				</thead>
 			<tbody>
-					<ng-container *ngFor="let q of questions;  let indexOfelement=index;">
-						<!-- <ng-container *ngFor="let q of questions | search:searchText : accountList : qfilter.has_answer :  filter2; let indexOfelement=index;"> 
+					 <ng-container *ngFor="let q of questions | qApprove:searchText: accountList: qfilter.has_answer :  filter2 ;  let indexOfelement=index;"> 
+						 <!-- <ng-container *ngFor="let q of questions | search:searchText : accountList : qfilter.has_answer :  filter2; let indexOfelement=index;"> 
 					 -->
 						<tr  *ngIf="indexOfelement >= listStart && indexOfelement <= listEnd">
 						<td><button class="btn btn-sm btn-primary" (click)="editQuestion(q)"><i class="feather icon-edit"></i>{{q.q_num}}</button></td>
 						<td >{{q.account.id}}</td>
 						<td>{{q.date_post | date}}</td>
 						<td >{{q.q_text}}</td>
+						<td><button class="btn btn-sm btn-success" *ngIf="q.q_approve_by; else noQApproval" [ngbPopover]="'UnApprove Question'" triggers="mouseenter:mouseleave" (click)="setApprovals(q.id,false,'question')">Yes</button> <ng-template #noQApproval> <button class="btn btn-sm btn-warning" popoverClass="custom-popover" [ngbPopover]="'Approve Question'" triggers="mouseenter:mouseleave" (click)="setApprovals(q.id,true,'question')">No</button></ng-template></td>
 					
 						<td>{{q.a_text}}</td>
+						<td><button class="btn btn-sm btn-success" *ngIf="q.a_approve_by; else noAApproval" [ngbPopover]="'UnApprove Answer'" triggers="mouseenter:mouseleave" (click)="setApprovals(q.id,false,'answer')">Yes</button> <ng-template #noAApproval> <button class="btn btn-sm btn-warning" [ngbPopover]="'Approve Answer'" triggers="mouseenter:mouseleave" (click)="setApprovals(q.id,true,'answer')">No</button></ng-template></td>
 						<!-- <td>{{q.d}}</td> -->
 						<td></td>
 						<td>
@@ -94,8 +98,10 @@
 			</tbody>
 			</table>
 			<div class="row">
-				<div class="col-lg-8"><ngb-pagination [collectionSize]="filteredQuestionsCount" [(page)]="page" [boundaryLinks]="true"  [pageSize]="pageSize" (pageChange)="onPageChange($event)"/></div>
-				<div class="col-lg-4"><button class="btn btn-primary" (click)="exportexcel()">Export to Excell</button></div>
+				<div class="col-lg-4"><ngb-pagination [collectionSize]="filteredQuestionsCount" [(page)]="page" [boundaryLinks]="true"  [pageSize]="pageSize" (pageChange)="onPageChange($event)"/></div>
+				<div class="col-lg-4"><button class="btn btn-success">Approve Questions</button> <button class="btn btn-success bg-dark">Approve Answers</button></div>
+				<div class="col-lg-2"></div>
+				<div class="col-lg-2"><button class="btn btn-primary" (click)="exportexcel()">Export to Excell</button></div>
 			</div>
 			
 			
@@ -138,4 +144,6 @@
 	  <button type="button" class="btn btn-primary shadow-2" (click)="closeMyModal($event)"> Save changes </button>
 	</div>
   </ng-template>
+
+  <notifier-container></notifier-container>
 

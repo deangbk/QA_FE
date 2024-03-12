@@ -5,7 +5,7 @@
 		(click)="callbackAction(false)"></button>
 </div>
 <div class="modal-body">
-	<h3>{{deleteCount}} items will be deleted.</h3>
+	<h3 *ngIf="deleteCount>0">{{deleteCount}} items will be deleted.</h3>
 	<h3 style="color: red;">This action cannot be undone.</h3>
 	
 	<div class="d-flex justify-content-center align-items-center">

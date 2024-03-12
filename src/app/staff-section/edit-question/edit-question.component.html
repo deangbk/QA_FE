@@ -46,12 +46,13 @@
       
           <div >
             <h4 >Documents <i class="feather icon-pdf"></i></h4>
+            <div *ngIf="question.attachments.length==0" class="alert alert-warning">No documents attached to this question</div>
            <div class="row" *ngFor="let d of question.attachments" >
             <div class="col-md-6">
                 <a href="/docs/pdf/{{d.id}}" target="_blank"><i class="feather icon-file"></i> {{d.name}}</a>
             </div>
             <div class="col-md-3">
-                <button class="btn btn-danger"><i class="feather icon-trash-2"></i> Delete</button>
+                <button class="btn btn-danger" (click)="deleteDocument(d.id)"><i class="feather icon-trash-2" *ngIf="idClicked!=d.id"></i> <i class="fa fa-spin fa-spinner" *ngIf="deleting && idClicked==d.id"></i> Delete</button>
             </div>
             <div class="col-md-3">
                 <!-- <button class="button btn btn-warning"><i class="feather icon-trash"></i></button> -->
@@ -62,10 +63,10 @@
          <h4 class="mt-2">Other Details</h4>
          <div class="row">
           <div class="col-md-6">
-            <h4><span class="badge rounded-pill bg-primary"> Queston Id: {{question.id}}</span> </h4>
+            <h4><strong>Queston Id </strong><span class="badge bg-primary"> {{question.id}}</span> </h4>
          </div>
          <div class="col-md-6">
-          <h4><span class="badge rounded-pill bg-success">Question Num #{{question.q_num}}</span></h4>
+          <h4><strong>Question Num </strong><span class="badge  bg-dark"> #{{question.q_num}}</span></h4>
        </div>
           <div class="col-md-6">
 
