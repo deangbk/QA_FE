@@ -81,11 +81,11 @@ export class DataService {
 		return this._delete(`admin/ungrant/role/${userId}/${role}`);
 	}
 
-	public adminGrantManager(projectId: number, userId: number) {
+	public adminGrantManagers(projectId: number, users: number[]) {
 		return <Observable<number>>
-			this._put(`admin/grant/manage/${projectId}/${userId}`);
+			this._put(`admin/grant/manage/${projectId}`, users);
 	}
-	public adminGrantManagerFromFile(projectId: number, file: File) {
+	public adminGrantManagersFromFile(projectId: number, file: File) {
 		var form = new FormData();
 		form.append('file', file, file.name);
 		return <Observable<number>>
