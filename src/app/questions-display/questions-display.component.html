@@ -205,7 +205,7 @@
 	<br> </span>
 	</h4>
 	  <p></p>
-	  <button type=" button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+	  <button type=" button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" (click)="closeMyModal($event)"></button>
 	</div>
 	<div class="modal-body">
 		<p>Account Number: {{singleQuestion.account.id_pretty}}</p>
@@ -221,6 +221,6 @@
 	</div>
 	<div class="modal-footer">
 	  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" (click)="closeMyModal($event)"> Close </button>
-	  <button type="button" class="btn btn-primary shadow-2" (click)="closeMyModal($event)"> Save changes </button>
+	  <!-- <button type="button" class="btn btn-primary shadow-2" (click)="closeMyModal($event)"> Save changes </button> -->
 	</div>
   </ng-template>

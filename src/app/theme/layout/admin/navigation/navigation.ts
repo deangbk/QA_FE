@@ -76,7 +76,7 @@ const NavigationItems: NavigationItem[] = [
 					NavigationItem.createItem('Create Project Users', '/staff/addusers', null),
 
 					NavigationItem.createItem('Approve Questions', '/staff/qapprove', null),
-					NavigationItem.createItem('Manage Question', '/staff/qmanage', null),
+					// NavigationItem.createItem('Manage Question', '/staff/qmanage', null),
 				]
 			},
 		]
@@ -157,34 +157,34 @@ const NavigationItems: NavigationItem[] = [
 						url: 'staff/qapprove',
 						external: true
 					},
-					{
-						id: 'question-manage',
-						title: 'Manage Questions',
-						type: 'item',
-						url: 'staff/qmanage',
-						external: true
-					},
-					{
-						id: 'menu-level-2.2',
-						title: 'Menu Level 2.2',
-						type: 'collapse',
-						children: [
-							{
-								id: 'menu-level-2.2.1',
-								title: 'Menu Level 2.2.1',
-								type: 'item',
-								url: 'javascript:',
-								external: true
-							},
-							{
-								id: 'menu-level-2.2.2',
-								title: 'Menu Level 2.2.2',
-								type: 'item',
-								url: 'javascript:',
-								external: true
-							}
-						]
-					}
+					// {
+					// 	id: 'question-manage',
+					// 	title: 'Manage Questions',
+					// 	type: 'item',
+					// 	url: 'staff/qmanage',
+					// 	external: true
+					// },
+					// {
+					// 	id: 'menu-level-2.2',
+					// 	title: 'Menu Level 2.2',
+					// 	type: 'collapse',
+					// 	children: [
+					// 		{
+					// 			id: 'menu-level-2.2.1',
+					// 			title: 'Menu Level 2.2.1',
+					// 			type: 'item',
+					// 			url: 'javascript:',
+					// 			external: true
+					// 		},
+					// 		{
+					// 			id: 'menu-level-2.2.2',
+					// 			title: 'Menu Level 2.2.2',
+					// 			type: 'item',
+					// 			url: 'javascript:',
+					// 			external: true
+					// 		}
+					// 	]
+					// }
 				]
 			}
 		]

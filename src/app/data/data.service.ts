@@ -351,6 +351,10 @@ export class DataService {
 		return <Observable<number>>
 			this._post(`document/upload/account/${accountId}`, data);
 	}
+	public documentUploadToQuestion(accountId: number, data: FormData) {
+		return <Observable<number>>
+			this._post(`manage/upQDoc`, data);
+	}
 	
 	public documentBulkEdit(projectId: number, edits: Models.ReqBodyEditDocument[]) {
 		return <Observable<number>>
