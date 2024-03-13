@@ -73,7 +73,7 @@
 					
 						<tr     (click)="openMyModal('modal-16',q)" role="button" *ngIf="indexOfelement >= listStart && indexOfelement <= listEnd">
 						<td>{{q.q_num}}</td>
-						<td *ngIf="qType === 'account'">{{q.account.id}}</td>
+						<td *ngIf="qType === 'account'">{{q.account.id_pretty}}</td>
 						<td>{{q.date_post | date}}</td>
 						<td >{{q.q_text}}</td>
 					
@@ -208,7 +208,7 @@
 	  <button type=" button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
 	</div>
 	<div class="modal-body">
-		<p>Account Number: {{singleQuestion.account.id}}</p>
+		<p>Account Number: {{singleQuestion.account.id_pretty}}</p>
 		<p ><strong>Category:</strong> {{singleQuestion.category | uppercase}}</p>
 	  <h4 class="text-black">Question  <span class="small">  - <i>Date Posted: {{singleQuestion.date_post | date}} </i></span></h4>
 	  <p class="text-muted mb-4">{{singleQuestion.q_text}}</p>

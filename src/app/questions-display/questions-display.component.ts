@@ -166,7 +166,7 @@ export class QuestionsDisplayComponent implements OnInit {
 			this.filteredQuestions.forEach(question => {
 				let questionExcelUser: Models.QuestionExcelUser = {
 				  Tranche:question.account ? question.account.tranche.name:"", // Add logic to map this property
-				  Account_Number: question.account ? String(question.account.id) : "",
+				  Account_Number: question.account ? question.account.id_pretty : "",
 				  Question_Number: question.q_num.toString(),
 				  Date_Posted: question.date_post,
 				  Is_Answered: !!question.a_text,

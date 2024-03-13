@@ -17,7 +17,7 @@
 		aria-label="Close" (click)="callbackClose($event)"></button>
 </div>
 <div class="modal-body">
-	<p *ngIf="question.account != null">Account Number: {{question.account.id}}</p>
+	<p *ngIf="question.account != null">Account Number: {{question.account.id_pretty}}</p>
 	<p><strong>Category:</strong> {{question.category | uppercase}}</p>
 	<h4 class="text-black">
 		Question

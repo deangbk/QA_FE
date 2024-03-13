@@ -41,9 +41,9 @@ export class QApprovePipe implements PipeTransform {
           if (accountText.length==0) {
               return true;
           }
-         else if (it.account && it.account.id) {
+         else if (it.account && it.account.id_pretty) {
               return accountTexts.some(accountText => 
-                  String(it.account.id).toLowerCase().includes(accountText.toLowerCase())
+				  String(it.account.id_pretty).toLowerCase().includes(accountText.toLowerCase())
               );
           }
           return false;
