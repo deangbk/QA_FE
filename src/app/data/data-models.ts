@@ -89,6 +89,7 @@ export interface ReqBodyCreatePost {
 	account?: number,
 	text: string,
 	category?: string,
+	post_as?: number,
 }
 export interface ReqBodySetAnswer {
 	id: number,
