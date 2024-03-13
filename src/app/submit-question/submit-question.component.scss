@@ -8,9 +8,9 @@
 	margin: 1em;
 }
 
-/* .select-type-group {
+.select-type-group {
 	margin-bottom: 1em;
-} */
+}
 
 .question-add-entry i.card-close {
 	color: salmon;
@@ -25,4 +25,18 @@
 }
 .question-add-entry .input-group-category {
 	margin-bottom: 1em;
+}
+
+.submit-area {
+	display: flex;
+	flex-direction: column;
+	
+	justify-content: center;
+	align-items: center;
+	
+	row-gap: 0.8em;
+	
+	button {
+		margin: 0px;
+	}
 }

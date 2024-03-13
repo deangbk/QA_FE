@@ -49,7 +49,7 @@
 										<input class="radio-control-input" type="radio" name="selectType" 
 											id="general" checked
 											(change)="callbackSetQuestionType(i, false)">
-										<label class="radio-control-label" for="general">
+										<label class="radio-control-label">
 											General Question
 										</label>
 									</div>
@@ -57,7 +57,7 @@
 										<input class="radio-control-input" type="radio" name="selectType" 
 											id="account" 
 											(change)="callbackSetQuestionType(i, true)">
-										<label class="radio-control-label" for="account">
+										<label class="radio-control-label">
 											Account Question
 										</label>
 									</div>
@@ -99,6 +99,25 @@
 								[(ngModel)]="i.category">
 							</ng-select>
 						</div>
+						<ng-container *ngIf="isStaff">
+							<div class="col-lg-4"></div>
+							<div class="col-lg-4">
+								<h4>Post as user</h4>
+								<input class="form-control" id="user-id-input" 
+									placeholder="Enter user ID" pattern="[0-9]*" 
+									[(ngModel)]="i.postAs">
+									
+								<div *ngIf="isOnlyNumbers(i.postAs); else notANumber">
+									<small id="userIdHelp" class="form-text text-muted">
+										Leave empty to post as yourself</small>
+								</div>
+								<ng-template #notANumber>
+									<small id="userIdHelp" class="form-text alert-danger">
+										User ID must be a number</small>
+								</ng-template>
+							</div>
+						</ng-container>
+						
 						<div class="form-group">
 							<h4>Question</h4>
 							<textarea class="form-control" id="question-text-area" rows="4"
@@ -108,10 +127,29 @@
 				</app-card>
 			</ng-container>
 			
-			<div class="d-flex justify-content-center">
+			<div class="submit-area">
 				<a href="javascript:void(0)" (click)="addNewQuestion()">
 					<p>Add another question?</p>
 				</a>
+				
+				<div *ngIf="buttonLoading != 'add'; else btnLoadAdd">
+					<button type="button" class="btn btn-primary" 
+						(click)="callbackAddAllQuestions()">
+						Submit Questions
+					</button>
+				</div>
+				<ng-template #btnLoadAdd>
+					<button class="btn btn-primary" type="button" disabled>
+						<span class="spinner-border spinner-border-sm" 
+							role="status" aria-hidden="true"></span>
+						Submitting questions...
+					</button>
+				</ng-template>
+				
+				<div *ngIf="addError.length > 0">
+					<h4 style="color: red;">{{addError}}</h4>
+				</div>
+				
 			</div>
 		</div>
 	</div>
