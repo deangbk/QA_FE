@@ -9,8 +9,9 @@ export function createDefaultRespPostData(): RespPostData {
     category: '',
     q_text: '',
     post_by: null, // replace with a default RespUserData object if needed
-    date_post: '',
-    date_edit: '',
+    date_post: new Date().toDateString(),
+    date_sent: new Date().toDateString(),
+    date_edit: new Date().toDateString(),
     attachments: [],
     account: createDefaultRespAccountData(),
     // optional properties are not required to be set

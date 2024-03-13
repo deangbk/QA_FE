@@ -222,6 +222,7 @@ export interface RespPostData {
 	post_by: RespUserData,
 
 	date_post: string,
+	date_sent: string,
 	date_edit: string,
 
 	attachments: RespDocumentData[],
