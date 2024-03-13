@@ -14,6 +14,7 @@ import { QuestionApproveComponent } from './staff-section/question-approve/quest
 import { EditQuestionComponent } from './staff-section/edit-question/edit-question.component';
 import { AddUsersComponent } from './staff-section/add-users/add-users.component';
 import { ViewUsersComponent } from './staff-section/view-users/view-users.component';
+import { UploadDocumentsComponent } from './staff-section/upload-documents/upload-documents.component';
 
 const routes: Routes = [
 	{
@@ -75,6 +76,9 @@ const routes: Routes = [
 					},
 					{
 						path: 'qapprove', component: QuestionApproveComponent,
+					},
+					{
+						path: 'docupload/:qid', component: UploadDocumentsComponent,
 					},
 				],
 			},

@@ -26,6 +26,7 @@
     "@ng-select/ng-select": "^10.0.4",
     "@popperjs/core": "^2.11.7",
     "angular-notifier": "^12.0.0",
+    "@iplab/ngx-file-upload": "^15.0.0",
     "bootstrap": "^5.2.3",
     "lodash": "^4.17.21",
     "lodash-es": "^4.17.21",
