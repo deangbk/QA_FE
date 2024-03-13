@@ -1,0 +1,42 @@
+
+.card-question-info-select hr {
+	margin-top: 2em;
+	margin-bottom: 2em;
+}
+
+.input-radio .radio-control-input {
+	margin: 1em;
+}
+
+.select-type-group {
+	margin-bottom: 1em;
+}
+
+.question-add-entry i.card-close {
+	color: salmon;
+	font-size: 1.2em;
+	
+	text-align: center;
+	
+	cursor: pointer;
+}
+.question-add-entry h4 {
+	margin-bottom: 0.5em;
+}
+.question-add-entry .input-group-category {
+	margin-bottom: 1em;
+}
+
+.submit-area {
+	display: flex;
+	flex-direction: column;
+	
+	justify-content: center;
+	align-items: center;
+	
+	row-gap: 0.8em;
+	
+	button {
+		margin: 0px;
+	}
+}

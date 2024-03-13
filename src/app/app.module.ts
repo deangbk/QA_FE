@@ -59,6 +59,7 @@ import { AddUsersComponent } from './staff-section/add-users/add-users.component
 import { EditQuestionComponent } from './staff-section/edit-question/edit-question.component';
 import { NotifierModule, NotifierOptions } from 'angular-notifier';
 import { ViewUsersComponent } from './staff-section/view-users/view-users.component';
+import { SubmitQuestionComponent } from './submit-question/submit-question.component';
 //import { QApprovePipe } from './pipes/q-approve.pipe';
 
 const customNotifierOptions: NotifierOptions = {
@@ -143,6 +144,7 @@ const customNotifierOptions: NotifierOptions = {
     AddUsersComponent,
     EditQuestionComponent,
     ViewUsersComponent,
+    SubmitQuestionComponent,
    // QApprovePipe,
 
 

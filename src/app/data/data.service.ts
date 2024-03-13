@@ -81,11 +81,11 @@ export class DataService {
 		return this._delete(`admin/ungrant/role/${userId}/${role}`);
 	}
 
-	public adminGrantManager(projectId: number, userId: number) {
+	public adminGrantManagers(projectId: number, users: number[]) {
 		return <Observable<number>>
-			this._put(`admin/grant/manage/${projectId}/${userId}`);
+			this._put(`admin/grant/manage/${projectId}`, users);
 	}
-	public adminGrantManagerFromFile(projectId: number, file: File) {
+	public adminGrantManagersFromFile(projectId: number, file: File) {
 		var form = new FormData();
 		form.append('file', file, file.name);
 		return <Observable<number>>
@@ -137,14 +137,29 @@ export class DataService {
 	// -----------------------------------------------------
 	// User
 	
+	public userGetSelfData(details: number = 0) {
+		var query = Helpers.bodyToHttpQueryString({},
+			["details", details]);
+		return <Observable<Models.RespUserData>>
+			this._get(`user?${query}`);
+	}
+	public userGetData(userId: number, details: number = 0) {
+		var query = Helpers.bodyToHttpQueryString({},
+			["details", details]);
+		return <Observable<Models.RespUserData>>
+			this._get(`user/${userId}?${query}`);
+	}
 	
-
 	// -----------------------------------------------------
 	// Project
 
 	public projectGetInfo(projectId: number) {
 		return <Observable<Models.RespProjectData>>
 			this._get(`project/get/${projectId}`);
+	}
+	public projectGetTranches() {
+		return <Observable<Models.RespTrancheData[]>>
+			this._get(`project/tranches`);
 	}
 	public projectGetUsers(projectId: number, details = 0) {
 		var query = Helpers.bodyToHttpQueryString({},
@@ -188,7 +203,7 @@ export class DataService {
 
 	// -----------------------------------------------------
 	// Account
-
+	
 	public accountGetInfo(accountId: number, details: number = 0) {
 		var query = Helpers.bodyToHttpQueryString({},
 			["details", details]);
@@ -223,15 +238,6 @@ export class DataService {
 			this._post(`post/page/${projectId}?${query}`, body);
 	}
 
-	public postCreateAsGeneral(projectId: number, create: Models.ReqBodyCreatePost) {
-		return <Observable<number>>
-			this._post(`post/general/${projectId}`, create);
-	}
-	public postCreateAsAccount(projectId: number, create: Models.ReqBodyCreatePost) {
-		return <Observable<number>>
-			this._post(`post/account/${projectId}`, create);
-	}
-
 	public postSetAnswer(projectId: number, set: Models.ReqBodySetAnswer) {
 		return this._put(`post/answer/${projectId}`, set);
 	}
@@ -240,19 +246,15 @@ export class DataService {
 	}
 
 	public postApproveQuestion(projectId: number, approve: Models.ReqBodySetApproval) {
-		return this._put(`post/approve/q/${projectId}`, approve);
+		return this._put(`post/approve/${projectId}?mode=q`, approve);
 	}
 	public postApproveAnswer(projectId: number, approve: Models.ReqBodySetApproval) {
-		return this._put(`post/approve/a/${projectId}`, approve);
+		return this._put(`post/approve/${projectId}?mode=a`, approve);
 	}
 	
-	public postBulkCreateAsGeneral(projectId: number, creates: Models.ReqBodyCreatePost[]) {
+	public postBulkCreate(projectId: number, creates: Models.ReqBodyCreatePost[]) {
 		return <Observable<number[]>>
-			this._post(`post/bulk/general/${projectId}`, creates);
-	}
-	public postBulkCreateAsAccount(projectId: number, creates: Models.ReqBodyCreatePost[]) {
-		return <Observable<number[]>>
-			this._post(`post/bulk/account/${projectId}`, creates);
+			this._post(`post/bulk/${projectId}`, creates);
 	}
 	public postBulkEdit(projectId: number, edits: Models.ReqBodyEditPost[]) {
 		return <Observable<number>>

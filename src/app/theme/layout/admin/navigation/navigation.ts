@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
-export interface NavigationItem {
+@Injectable()
+export class NavigationItem {
 	id: string;
 	title: string;
 	type: 'item' | 'collapse' | 'group';
@@ -17,28 +18,78 @@ export interface NavigationItem {
 		title?: string;
 		type?: string;
 	};
-	children?: Navigation[];
-}
-
-export interface Navigation extends NavigationItem {
 	children?: NavigationItem[];
+	
+	static createItem(title: string, url: string, icon?: string): NavigationItem {
+		return {
+			type: 'item',
+			classes: 'nav-item',
+			
+			id: 'it-' + title.split(/\s+/).join('-'),
+			title: title,
+			
+			url: url,
+			icon: icon,
+		}
+	}
+	
+	static get() {
+		return NavigationItems;
+	}
 }
 
-const NavigationItems = [
+const NavigationItems: NavigationItem[] = [
 	{
-		id: 'other',
-		title: 'Other',
+		id: 'gr-main',
+		title: 'Main',
 		type: 'group',
-		icon: 'icon-other',
+		children: [
+			NavigationItem.createItem('Project Home', '/main', 'feather icon-home'),
+			NavigationItem.createItem('User Login', '/login', 'user icon-sidebar'),
+		]
+	},
+	{
+		id: 'gr-questions',
+		title: 'Questions',
+		type: 'group',
+		children: [
+			NavigationItem.createItem('General Questions', '/questions/general', 'feather icon-clipboard'),
+			NavigationItem.createItem('Account Questions', '/questions/account', 'feather icon-layers'),
+			NavigationItem.createItem('Submit a Question', '/questions/submit', 'bi bi-question'),
+
+			NavigationItem.createItem('Recent Documents', '/docs/recent', 'bi bi-file-earmark'),
+		]
+	},
+	{
+		id: 'gr-staff',
+		title: 'Site Management',
+		type: 'group',
 		children: [
 			{
-				id: 'Main',
-				title: 'Main',
-				type: 'item',
-				url: '/main',
-				classes: 'nav-item',
-				icon: 'feather icon-home'
+				id: 'cl-staff',
+				title: 'Staff Section',
+				type: 'collapse',
+				icon: 'bi bi-database-fill',
+				
+				children: [
+					NavigationItem.createItem('View Project Users', '/staff/viewusers', null),
+					NavigationItem.createItem('Create Project Users', '/staff/addusers', null),
+
+					NavigationItem.createItem('Approve Questions', '/staff/qapprove', null),
+					NavigationItem.createItem('Manage Question', '/staff/qmanage', null),
+				]
 			},
+		]
+	},
+];
+
+/* const NavigationItems: NavigationItem[] = [
+	{
+		id: 'project',
+		title: 'Project',
+		type: 'group',
+		icon: 'feather icon-book',
+		children: [
 			{
 				id: 'questions-account',
 				title: 'Account Questions',
@@ -54,6 +105,14 @@ const NavigationItems = [
 				url: '/questions/general',
 				classes: 'nav-item',
 				icon: 'feather icon-clipboard'
+			},
+			{
+				id: 'question-submit',
+				title: 'Submit Question',
+				type: 'item',
+				url: '/questions/submit',
+				classes: 'nav-item',
+				icon: 'bi bi-question'
 			},
 			{
 				id: 'recent-docs',
@@ -130,11 +189,6 @@ const NavigationItems = [
 			}
 		]
 	}
-];
+]; */
 
-@Injectable()
-export class NavigationItem {
-	get() {
-		return NavigationItems;
-	}
-}
+

@@ -89,6 +89,7 @@ export interface ReqBodyCreatePost {
 	account?: number,
 	text: string,
 	category?: string,
+	post_as?: number,
 }
 export interface ReqBodySetAnswer {
 	id: number,
@@ -187,6 +188,10 @@ export interface RespProjectData {
 export interface RespTrancheData {
 	id: number,
 	name: string,
+	
+	// -----------------------------
+
+	accounts?: RespAccountData[],
 }
 
 export interface RespUserData {
@@ -217,6 +222,7 @@ export interface RespPostData {
 	post_by: RespUserData,
 
 	date_post: string,
+	date_sent: string,
 	date_edit: string,
 
 	attachments: RespDocumentData[],
@@ -277,9 +283,13 @@ export interface RespCommentData {
 }
 
 export interface RespAccountData {
-	id: string,
+	id: number,
+	id_pretty: string,
 	no: number,
 	name: string,
+	
+	// -----------------------------
+	
 	tranche: RespTrancheData,
 }
 export interface RespNoteData {

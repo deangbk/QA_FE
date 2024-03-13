@@ -32,7 +32,7 @@ export class NavContentComponent implements OnInit, AfterViewInit {
     this.config = DattaConfig;
     this.windowWidth = window.innerWidth;
 
-    this.navigation = this.nav.get();
+    this.navigation = NavigationItem.get();
     this.prevDisabled = 'disabled';
     this.nextDisabled = '';
     this.scrollWidth = 0;
