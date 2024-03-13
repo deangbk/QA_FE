@@ -76,7 +76,7 @@ const NavigationItems: NavigationItem[] = [
 					NavigationItem.createItem('Create Project Users', '/staff/addusers', null),
 
 					NavigationItem.createItem('Approve Questions', '/staff/qapprove', null),
-					NavigationItem.createItem('Manage Question', '/staff/qmanage', null),
+					// NavigationItem.createItem('Manage Question', '/staff/qmanage', null),
 				]
 			},
 		]

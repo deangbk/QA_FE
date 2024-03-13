@@ -15,6 +15,7 @@ import { EditQuestionComponent } from './staff-section/edit-question/edit-questi
 import { AddUsersComponent } from './staff-section/add-users/add-users.component';
 import { ViewUsersComponent } from './staff-section/view-users/view-users.component';
 import { SubmitQuestionComponent } from './submit-question/submit-question.component';
+import { UploadDocumentsComponent } from './staff-section/upload-documents/upload-documents.component';
 
 const routes: Routes = [
 	{
