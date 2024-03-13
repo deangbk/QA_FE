@@ -238,15 +238,6 @@ export class DataService {
 			this._post(`post/page/${projectId}?${query}`, body);
 	}
 
-	public postCreateAsGeneral(projectId: number, create: Models.ReqBodyCreatePost) {
-		return <Observable<number>>
-			this._post(`post/general/${projectId}`, create);
-	}
-	public postCreateAsAccount(projectId: number, create: Models.ReqBodyCreatePost) {
-		return <Observable<number>>
-			this._post(`post/account/${projectId}`, create);
-	}
-
 	public postSetAnswer(projectId: number, set: Models.ReqBodySetAnswer) {
 		return this._put(`post/answer/${projectId}`, set);
 	}
