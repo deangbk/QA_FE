@@ -3,8 +3,8 @@ import {
 	Input, Output,
 	ViewChild, ElementRef,
 } from '@angular/core';
-import { Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
+import { NotifierService } from 'angular-notifier';
 
 import * as XLSX from 'xlsx';
 
@@ -12,7 +12,6 @@ import { DataService } from '../../data/data.service';
 import { SecurityService } from '../../security/security.service';
 
 import * as Models from "../../data/data-models";
-import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { Helpers } from '../../helpers';
 
@@ -38,7 +37,8 @@ export class AddUsersComponent implements OnInit {
 	constructor(
 		private dataService: DataService,
 		private securityService: SecurityService,
-		private router: Router,
+		
+		private notifier: NotifierService,
 	) {
 		this.projectId = securityService.getProjectId();
 	}
@@ -115,7 +115,7 @@ export class AddUsersComponent implements OnInit {
 		this.addReady = false;
 		this.addError = null;
 		
-		{
+		/* {
 			await (new Promise(resolve => setTimeout(resolve, 500)));
 			
 			this.listAddedUsersData = this.listUsersDTO
@@ -126,18 +126,22 @@ export class AddUsersComponent implements OnInit {
 				}))
 			this.callbackCopyData();
 			//this.addError = 'Error';
-		}
-		/* let res = await Helpers.observableAsPromise(
+		} */
+		let res = await Helpers.observableAsPromise(
 			this.dataService.managerBulkAddUsers(this.projectId, this.listUsersDTO));
 		if (res.ok) {
 			this.listAddedUsersData = res.val;
+			
+			this.notifier.notify("success", `User(s) added successfully`);
 			
 			this.callbackCopyData();
 		}
 		else {
 			console.log(res.val);
+			this.notifier.notify('error', "Server Error: " + res.val.message);
+			
 			this.addError = res.val;
-		} */
+		}
 		
 		this.addReady = true;
 		this.buttonLoading = '';
@@ -151,6 +155,7 @@ export class AddUsersComponent implements OnInit {
 			`    password: ${x.pass}\n` +
 			'}'
 		)).join(',\n');
+		
 		navigator.clipboard.writeText(str);
 		
 		return false;
