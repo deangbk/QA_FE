@@ -252,13 +252,9 @@ export class DataService {
 		return this._put(`post/approve/${projectId}?mode=a`, approve);
 	}
 	
-	public postBulkCreateAsGeneral(projectId: number, creates: Models.ReqBodyCreatePost[]) {
+	public postBulkCreate(projectId: number, creates: Models.ReqBodyCreatePost[]) {
 		return <Observable<number[]>>
-			this._post(`post/bulk/general/${projectId}`, creates);
-	}
-	public postBulkCreateAsAccount(projectId: number, creates: Models.ReqBodyCreatePost[]) {
-		return <Observable<number[]>>
-			this._post(`post/bulk/account/${projectId}`, creates);
+			this._post(`post/bulk/${projectId}`, creates);
 	}
 	public postBulkEdit(projectId: number, edits: Models.ReqBodyEditPost[]) {
 		return <Observable<number>>
