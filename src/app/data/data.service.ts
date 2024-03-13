@@ -246,10 +246,10 @@ export class DataService {
 	}
 
 	public postApproveQuestion(projectId: number, approve: Models.ReqBodySetApproval) {
-		return this._put(`post/approve/q/${projectId}`, approve);
+		return this._put(`post/approve/${projectId}?mode=q`, approve);
 	}
 	public postApproveAnswer(projectId: number, approve: Models.ReqBodySetApproval) {
-		return this._put(`post/approve/a/${projectId}`, approve);
+		return this._put(`post/approve/${projectId}?mode=a`, approve);
 	}
 	
 	public postBulkCreateAsGeneral(projectId: number, creates: Models.ReqBodyCreatePost[]) {
