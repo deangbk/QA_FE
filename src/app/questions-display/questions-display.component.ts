@@ -137,7 +137,7 @@ export class QuestionsDisplayComponent implements OnInit {
 		getAccounts(): void {
 			if (this.qType=="account")
 			{
-			this.accountList$=this.questions.map(q=>q.account.id).sort();
+				this.accountList$=this.questions.map(q=>q.account.id_pretty).sort();
 			}
 			else
 			{

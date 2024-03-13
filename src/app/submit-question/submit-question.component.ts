@@ -98,7 +98,7 @@ export class SubmitQuestionComponent {
 		if (tranche != null) {
 			let res =
 				tranche.accounts.map(x => ({
-					label: x.id,
+					label: x.id_pretty,
 					id: x.id,
 				}));
 			

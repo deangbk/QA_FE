@@ -26,7 +26,8 @@ export function createDefaultRespTrancheData(): RespTrancheData {
   
   export function createDefaultRespAccountData(): RespAccountData {
     return {
-      id: '',
+      id: 0,
+      id_pretty: '',
       no: 0,
       name: '',
       tranche: createDefaultRespTrancheData(), // Initialize the tranche property

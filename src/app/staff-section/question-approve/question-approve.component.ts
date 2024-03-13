@@ -142,7 +142,7 @@ export class QuestionApproveComponent {
 			new Set(
 				this.questions
 					.filter(q => q.account !== null && q.account !== undefined)
-					.map(q => q.account.id)
+					.map(q => q.account.id_pretty)
 			)
 		).sort();
 

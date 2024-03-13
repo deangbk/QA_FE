@@ -176,7 +176,7 @@ export class RecentDocumentsComponent implements OnInit {
 						.filter(x => {
 							const account = <Models.RespAccountData>x.assoc_account;
 							return account.name.toLowerCase().includes(search)
-								|| account.id.toLowerCase().includes(search);
+								|| account.id_pretty.toLowerCase().includes(search);
 						});
 				}
 				

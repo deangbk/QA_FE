@@ -281,9 +281,13 @@ export interface RespCommentData {
 }
 
 export interface RespAccountData {
-	id: string,
+	id: number,
+	id_pretty: string,
 	no: number,
 	name: string,
+	
+	// -----------------------------
+	
 	tranche: RespTrancheData,
 }
 export interface RespNoteData {
