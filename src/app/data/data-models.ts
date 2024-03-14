@@ -90,6 +90,7 @@ export interface ReqBodyCreatePost {
 	text: string,
 	category?: string,
 	post_as?: number,
+	date_sent?: string,
 }
 export interface ReqBodySetAnswer {
 	id: number,

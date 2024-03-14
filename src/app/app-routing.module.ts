@@ -27,7 +27,7 @@ const routes: Routes = [
 		children: [
 			{
 				path: '',
-				redirectTo: 'sign',
+				redirectTo: 'login',
 				pathMatch: 'full'
 			},
 			
@@ -93,14 +93,14 @@ const routes: Routes = [
 		path: '',
 		component: GuestComponent,
 		children: [
-			{ path: 'login', component: HomeLoginComponent },
+			//{ path: 'login', component: HomeLoginComponent },
 			
 			// {
 			
 			//   loadChildren: () => import('./public/public.module').then((m) => m.PublicModule)
 			// },
 			{
-				path: 'sign',component: AuthSigninV2Component
+				path: 'login',component: AuthSigninV2Component
 			},
 			{
 				path: 'maintenance',

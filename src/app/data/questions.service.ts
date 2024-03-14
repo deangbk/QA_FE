@@ -36,7 +36,7 @@ export class QuestionsService{
 	}
 
 	public questionEdit(postID: number, edit: Models.RespPostData) {
-		/* const qUpdate ={
+		const qUpdate ={
 			id: postID,
 			q_num: edit.q_num,
 			type: edit.type,
@@ -44,15 +44,15 @@ export class QuestionsService{
 			q_text: edit.q_text,
 			a_text: edit.a_text,
 		} 
-		return this._post(`manage/editq`, qUpdate); */
+		return this._post(`manage/editq`, qUpdate);
 		
-		const qUpdate: Models.ReqBodyEditPost = {
+		/* const qUpdate: Models.ReqBodyEditPost = {
 			id: postID,
 			category: edit.category,
 			q_text: edit.q_text,
 			a_text: edit.a_text,
 		}
-		return this._post(`post/edit`, qUpdate);
+		return this._post(`post/edit`, qUpdate); */
 	}
 
 	///get questions as manager

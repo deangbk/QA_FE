@@ -1,4 +1,4 @@
-<notifier-container></notifier-container>
+
 <div class="card">
   <div class="card-header">
     <h5>Update Question </h5>
@@ -73,7 +73,7 @@
             <h4><strong> Question Type </strong> <span *ngIf="question.type==1" class="badge bg-primary"> Account</span><span *ngIf="question.type==2">General</span></h4>
          </div>
          <div class="col-md-6">
-          <h4 *ngIf="question.type==1"><strong> Account </strong> <span class="badge bg-dark">{{question.account.id}}</span> </h4>
+          <h4 *ngIf="question.type==1"><strong> Account </strong> <span class="badge bg-dark">{{question.account.id_pretty}}</span> </h4>
        </div>
           <div class="col-md-6">
             <p><strong> Posted By:</strong> {{question.post_by.display_name}}</p>

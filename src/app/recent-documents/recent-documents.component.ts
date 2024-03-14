@@ -126,7 +126,7 @@ export class RecentDocumentsComponent implements OnInit {
 			return `${id}`;
 		}
 		else if (data.assoc_account != null) {
-			const id = (<Models.RespAccountData>data.assoc_account).id;
+			const id = (<Models.RespAccountData>data.assoc_account).id_pretty;
 			return `${id}`;
 		}
 		return '';

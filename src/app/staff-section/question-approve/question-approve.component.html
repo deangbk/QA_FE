@@ -75,7 +75,7 @@
 					 -->
 						<tr  *ngIf="indexOfelement >= listStart && indexOfelement <= listEnd">
 						<td><button class="btn btn-sm btn-primary" (click)="editQuestion(q)"><i class="feather icon-edit"></i>{{q.q_num}}</button></td>
-						<td >{{q.account.id}}</td>
+						<td >{{q.account.id_pretty}}</td>
 						<td>{{q.date_post | date}}</td>
 						<td >{{q.q_text}}</td>
 						<td><button class="btn btn-sm btn-success" *ngIf="q.q_approve_by; else noQApproval" [ngbPopover]="'UnApprove Question'" triggers="mouseenter:mouseleave" (click)="setApprovals(q.id,false,'question')">Yes</button> <ng-template #noQApproval> <button class="btn btn-sm btn-warning" popoverClass="custom-popover" [ngbPopover]="'Approve Question'" triggers="mouseenter:mouseleave" (click)="setApprovals(q.id,true,'question')">No</button></ng-template></td>
@@ -128,7 +128,7 @@
 	  <button type=" button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
 	</div>
 	<div class="modal-body">
-		<p>Account Number: {{singleQuestion.account.id}}</p>
+		<p>Account Number: {{singleQuestion.account.id_pretty}}</p>
 		<p ><strong>Category:</strong> {{singleQuestion.category | uppercase}}</p>
 	  <h4 class="text-black">Question  <span class="small">  - <i>Date Posted: {{singleQuestion.date_post | date}} </i></span></h4>
 	  <p class="text-muted mb-4">{{singleQuestion.q_text}}</p>
@@ -145,5 +145,4 @@
 	</div>
   </ng-template>
 
-  <notifier-container></notifier-container>
 

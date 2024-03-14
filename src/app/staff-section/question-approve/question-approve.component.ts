@@ -135,7 +135,7 @@ export class QuestionApproveComponent {
 	getAccounts(): void {
 		// 		this.accountList$ = this.questions
 		//   .filter(q => q.account !== null && q.account !== undefined)
-		//   .map(q => q.account.id)
+		//   .map(q => q.account.id_pretty)
 		//   .sort();
 
 		this.accountList$ = Array.from(
@@ -186,7 +186,7 @@ export class QuestionApproveComponent {
 		this.filteredQuestions.forEach(question => {
 			let questionExcelUser: Models.QuestionExcelUser = {
 				Tranche: question.account ? question.account.tranche.name : "", // Add logic to map this property
-				Account_Number: question.account ? String(question.account.id) : "",
+				Account_Number: question.account ? question.account.id_pretty : "",
 				Question_Number: question.q_num.toString(),
 				Date_Posted: question.date_post,
 				Is_Answered: !!question.a_text,

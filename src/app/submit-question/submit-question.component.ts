@@ -2,6 +2,9 @@ import {
 	Component, OnInit, ChangeDetectorRef,
 	Input, Output,
 } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+
+import { NotifierService } from 'angular-notifier';
 
 import { DataService } from '../data/data.service';
 import { SecurityService } from '../security/security.service';
@@ -33,6 +36,8 @@ export class SubmitQuestionComponent {
 	constructor(
 		private dataService: DataService,
 		private securityService: SecurityService,
+		
+		private notifier: NotifierService,
 	) {
 		this.projectId = securityService.getProjectId();
 		this.isStaff = securityService.isStaff();
@@ -82,7 +87,10 @@ export class SubmitQuestionComponent {
 			console.log(this.tranchesData);
 		}
 		else {
-			console.log(res.val);
+			let err = res.val as HttpErrorResponse;
+			
+			console.log(err);
+			this.notifier.notify('error', "Server Error: " + err.message);
 		}
 		
 		this.headerLoaded = true;
@@ -146,6 +154,8 @@ export class SubmitQuestionComponent {
 	}
 	
 	async callbackAddAllQuestions() {
+		let count = this.addingQuestionsData.length;
+	
 		// Check input validity first
 		{
 			this.addError = '';
@@ -171,6 +181,7 @@ export class SubmitQuestionComponent {
 			}
 			catch (e) {
 				this.addError = `Question ${i}: ` + (e as Error).message;
+				this.notifier.notify('error', this.addError);
 				return;
 			}
 		}
@@ -190,15 +201,18 @@ export class SubmitQuestionComponent {
 			let res = await Helpers.observableAsPromise(
 				this.dataService.postBulkCreate(this.projectId, questionsData));
 			if (res.ok) {
-				// TODO: Add success response
-				
 				console.log(res.val);
+				
+				this.notifier.notify("success",
+					`Submitted ${count} question${count > 1 ? 's' : ''}`);
 				
 				this.addingQuestionsData = [];
 				this.addNewQuestion();
 			}
 			else {
 				console.log(res.val);
+				this.notifier.notify('error', "Server Error: " + res.val.message);
+				
 				this.addError = res.val;
 			}
 		}
