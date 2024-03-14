@@ -1,5 +1,5 @@
 
-import { RespPostData, RespAccountData, RespUserData, RespDocumentData, RespTrancheData,ReqBodyGetPosts } from './data-models';
+import { RespPostData, RespAccountData, RespUserData, RespDocumentData, RespTrancheData,ReqBodyGetPosts,FileUploadDTO } from './data-models';
 
 export function createDefaultRespPostData(): RespPostData {
   return {
@@ -50,3 +50,28 @@ export function createDefaultRespTrancheData(): RespTrancheData {
       category: ''     // Initialize to empty string or any default value
     };
   }
+  export function initializeFileUploadDTO(): FileUploadDTO {
+    return {
+        questionID: 0,
+        upType: null,
+        account: null,
+        accountId: 0
+    };
+}
+export function initializeRespTrancheData(): RespTrancheData {
+  return {
+    id: 0,
+    name: '',
+    accounts: []
+  };
+}
+
+export function initializeRespAccountData(): RespAccountData {
+  return {
+    id: 0,
+    id_pretty: '',
+    no: 0,
+    name: '',
+    tranche: initializeRespTrancheData()
+  };
+}

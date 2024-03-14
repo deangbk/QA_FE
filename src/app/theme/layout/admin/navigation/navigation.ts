@@ -58,6 +58,8 @@ const NavigationItems: NavigationItem[] = [
 			NavigationItem.createItem('Submit a Question', '/questions/submit', 'bi bi-question'),
 
 			NavigationItem.createItem('Recent Documents', '/docs/recent', 'bi bi-file-earmark'),
+			
+			
 		]
 	},
 	{
@@ -77,6 +79,7 @@ const NavigationItems: NavigationItem[] = [
 
 					NavigationItem.createItem('Approve Questions', '/staff/qapprove', null),
 					// NavigationItem.createItem('Manage Question', '/staff/qmanage', null),
+					NavigationItem.createItem('Upload Documents', '/staff/docupload/0',null),
 				]
 			},
 		]

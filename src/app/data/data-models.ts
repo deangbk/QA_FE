@@ -110,7 +110,12 @@ export interface ReqBodySetApproval {
 export interface ReqBodyAddComment {
 	text: string,
 }
-
+export interface FileUploadDTO {
+    questionID: number;
+    upType?: string;
+    account?: string;
+    accountId: number;
+}
 export interface ReqBodyUploadDocument {
 	name?: string,
 	url: string,

@@ -83,7 +83,7 @@ const routes: Routes = [
 						path: 'qapprove', component: QuestionApproveComponent,
 					},
 					{
-						path: 'docupload/:qid', component: UploadDocumentsComponent,
+						path: 'docupload/:qId', component: UploadDocumentsComponent,
 					},
 				],
 			},

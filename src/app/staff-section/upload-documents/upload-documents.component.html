@@ -1,3 +1,40 @@
+<div class="row" >
+  <form #editQuestion="ngForm">
+  <div class="col-sm-12">
+    <app-card cardTitle="Choose Document Type" [options]="false">
+<div class="row" *ngIf="questionId === null || questionId === 0">
+  <div class="col-sm-3"><div class="form-group">
+    <label for="exampleFormControlSelect1">Select Type</label>
+    <select class="form-control" name="docType" (change)="chooseDocType()" [(ngModel)]="upDetails.upType">
+      <option value="">Select Document Type</option>
+      <option value="Transaction">Transaction</option>
+      <option value="Bid">Bid Bulletin</option>
+      <option value="Account">Account</option>
+    </select>
+</div></div>
+  <div class="col-sm-2"><div class="form-group" >
+    <label for="tranchesSelect">Select Tranche</label>
+    <!-- <select class="form-control" id="tranchesSelect" [(ngModel)]="selectedTranche" (change)="getAccounts(selectedTranche.accounts)">
+      <option *ngFor="let tranche of tranchesData" [value]="tranche.id">{{tranche.name}}</option>
+  </select> -->
+  <select class="form-control" id="tranchesSelect" nmae="trancheSelect" [(ngModel)]="selectedTranche" (change)="getAccounts(selectedTranche.accounts)" *ngIf="isAccount">
+    <option *ngFor="let tranche of tranchesData" [ngValue]="tranche">Tranche {{tranche.name}}</option>
+</select>
+</div></div>
+  <div class="col-sm-2"><div class="form-group" *ngIf="isAccount">
+    <label for="accountsSelect">Select Account</label>
+    <select class="form-control" id="accountsSelect" name="accountSelect" [(ngModel)]="selectedAccount" (change)="setAccount()">
+      <option *ngFor="let account of accounts" [value]="account.id">{{account.id_pretty}} </option>
+  </select>
+    <!-- <select class="form-control" id="accountsSelect" [(ngModel)]="selectedAccount" (change)="setAccount()">
+        <option *ngFor="let account of accounts" [value]="account.id">{{account.id_pretty}} </option>
+    </select> -->
+</div></div>
+  </div>
+  </app-card>
+  </div>
+  </form>
+  </div>
 <div class="row">
     <div class="col-sm-12">
       <app-card cardTitle="File Upload" [options]="false">
@@ -5,7 +42,7 @@
           <file-upload formControlName="files"></file-upload>
         </form>
         <div class="text-center m-t-20">
-          <button class="btn btn-primary" (click)="uploadFiles()">Upload Now</button>
+          <button class="btn btn-primary" (click)="uploadFiles()" [disabled]="!upReady">Upload Now {{upReady}} -{{upDetails.upType}}</button>
         </div>
       </app-card>
     </div>
