@@ -76,6 +76,10 @@ export class Helpers {
 	
 	// -----------------------------------------------------
 	
+	public static strCaseCmp(s1: string, s2: string): boolean {
+		return s1.toLowerCase() == s2.toLowerCase();
+	}
+	
 	public static parseInt(s: string, radix?: number): Option<number> {
 		if (s == null || s.length == 0)
 			return None;

@@ -2,7 +2,8 @@ import {
 	Component, OnInit, ChangeDetectorRef,
 	Input, Output, Injector
 } from '@angular/core';
-import { Router } from '@angular/router';
+import { Location } from '@angular/common';
+import { Router, ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { QuestionModalData, QuestionModalComponent } from '../question-modal/question-modal.component';
@@ -37,6 +38,15 @@ export class RecentDocumentsComponent implements OnInit {
 	// TODO: Replace with your actual projectId
 	projectId = 1;
 	
+	initFilterType: string;
+	typeSelectLabels = [
+		{ value: -1, label: 'All' },
+		{ value: 0, label: 'Bid' },
+		{ value: 1, label: 'Question' },
+		{ value: 2, label: 'Account' },
+		{ value: 3, label: 'Transaction' }
+	];
+	
 	listDocuments: Models.RespDocumentData[] = null;
 	listDocumentDisplay: ListItem[] = [];
 	filter: SearchFilter;
@@ -54,8 +64,11 @@ export class RecentDocumentsComponent implements OnInit {
 	constructor(
 		private dataService: DataService,
 		private securityService: SecurityService,
-		private changeDetector: ChangeDetectorRef,
+		
+		private location: Location,
 		private router: Router,
+		private route: ActivatedRoute,
+		
 		public modalService: NgbModal,
 	) { 
 		this.filter = {
@@ -65,15 +78,20 @@ export class RecentDocumentsComponent implements OnInit {
 			accountName: '',
 		};
 		
+		this.initFilterType = this.route.snapshot.paramMap.get('type');
+		{
+			let find = this.typeSelectLabels.find(
+				x => Helpers.strCaseCmp(x.label, this.initFilterType));
+			if (find != null) {
+				this.filter.type = find.value;
+			}
+			else {
+				this.router.navigate(['/docs/recent/all']);
+			}
+		}
+		
 		this.enableModifyData = securityService.isStaff();
 	}
-	
-	typeSelectLabels = [
-		{ value: -1, label: 'All' },
-		{ value: 0, label: 'General' },
-		{ value: 1, label: 'Question' },
-		{ value: 2, label: 'Account' }
-	];
 	
 	buttonLoading = '';
 	
@@ -134,6 +152,12 @@ export class RecentDocumentsComponent implements OnInit {
 	
 	// -----------------------------------------------------
 	
+	callbackChangeRoute() {
+		let find = this.typeSelectLabels.find(x => x.value == this.filter.type);
+		if (find != null) {
+			this.location.replaceState("/docs/recent/" + find.label.toLowerCase());
+		}
+	}
 	callbackUpdateList() {
 		console.log(this.filter);
 		var listRes: Models.RespDocumentData[];

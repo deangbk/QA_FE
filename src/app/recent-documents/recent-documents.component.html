@@ -21,7 +21,7 @@
 					<ng-select [items]="typeSelectLabels" 
 						bindLabel="label" bindValue="value" [(ngModel)]="filter.type"
 						[clearable]="false" [searchable]="false" 
-						(change)="callbackUpdateList()">
+						(change)="callbackUpdateList(); callbackChangeRoute()">
 					</ng-select>
 				</div>
 				

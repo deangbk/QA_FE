@@ -55,7 +55,10 @@ const routes: Routes = [
 				path: 'docs/pdf/:id', component: DocumentViewerComponent
 			},
 			{
-				path: 'docs/recent', component: RecentDocumentsComponent,
+				path: 'docs/recent/:type', component: RecentDocumentsComponent,
+			},
+			{
+				path: 'docs/recent', redirectTo: 'docs/recent/all',
 			},
 			
 			///paths that should be protected staff and admin only
