@@ -138,7 +138,7 @@ export class AddUsersComponent implements OnInit {
 		}
 		else {
 			console.log(res.val);
-			this.notifier.notify('error', "Server Error: " + res.val.message);
+			this.notifier.notify('error', "Server Error: " + Helpers.formatHttpError(res.val));
 			
 			this.addError = res.val;
 		}

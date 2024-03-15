@@ -87,10 +87,9 @@ export class SubmitQuestionComponent {
 			console.log(this.tranchesData);
 		}
 		else {
-			let err = res.val as HttpErrorResponse;
-			
-			console.log(err);
-			this.notifier.notify('error', "Server Error: " + err.message);
+			console.log(res.val);
+			//this.notifier.notify('error', "Server Error: " + err.status);
+			this.notifier.notify('error', "Server Error: " + Helpers.formatHttpError(res.val));
 		}
 		
 		this.headerLoaded = true;
@@ -211,7 +210,7 @@ export class SubmitQuestionComponent {
 			}
 			else {
 				console.log(res.val);
-				this.notifier.notify('error', "Server Error: " + res.val.message);
+				this.notifier.notify('error', "Server Error: " + Helpers.formatHttpError(res.val));
 				
 				this.addError = res.val;
 			}

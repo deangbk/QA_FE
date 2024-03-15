@@ -1,11 +1,17 @@
-import { Result, Err, Ok, Option, Some, None } from 'ts-results';
+import { HttpErrorResponse } from '@angular/common/http';
 
 import { Observable, lastValueFrom } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { Buffer } from 'buffer';
 
+import { Result, Err, Ok, Option, Some, None } from 'ts-results';
+
 export class Helpers {
+	public static formatHttpError(e: HttpErrorResponse) {
+		return `(code ${e.status}) ${e.statusText}`;
+	}
+	
 	public static bodyToHttpFormData(body: any) {
 		let form = new FormData();
 		Object.entries(body).forEach(x => {
