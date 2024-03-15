@@ -10,6 +10,7 @@ import { FileUploadDTO } from 'src/app/data/data-models';
 import { initializeFileUploadDTO,initializeRespAccountData,initializeRespTrancheData } from 'src/app/data/model-initializers';
 import { Helpers } from 'src/app/helpers';
 import * as Models from "../../data/data-models";
+import { NotifierService } from 'angular-notifier';
 
 
 // third party
@@ -26,17 +27,22 @@ export class UploadDocumentsComponent {
   questionId: number;
   isAccount:boolean = false;
     upReady:boolean=false; 
+    uploading:boolean=false;
     tranchesData: Models.RespTrancheData[] = []; ///disables the upload button if false
   tranches = ['Tranche 1', 'Tranche 2', 'Tranche 3']; // replace with your actual tranches
 accounts:Models.RespAccountData[]; // replace with your actual accounts
 selectedTranche:Models.RespTrancheData;
 selectedAccount:Models.RespAccountData;
+private notifier: NotifierService;
 
 
   private filesControl = new UntypedFormControl(null, FileUploadValidators.filesLimit(2));
-  constructor(private dataService: DataService, private route: ActivatedRoute) {
+
+
+  constructor(private dataService: DataService, private route: ActivatedRoute,notifier: NotifierService,) {
     this.questionId = +this.route.snapshot.paramMap.get('qId');
     console.log(this.questionId);
+    this.notifier = notifier;
   }
   
 
@@ -87,8 +93,11 @@ selectedAccount:Models.RespAccountData;
   toggleStatus() {
     this.filesControl.disabled ? this.filesControl.enable() : this.filesControl.disable();
   }
-
+  showNotification(type: string, message: string): void {
+    this.notifier.notify(type, message);
+  }
   uploadFiles() {
+    this.uploading=true;
     const files: File[] = this.demoForm.get('files').value;
     const formData = new FormData();
 
@@ -106,12 +115,18 @@ selectedAccount:Models.RespAccountData;
         //   this.showNotification("success", notifMess); // handle the response here
         // console.log(response);
         //  this.displayAApproveBy(approvals);
+        this.uploading=false;
+        this.demoForm.get('files').reset([]);
+        this.showNotification('success', 'Document uploaded successfully');
+        
 
       },
       error => {
         //     this.showNotification("error", "Error Approving Answer");
         // handle the error herethis.showNotification("Answer Approved", "sucess")
         console.log(error);
+        this.uploading=false;
+        this.showNotification('error', 'Error when uplaoding document, try again');
       }
     );
   
