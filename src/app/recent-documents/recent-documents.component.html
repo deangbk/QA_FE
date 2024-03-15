@@ -70,7 +70,7 @@
 						</td>
 						
 						<td>
-							<a href="/docs/pdf/{{i.data.id}}">
+							<a href="/docs/pdf/{{i.data.id}}" target="_blank">
 								{{i.data.id}}
 							</a>
 						</td>
@@ -82,7 +82,8 @@
 							This project
 						</td>
 						<td *ngIf="i.data.assoc_post != null">
-							Question <i><a href="#" (click)="callbackNavigateToQuestion(i.data)">
+							Question <i><a href="#" (click)="callbackNavigateToQuestion(i.data)" 
+								target="_blank">
 								#{{getIdText(i.data)}}</a></i>
 						</td>
 						<td *ngIf="i.data.assoc_account != null">
