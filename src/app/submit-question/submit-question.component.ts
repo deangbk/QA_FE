@@ -12,6 +12,7 @@ import { SecurityService } from '../security/security.service';
 import * as Models from "../data/data-models";
 
 import { Helpers } from '../helpers';
+import { Observable } from 'rxjs';
 
 class AddQuestionEntry {
 	isAccount: boolean;
@@ -22,6 +23,7 @@ class AddQuestionEntry {
 	text: string;
 	
 	postAs?: string;
+	
 }
 
 @Component({
@@ -44,7 +46,7 @@ export class SubmitQuestionComponent {
 	}
 	
 	buttonLoading = '';
-	
+	listUser:Models.RespUserData[];
 	headerLoaded = false;
 	tranchesData: Models.RespTrancheData[] = [];
 	
@@ -74,8 +76,8 @@ export class SubmitQuestionComponent {
 
 	ngOnInit(): void {
 		this.fetchData();
-		
-		this.addNewQuestion();
+		this.getUserList();
+		this.addFirstQuestion();
 	}
 	
 	async fetchData() {
@@ -93,6 +95,9 @@ export class SubmitQuestionComponent {
 		}
 		
 		this.headerLoaded = true;
+
+		
+		
 	}
 
 	// -----------------------------------------------------
@@ -120,7 +125,17 @@ export class SubmitQuestionComponent {
 		}
 		return [];
 	}
-	
+	async getUserList(){
+		let data = await Helpers.observableAsPromise(<Observable<Models.RespUserData[]>>
+			this.dataService.projectGetUsers(this.projectId, 1));
+		if (data.ok) {
+			this.listUser = data.val;
+			console.log(data);
+		}
+		else {
+			console.log(data.val);
+		}
+	}
 	isOnlyNumbers(text?: string) {
 		return text != null && text.length == 0 || !(/[^0-9]/.test(text));
 	}
@@ -128,14 +143,26 @@ export class SubmitQuestionComponent {
 	// -----------------------------------------------------
 	
 	// TODO: Add animations
-	addNewQuestion() {
+
+	addFirstQuestion() {
 		this.addingQuestionsData.push({
 			isAccount: false,
 
-			category: this.categorySelectItems[0].id,
+			category: 'General',
 			text: '',
-			
+		
 			postAs: '',
+		});
+	}
+	addNewQuestion(question?: AddQuestionEntry) {
+		this.addingQuestionsData.push({
+			isAccount: question.isAccount,
+
+			category: question.category,
+			text: '',
+			accountId: question.accountId,
+			trancheId: question.trancheId,
+			postAs: question.postAs,
 		});
 	}
 	removeQuestion(row: number) {

@@ -40,3 +40,13 @@
 		margin: 0px;
 	}
 }
+.custom-select-height {
+	height: 40px  !important; /* adjust this value as needed */
+	padding: 10px !important; 
+  }
+  .select-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	height: 80%; // adjust this value as needed
+  }
