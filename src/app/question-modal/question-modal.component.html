@@ -19,20 +19,33 @@
 <div class="modal-body">
 	<p *ngIf="question.account != null">Account Number: {{question.account.id_pretty}}</p>
 	<p><strong>Category:</strong> {{question.category | uppercase}}</p>
-	<h4 class="text-black">
-		Question
-		<span class="small">
-			- <i>Date Posted: {{question.date_post | date}}</i>
-		</span>
-	</h4>
-	<p class="text-muted mb-4">{{question.q_text}}</p>
-	<h4 class="text-black">
-		Answer
-		<span class="small">
-			- <i>Date Answered: {{question.date_a_approve | date}}</i>
-		</span>
-	</h4>
-	<p class="text-muted "> {{question.a_text}}</p>
+	
+	<hr>
+	
+	<div>
+		<h4 class="text-black">
+			Question
+			<span class="small">
+				- <i>Date Posted: {{question.date_post | date}}</i>
+			</span>
+		</h4>
+		<p class="text-muted mb-4">{{question.q_text}}</p>
+	</div>
+	
+	<div *ngIf="question.a_text != null">
+		<h4 class="text-black">
+			Answer
+			<span class="small">
+				- <i>Date Answered: {{question.date_a_approve | date}}</i>
+			</span>
+		</h4>
+		<p class="text-muted "> {{question.a_text}}</p>
+	</div>
+	<div *ngIf="question.a_text == null">
+		<p class="text-black">Question has not been answered.</p>
+	</div>
+	
+	<hr>
 
 	<h4 class="text-black">Documents</h4>
 	<div *ngFor="let doc of question.attachments">
@@ -45,6 +58,6 @@
 	<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"
 		(click)="callbackClose($event)">Close
 	</button>
-	<button type="button" class="btn btn-primary shadow-2" (click)="callbackClose($event)">Save changes
-	</button>
+	<!-- <button type="button" class="btn btn-primary shadow-2" (click)="callbackClose($event)">Save changes
+	</button> -->
 </div>
