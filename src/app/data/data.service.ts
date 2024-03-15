@@ -21,8 +21,7 @@ export class DataService {
 
 	protected handleError(error: HttpErrorResponse) {
 		console.log(error);
-		const err = new Error('Http error.')
-		return throwError(() => err);
+		return throwError(() => error);
 	}
 	
 	protected _get(url: string) {
