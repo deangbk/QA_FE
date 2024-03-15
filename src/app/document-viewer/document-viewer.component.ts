@@ -28,11 +28,16 @@ export class DocumentViewerComponent implements OnInit, AfterViewInit {
 	// https://stackblitz.com/edit/angular-10-pdf-viewer-example
 	// https://www.npmjs.com/package/ng2-pdf-viewer#render-text-mode
 	
+	isStaff: boolean;
+	
 	constructor(
 		private dataService: DataService,
 		private securityService: SecurityService,
 		private changeDetector: ChangeDetectorRef,
-		private route: ActivatedRoute) { }
+		private route: ActivatedRoute)
+	{ 
+		this.isStaff = securityService.isStaff();
+	}
 	
 	documentReady = false;
 	documentInfo: Models.RespDocumentData;

@@ -45,7 +45,7 @@
 						<mat-icon>keyboard_arrow_left</mat-icon>
 					</button>
 
-					<ng-container *ngIf="documentInfo.allow_print">
+					<ng-container *ngIf="documentInfo.allow_print || isStaff">
 						<button mat-icon-button aria-label="Print Document" (click)="callbackPrint()">
 							<mat-icon>print</mat-icon>
 						</button>
