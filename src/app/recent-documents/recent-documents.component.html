@@ -103,52 +103,52 @@
 			<div class="row"> <div class="col-sm-6">
 			<ngb-pagination [collectionSize]="listDocuments.length" [(page)]="page" [boundaryLinks]="true"  [pageSize]="pageSize" (pageChange)="onPageChange($event)"/>
 		</div>
-		<div class="col-sm-2"><h3>Edit Selected items </h3></div>
-		<div class="col-sm-4">
-			
-			<div *ngIf="enableModifyData" id="actions-box">
-				<div *ngIf="buttonLoading != 'print'">
-					<div ngbDropdown class="d-inline-block">
-						<button type="button" class="btn btn-outline-primary" id="ddSetPrintable" ngbDropdownToggle>
-							Change printable
-						</button>
-						<div ngbDropdownMenu aria-labelledby="ddSetPrintable">
-							<button ngbDropdownItem
-								(click)="callbackUpdatePrintable(true)">
-								Set to true
+		
+		<ng-container *ngIf="enableModifyData">
+			<div class="col-sm-2"><h3>Edit Selected items </h3></div>
+			<div class="col-sm-4">
+				<div id="actions-box">
+					<div *ngIf="buttonLoading != 'print'">
+						<div ngbDropdown class="d-inline-block">
+							<button type="button" class="btn btn-outline-primary" id="ddSetPrintable" ngbDropdownToggle>
+								Change printable
 							</button>
-							<button ngbDropdownItem
-								(click)="callbackUpdatePrintable(false)">
-								Set to false
-							</button>
+							<div ngbDropdownMenu aria-labelledby="ddSetPrintable">
+								<button ngbDropdownItem
+									(click)="callbackUpdatePrintable(true)">
+									Set to true
+								</button>
+								<button ngbDropdownItem
+									(click)="callbackUpdatePrintable(false)">
+									Set to false
+								</button>
+							</div>
 						</div>
 					</div>
+					<div *ngIf="buttonLoading == 'print'">
+						<button class="btn btn-primary" type="button" disabled>
+							<span class="spinner-border spinner-border-sm" 
+								role="status" aria-hidden="true"></span>
+							Updating data...
+						</button>
+					</div>
+					
+					<div *ngIf="buttonLoading != 'delete'">
+						<button type="button" class="btn btn-danger" 
+							(click)="callbackDeleteDocuments()">
+							Delete document
+						</button>
+					</div>
+					<div *ngIf="buttonLoading == 'delete'">
+						<button class="btn btn-danger" type="button" disabled>
+							<span class="spinner-border spinner-border-sm" 
+								role="status" aria-hidden="true"></span>
+							Deleting data...
+						</button>
+					</div>
 				</div>
-				<div *ngIf="buttonLoading == 'print'">
-					<button class="btn btn-primary" type="button" disabled>
-						<span class="spinner-border spinner-border-sm" 
-							role="status" aria-hidden="true"></span>
-						Updating data...
-					</button>
-				</div>
-				
-				<div *ngIf="buttonLoading != 'delete'">
-					<button type="button" class="btn btn-danger" 
-						(click)="callbackDeleteDocuments()">
-						Delete document
-					</button>
-				</div>
-				<div *ngIf="buttonLoading == 'delete'">
-					<button class="btn btn-danger" type="button" disabled>
-						<span class="spinner-border spinner-border-sm" 
-							role="status" aria-hidden="true"></span>
-						Deleting data...
-					</button>
-				</div>
-				
 			</div>
-		
-		</div>
+		</ng-container> <!-- *ngIf="enableModifyData" -->
 	</div>
 		
 		</div>
