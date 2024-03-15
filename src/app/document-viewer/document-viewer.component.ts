@@ -78,6 +78,8 @@ export class DocumentViewerComponent implements OnInit, AfterViewInit {
 				console.log(this.documentInfo);
 				
 				{
+					// TODO: Remove placeholder text
+					
 					this.descText = "Document is from post "
 						+ `<i>#42069</i>`;
 					/* if (this.documentInfo.assoc_post != null) {
