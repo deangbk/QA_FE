@@ -69,21 +69,25 @@
 							*ngIf="i.isAccount">
 							
 							<div class="question-select-input-group">
-								<label>Select Tranche</label>
-								<ng-select [items]="tranchesToSelectItems()" 
-									bindLabel="label" bindValue="id" 
-									[clearable]="false" [searchable]="false" 
-									[(ngModel)]="i.trancheId" 
+								<label for="dropdownSelectTranche">Select Tranche</label>
+								<select class="form-control" id="dropdownSelectTranche"
+									[(ngModel)]="i.trancheId"
 									(change)="callbackSelectTranche(i)">
-								</ng-select>
+									
+									<option label=" " hidden></option>
+									<option *ngFor="let si of tranchesToSelectItems()"
+										[ngValue]="si.id">{{si.label}}</option>
+								</select>
 							</div>
 							<div class="question-select-input-group" *ngIf="i.trancheId != null">
-								<label>Select Account</label>
-								<ng-select [items]="getAccountSelectItems(i)" 
-									bindLabel="label" bindValue="id" 
-									[clearable]="false" [searchable]="false" 
+								<label for="dropdownSelectAccount">Select Account</label>
+								<select class="form-control" id="dropdownSelectAccount"
 									[(ngModel)]="i.accountId">
-								</ng-select>
+									
+									<option label=" " hidden></option>
+									<option *ngFor="let si of getAccountSelectItems(i)"
+										[ngValue]="si.id">{{si.label}}</option>
+								</select>
 							</div>
 						</div>
 					</div> <!-- row -->
@@ -93,11 +97,10 @@
 					<div class="row">
 						<div class="col-lg-4 input-group-category">
 							<h4>Question Category</h4>
-							<ng-select [items]="categorySelectItems" 
-								bindLabel="label" bindValue="id" 
-								[clearable]="false" [searchable]="false" 
-								[(ngModel)]="i.category">
-							</ng-select>
+							<select class="form-control" [(ngModel)]="i.category">
+								<option *ngFor="let si of categorySelectItems"
+									[ngValue]="si.id">{{si.label}}</option>
+							</select>
 						</div>
 						<ng-container *ngIf="isStaff">
 							<div class="col-lg-4"></div>
@@ -128,7 +131,7 @@
 			</ng-container>
 			
 			<div class="submit-area">
-				<a href="javascript:void(0)" (click)="addNewQuestion()">
+				<a href="javascript:" (click)="addNewQuestion()">
 					<p>Add another question?</p>
 				</a>
 				
