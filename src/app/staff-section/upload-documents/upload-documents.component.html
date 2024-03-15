@@ -12,12 +12,12 @@
       <option value="Account">Account</option>
     </select>
 </div></div>
-  <div class="col-sm-2"><div class="form-group" >
+  <div class="col-sm-2"><div class="form-group" *ngIf="isAccount" >
     <label for="tranchesSelect">Select Tranche</label>
     <!-- <select class="form-control" id="tranchesSelect" [(ngModel)]="selectedTranche" (change)="getAccounts(selectedTranche.accounts)">
       <option *ngFor="let tranche of tranchesData" [value]="tranche.id">{{tranche.name}}</option>
   </select> -->
-  <select class="form-control" id="tranchesSelect" nmae="trancheSelect" [(ngModel)]="selectedTranche" (change)="getAccounts(selectedTranche.accounts)" *ngIf="isAccount">
+  <select class="form-control" id="tranchesSelect" nmae="trancheSelect" [(ngModel)]="selectedTranche" (change)="getAccounts(selectedTranche.accounts)" >
     <option *ngFor="let tranche of tranchesData" [ngValue]="tranche">Tranche {{tranche.name}}</option>
 </select>
 </div></div>
@@ -42,7 +42,7 @@
           <file-upload formControlName="files"></file-upload>
         </form>
         <div class="text-center m-t-20">
-          <button class="btn btn-primary" (click)="uploadFiles()" [disabled]="!upReady">Upload Now {{upReady}} -{{upDetails.upType}}</button>
+          <button class="btn btn-primary" (click)="uploadFiles()" [disabled]="!upReady"><i class="fa fa-spin fa-spinner" *ngIf="uploading"></i> Upload Now</button>
         </div>
       </app-card>
     </div>
