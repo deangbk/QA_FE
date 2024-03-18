@@ -22,8 +22,8 @@ class AddQuestionEntry {
 	category: string;
 	text: string;
 	
-	postAs?: string;
-	
+	//postAs?: string;
+	postAs?: number;
 }
 
 @Component({
@@ -46,7 +46,7 @@ export class SubmitQuestionComponent {
 	}
 	
 	buttonLoading = '';
-	listUser:Models.RespUserData[];
+	listUser: Models.RespUserData[];
 	headerLoaded = false;
 	tranchesData: Models.RespTrancheData[] = [];
 	
@@ -77,6 +77,7 @@ export class SubmitQuestionComponent {
 	ngOnInit(): void {
 		this.fetchData();
 		this.getUserList();
+		
 		this.addFirstQuestion();
 	}
 	
@@ -95,9 +96,20 @@ export class SubmitQuestionComponent {
 		}
 		
 		this.headerLoaded = true;
-
-		
-		
+	}
+	async getUserList() {
+		let res = await Helpers.observableAsPromise(
+			<Observable<Models.RespUserData[]>>
+			this.dataService.projectGetUsers(this.projectId, 1));
+		if (res.ok) {
+			this.listUser = res.val;
+			
+			//console.log(res);
+		}
+		else {
+			console.log(res.val);
+			this.notifier.notify('error', "Server Error: " + Helpers.formatHttpError(res.val));
+		}
 	}
 
 	// -----------------------------------------------------
@@ -125,17 +137,7 @@ export class SubmitQuestionComponent {
 		}
 		return [];
 	}
-	async getUserList(){
-		let data = await Helpers.observableAsPromise(<Observable<Models.RespUserData[]>>
-			this.dataService.projectGetUsers(this.projectId, 1));
-		if (data.ok) {
-			this.listUser = data.val;
-			console.log(data);
-		}
-		else {
-			console.log(data.val);
-		}
-	}
+	
 	isOnlyNumbers(text?: string) {
 		return text != null && text.length == 0 || !(/[^0-9]/.test(text));
 	}
@@ -148,10 +150,10 @@ export class SubmitQuestionComponent {
 		this.addingQuestionsData.push({
 			isAccount: false,
 
-			category: 'General',
+			category: 'general',
 			text: '',
 		
-			postAs: '',
+			postAs: null,
 		});
 	}
 	addNewQuestion(question?: AddQuestionEntry) {
@@ -195,8 +197,8 @@ export class SubmitQuestionComponent {
 					else if (entry.text.length == 0) {
 						throw new Error("Please add question text");
 					}
-					else if (!this.isOnlyNumbers(entry.postAs)) {
-						throw new Error("Invalid user ID");
+					else if (this.listUser.findIndex(x => x.id == entry.postAs) == -1) {
+						throw new Error("Invalid user ID (user not found)");
 					}
 					else if (this.categorySelectItems.findIndex(x => x.id == entry.category) == -1) {
 						throw new Error("Invalid category");
@@ -219,7 +221,7 @@ export class SubmitQuestionComponent {
 				account: x.isAccount ? x.accountId : null,
 				text: x.text,
 				category: x.category,
-				post_as: this.isStaff ? (Helpers.parseInt(x.postAs).unwrapOr(null)) : null,
+				post_as: this.isStaff ? (isNaN(x.postAs) ? null : x.postAs) : null,
 			} as Models.ReqBodyCreatePost));
 			
 			console.log(questionsData);
