@@ -104,42 +104,90 @@ private notifier: NotifierService;
   showNotification(type: string, message: string): void {
     this.notifier.notify(type, message);
   }
-  uploadFiles() {
-    this.uploading=true;
-    const files: File[] = this.demoForm.get('files').value;
-    const formData = new FormData();
+	async uploadFiles() {
+		this.uploading = true;
+		
+		/* const files: File[] = this.demoForm.get('files').value;
+		const formData = new FormData();
 
-    files.forEach((file, index) => {
-      formData.append(`file${index}`, file, file.name);
-    });
- //   this.upDetails.accountId=+this.selectedAccount.id;
-  //  formData.append('upType', 'question');
-  formData.append("QuestionID", this.upDetails.questionID.toString());
-  formData.append("upType", this.upDetails.upType || '');
-  formData.append("Account", this.upDetails.account || '');
-  formData.append("AccountId", this.upDetails.accountId.toString());
-    this.dataService.documentUploadToQuestion(40, formData).subscribe(
-      response => {
-        //   this.showNotification("success", notifMess); // handle the response here
-        // console.log(response);
-        //  this.displayAApproveBy(approvals);
-        this.uploading=false;
-        this.demoForm.get('files').reset([]);
-        this.showNotification('success', 'Document uploaded successfully');
-        
+		files.forEach((file, index) => {
+			formData.append(`file${index}`, file, file.name);
+		});
+		//   this.upDetails.accountId=+this.selectedAccount.id;
+		//  formData.append('upType', 'question');
+		formData.append("QuestionID", this.upDetails.questionID.toString());
+		formData.append("upType", this.upDetails.upType || '');
+		formData.append("Account", this.upDetails.account || '');
+		formData.append("AccountId", this.upDetails.accountId.toString());
+		this.dataService.documentUploadToQuestion(40, formData).subscribe(
+			response => {
+				//   this.showNotification("success", notifMess); // handle the response here
+				// console.log(response);
+				//  this.displayAApproveBy(approvals);
+				this.uploading = false;
+				this.demoForm.get('files').reset([]);
+				this.showNotification('success', 'Document uploaded successfully');
 
-      },
-      error => {
-        //     this.showNotification("error", "Error Approving Answer");
-        // handle the error herethis.showNotification("Answer Approved", "sucess")
-        console.log(error);
-        this.uploading=false;
-        this.showNotification('error', 'Error when uplaoding document, try again');
-      }
-    );
-  
 
-  }
+			},
+			error => {
+				//     this.showNotification("error", "Error Approving Answer");
+				// handle the error herethis.showNotification("Answer Approved", "sucess")
+				console.log(error);
+				this.uploading = false;
+				this.showNotification('error', 'Error when uplaoding document, try again');
+			}
+		); */
+		
+		
+		const fnMapCorrectType = (x: string) => {
+			switch (x) {
+				case 'Bid':
+					return 'bid';
+				case 'Account':
+					return 'account';
+				case 'Transaction':
+					return 'transaction';
+			}
+			return 'bid';
+		};
+		const docType = fnMapCorrectType(this.upDetails.upType);
+		
+		const files: File[] = this.demoForm.get('files').value;
+		
+		let models = files.map((file, i) => {
+			/* let fpath = file.name.split('/').pop();
+			let spath = fpath.split('.');
+			let fname = `${spath[0]}.${spath[1]}`; */
+			
+			let dto = {
+				type: docType,
+				
+				with_post: this.upDetails.questionID,
+				with_account: this.upDetails.accountId,
+				
+				name: file.name,
+			} as Models.ReqBodyUploadDocument;
+			return dto;
+		});
+		
+		console.log(models);
+		{
+			let res = await Helpers.observableAsPromise(
+				this.dataService.documentUploadFromFiles(this.projectId, models, files));
+			if (res.ok) {
+				this.showNotification('success', 'Document uploaded successfully');
+				
+				this.demoForm.get('files').reset([]);
+			}
+			else {
+				this.showNotification('error', 'Document upload error: '
+					+ Helpers.formatHttpError(res.val));
+			}
+			
+			this.uploading = false;
+		}
+	}
 
 chooseDocType(){
 switch(this.upDetails.upType){
