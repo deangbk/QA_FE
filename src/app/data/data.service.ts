@@ -6,8 +6,6 @@ import { catchError } from 'rxjs/operators';
 
 import { Helpers } from "../helpers";
 import * as Models from "./data-models";
-import { createDefaultRespPostData } from '../data/model-initializers';
-
 @Injectable({
 	providedIn: 'root'
 })
@@ -361,6 +359,11 @@ export class DataService {
 		return <Observable<number>>
 			this._post(`document/upload/${projectId}`, data);
 	}
+	
+	/**
+	 * @deprecate
+	 * Deprecated, please use documentUploadFromFiles
+	 */
 	public documentUploadToQuestion(accountId: number, data: FormData) {
 		return <Observable<number>>
 			this._post(`manage/upQDoc`, data);
