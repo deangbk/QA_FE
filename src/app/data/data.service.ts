@@ -343,17 +343,23 @@ export class DataService {
 			this._post(`document/recent/${projectId}?${query}`, body);
 	}
 
-	public documentUploadToProject(projectId: number, data: Models.ReqBodyUploadDocument) {
+	public documentUploadFromFiles(projectId: number,
+		data: Models.ReqBodyUploadDocument[],
+		files: File[])
+	{
+		const form = new FormData();
+		
+		files.forEach((file, index) => {
+			form.append('files', file, file.name);
+		});
+		form.append('descs', JSON.stringify(data));
+		
 		return <Observable<number>>
-			this._post(`document/upload/project/${projectId}`, data);
+			this._post_as_form(`document/upload/file/${projectId}`, form);
 	}
-	public documentUploadToPost(postID: number, data: Models.ReqBodyUploadDocument) {
+	public documentUploadEntryOnly(projectId: number, data: Models.ReqBodyUploadDocument[]) {
 		return <Observable<number>>
-			this._post(`document/upload/post/${postID}`, data);
-	}
-	public documentUploadToAccount(accountId: number, data: Models.ReqBodyUploadDocument) {
-		return <Observable<number>>
-			this._post(`document/upload/account/${accountId}`, data);
+			this._post(`document/upload/${projectId}`, data);
 	}
 	public documentUploadToQuestion(accountId: number, data: FormData) {
 		return <Observable<number>>
