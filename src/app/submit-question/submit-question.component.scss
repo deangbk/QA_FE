@@ -4,8 +4,19 @@
 	margin-bottom: 2em;
 }
 
-.input-radio .radio-control-input {
-	margin: 1em;
+.input-radio {
+	display: flex;
+	flex-direction: column;
+	
+	justify-content: center;
+	align-items: center;
+	
+	.radio-control-input {
+		margin: 1em;
+	}
+	.radio-control-label {
+		text-align: center;
+	}
 }
 
 .select-type-group {
