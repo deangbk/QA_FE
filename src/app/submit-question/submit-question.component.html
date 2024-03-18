@@ -1,159 +1,154 @@
-
 <div class="col-xl-12">
-	
-	<div *ngIf="!headerLoaded">
-		<div class="row">
-			<div class="d-flex justify-content-center">
-				<div class="spinner-border" role="status">
-					<span class="sr-only">Loading...</span>
+  <div *ngIf="!headerLoaded">
+    <div class="row">
+      <div class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="headerLoaded">
+    <div class="row">
+      <app-card cardTitle="Post a question" [options]="false" blockClass="table-border-style" class="card-question-info-select">
+        <h3>Submit your inquiries here. We will respond to you as soon as possible.</h3>
+
+        <p>Placeholder description.</p>
+      </app-card>
+    </div>
+
+    <hr />
+    <br />
+
+    <div class="row">
+      <ng-container *ngFor="let i of addingQuestionsData; let idx = index">
+        <app-card class="question-add-entry" blockClass="table-border-style" [options]="false" [customHeader]="true">
+          <!-- Custom card header -->
+          <!-- app-card has content projection on .app-card-header -->
+          <div class="app-card-header">
+            <div class="d-flex justify-content-between">
+              <h5>Question #{{ idx + 1 }}</h5>
+              <i class="feather icon-x card-close" (click)="removeQuestion(idx)" *ngIf="idx > 0"></i>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-4 select-type-group">
+				
+              <h4>Question Type</h4>
+              <div class="radio-group" >
+                <form>
+					<div class="row">
+						<div class="col-lg-6">
+                  <div class="input-radio ">
+                    <input
+                      class="radio-control-input"
+                      type="radio"
+                      name="selectType"
+                      id="general"
+                      [checked]="!i.isAccount"
+                      (change)="callbackSetQuestionType(i, false)"
+                    />
+                    <label class="radio-control-label"> General Question </label>
+                  </div>
+				</div>
+				  <div class="col-lg-6">
+                  <div class="input-radio">
+                    <input
+                      class="radio-control-input"
+                      type="radio"
+                      name="selectType"
+                      id="account"
+                      [checked]="i.isAccount"
+                      (change)="callbackSetQuestionType(i, true)"
+                    />
+                    <label class="radio-control-label"> Account Question </label>
+                  </div>
 				</div>
 			</div>
-		</div>
-	</div>
-	<div *ngIf="headerLoaded">
-		<div class="row">
-			<app-card cardTitle="Post a question" [options]="false" 
-				blockClass="table-border-style" class="card-question-info-select">
-				
-				<h3>Submit your inquiries here. We will respond to you as soon as possible.</h3>
-				
-				<p>Placeholder description.</p>
-			</app-card>
-		</div>
+                </form>
 		
-		<hr>
-		<br>
-		
-		<div class="row">
-			<ng-container *ngFor="let i of addingQuestionsData; let idx=index;">
-				<app-card class="question-add-entry" blockClass="table-border-style" 
-					[options]="false" [customHeader]="true">
-					
-					<!-- Custom card header -->
-					<!-- app-card has content projection on .app-card-header -->
-					<div class="app-card-header">
-						<div class="d-flex justify-content-between">
-							<h5>Question #{{idx + 1}}</h5>
-							<i class="feather icon-x card-close"
-								(click)="removeQuestion(idx)"
-								*ngIf="idx > 0"></i>
-						</div>
-					</div>
-					
-					<div class="row">
-						<div class="col-lg-4 select-type-group">
-							<h4>Question Type</h4>
-							<div class="radio-group">
-								<form>
-									<div class="input-radio">
-										<input class="radio-control-input" type="radio" name="selectType" 
-											id="general" checked
-											(change)="callbackSetQuestionType(i, false)">
-										<label class="radio-control-label">
-											General Question
-										</label>
-									</div>
-									<div class="input-radio">
-										<input class="radio-control-input" type="radio" name="selectType" 
-											id="account" 
-											(change)="callbackSetQuestionType(i, true)">
-										<label class="radio-control-label">
-											Account Question
-										</label>
-									</div>
-								</form>
-							</div>
-						</div>
-						
-						<div class="col-lg-4 d-flex flex-column justify-content-between" 
-							*ngIf="i.isAccount">
-							
-							<div class="question-select-input-group">
-								<label for="dropdownSelectTranche">Select Tranche</label>
-								<select class="form-control" id="dropdownSelectTranche"
-									[(ngModel)]="i.trancheId"
-									(change)="callbackSelectTranche(i)">
-									
-									<option label=" " hidden></option>
-									<option *ngFor="let si of tranchesToSelectItems()"
-										[ngValue]="si.id">{{si.label}}</option>
-								</select>
-							</div>
-							<div class="question-select-input-group" *ngIf="i.trancheId != null">
-								<label for="dropdownSelectAccount">Select Account</label>
-								<select class="form-control" id="dropdownSelectAccount"
-									[(ngModel)]="i.accountId">
-									
-									<option label=" " hidden></option>
-									<option *ngFor="let si of getAccountSelectItems(i)"
-										[ngValue]="si.id">{{si.label}}</option>
-								</select>
-							</div>
-						</div>
-					</div> <!-- row -->
-					
-					<hr>
-					
-					<div class="row">
-						<div class="col-lg-4 input-group-category">
-							<h4>Question Category</h4>
-							<select class="form-control" [(ngModel)]="i.category">
-								<option *ngFor="let si of categorySelectItems"
-									[ngValue]="si.id">{{si.label}}</option>
-							</select>
-						</div>
-						<ng-container *ngIf="isStaff">
-							<div class="col-lg-4"></div>
-							<div class="col-lg-4">
-								<h4>Post as user</h4>
-								<input class="form-control" id="user-id-input" 
-									placeholder="Enter user ID" pattern="[0-9]*" 
-									[(ngModel)]="i.postAs">
-									
-								<div *ngIf="isOnlyNumbers(i.postAs); else notANumber">
-									<small id="userIdHelp" class="form-text text-muted">
-										Leave empty to post as yourself</small>
-								</div>
-								<ng-template #notANumber>
-									<small id="userIdHelp" class="form-text alert-danger">
-										User ID must be a number</small>
-								</ng-template>
-							</div>
-						</ng-container>
-						
-						<div class="form-group">
-							<h4>Question</h4>
-							<textarea class="form-control" id="question-text-area" rows="4"
-								[(ngModel)]="i.text"></textarea>
-						</div>
-					</div> <!-- row -->
-				</app-card>
-			</ng-container>
-			
-			<div class="submit-area">
-				<a href="javascript:" (click)="addNewQuestion()">
-					<p>Add another question?</p>
-				</a>
-				
-				<div *ngIf="buttonLoading != 'add'; else btnLoadAdd">
-					<button type="button" class="btn btn-primary" 
-						(click)="callbackAddAllQuestions()">
-						Submit Questions
-					</button>
-				</div>
-				<ng-template #btnLoadAdd>
-					<button class="btn btn-primary" type="button" disabled>
-						<span class="spinner-border spinner-border-sm" 
-							role="status" aria-hidden="true"></span>
-						Submitting questions...
-					</button>
-				</ng-template>
-				
-				<!-- <div *ngIf="addError.length > 0">
+              </div>
+            </div>
+
+            <div class="col-lg-3 d-flex flex-column justify-content-between" *ngIf="i.isAccount">
+              <div class="select-container">
+                <label for="dropdownSelectTranche">Select Tranche</label>
+                <select class="form-control custom-select-height" id="dropdownSelectTranche" [(ngModel)]="i.trancheId" (change)="callbackSelectTranche(i)">
+                  <option label=" " hidden></option>
+                  <option *ngFor="let si of tranchesToSelectItems()" [ngValue]="si.id">Tranche {{ si.label }}</option>
+                </select>
+              </div>
+              
+            </div>
+			<div class="col-lg-3 d-flex flex-column justify-content-between" *ngIf="i.isAccount">
+			<div class="select-container" *ngIf="i.trancheId != null">
+                <label for="dropdownSelectAccount">Select Account</label>
+                <select class="form-control custom-select-height" id="dropdownSelectAccount" [(ngModel)]="i.accountId">
+                  <option label=" " hidden></option>
+                  <option *ngFor="let si of getAccountSelectItems(i)" [ngValue]="si.id">{{ si.label }}</option>
+                </select>
+              </div>
+			  </div>
+          </div>
+          <!-- row -->
+
+          <hr />
+
+          <div class="row">
+            <div class="col-lg-4 input-group-category">
+              <h4>Question Category</h4>
+              <select class="form-control" [(ngModel)]="i.category">
+                <option *ngFor="let si of categorySelectItems" [ngValue]="si.id">{{ si.label }}</option>
+              </select>
+            </div>
+            <ng-container *ngIf="isStaff">
+              <div class="col-lg-4"></div>
+              <div class="col-lg-4">
+                <h4>Post as user</h4>
+
+                <ng-select [items]="listUser" bindLabel="user_name" bindValue="id" placeholder="Enter User" [(ngModel)]="i.postAs">
+                </ng-select>
+             <!-- <input class="form-control" id="user-id-input" placeholder="Enter user ID" pattern="[0-9]*" [(ngModel)]="i.postAs" /> -->
+
+                <div *ngIf="isOnlyNumbers(i.postAs); else notANumber">
+                  <small id="userIdHelp" class="form-text text-muted"> Leave empty to post as yourself</small>
+                </div>
+                <ng-template #notANumber>
+                  <small id="userIdHelp" class="form-text alert-danger"> User ID must be a number</small>
+                </ng-template>
+              </div>
+            </ng-container>
+
+            <div class="form-group">
+              <h4>Question</h4>
+              <textarea class="form-control" id="question-text-area" rows="4" [(ngModel)]="i.text"></textarea>
+            </div>
+          </div>
+          <!-- row -->
+          <a href="javascript:" (click)="addNewQuestion(i)">
+            <p><i class="fas fa-plus"></i> another question?</p>
+          </a>
+        </app-card>
+      </ng-container>
+
+      <div class="submit-area">
+        <div *ngIf="buttonLoading != 'add'; else btnLoadAdd">
+          <button type="button" class="btn btn-primary" (click)="callbackAddAllQuestions()"> Submit Questions </button>
+        </div>
+        <ng-template #btnLoadAdd>
+          <button class="btn btn-primary" type="button" disabled>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Submitting questions...
+          </button>
+        </ng-template>
+
+        <!-- <div *ngIf="addError.length > 0">
 					<h4 style="color: red;">{{addError}}</h4>
 				</div> -->
-				
-			</div> <!-- .submit-area -->
-		</div> <!-- row -->
-	</div>
+      </div>
+      <!-- .submit-area -->
+    </div>
+    <!-- row -->
+  </div>
 </div>
