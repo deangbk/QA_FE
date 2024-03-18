@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -45,16 +46,20 @@ export class DataService {
 			.pipe(catchError(this.handleError));
 	}
 
-	protected _post_as_form(url: string, body?: any) {
-		var form = body != null ? Helpers.bodyToHttpFormData(body) : null;
+	protected _post_as_form(url: string, form?: any) {
+		const headers = new HttpHeaders();
+		headers.append('Content-Type', 'multipart/form-data');
+		
 		return this.http
-			.post(`${this.baseUrl}/${url}`, form)
+			.post(`${this.baseUrl}/${url}`, form, { 'headers': headers })
 			.pipe(catchError(this.handleError));
 	}
-	protected _put_as_form(url: string, body?: any) {
-		var form = body != null ? Helpers.bodyToHttpFormData(body) : null;
+	protected _put_as_form(url: string, form?: any) {
+		const headers = new HttpHeaders();
+		headers.append('Content-Type', 'multipart/form-data');
+		
 		return this.http
-			.put(`${this.baseUrl}/${url}`, form)
+			.put(`${this.baseUrl}/${url}`, form, { 'headers': headers })
 			.pipe(catchError(this.handleError));
 	}
 
