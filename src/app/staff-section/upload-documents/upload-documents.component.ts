@@ -5,13 +5,15 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
-import { DataService } from 'src/app/data/data.service';
-import { FileUploadDTO } from 'src/app/data/data-models';
 import { initializeFileUploadDTO,initializeRespAccountData,initializeRespTrancheData } from 'src/app/data/model-initializers';
-import { Helpers } from 'src/app/helpers';
-import * as Models from "../../data/data-models";
 import { NotifierService } from 'angular-notifier';
 
+import { DataService } from '../../data/data.service';
+import { SecurityService } from '../../security/security.service';
+
+import * as Models from "../../data/data-models";
+
+import { Helpers } from '../../helpers';
 
 // third party
 import { FileUploadValidators, FileUploadModule } from '@iplab/ngx-file-upload';
@@ -23,7 +25,9 @@ import { FileUploadValidators, FileUploadModule } from '@iplab/ngx-file-upload';
   styleUrls: ['./upload-documents.component.scss']
 })
 export class UploadDocumentsComponent {
-  upDetails: FileUploadDTO = initializeFileUploadDTO();
+	projectId = 1;
+	
+	upDetails: Models.FileUploadDTO = initializeFileUploadDTO();
   questionId: number;
   isAccount:boolean = false;
     upReady:boolean=false; 
@@ -39,7 +43,9 @@ private notifier: NotifierService;
   private filesControl = new UntypedFormControl(null, FileUploadValidators.filesLimit(2));
 
 
-  constructor(private dataService: DataService, private route: ActivatedRoute,notifier: NotifierService,) {
+	constructor(
+		private dataService: DataService, private securityService: SecurityService,
+		private route: ActivatedRoute, notifier: NotifierService,) {
     this.questionId = +this.route.snapshot.paramMap.get('qId');
     console.log(this.questionId);
     this.notifier = notifier;
@@ -51,7 +57,9 @@ private notifier: NotifierService;
 
 
   });
- ngOnInit(): void {
+	ngOnInit(): void {
+		this.projectId = this.securityService.getProjectId();
+		
   this.selectedAccount =initializeRespAccountData(); 
   this.selectedTranche=initializeRespTrancheData();
   if (this.questionId) {
