@@ -112,28 +112,27 @@ export class DataService {
 		return <Observable<number>>
 			this._put(`manage/grant/access/file/${trancheId}`, form);
 	}
-
 	public managerRemoveAccess(trancheId: number, userId: number) {
 		return <Observable<number>>
 			this._delete(`manage/ungrant/access/${trancheId}/${userId}`);
 	}
 
-	public managerBulkAddUsersFromFile(projectId: number, file: File) {
+	public managerBulkAddUsersFromFile(file: File) {
 		var form = new FormData();
 		form.append('file', file, file.name);
 		return <Observable<Models.RespBulkUserCreate[]>>
-			this._post(`manage/bulk/create_user/${projectId}`, form);
+			this._post(`manage/bulk/create_user`, form);
 	}
-	public managerBulkAddUsers(projectId: number, users: Models.ReqBodyCreateUser[]) {
+	public managerBulkAddUsers(users: Models.ReqBodyCreateUser[]) {
 		return <Observable<Models.RespBulkUserCreate[]>>
-			this._post(`manage/bulk/create_user/json/${projectId}`, users);
+			this._post(`manage/bulk/create_user/json`, users);
 	}
 	
-	public managerGetPosts(projectId: number, filter: Models.ReqBodyGetPosts, details: number = 0) {
+	public managerGetPosts(filter: Models.ReqBodyGetPosts, details: number = 0) {
 		var query = Helpers.bodyToHttpQueryString({},
 			["details", details]);
 		return <Observable<Models.RespPostData[]>>
-			this._post(`manage/post/${projectId}?${query}`, filter);
+			this._post(`manage/post?${query}`, filter);
 	}
 	
 	// -----------------------------------------------------
@@ -155,29 +154,29 @@ export class DataService {
 	// -----------------------------------------------------
 	// Project
 
-	public projectGetInfo(projectId: number) {
+	public projectGetInfo() {
 		return <Observable<Models.RespProjectData>>
-			this._get(`project/get/${projectId}`);
+			this._get(`project/get`);
 	}
 	public projectGetTranches() {
 		return <Observable<Models.RespTrancheData[]>>
 			this._get(`project/tranches`);
 	}
-	public projectGetUsers(projectId: number, details = 0) {
+	public projectGetUsers(details = 0) {
 		var query = Helpers.bodyToHttpQueryString({},
 			["details", details]);
 		return <Observable<number[]> | Observable<Models.RespUserData[]>>
-			this._get(`project/users/${projectId}?${query}`);
+			this._get(`project/users?${query}`);
 	}
-	public projectGetManagers(projectId: number, details = 0) {
+	public projectGetManagers(details = 0) {
 		var query = Helpers.bodyToHttpQueryString({},
 			["details", details]);
 		return <Observable<number[]> | Observable<Models.RespUserData[]>>
-			this._get(`project/managers/${projectId}?${query}`);
+			this._get(`project/managers?${query}`);
 	}
-	public projectCountContent(projectId: number) {
+	public projectCountContent() {
 		return <Observable<number[]>>
-			this._get(`project/content/${projectId}`);
+			this._get(`project/content`);
 	}
 
 	public projectCreate(create: Models.ReqBodyCreateProject) {
@@ -188,19 +187,19 @@ export class DataService {
 	// -----------------------------------------------------
 	// Note
 
-	public noteGetInProject(projectId: number) {
+	public noteGetInProject() {
 		return <Observable<Models.RespNoteData[]>>
-			this._get(`note/${projectId}`);
+			this._get(`note`);
 	}
-	public noteAdd(projectId: number, add: Models.ReqBodyAddNote) {
+	public noteAdd(add: Models.ReqBodyAddNote) {
 		return <Observable<number>>
-			this._post(`note/${projectId}`, add);
+			this._post(`note`, add);
 	}
-	public noteDelete(projectId: number, num: number) {
+	public noteDelete(num: number) {
 		var query = Helpers.bodyToHttpQueryString({},
 			["num", num]);
 		return <Observable<number>>
-			this._delete(`note/${projectId}?${query}`);
+			this._delete(`note?${query}`);
 	}
 
 	// -----------------------------------------------------
@@ -212,9 +211,9 @@ export class DataService {
 		return <Observable<Models.RespAccountData>>
 			this._get(`account/${accountId}?${query}`);
 	}
-	public accountCreate(accountId: number, create: Models.ReqBodyCreateAccount) {
+	public accountCreate(projectId: number, create: Models.ReqBodyCreateAccount) {
 		return <Observable<Models.RespAccountData>>
-			this._post(`account/${accountId}`, create);
+			this._post(`account/${projectId}`, create);
 	}
 	public accountEdit(accountId: number, edit: Models.ReqBodyEditAccount) {
 		return this._put(`account/edit/${accountId}`, edit);
@@ -226,7 +225,7 @@ export class DataService {
 	// -----------------------------------------------------
 	// Post
 
-	public postGet(projectId: number,
+	public postGet(
 		filter: Models.ReqBodyGetPosts, paginate?: Models.ReqBodyPaginate,
 		details: number = 0)
 	{
@@ -237,56 +236,56 @@ export class DataService {
 			paginate: paginate,
 		};
 		return <Observable<Models.RespGetPost>>
-			this._post(`post/page/${projectId}?${query}`, body);
+			this._post(`post/page?${query}`, body);
 	}
 
-	public postSetAnswer(projectId: number, set: Models.ReqBodySetAnswer) {
-		return this._put(`post/answer/${projectId}`, set);
+	public postSetAnswer(set: Models.ReqBodySetAnswer) {
+		return this._put(`post/answer`, set);
 	}
-	public postEdit(projectId: number, edit: Models.ReqBodyEditPost) {
-		return this._put(`post/edit/${projectId}`, edit);
+	public postEdit(edit: Models.ReqBodyEditPost) {
+		return this._put(`post/edit`, edit);
 	}
 
-	public postApproveQuestion(projectId: number, approve: Models.ReqBodySetApproval) {
-		return this._put(`post/approve/${projectId}?mode=q`, approve);
+	public postApproveQuestion(approve: Models.ReqBodySetApproval) {
+		return this._put(`post/approve?mode=q`, approve);
 	}
-	public postApproveAnswer(projectId: number, approve: Models.ReqBodySetApproval) {
-		return this._put(`post/approve/${projectId}?mode=a`, approve);
+	public postApproveAnswer(approve: Models.ReqBodySetApproval) {
+		return this._put(`post/approve?mode=a`, approve);
 	}
 	
-	public postBulkCreate(projectId: number, creates: Models.ReqBodyCreatePost[]) {
+	public postBulkCreate(creates: Models.ReqBodyCreatePost[]) {
 		return <Observable<number[]>>
-			this._post(`post/bulk/${projectId}`, creates);
+			this._post(`post/bulk`, creates);
 	}
-	public postBulkEdit(projectId: number, edits: Models.ReqBodyEditPost[]) {
+	public postBulkEdit(edits: Models.ReqBodyEditPost[]) {
 		return <Observable<number>>
-			this._put(`post/bulk/edit/${projectId}`, edits);
+			this._put(`post/bulk/edit`, edits);
 	}
-	public postBulkAnswer(projectId: number, edits: Models.ReqBodySetAnswer[]) {
+	public postBulkAnswer(edits: Models.ReqBodySetAnswer[]) {
 		return <Observable<number>>
-			this._put(`post/bulk/edit/${projectId}`, edits);
+			this._put(`post/bulk/answer`, edits);
 	}
 
 	// -----------------------------------------------------
 	// Comment
 
-	public commentGetInPost(postID: number) {
+	public commentGetInPost(postId: number) {
 		return <Observable<Models.RespCommentData[]>>
-			this._get(`comment/${postID}`);
+			this._get(`comment/${postId}`);
 	}
-	public commentAdd(postID: number, add: Models.ReqBodyAddComment) {
+	public commentAdd(postId: number, add: Models.ReqBodyAddComment) {
 		return <Observable<number>>
-			this._post(`comment/${postID}`, add);
+			this._post(`comment/${postId}`, add);
 	}
-	public commentDelete(postID: number, num: number) {
+	public commentDelete(postId: number, num: number) {
 		var query = Helpers.bodyToHttpQueryString({},
 			["num", num]);
 		return <Observable<number>>
-			this._delete(`comment/${postID}?${query}`);
+			this._delete(`comment/${postId}?${query}`);
 	}
-	public commentClear(postID: number) {
+	public commentClear(postId: number) {
 		return <Observable<number>>
-			this._delete(`comment/all/${postID}`);
+			this._delete(`comment/all/${postId}`);
 	}
 
 	// -----------------------------------------------------
@@ -308,17 +307,17 @@ export class DataService {
 		return <Observable<ArrayBuffer>>res;
 	}
 
-	public documentGetInProject(projectId: number, details: number = 0) {
+	public documentGetInProject(details: number = 0) {
 		var query = Helpers.bodyToHttpQueryString({},
 			["details", details]);
 		return <Observable<Models.RespDocumentData[]>>
-			this._get(`document/with/project/${projectId}?${query}`);
+			this._get(`document/with/project?${query}`);
 	}
-	public documentGetInPost(postID: number, details: number = 0) {
+	public documentGetInPost(postId: number, details: number = 0) {
 		var query = Helpers.bodyToHttpQueryString({},
 			["details", details]);
 		return <Observable<Models.RespDocumentData[]>>
-			this._get(`document/with/post/${postID}?${query}`);
+			this._get(`document/with/post/${postId}?${query}`);
 	}
 	public documentGetInAccount(accountId: number, details: number = 0) {
 		var query = Helpers.bodyToHttpQueryString({},
@@ -327,7 +326,7 @@ export class DataService {
 			this._get(`document/with/account/${accountId}?${query}`);
 	}
 	
-	public documentGetRecents(projectId: number, 
+	public documentGetRecents(
 		filter?: Models.ReqBodyFilterGetDocument, paginate?: Models.ReqBodyPaginate, 
 		details: number = 0)
 	{
@@ -338,10 +337,10 @@ export class DataService {
 			paginate: paginate,
 		};
 		return <Observable<Models.RespDocumentData[]>>
-			this._post(`document/recent/${projectId}?${query}`, body);
+			this._post(`document/recent?${query}`, body);
 	}
 
-	public documentUploadFromFiles(projectId: number,
+	public documentUploadFromFiles(
 		data: Models.ReqBodyUploadDocument[],
 		files: File[])
 	{
@@ -353,11 +352,11 @@ export class DataService {
 		form.append('descs', JSON.stringify(data));
 		
 		return <Observable<number>>
-			this._post_as_form(`document/upload/file/${projectId}`, form);
+			this._post_as_form(`document/upload/file`, form);
 	}
-	public documentUploadEntryOnly(projectId: number, data: Models.ReqBodyUploadDocument[]) {
+	public documentUploadEntryOnly(data: Models.ReqBodyUploadDocument[]) {
 		return <Observable<number>>
-			this._post(`document/upload/${projectId}`, data);
+			this._post(`document/upload`, data);
 	}
 	
 	/**
@@ -369,33 +368,33 @@ export class DataService {
 			this._post(`manage/upQDoc`, data);
 	}
 	
-	public documentBulkEdit(projectId: number, edits: Models.ReqBodyEditDocument[]) {
+	public documentBulkEdit(edits: Models.ReqBodyEditDocument[]) {
 		return <Observable<number>>
-			this._put(`document/bulk/edit/${projectId}`, edits);
+			this._put(`document/bulk/edit`, edits);
 	}
-	public documentDelete(projectId: number, deleteId: number) {
+	public documentDelete(documentId: number) {
 		return <Observable<number>>
-			this._delete(`document/${projectId}/${deleteId}`);
+			this._delete(`document/${documentId}`);
 	}
-	public documentBulkDelete(projectId: number, deleteIds: number[]) {
+	public documentBulkDelete(documentIds: number[]) {
 		return <Observable<number>>
-			this._post(`document/bulk/delete/${projectId}`, deleteIds);
+			this._post(`document/bulk/delete`, documentIds);
 	}
 
 	// -----------------------------------------------------
-
-	public getQuestions(filter: Models.ReqBodyGetPosts, projectId: number): Observable<Models.RespGetPost> {
+	
+	public getQuestions(filter: Models.ReqBodyGetPosts): Observable<Models.RespGetPost> {
 		/* return this.http
 		.get(`${this.baseUrl}/post/get_page/1`)
 		.pipe(catchError(this.handleError)); */
      
-		return this.postGet(1, {}, null);
+		return this.postGet({}, null);
 	}
-	public getQuestionss(filter: Models.ReqBodyGetPosts, projectId: number): Observable<Models.RespGetPost> {
+	public getQuestionss(filter: Models.ReqBodyGetPosts): Observable<Models.RespGetPost> {
 		/* return this.http
 		.get(`${this.baseUrl}/post/get_page/1`)
 		.pipe(catchError(this.handleError)); */
      
-		return this.postGet(1, {}, null);
+		return this.postGet({}, null);
 	}
 }

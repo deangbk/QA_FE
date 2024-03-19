@@ -25,7 +25,6 @@ export class EditQuestionComponent {
   question: Models.RespPostData;
   questionId: number;
   qFilter: Models.ReqBodyGetPosts;
-  projectId: number = 1;
   paginate: Models.ReqBodyPaginate = null;
   loading: boolean = false;
   deleting: boolean = false;
@@ -33,32 +32,31 @@ export class EditQuestionComponent {
   deleteIds: number[] = [];
   idClicked: number;
 
-  ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    this.qFilter = {
-      has_answer: null,
-      category: null,
-      account: null,
-      tranche: null,
-      type: null,
-      id: this.questionId,
-    };
-    console.log(this.question);
-    this.question = createDefaultRespPostData();
-    this.getQuestions(this.paginate, this.projectId).subscribe({
-      next: (data: Models.RespPostData[]) => {
+	ngOnInit(): void {
+		//Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+		//Add 'implements OnInit' to the class.
+		this.qFilter = {
+			has_answer: null,
+			category: null,
+			account: null,
+			tranche: null,
+			type: null,
+			id: this.questionId,
+		};
 
+		console.log(this.question);
 
-        this.question = data[0];
-        console.log(data);
-
-      },
-      error: e => {
-        console.error('There was an error!', e);
-      }
-    });
-  }
+		this.question = createDefaultRespPostData();
+		this.getQuestions(this.paginate).subscribe({
+			next: (data) => {
+				this.question = data.posts[0];
+				console.log(data);
+			},
+			error: e => {
+				console.error('There was an error!', e);
+			}
+		});
+	}
 
   constructor(private route: ActivatedRoute, private qService: QuestionsService, notifier: NotifierService, private dataService: DataService, public modalService: NgbModal,) {
     // const navigation = this.router.getCurrentNavigation();
@@ -76,65 +74,67 @@ export class EditQuestionComponent {
     this.notifier.notify(type, message);
   }
 
-  getQuestions(paginate: Models.ReqBodyPaginate, projectId: number): Observable<Models.RespPostData[]> {
-    this.qFilter.id = this.questionId;
-    this.qFilter.type = "question";
-    return this.qService.postGet(projectId, this.qFilter, paginate);
-  }
-
+	getQuestions(paginate: Models.ReqBodyPaginate): Observable<Models.RespGetPost> {
+		this.qFilter.id = this.questionId;
+		this.qFilter.type = "question";
+		return this.qService.postGet(this.qFilter, paginate);
+	}
+  
   subQuestions() {
     this.qFilter.id = this.questionId;
     this.qFilter.type = "question";
     return this.qService.postQ(this.question);
   }
-  deleteDocument(docId: number) {
-    const modalRef = this.modalService.open(ConfirmDeleteModalComponent);
-    modalRef.componentInstance.title = 'Delete Question';
-    modalRef.componentInstance.message = 'Are you sure you want to delete this question?';
+  
+	async deleteDocument(docId: number) {
+		const modalRef = this.modalService.open(ConfirmDeleteModalComponent);
+		modalRef.componentInstance.title = 'Delete Question';
+		modalRef.componentInstance.message = 'Are you sure you want to delete this question?';
 
-    modalRef.componentInstance.result.subscribe((result) => {
-      if (result)
+		modalRef.componentInstance.result.subscribe((result) => {
+			if (result)
+				this.deleteIds.push(docId);
+			
+			this.deleting = true;
+			this.idClicked = docId;
 
-        this.deleteIds.push(docId);
-      this.deleting = true;
-      this.idClicked=docId;
+			{
+				this.dataService.documentBulkDelete(this.deleteIds).subscribe({
+					next: res => {
+						/* this.listDocuments = this.listDocuments
+								.filter(x => deleteIds.findIndex(y => y == x.id) == -1)
+							
+							this.callbackUpdateList(); */
+						//  this.fetchData();
+						this.deleting = false;
+						this.idClicked = 0;
+						this.showNotification('success', 'Document deleted successfully');
+						let index = this.question.attachments.findIndex(x => x.id === docId);
+						if (index !== -1) {
+							this.question.attachments.splice(index, 1);
+						}
+					},
+					error: e => {
+						this.deleting = false;
+						this.idClicked = 0;
+						this.showNotification('error', 'Unable to delete document');
+					}
+				})
+			}
+			// this.qService.deleteQuestion(this.question.id).subscribe({
+			//   next: (data: any) => {
+			//     this.showNotification('success', 'Question deleted successfully');
+			//     this.loading = false;
+			//     this.router.navigate(['/staff']);
+			//   },
+			//   error: e => {
+			//     this.showNotification('error', 'Question was not deleted');
+			//     this.loading = false;
+			//   }
+			// });
 
-      let res = Helpers.observableAsPromise(
-        this.dataService.documentBulkDelete(this.projectId, this.deleteIds)).then(res => {
-          if (res.ok) {
-            /* this.listDocuments = this.listDocuments
-              .filter(x => deleteIds.findIndex(y => y == x.id) == -1)
-            
-            this.callbackUpdateList(); */
-            //  this.fetchData();
-            this.deleting = false;
-            this.idClicked=0;
-            this.showNotification('success', 'Document deleted successfully');
-            let index = this.question.attachments.findIndex(x => x.id === docId);
-            if (index !== -1) {
-              this.question.attachments.splice(index, 1);
-            }
-          }
-          else {
-            this.deleting = false;
-            this.idClicked=0;
-            this.showNotification('error', 'Unable to delete document');
-          }
-        });
-      // this.qService.deleteQuestion(this.question.id).subscribe({
-      //   next: (data: any) => {
-      //     this.showNotification('success', 'Question deleted successfully');
-      //     this.loading = false;
-      //     this.router.navigate(['/staff']);
-      //   },
-      //   error: e => {
-      //     this.showNotification('error', 'Question was not deleted');
-      //     this.loading = false;
-      //   }
-      // });
-
-    });
-  }
+		});
+	}
 
   submitQuestion() {
     // this.qService.questionEdit(this.question.id, this.question).subscribe(response => {

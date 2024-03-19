@@ -46,7 +46,6 @@ export class QuestionApproveComponent {
 	listStart = 0;
 	listEnd = 2000;
 	pageSize: number = 10;
-	projectId: number = 1;
 	paginate: Models.ReqBodyPaginate = null;
 
 	constructor(private dataService: DataService, private qService: QuestionsService, private sService: SecurityService, private router: Router, notifier: NotifierService) {
@@ -57,7 +56,6 @@ export class QuestionApproveComponent {
 
 		this.singleQuestion = createDefaultRespPostData();
 		//this.qfilter=initReqBodyGetPosts();
-		this.projectId = 1; // Replace with your actual projectId
 
 		this.qfilter = {
 			has_answer: null,
@@ -75,12 +73,15 @@ export class QuestionApproveComponent {
 		console.log("Is Manager:" + this.isManager);
 		console.log("Is User:" + this.isUser);
 
-		this.getQuestions(this.paginate, this.projectId).subscribe({
-			next: (data: Models.RespPostData[]) => {
-				this.questions = data;
-				this.filteredQuestions = [...data];
-				this.filteredQuestionsCount = data.length;
-				console.log(data);
+		this.getQuestions(this.paginate).subscribe({
+			next: (data) => {
+				this.questions = data.posts;
+
+				this.filteredQuestions = [...data.posts];
+				this.filteredQuestionsCount = data.posts.length;
+
+				console.log(this.questions);
+
 				this.getAccounts();
 			},
 			error: e => {
@@ -124,10 +125,10 @@ export class QuestionApproveComponent {
 
 
 
-	getQuestions(paginate: Models.ReqBodyPaginate, projectId: number): Observable<Models.RespPostData[]> {
+	getQuestions(paginate: Models.ReqBodyPaginate): Observable<Models.RespGetPost> {
 
 		//return this.dataService.postGet(projectId, this.qfilter, paginate);
-		return this.qService.postGet(projectId, this.qfilter, paginate);
+		return this.qService.postGet(this.qfilter, paginate);
 	}
 
 
@@ -227,7 +228,7 @@ export class QuestionApproveComponent {
 
 	approveQuestion(approvals: any) {
 		var notifMess = approvals.approve ? "Question Approved" : "Question UnApproved";
-		this.dataService.postApproveQuestion(this.projectId, approvals).subscribe(
+		this.dataService.postApproveQuestion(approvals).subscribe(
 			response => {
 				this.showNotification("success", notifMess);
 				console.log(response);
@@ -243,7 +244,7 @@ export class QuestionApproveComponent {
 
 	approveAnswer(approvals: any) {
 		var notifMess = approvals.approve ? "Answer Approved" : "Answer UnApproved";
-		this.dataService.postApproveAnswer(this.projectId, approvals).subscribe(
+		this.dataService.postApproveAnswer(approvals).subscribe(
 			response => {
 				this.showNotification("success", notifMess); // handle the response here
 				// console.log(response);

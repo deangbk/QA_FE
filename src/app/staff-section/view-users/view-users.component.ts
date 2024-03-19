@@ -47,7 +47,7 @@ export class ViewUsersComponent {
 		this.dataReady = false;
 		
 		let res = await Helpers.observableAsPromise(<Observable<Models.RespUserData[]>>
-			this.dataService.projectGetUsers(this.projectId, 1));
+			this.dataService.projectGetUsers(1));
 		if (res.ok) {
 			this.listUsers = res.val;
 		}

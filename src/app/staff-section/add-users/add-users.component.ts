@@ -128,7 +128,7 @@ export class AddUsersComponent implements OnInit {
 			//this.addError = 'Error';
 		} */
 		let res = await Helpers.observableAsPromise(
-			this.dataService.managerBulkAddUsers(this.projectId, this.listUsersDTO));
+			this.dataService.managerBulkAddUsers(this.listUsersDTO));
 		if (res.ok) {
 			this.listAddedUsersData = res.val;
 			

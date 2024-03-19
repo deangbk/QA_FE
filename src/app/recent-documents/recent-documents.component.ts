@@ -109,7 +109,7 @@ export class RecentDocumentsComponent implements OnInit {
 			per_page: 100,
 			page: 0
 		};
-		this.dataService.documentGetRecents(this.projectId, null, page, 3).subscribe({
+		this.dataService.documentGetRecents(null, page, 3).subscribe({
 			next: data => {
 				this.listDocuments = data;
 				//console.log(data);
@@ -242,7 +242,7 @@ export class RecentDocumentsComponent implements OnInit {
 			} as Models.ReqBodyEditDocument));
 		
 		let res = await Helpers.observableAsPromise(
-			this.dataService.documentBulkEdit(this.projectId, edits));
+			this.dataService.documentBulkEdit(edits));
 		if (res.ok) {
 			selectedItems.forEach(d => {
 				d.allow_print = newState;
@@ -280,7 +280,7 @@ export class RecentDocumentsComponent implements OnInit {
 			.map(d => d.id);
 
 		let res = await Helpers.observableAsPromise(
-			this.dataService.documentBulkDelete(this.projectId, deleteIds));
+			this.dataService.documentBulkDelete(deleteIds));
 		if (res.ok) {
 			/* this.listDocuments = this.listDocuments
 				.filter(x => deleteIds.findIndex(y => y == x.id) == -1)

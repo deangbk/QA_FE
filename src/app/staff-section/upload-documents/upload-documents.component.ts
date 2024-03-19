@@ -174,7 +174,7 @@ private notifier: NotifierService;
 		console.log(models);
 		{
 			let res = await Helpers.observableAsPromise(
-				this.dataService.documentUploadFromFiles(this.projectId, models, files));
+				this.dataService.documentUploadFromFiles(models, files));
 			if (res.ok) {
 				this.showNotification('success', 'Document uploaded successfully');
 				

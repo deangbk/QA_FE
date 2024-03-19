@@ -49,8 +49,10 @@ export class HomeLoginComponent implements OnInit {
 	}
 	
 	onForgotPasswordClick() {
+		// TODO: Remove this test code
+		
 		console.log('click');
-		this.dataService.projectGetInfo(3).subscribe({
+		this.dataService.projectGetInfo().subscribe({
 			next: x => console.log(x),
 			error: x => console.log(x),
 		});

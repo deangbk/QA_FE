@@ -43,7 +43,6 @@ export class QuestionsDisplayComponent implements OnInit {
 	listStart=0;
 	listEnd=2000;
 	pageSize: number = 3;
-	projectId: number = 1;
 	paginate: Models.ReqBodyPaginate = null;
 
 	
@@ -53,7 +52,7 @@ export class QuestionsDisplayComponent implements OnInit {
 		
 		this.singleQuestion= createDefaultRespPostData();
 		//this.qfilter=initReqBodyGetPosts();
-		this.projectId = 1; // Replace with your actual projectId
+		
 		console.log(this.qType);
 		this.qfilter = {
 			has_answer: null,
@@ -66,24 +65,28 @@ export class QuestionsDisplayComponent implements OnInit {
 			category: ''
 			
 		};
-		this.isManager=this.sService.isManager();
+		
+		/* this.isManager=this.sService.isManager();
 		this.isUser=this.sService.isUser();
-	console.log("Is Manager:"+this.isManager);
-	console.log("Is User:"+this.isUser);
-
-	this.getQuestions(this.paginate, this.projectId).subscribe({
-		next: (data: Models.RespGetPost) => {
-		  this.questions = data.posts;
-		  this.filteredQuestions= 	[...data.posts];
-		  this.filteredQuestionsCount = data.posts.length;
-		  console.log(this.questions);
-		  this.getAccounts();
-		},
-		error: e => {
-		  console.error('There was an error!', e);
-		}
-	  });
-
+		console.log("Is Manager:"+this.isManager);
+		console.log("Is User:"+this.isUser); */
+	
+		this.getQuestions(this.paginate).subscribe({
+			next: (data: Models.RespGetPost) => {
+				this.questions = data.posts;
+				
+				this.filteredQuestions = [...data.posts];
+				this.filteredQuestionsCount = data.posts.length;
+				
+				console.log(this.questions);
+				
+				this.getAccounts();
+			},
+			error: e => {
+				console.error('There was an error!', e);
+			}
+		});
+		
 	
 		this.onPageChange(this.page);
 
@@ -127,10 +130,10 @@ export class QuestionsDisplayComponent implements OnInit {
 	  }
 	
 
-	  getQuestions(paginate: Models.ReqBodyPaginate, projectId: number): Observable<Models.RespGetPost> {
+	getQuestions(paginate: Models.ReqBodyPaginate): Observable<Models.RespGetPost> {
 		this.qfilter.type = this.qType;
-		return this.dataService.postGet(projectId, this.qfilter, paginate);
-	  }
+		return this.dataService.postGet(this.qfilter, paginate);
+	}
 
 	
 

@@ -100,7 +100,7 @@ export class SubmitQuestionComponent {
 	async getUserList() {
 		let res = await Helpers.observableAsPromise(
 			<Observable<Models.RespUserData[]>>
-			this.dataService.projectGetUsers(this.projectId, 1));
+			this.dataService.projectGetUsers(1));
 		if (res.ok) {
 			this.listUser = res.val;
 			
@@ -227,7 +227,7 @@ export class SubmitQuestionComponent {
 			console.log(questionsData);
 			
 			let res = await Helpers.observableAsPromise(
-				this.dataService.postBulkCreate(this.projectId, questionsData));
+				this.dataService.postBulkCreate(questionsData));
 			if (res.ok) {
 				console.log(res.val);
 				
