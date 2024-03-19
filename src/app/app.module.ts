@@ -60,6 +60,9 @@ import { EditQuestionComponent } from './staff-section/edit-question/edit-questi
 import { NotifierModule, NotifierOptions } from 'angular-notifier';
 import { ViewUsersComponent } from './staff-section/view-users/view-users.component';
 import { SubmitQuestionComponent } from './submit-question/submit-question.component';
+import { BaseChartComponent } from './charts/base-chart/base-chart.component';
+import { CircleChartComponent } from './charts/circle-chart/circle-chart.component';
+import { ViewStatsComponent } from './staff-section/view-stats/view-stats.component';
 //import { QApprovePipe } from './pipes/q-approve.pipe';
 
 const customNotifierOptions: NotifierOptions = {
@@ -145,6 +148,9 @@ const customNotifierOptions: NotifierOptions = {
     EditQuestionComponent,
     ViewUsersComponent,
     SubmitQuestionComponent,
+    BaseChartComponent,
+    CircleChartComponent,
+    ViewStatsComponent,
    // QApprovePipe,
 
 
