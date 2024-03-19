@@ -5,13 +5,15 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
-import { DataService } from 'src/app/data/data.service';
-import { FileUploadDTO } from 'src/app/data/data-models';
 import { initializeFileUploadDTO,initializeRespAccountData,initializeRespTrancheData } from 'src/app/data/model-initializers';
-import { Helpers } from 'src/app/helpers';
-import * as Models from "../../data/data-models";
 import { NotifierService } from 'angular-notifier';
 
+import { DataService } from '../../data/data.service';
+import { SecurityService } from '../../security/security.service';
+
+import * as Models from "../../data/data-models";
+
+import { Helpers } from '../../helpers';
 
 // third party
 import { FileUploadValidators, FileUploadModule } from '@iplab/ngx-file-upload';
@@ -23,7 +25,9 @@ import { FileUploadValidators, FileUploadModule } from '@iplab/ngx-file-upload';
   styleUrls: ['./upload-documents.component.scss']
 })
 export class UploadDocumentsComponent {
-  upDetails: FileUploadDTO = initializeFileUploadDTO();
+	projectId = 1;
+	
+	upDetails: Models.FileUploadDTO = initializeFileUploadDTO();
   questionId: number;
   isAccount:boolean = false;
     upReady:boolean=false; 
@@ -39,7 +43,9 @@ private notifier: NotifierService;
   private filesControl = new UntypedFormControl(null, FileUploadValidators.filesLimit(2));
 
 
-  constructor(private dataService: DataService, private route: ActivatedRoute,notifier: NotifierService,) {
+	constructor(
+		private dataService: DataService, private securityService: SecurityService,
+		private route: ActivatedRoute, notifier: NotifierService,) {
     this.questionId = +this.route.snapshot.paramMap.get('qId');
     console.log(this.questionId);
     this.notifier = notifier;
@@ -51,7 +57,9 @@ private notifier: NotifierService;
 
 
   });
- ngOnInit(): void {
+	ngOnInit(): void {
+		this.projectId = this.securityService.getProjectId();
+		
   this.selectedAccount =initializeRespAccountData(); 
   this.selectedTranche=initializeRespTrancheData();
   if (this.questionId) {
@@ -96,42 +104,90 @@ private notifier: NotifierService;
   showNotification(type: string, message: string): void {
     this.notifier.notify(type, message);
   }
-  uploadFiles() {
-    this.uploading=true;
-    const files: File[] = this.demoForm.get('files').value;
-    const formData = new FormData();
+	async uploadFiles() {
+		this.uploading = true;
+		
+		/* const files: File[] = this.demoForm.get('files').value;
+		const formData = new FormData();
 
-    files.forEach((file, index) => {
-      formData.append(`file${index}`, file, file.name);
-    });
- //   this.upDetails.accountId=+this.selectedAccount.id;
-  //  formData.append('upType', 'question');
-  formData.append("QuestionID", this.upDetails.questionID.toString());
-  formData.append("upType", this.upDetails.upType || '');
-  formData.append("Account", this.upDetails.account || '');
-  formData.append("AccountId", this.upDetails.accountId.toString());
-    this.dataService.documentUploadToQuestion(40, formData).subscribe(
-      response => {
-        //   this.showNotification("success", notifMess); // handle the response here
-        // console.log(response);
-        //  this.displayAApproveBy(approvals);
-        this.uploading=false;
-        this.demoForm.get('files').reset([]);
-        this.showNotification('success', 'Document uploaded successfully');
-        
+		files.forEach((file, index) => {
+			formData.append(`file${index}`, file, file.name);
+		});
+		//   this.upDetails.accountId=+this.selectedAccount.id;
+		//  formData.append('upType', 'question');
+		formData.append("QuestionID", this.upDetails.questionID.toString());
+		formData.append("upType", this.upDetails.upType || '');
+		formData.append("Account", this.upDetails.account || '');
+		formData.append("AccountId", this.upDetails.accountId.toString());
+		this.dataService.documentUploadToQuestion(40, formData).subscribe(
+			response => {
+				//   this.showNotification("success", notifMess); // handle the response here
+				// console.log(response);
+				//  this.displayAApproveBy(approvals);
+				this.uploading = false;
+				this.demoForm.get('files').reset([]);
+				this.showNotification('success', 'Document uploaded successfully');
 
-      },
-      error => {
-        //     this.showNotification("error", "Error Approving Answer");
-        // handle the error herethis.showNotification("Answer Approved", "sucess")
-        console.log(error);
-        this.uploading=false;
-        this.showNotification('error', 'Error when uplaoding document, try again');
-      }
-    );
-  
 
-  }
+			},
+			error => {
+				//     this.showNotification("error", "Error Approving Answer");
+				// handle the error herethis.showNotification("Answer Approved", "sucess")
+				console.log(error);
+				this.uploading = false;
+				this.showNotification('error', 'Error when uplaoding document, try again');
+			}
+		); */
+		
+		
+		const fnMapCorrectType = (x: string) => {
+			switch (x) {
+				case 'Bid':
+					return 'bid';
+				case 'Account':
+					return 'account';
+				case 'Transaction':
+					return 'transaction';
+			}
+			return 'bid';
+		};
+		const docType = fnMapCorrectType(this.upDetails.upType);
+		
+		const files: File[] = this.demoForm.get('files').value;
+		
+		let models = files.map((file, i) => {
+			/* let fpath = file.name.split('/').pop();
+			let spath = fpath.split('.');
+			let fname = `${spath[0]}.${spath[1]}`; */
+			
+			let dto = {
+				type: docType,
+				
+				with_post: this.upDetails.questionID,
+				with_account: this.upDetails.accountId,
+				
+				name: file.name,
+			} as Models.ReqBodyUploadDocument;
+			return dto;
+		});
+		
+		console.log(models);
+		{
+			let res = await Helpers.observableAsPromise(
+				this.dataService.documentUploadFromFiles(this.projectId, models, files));
+			if (res.ok) {
+				this.showNotification('success', 'Document uploaded successfully');
+				
+				this.demoForm.get('files').reset([]);
+			}
+			else {
+				this.showNotification('error', 'Document upload error: '
+					+ Helpers.formatHttpError(res.val));
+			}
+			
+			this.uploading = false;
+		}
+	}
 
 chooseDocType(){
 switch(this.upDetails.upType){

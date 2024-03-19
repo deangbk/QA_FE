@@ -109,6 +109,7 @@ export interface ReqBodySetApproval {
 }
 
 export interface ReqBodyAddComment {
+	id: number,
 	text: string,
 }
 export interface FileUploadDTO {
@@ -117,13 +118,31 @@ export interface FileUploadDTO {
     account?: string;
     accountId: number;
 }
-export interface ReqBodyUploadDocument {
-	name?: string,
-	url: string,
-	description?: string,
+
+export interface ReqBodyUploadDocumentWithFile {
+	type: string,
+	
+	with_post?: number,
+	with_account?: number,
+	
 	hidden?: boolean,
 	printable?: boolean,
 }
+export interface ReqBodyUploadDocument {
+	type: string,
+	
+	with_post?: number,
+	with_account?: number,
+	
+	name: string,
+	description?: string,
+	
+	url?: string,
+	
+	hidden?: boolean,
+	printable?: boolean,
+}
+
 export interface ReqBodyEditDocument {
 	id: number,
 	name?: string,

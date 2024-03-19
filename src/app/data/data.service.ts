@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { Helpers } from "../helpers";
 import * as Models from "./data-models";
-import { createDefaultRespPostData } from '../data/model-initializers';
-
 @Injectable({
 	providedIn: 'root'
 })
@@ -45,16 +44,20 @@ export class DataService {
 			.pipe(catchError(this.handleError));
 	}
 
-	protected _post_as_form(url: string, body?: any) {
-		var form = body != null ? Helpers.bodyToHttpFormData(body) : null;
+	protected _post_as_form(url: string, form?: any) {
+		const headers = new HttpHeaders();
+		headers.append('Content-Type', 'multipart/form-data');
+		
 		return this.http
-			.post(`${this.baseUrl}/${url}`, form)
+			.post(`${this.baseUrl}/${url}`, form, { 'headers': headers })
 			.pipe(catchError(this.handleError));
 	}
-	protected _put_as_form(url: string, body?: any) {
-		var form = body != null ? Helpers.bodyToHttpFormData(body) : null;
+	protected _put_as_form(url: string, form?: any) {
+		const headers = new HttpHeaders();
+		headers.append('Content-Type', 'multipart/form-data');
+		
 		return this.http
-			.put(`${this.baseUrl}/${url}`, form)
+			.put(`${this.baseUrl}/${url}`, form, { 'headers': headers })
 			.pipe(catchError(this.handleError));
 	}
 
@@ -338,18 +341,29 @@ export class DataService {
 			this._post(`document/recent/${projectId}?${query}`, body);
 	}
 
-	public documentUploadToProject(projectId: number, data: Models.ReqBodyUploadDocument) {
+	public documentUploadFromFiles(projectId: number,
+		data: Models.ReqBodyUploadDocument[],
+		files: File[])
+	{
+		const form = new FormData();
+		
+		files.forEach((file, index) => {
+			form.append('files', file, file.name);
+		});
+		form.append('descs', JSON.stringify(data));
+		
 		return <Observable<number>>
-			this._post(`document/upload/project/${projectId}`, data);
+			this._post_as_form(`document/upload/file/${projectId}`, form);
 	}
-	public documentUploadToPost(postID: number, data: Models.ReqBodyUploadDocument) {
+	public documentUploadEntryOnly(projectId: number, data: Models.ReqBodyUploadDocument[]) {
 		return <Observable<number>>
-			this._post(`document/upload/post/${postID}`, data);
+			this._post(`document/upload/${projectId}`, data);
 	}
-	public documentUploadToAccount(accountId: number, data: Models.ReqBodyUploadDocument) {
-		return <Observable<number>>
-			this._post(`document/upload/account/${accountId}`, data);
-	}
+	
+	/**
+	 * @deprecate
+	 * Deprecated, please use documentUploadFromFiles
+	 */
 	public documentUploadToQuestion(accountId: number, data: FormData) {
 		return <Observable<number>>
 			this._post(`manage/upQDoc`, data);
