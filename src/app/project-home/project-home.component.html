@@ -1,0 +1,84 @@
+
+<div *ngIf="!projectReady">
+	<div class="d-flex justify-content-center">
+		<div class="spinner-border" role="status"></div>
+	</div>
+</div>
+<div class="container" *ngIf="projectReady">
+	<div class="row">
+		<div class="col-lg-8">
+			<app-card cardTitle="{{projectInfo.display_name}}" [options]="false" blockClass="table-border-style">
+				<h3>{{projectInfo.company}}</h3>
+				
+				<p *ngIf="projectInfo.description.length > 0; else noDescription">
+					{{projectInfo.description}}
+				</p>
+				<ng-template #noDescription>
+					<p class="text-muted">
+						<i>No description provided.</i>
+					</p>
+				</ng-template>
+				
+				<hr />
+				<div class="row">
+					<span class="small"><i>
+						Began {{projectInfo.date_start | date}}
+					</i></span>
+				</div>
+				<div class="row">
+					<span class="small"><i>
+						{{getEndText()}} {{projectInfo.date_end | date}}
+					</i></span>
+				</div>
+			</app-card>
+		</div>
+		
+		<div class="col-lg-4 note-panel" *ngIf="hasNotes">
+			<div *ngFor="let n of projectStickyNotes" id="sectionStickyNotes">
+				<app-card class="note" blockClass="table-border-style" [options]="false" [customHeader]="true">
+					<!-- Custom card header -->
+					<!-- app-card has content projection on .app-card-header -->
+					<div class="app-card-header">
+						<div class="d-flex justify-content-between">
+							<h5>{{n.text}}</h5>
+							<i class="bi bi-pin-angle"></i>
+						</div>
+					</div>
+					
+					<div *ngIf="n.description != null && n.description.length > 0">
+						<p>{{n.description}}</p>
+						<hr />
+					</div>
+					<div class="note-footer">
+						<p>Posted by
+							<a href="javascript:">
+								<i>{{n.post_by.display_name}}</i>
+							</a>
+							at {{n.date_post | date:'yyyy-MM-dd, HH:mm'}}
+						</p>
+					</div>
+				</app-card>
+			</div>
+			
+			<hr />
+			<h3 class="text-muted">Latest Updates</h3>
+			
+			<div *ngFor="let n of projectNormalNotes">
+				<app-card cardTitle="{{n.text}}" class="note" blockClass="table-border-style" [options]="false">
+					<div *ngIf="n.description != null && n.description.length > 0">
+						<p>{{n.description}}</p>
+						<hr />
+					</div>
+					<div class="note-footer">
+						<p>Posted by
+							<a href="javascript:">
+								<i>{{n.post_by.display_name}}</i>
+							</a>
+							at {{n.date_post | date:'yyyy-MM-dd, HH:mm'}}
+						</p>
+					</div>
+				</app-card>
+			</div>
+		</div>
+	</div>
+</div>

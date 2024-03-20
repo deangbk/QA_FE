@@ -17,6 +17,7 @@ import { ViewUsersComponent } from './staff-section/view-users/view-users.compon
 import { SubmitQuestionComponent } from './submit-question/submit-question.component';
 import { UploadDocumentsComponent } from './staff-section/upload-documents/upload-documents.component';
 import { ViewStatsComponent } from './staff-section/view-stats/view-stats.component';
+import { ProjectHomeComponent } from './project-home/project-home.component';
 
 const routes: Routes = [
 	{
@@ -34,7 +35,8 @@ const routes: Routes = [
 			
 			{
 				path: 'main',
-				loadComponent: () => import('./demo/sample-page/sample-page.component'),
+				//loadComponent: () => import('./demo/sample-page/sample-page.component'),
+				component: ProjectHomeComponent,
 			},
 			{
 				path: 'question/:id', component: QuestionsDisplayComponent,

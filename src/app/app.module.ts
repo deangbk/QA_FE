@@ -63,6 +63,7 @@ import { SubmitQuestionComponent } from './submit-question/submit-question.compo
 import { BaseChartComponent } from './charts/base-chart/base-chart.component';
 import { CircleChartComponent } from './charts/circle-chart/circle-chart.component';
 import { ViewStatsComponent } from './staff-section/view-stats/view-stats.component';
+import { ProjectHomeComponent } from './project-home/project-home.component';
 //import { QApprovePipe } from './pipes/q-approve.pipe';
 
 const customNotifierOptions: NotifierOptions = {
@@ -151,6 +152,7 @@ const customNotifierOptions: NotifierOptions = {
     BaseChartComponent,
     CircleChartComponent,
     ViewStatsComponent,
+    ProjectHomeComponent,
    // QApprovePipe,
 
 
