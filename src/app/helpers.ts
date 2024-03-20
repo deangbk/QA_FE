@@ -66,10 +66,10 @@ export class Helpers {
 	}
 	
 	public static async observableAsPromise<T>(ob: Observable<T>): Promise<Result<T, any>> {
-		return new Promise((rs) => {
+		return new Promise((resolve, reject) => {
 			ob.subscribe({
-				next: (x) => rs(new Ok(x)),
-				error: (e) => rs(new Err(e)),
+				next: (x) => resolve(new Ok(x)),
+				error: (e) => reject(new Err(e)),
 			});
 		});
 	}
