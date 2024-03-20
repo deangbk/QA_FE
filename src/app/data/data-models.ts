@@ -199,7 +199,7 @@ export interface RespProjectData {
 	date_end: string,
 
 	// -----------------------------
-
+	
 	description?: string,
 	company?: string,
 	url_logo?: string,

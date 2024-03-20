@@ -187,19 +187,19 @@ export class DataService {
 	// -----------------------------------------------------
 	// Note
 
-	public noteGetInProject() {
+	public noteGetInProject(count = 3) {
+		var query = Helpers.bodyToHttpQueryString({},
+			["count", count]);
 		return <Observable<Models.RespNoteData[]>>
-			this._get(`note`);
+			this._get(`note?${query}`);
 	}
 	public noteAdd(add: Models.ReqBodyAddNote) {
 		return <Observable<number>>
 			this._post(`note`, add);
 	}
 	public noteDelete(num: number) {
-		var query = Helpers.bodyToHttpQueryString({},
-			["num", num]);
 		return <Observable<number>>
-			this._delete(`note?${query}`);
+			this._delete(`note/${num}`);
 	}
 
 	// -----------------------------------------------------
