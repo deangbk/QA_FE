@@ -20,8 +20,8 @@ export class HomeLoginComponent implements OnInit {
 	hide = true;
 	userType: string = '';
 
-	username = new FormControl('0@test.admin');
-	password = new FormControl('pasaworda55');
+	username = new FormControl('');
+	password = new FormControl('');
 	token: object;
 	
 	ngOnInit(): void {
@@ -41,7 +41,7 @@ export class HomeLoginComponent implements OnInit {
 					next: x => {
 						this.securityService.saveLoginToken(x);
 						//console.log(x);
-						//this.router.navigate(['/sample-page']);
+						this.router.navigate(['/main']);
 					},
 					error: x => console.log(x),
 				});
