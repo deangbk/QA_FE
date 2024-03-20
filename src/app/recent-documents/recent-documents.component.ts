@@ -6,6 +6,8 @@ import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
+import { NotifierService } from 'angular-notifier';
+
 import { QuestionModalData, QuestionModalComponent } from '../question-modal/question-modal.component';
 import { ConfirmDeleteModalComponent } from './confirm-delete-modal/confirm-delete-modal.component';
 
@@ -70,6 +72,8 @@ export class RecentDocumentsComponent implements OnInit {
 		private route: ActivatedRoute,
 		
 		public modalService: NgbModal,
+		
+		private notifier: NotifierService,
 	) { 
 		this.filter = {
 			searchText: '',
@@ -116,7 +120,11 @@ export class RecentDocumentsComponent implements OnInit {
 				
 				this.callbackUpdateList();
 			},
-			error: x => console.log(x),
+			error: x => {
+				console.log(x);
+				
+				this.notifier.notify('error', 'Server Error: ' + Helpers.formatHttpError(x));
+			},
 		});
 	}
 	
@@ -250,10 +258,12 @@ export class RecentDocumentsComponent implements OnInit {
 			
 			this.callbackUpdateList();
 			
-			console.log(`Updated printable state: ${res.val} documents affected`);
+			this.notifier.notify('success', `${res.val} documents updated`);
 		}
 		else {
 			console.log(res.val);
+			
+			this.notifier.notify('error', 'Server Error: ' + Helpers.formatHttpError(res.val));
 		}
 		
 		this.buttonLoading = '';
@@ -287,8 +297,8 @@ export class RecentDocumentsComponent implements OnInit {
 			
 			this.callbackUpdateList(); */
 			await this.fetchData();
-
-			console.log(`Deleted ${res.val} documents`);
+			
+			this.notifier.notify('success', `${res.val} documents deleted`);
 		}
 		else {
 			console.log(res.val);
