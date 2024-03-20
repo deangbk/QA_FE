@@ -156,7 +156,7 @@ export class DataService {
 
 	public projectGetInfo() {
 		return <Observable<Models.RespProjectData>>
-			this._get(`project/get`);
+			this._get(`project`);
 	}
 	public projectGetTranches() {
 		return <Observable<Models.RespTrancheData[]>>
