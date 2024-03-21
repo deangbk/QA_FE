@@ -1,9 +1,15 @@
 <div class="">
+ 
+  <div class="col-lg-8">
   <a [routerLink]="['/sample-page']" class="b-brand">
-    <div class="b-bg">
-      <i class="feather icon-trending-up"></i>
-    </div>
-    <span class="b-title">Datta Able</span>
+    <i class="fas fa-cube fa-2x" *ngIf="navCollapsed"> </i> 
+    <!-- <img src="assets/images/GrowthSymbol.png" class="img-fluid" alt="logo" *ngIf="navCollapsed" /> -->
+      <img src="assets/images/Bakertilly-logo-white.png" class="img-fluid" alt="logo" *ngIf="!navCollapsed" />
+  
+    <span class="b-title"></span>
   </a>
+  </div>
+  <div class="col-lg-4">
   <a href="javascript:" class="mobile-menu" [ngClass]="{ on: navCollapsed }" id="mobile-collapse" (click)="navCollapse()"><span></span></a>
+</div>
 </div>
