@@ -14,6 +14,7 @@ export class DataService {
 
 	constructor(private http: HttpClient) {
 		this.baseUrl = 'https://localhost:7203/api';
+		//this.baseUrl='https://backendqa.azurewebsites.net/api';
 	}
 	
 	// -----------------------------------------------------
