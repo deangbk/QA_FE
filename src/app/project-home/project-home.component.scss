@@ -1,0 +1,43 @@
+
+	
+.note-panel {
+	overflow-y: scroll;
+	height: 90vh;
+}
+
+#sectionStickyNotes {
+	padding-bottom: 0.3em;
+}
+
+.note {
+	i.bi {
+		font-size: 1.4em;
+	}
+	
+	.note-footer {
+		display: flex;
+		flex-direction: column;
+		row-gap: 0px;
+		
+		p {
+			font-size: 0.9em;
+			margin: 0px;
+		}
+	}
+}
+
+::ng-deep #sectionStickyNotes .card-header {
+	background-color: rgb(235, 235, 255);
+}
+::ng-deep .card {
+	margin-bottom: 1em;
+	
+	.card-block {
+		padding-top: 1.5em;
+		padding-bottom: 1.5em;
+	}
+}
+
+::ng-deep .note h5 {
+	word-break: break-word;
+}
