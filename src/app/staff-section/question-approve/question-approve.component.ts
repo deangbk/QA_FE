@@ -151,6 +151,7 @@ export class QuestionApproveComponent {
 	}
 	uploadPage(qId: number) {
 		console.log(qId);
+		this.router.navigate(['staff/docupload/' + qId]);
 	}
 	editQuestion(question: Models.RespPostData) {
 		//this.router.navigate(['staff/qmanage/'+question.id]);
