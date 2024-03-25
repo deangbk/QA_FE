@@ -123,25 +123,25 @@ private notifier: NotifierService;
 		formData.append("upType", this.upDetails.upType || '');
 		formData.append("Account", this.upDetails.account || '');
 		formData.append("AccountId", this.upDetails.accountId.toString());
-		this.dataService.documentUploadToQuestion(40, formData).subscribe(
-			response => {
-				//   this.showNotification("success", notifMess); // handle the response here
-				// console.log(response);
-				//  this.displayAApproveBy(approvals);
-				this.uploading = false;
-				this.demoForm.get('files').reset([]);
-				this.showNotification('success', 'Document uploaded successfully');
+		// this.dataService.documentUploadToQuestion(40, formData).subscribe(
+		// 	response => {
+		// 		//   this.showNotification("success", notifMess); // handle the response here
+		// 		// console.log(response);
+		// 		//  this.displayAApproveBy(approvals);
+		// 		this.uploading = false;
+		// 		this.demoForm.get('files').reset([]);
+		// 		this.showNotification('success', 'Document uploaded successfully');
 
 
-			},
-			error => {
-				//     this.showNotification("error", "Error Approving Answer");
-				// handle the error herethis.showNotification("Answer Approved", "sucess")
-				console.log(error);
-				this.uploading = false;
-				this.showNotification('error', 'Error when uplaoding document, try again');
-			}
-		); 
+		// 	},
+		// 	error => {
+		// 		//     this.showNotification("error", "Error Approving Answer");
+		// 		// handle the error herethis.showNotification("Answer Approved", "sucess")
+		// 		console.log(error);
+		// 		this.uploading = false;
+		// 		this.showNotification('error', 'Error when uplaoding document, try again');
+		// 	}
+		// ); 
 		
 		
 		const fnMapCorrectType = (x: string) => {

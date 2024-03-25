@@ -155,6 +155,7 @@ export class SubmitQuestionComponent {
 		
 			postAs: null,
 		});
+		console.log("adding blank q")
 	}
 	addNewQuestion(question?: AddQuestionEntry) {
 		this.addingQuestionsData.push({
@@ -166,6 +167,7 @@ export class SubmitQuestionComponent {
 			trancheId: question.trancheId,
 			postAs: question.postAs,
 		});
+		
 	}
 	removeQuestion(row: number) {
 		this.addingQuestionsData.splice(row, 1);
@@ -235,13 +237,15 @@ export class SubmitQuestionComponent {
 					`Submitted ${count} question${count > 1 ? 's' : ''}`);
 				
 				this.addingQuestionsData = [];
-				this.addNewQuestion();
+				this.addFirstQuestion();
+				this.buttonLoading = '';
 			}
 			else {
 				console.log(res.val);
 				this.notifier.notify('error', "Server Error: " + Helpers.formatHttpError(res.val));
 				
 				this.addError = res.val;
+				this.buttonLoading = '';
 			}
 		}
 		

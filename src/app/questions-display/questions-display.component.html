@@ -79,7 +79,7 @@
 					
 						<td>{{q.a_text}}</td>
 						<!-- <td>{{q.d}}</td> -->
-						<td></td>
+						<td>{{q.date_a_approve | date}}</td>
 						<td>
 							<span *ngFor="let doc of q.attachments">
 								<a href="/docs/pdf/{{doc.id}}" target="_blank">{{doc.name}}</a></span>

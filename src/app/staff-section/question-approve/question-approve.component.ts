@@ -190,8 +190,8 @@ export class QuestionApproveComponent {
 
 		this.filteredQuestions.forEach(question => {
 			let questionExcelUser: Models.QuestionExcelUser = {
-				Tranche: question.account ? question.account.tranche.name : "", // Add logic to map this property
-				Account_Number: question.account ? question.account.id_pretty : "",
+				Tranche: question.account ? question.account?.tranche?.name : "", // Add logic to map this property
+				Account_Number: question.account ? question?.account?.id_pretty : "",
 				Question_Number: question.q_num.toString(),
 				Date_Posted: question.date_post,
 				Is_Answered: !!question.a_text,
@@ -200,7 +200,7 @@ export class QuestionApproveComponent {
 
 				Question: question.q_text,
 				Answer: question.a_text || '',
-				PDF_Attached: question.attachments ? question.attachments.length : 0, // Add logic to map this property
+				PDF_Attached: question.attachments ? question?.attachments?.length : 0, // Add logic to map this property
 
 				Question_Type: question.type == 1 ? 'Account Question' : 'General Question',
 				Category: question.category.toUpperCase(),
