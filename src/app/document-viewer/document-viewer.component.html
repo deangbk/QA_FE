@@ -14,12 +14,12 @@
 		<div class="doc-side">
 			<div>
 				<app-card cardTitle="{{documentInfo.name}}" [options]="false">
-					<p *ngIf="documentInfo.description != null">
+					<p *ngIf="documentInfo.description != null && documentInfo.description.length > 0; else noDesc">
 						<i>{{documentInfo.description}}</i>
 					</p>
-					<div *ngIf="documentInfo.description == null">
+					<ng-template #noDesc>
 						<p><i>No description provided</i></p>
-					</div>
+					</ng-template>
 				</app-card>
 				
 				<app-card [options]="false" [hidHeader]="true" id="desc-card">
