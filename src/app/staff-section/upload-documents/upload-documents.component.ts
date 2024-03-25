@@ -52,28 +52,32 @@ private notifier: NotifierService;
   }
   
 
-  demoForm = new UntypedFormGroup({
-    files: this.filesControl
-
-
-  });
+	demoForm = new UntypedFormGroup({
+		files: this.filesControl
+	
+	
+	});
 	ngOnInit(): void {
 		this.projectId = this.securityService.getProjectId();
 		
-  this.selectedAccount =initializeRespAccountData(); 
-  this.selectedTranche=initializeRespTrancheData();
-  if (this.questionId) {
-    this.upDetails.questionID = this.questionId;
-    this.upDetails.upType = 'question';
-    this.upReady=true;
-  }
-    this.upDetails.questionID = 0;
-    this.upDetails.upType = '';
-    this.upDetails.accountId = 0;
-    this.upDetails.account = null;
-    this.fetchData();
-  }
-  async fetchData() {
+		this.selectedAccount =initializeRespAccountData(); 
+		this.selectedTranche = initializeRespTrancheData();
+		
+		if (this.questionId) {
+			this.upDetails.questionID = this.questionId;
+			this.upDetails.upType = 'question';
+			this.upReady = true;
+		}
+		else {
+			this.upDetails.questionID = 0;
+			this.upDetails.upType = '';
+			this.upDetails.accountId = 0;
+			this.upDetails.account = null;
+		}
+		
+		this.fetchData();
+	}
+	async fetchData() {
 		let res = await Helpers.observableAsPromise(
 			this.dataService.projectGetTranches());
 		if (res.ok) {
@@ -149,32 +153,24 @@ private notifier: NotifierService;
 				case 'Transaction':
 					return 'transaction';
 			}
-			return 'bid';
+			return x;
 		};
 		const docType = fnMapCorrectType(this.upDetails.upType);
 		
 		const files: File[] = this.demoForm.get('files').value;
 		
-		let models = files.map((file, i) => {
-			/* let fpath = file.name.split('/').pop();
-			let spath = fpath.split('.');
-			let fname = `${spath[0]}.${spath[1]}`; */
-			
-			let dto = {
-				type: docType,
-				
-				with_post: this.upDetails.questionID,
-				with_account: this.upDetails.accountId,
-				
-				name: file.name,
-			} as Models.ReqBodyUploadDocument;
-			return dto;
-		});
+		let model: Models.ReqBodyUploadDocumentWithFile = {
+			type: docType,
+			with_post: this.upDetails.questionID,
+			with_account: this.upDetails.accountId,
+		};
 		
-		console.log(models);
+		console.log(this.upDetails);
+		console.log(model);
+	
 		{
 			let res = await Helpers.observableAsPromise(
-				this.dataService.documentUploadFromFiles(models, files));
+				this.dataService.documentUploadFromFiles(files, model));
 			if (res.ok) {
 				this.showNotification('success', 'Document uploaded successfully');
 				
