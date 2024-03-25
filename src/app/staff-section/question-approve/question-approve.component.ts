@@ -53,7 +53,7 @@ export class QuestionApproveComponent {
 	}
 
 	ngOnInit() {
-
+		
 		this.singleQuestion = createDefaultRespPostData();
 		//this.qfilter=initReqBodyGetPosts();
 
@@ -72,11 +72,11 @@ export class QuestionApproveComponent {
 		this.isUser = this.sService.isUser();
 		console.log("Is Manager:" + this.isManager);
 		console.log("Is User:" + this.isUser);
-
+		
 		this.getQuestions(this.paginate).subscribe({
 			next: (data) => {
 				this.questions = data.posts;
-
+				
 				this.filteredQuestions = [...data.posts];
 				this.filteredQuestionsCount = data.posts.length;
 
@@ -128,7 +128,7 @@ export class QuestionApproveComponent {
 	getQuestions(paginate: Models.ReqBodyPaginate): Observable<Models.RespGetPost> {
 
 		//return this.dataService.postGet(projectId, this.qfilter, paginate);
-		return this.qService.postGet(this.qfilter, paginate);
+		return this.qService.postGet(this.qfilter, paginate, 1);
 	}
 
 

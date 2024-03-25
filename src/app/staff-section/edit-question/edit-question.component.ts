@@ -77,7 +77,7 @@ export class EditQuestionComponent {
 	getQuestions(paginate: Models.ReqBodyPaginate): Observable<Models.RespGetPost> {
 		this.qFilter.id = this.questionId;
 		this.qFilter.type = "question";
-		return this.qService.postGet(this.qFilter, paginate);
+		return this.qService.postGet(this.qFilter, paginate, 1);
 	}
   
   subQuestions() {
