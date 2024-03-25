@@ -42,7 +42,7 @@ export class QuestionsDisplayComponent implements OnInit {
 	page = 1;
 	listStart=0;
 	listEnd=2000;
-	pageSize: number = 3;
+	pageSize: number = 10;
 	paginate: Models.ReqBodyPaginate = null;
 
 	
@@ -73,11 +73,12 @@ export class QuestionsDisplayComponent implements OnInit {
 	
 		this.getQuestions(this.paginate).subscribe({
 			next: (data: Models.RespGetPost) => {
+				
 				this.questions = data.posts;
 				
 				this.filteredQuestions = [...data.posts];
 				this.filteredQuestionsCount = data.posts.length;
-				
+				console.log("processed");
 				console.log(this.questions);
 				
 				this.getAccounts();

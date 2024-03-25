@@ -64,14 +64,16 @@ private notifier: NotifierService;
   this.selectedTranche=initializeRespTrancheData();
   if (this.questionId) {
     this.upDetails.questionID = this.questionId;
-    this.upDetails.upType = 'question';
+    this.upDetails.upType = 'Question';
     this.upReady=true;
   }
+  else{
     this.upDetails.questionID = 0;
     this.upDetails.upType = '';
     this.upDetails.accountId = 0;
     this.upDetails.account = null;
     this.fetchData();
+  }
   }
   async fetchData() {
 		let res = await Helpers.observableAsPromise(
@@ -106,8 +108,8 @@ private notifier: NotifierService;
   }
 	async uploadFiles() {
 		this.uploading = true;
-		
-		/* const files: File[] = this.demoForm.get('files').value;
+		//// this part is the old code
+		 const files: File[] = this.demoForm.get('files').value;
 		const formData = new FormData();
 
 		files.forEach((file, index) => {
@@ -137,23 +139,25 @@ private notifier: NotifierService;
 				this.uploading = false;
 				this.showNotification('error', 'Error when uplaoding document, try again');
 			}
-		); */
+		); 
 		
 		
 		const fnMapCorrectType = (x: string) => {
 			switch (x) {
 				case 'Bid':
-					return 'bid';
+					return 'Bid';
 				case 'Account':
-					return 'account';
+					return 'Account';
 				case 'Transaction':
-					return 'transaction';
+					return 'Transaction';
+					case 'Question':
+						return 'Question';
 			}
 			return 'bid';
 		};
 		const docType = fnMapCorrectType(this.upDetails.upType);
 		
-		const files: File[] = this.demoForm.get('files').value;
+	//	const files: File[] = this.demoForm.get('files').value;
 		
 		let models = files.map((file, i) => {
 			/* let fpath = file.name.split('/').pop();
@@ -161,10 +165,11 @@ private notifier: NotifierService;
 			let fname = `${spath[0]}.${spath[1]}`; */
 			
 			let dto = {
-				type: docType,
+				type: this.upDetails.upType,
 				
 				with_post: this.upDetails.questionID,
 				with_account: this.upDetails.accountId,
+				 
 				
 				name: file.name,
 			} as Models.ReqBodyUploadDocument;
@@ -173,8 +178,10 @@ private notifier: NotifierService;
 		
 		console.log(models);
 		{
+			
+
 			let res = await Helpers.observableAsPromise(
-				this.dataService.documentUploadFromFiles(models, files));
+				this.dataService.documentUploadToQuestion(this.upDetails.accountId, formData));
 			if (res.ok) {
 				this.showNotification('success', 'Document uploaded successfully');
 				
@@ -184,6 +191,18 @@ private notifier: NotifierService;
 				this.showNotification('error', 'Document upload error: '
 					+ Helpers.formatHttpError(res.val));
 			}
+
+			// let res = await Helpers.observableAsPromise(
+			// 	this.dataService.documentUploadFromFiles(models, files));
+			// if (res.ok) {
+			// 	this.showNotification('success', 'Document uploaded successfully');
+				
+			// 	this.demoForm.get('files').reset([]);
+			// }
+			// else {
+			// 	this.showNotification('error', 'Document upload error: '
+			// 		+ Helpers.formatHttpError(res.val));
+			// }
 			
 			this.uploading = false;
 		}

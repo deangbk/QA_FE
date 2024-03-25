@@ -22,6 +22,12 @@ import { ProjectHomeComponent } from './project-home/project-home.component';
 const routes: Routes = [
 	{
 		path: '',
+		redirectTo: '/login/sign',
+		pathMatch: 'full'
+	  },{
+
+	
+		path: '',
 		component: AdminComponent,
 		canActivate: [AuthGuard],
 		data: { roles: ['admin', 'manager', 'user'] },
@@ -101,7 +107,7 @@ const routes: Routes = [
 	},
 	{
 		path: 'login',
-		component: GuestComponent,
+		//component: GuestComponent,
 		children: [
 			//{ path: 'login', component: HomeLoginComponent },
 			

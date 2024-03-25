@@ -13,11 +13,11 @@
 	<div class="col-md-3"> <!--*ngIf="!pdfReady"> -->
 		<div class="doc-side">
 			<div>
-				<app-card cardTitle="{{documentInfo.name}}" [options]="false">
-					<p *ngIf="documentInfo.description != null">
-						<i>{{documentInfo.description}}</i>
+				<app-card cardTitle="View Document" [options]="false">
+					<p *ngIf="documentInfo?.description != null">
+						<i>{{documentInfo?.description}}</i>
 					</p>
-					<div *ngIf="documentInfo.description == null">
+					<div *ngIf="documentInfo?.description == null">
 						<p><i>No description provided</i></p>
 					</div>
 				</app-card>
@@ -26,10 +26,10 @@
 					<div class="desc-para">
 						<p>Uploaded by
 							<a href="#" (click)="callbackClickUsername($event)" target="_blank">
-								<i>{{documentInfo.upload_by.display_name}}</i>
+								<i>{{documentInfo?.upload_by?.display_name}}</i>
 							</a>
 						</p>
-						<p>at {{documentInfo.date_upload | date:'yyyy-MM-dd, HH:mm'}}</p>
+						<p>at {{documentInfo?.date_upload | date:'yyyy-MM-dd, HH:mm'}}</p>
 					</div>
 					<div class="desc-para" *ngIf="descText.length > 0">
 						<br>

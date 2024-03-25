@@ -76,13 +76,13 @@
           <h4 *ngIf="question.type==1"><strong> Account </strong> <span class="badge bg-dark">{{question.account.id_pretty}}</span> </h4>
        </div>
           <div class="col-md-6">
-            <p><strong> Posted By:</strong> {{question.post_by.display_name}}</p>
+            <p><strong> Posted By:</strong> {{question?.post_by?.display_name}}</p>
          </div>
          <div class="col-md-6">
           <p><strong> Date </strong> <i class="feather icon-calendar"></i> {{question.date_post | date}}</p>
        </div>
        <div class="col-md-6">
-        <p><strong>Last Edited By </strong>  {{question.edit_by.display_name}}</p>
+        <p><strong>Last Edited By </strong>  {{question?.edit_by?.display_name}}</p>
      </div>
      <div class="col-md-6">
       <p><strong> Last Edited </strong> <i class="feather icon-calendar"></i> {{question.date_edit | date}}</p>

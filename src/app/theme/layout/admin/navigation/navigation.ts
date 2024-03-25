@@ -45,7 +45,7 @@ const NavigationItems: NavigationItem[] = [
 		type: 'group',
 		children: [
 			NavigationItem.createItem('Project Home', '/main', 'feather icon-home'),
-			NavigationItem.createItem('User Login', '/login', 'user icon-sidebar'),
+			NavigationItem.createItem('User Login', '/login/sign', 'user icon-sidebar'),
 		]
 	},
 	{

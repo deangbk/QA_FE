@@ -128,7 +128,7 @@ export class QuestionApproveComponent {
 	getQuestions(paginate: Models.ReqBodyPaginate): Observable<Models.RespGetPost> {
 
 		//return this.dataService.postGet(projectId, this.qfilter, paginate);
-		return this.qService.postGet(this.qfilter, paginate);
+		return this.qService.postGet(this.qfilter, paginate,1);
 	}
 
 
@@ -151,6 +151,7 @@ export class QuestionApproveComponent {
 	}
 	uploadPage(qId: number) {
 		console.log(qId);
+		this.router.navigate(['staff/docupload/'+qId]);
 	}
 	editQuestion(question: Models.RespPostData) {
 		//this.router.navigate(['staff/qmanage/'+question.id]);
@@ -232,7 +233,7 @@ export class QuestionApproveComponent {
 			response => {
 				this.showNotification("success", notifMess);
 				console.log(response);
-				this.displayQApproveBy(approvals);
+				//this.displayQApproveBy(approvals);
 			},
 			error => {
 				this.showNotification("error", "Error Approving Question");
@@ -248,7 +249,7 @@ export class QuestionApproveComponent {
 			response => {
 				this.showNotification("success", notifMess); // handle the response here
 				// console.log(response);
-				this.displayAApproveBy(approvals);
+				//this.displayAApproveBy(approvals);
 
 			},
 			error => {
