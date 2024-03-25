@@ -340,25 +340,25 @@ export class DataService {
 		return <Observable<Models.RespDocumentData[]>>
 			this._post(`document/recent?${query}`, body);
 	}
-
+	
 	public documentUploadFromFiles(
-		data: Models.ReqBodyUploadDocument[],
-		files: File[])
+		files: File[],
+		desc: Models.ReqBodyUploadDocumentWithFile)
 	{
-		const form = new FormData();
-		
+		var form = Helpers.bodyToHttpFormData(desc);
 		files.forEach((file, index) => {
 			form.append('files', file, file.name);
 		});
-		form.append('descs', JSON.stringify(data));
+		
+		console.log(form);
 		
 		return <Observable<number>>
 			this._post_as_form(`document/upload/file`, form);
 	}
-	public documentUploadEntryOnly(data: Models.ReqBodyUploadDocument[]) {
+	/* public documentUploadEntryOnly(data: Models.ReqBodyUploadDocument[]) {
 		return <Observable<number>>
 			this._post(`document/upload`, data);
-	}
+	} */
 	
 	/**
 	 * @deprecate

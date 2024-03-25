@@ -78,19 +78,23 @@ export class DocumentViewerComponent implements OnInit, AfterViewInit {
 				console.log(this.documentInfo);
 				
 				{
-					// TODO: Remove placeholder text
+					// TODO: Maybe add hover popups
 					
-					this.descText = "Document is from post "
-						+ `<i>#42069</i>`;
-					/* if (this.documentInfo.assoc_post != null) {
-						var postId = (<Models.RespPostData>this.documentInfo.assoc_post).q_num;
-						this.descText = "Document is from post "
-							+ `#${postId}`;
+					//this.descText = "Document is from post "
+					//	+ `<i>#42069</i>`;
+					
+					if (this.documentInfo.assoc_post != null) {
+						var postId = (<Models.RespPostData>this.documentInfo.assoc_post).id;
+						this.descText = "Document is from question "
+							+ `<i>#${postId}<i>`;
 					}
 					else if (this.documentInfo.assoc_account != null) {
-						var accountName = (<Models.RespAccountData>this.documentInfo.assoc_account).name;
-						this.descText = `Document is associated with account ${accountName}`;
-					} */
+						var accountName = (<Models.RespAccountData>this.documentInfo.assoc_account).id_pretty;
+						this.descText = `Document is associated with account <i>${accountName}<i>`;
+					}
+					else {
+						this.descText = "Document is from this project";
+					}
 				}
 				
 				this.dataService.documentGetFileData(this.documentId).subscribe({

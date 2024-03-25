@@ -125,10 +125,12 @@ export interface ReqBodyUploadDocumentWithFile {
 	with_post?: number,
 	with_account?: number,
 	
+	description?: string,
+	
 	hidden?: boolean,
 	printable?: boolean,
 }
-export interface ReqBodyUploadDocument {
+/* export interface ReqBodyUploadDocument {
 	type: string,
 	
 	with_post?: number,
@@ -141,7 +143,7 @@ export interface ReqBodyUploadDocument {
 	
 	hidden?: boolean,
 	printable?: boolean,
-}
+} */
 
 export interface ReqBodyEditDocument {
 	id: number,
