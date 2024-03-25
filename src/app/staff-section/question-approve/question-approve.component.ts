@@ -236,7 +236,7 @@ export class QuestionApproveComponent {
 			response => {
 				this.showNotification("success", notifMess);
 				console.log(response);
-				//this.displayQApproveBy(approvals);
+				this.displayQApproveBy(approvals);
 			},
 			error => {
 				this.showNotification("error", "Error Approving Question");
@@ -252,7 +252,7 @@ export class QuestionApproveComponent {
 			response => {
 				this.showNotification("success", notifMess); // handle the response here
 				// console.log(response);
-				//this.displayAApproveBy(approvals);
+				this.displayAApproveBy(approvals);
 
 			},
 			error => {
