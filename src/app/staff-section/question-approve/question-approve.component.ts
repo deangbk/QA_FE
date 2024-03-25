@@ -75,10 +75,10 @@ export class QuestionApproveComponent {
 		
 		this.getQuestions(this.paginate).subscribe({
 			next: (data) => {
-				this.questions = data.posts;
+				this.questions = data;
 				
-				this.filteredQuestions = [...data.posts];
-				this.filteredQuestionsCount = data.posts.length;
+				this.filteredQuestions = data;
+				this.filteredQuestionsCount = data.length;
 
 				console.log(this.questions);
 
@@ -124,15 +124,18 @@ export class QuestionApproveComponent {
 	}
 
 
-
-	getQuestions(paginate: Models.ReqBodyPaginate): Observable<Models.RespGetPost> {
-
+	/**
+	 * @param paginate Unused (TODO?: add backend pagination)
+	 */
+	getQuestions(paginate: Models.ReqBodyPaginate): Observable<Models.RespPostData[]> {
+		
 		//return this.dataService.postGet(projectId, this.qfilter, paginate);
-		return this.qService.postGet(this.qfilter, paginate, 1);
+		//return this.qService.postGet(this.qfilter, paginate, 1);
+		return this.dataService.managerGetPosts(this.qfilter, 1);
 	}
-
-
-
+	
+	
+	
 	getAccounts(): void {
 		// 		this.accountList$ = this.questions
 		//   .filter(q => q.account !== null && q.account !== undefined)

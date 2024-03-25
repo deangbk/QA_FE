@@ -49,7 +49,7 @@ export class EditQuestionComponent {
 		this.question = createDefaultRespPostData();
 		this.getQuestions(this.paginate).subscribe({
 			next: (data) => {
-				this.question = data.posts[0];
+				this.question = data[0];
 				console.log(data);
 			},
 			error: e => {
@@ -73,11 +73,16 @@ export class EditQuestionComponent {
   showNotification(type: string, message: string): void {
     this.notifier.notify(type, message);
   }
-
-	getQuestions(paginate: Models.ReqBodyPaginate): Observable<Models.RespGetPost> {
+	
+	/**
+	 * @param paginate Unused (TODO?: add backend pagination)
+	 */
+	getQuestions(paginate: Models.ReqBodyPaginate): Observable<Models.RespPostData[]> {
 		this.qFilter.id = this.questionId;
 		this.qFilter.type = "question";
-		return this.qService.postGet(this.qFilter, paginate, 1);
+		//return this.qService.postGet(this.qFilter, paginate, 1);
+		
+		return this.dataService.managerGetPosts(this.qFilter, 1);
 	}
   
   subQuestions() {
