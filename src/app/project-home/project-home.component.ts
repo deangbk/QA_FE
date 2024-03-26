@@ -33,6 +33,7 @@ export class ProjectHomeComponent {
 	
 	projectReady = false;
 	projectInfo: Models.RespProjectData = null;
+	descriptionTextLines: string[];
 	
 	hasNotes = false;
 	projectStickyNotes: Models.RespNoteData[] = [];
@@ -55,6 +56,20 @@ export class ProjectHomeComponent {
 			.then(([resProject, resNotes]) => {
 				this.projectInfo = resProject.unwrap();
 				
+				this.projectInfo.description =
+					"Welcome to the Transaction Website for the Sealed Bid Public Auction of the " +
+					"Bank of Ayudhya (the \"Bank\")'s Non-Performing Loan Portfolio #1/2024.\n" +
+					
+					"During the course of Due Diligence, Qualified Investors may post their questions " +
+					"pertaining to the Transaction and receive responses from the Bank through the " +
+					"Question & Answer section in accordance with the conditions set forth herein and in the CIM. " +
+					"All general questions and answers will be available to every Qualified Investor, " +
+					"while those relating to a specific Tranche and / or NPL account(s) will be available to " +
+					"Qualified Investors who have registered to participate in the specific Tranche in question.\n" +
+					
+					"Please be reminded that Information contained in this Transaction Website is subject to " +
+					"the Confidentiality Undertaking executed by the Qualified Investors in connection with this Transaction.";
+				this.descriptionTextLines = this.projectInfo.description.split('\n')
 				
 				this.refreshNotesList(resNotes.unwrap());
 				

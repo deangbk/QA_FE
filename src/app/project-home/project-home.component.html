@@ -8,15 +8,11 @@
 	<div class="row">
 		<div class="col-lg-8">
 			<app-card cardTitle="{{projectInfo.display_name}}" [options]="false" blockClass="table-border-style">
-				<!-- <h3>{{projectInfo.company}}</h3> -->
+				<h3>{{projectInfo.company}}</h3>
 				
-				<!-- <p *ngIf="projectInfo.description.length > 0; else noDescription">
-					{{projectInfo.description}}
-				</p> -->
-				<p> Welcome to the Transaction Website for the Sealed Bid Public Auction of the Bank of Ayudhya (the &quot;Bank&quot;)'s Non-Performing Loan Portfolio #1/2024.</p>
-				<p>During the course of Due Diligence, Qualified Investors may post their questions pertaining to the Transaction and receive responses from the Bank through the Question & Answer section in accordance with the conditions set forth herein and in the CIM. All general questions and answers will be available to every Qualified Investor, while those relating to a specific Tranche and/or NPL account(s) will be available to Qualified Investors who have registered to participate in the specific Tranche in question.</p>
-				<p>Please be reminded that Information contained in this Transaction Website is subject to the Confidentiality Undertaking executed by the Qualified Investors in connection with this Transaction.</p>
-				
+				<div *ngIf="descriptionTextLines.length > 0; else noDescription">
+					<p *ngFor="let i of descriptionTextLines">{{i}}</p>
+				</div>
 				<ng-template #noDescription>
 					<p class="text-muted">
 						<i>No description provided.</i>
@@ -24,8 +20,9 @@
 				</ng-template>
 				
 				<hr />
+				
+				<p>The Q&A period for this transaction is as following</p>
 				<div class="row">
-					The Q&A period for this transaction is as following
 					<span class="small"><i>
 						Begins {{projectInfo.date_start | date}}
 					</i></span>
@@ -36,7 +33,7 @@
 					</i></span>
 				</div>
 			</app-card>
-		</div>
+		</div> <!-- col-lg-8 -->
 		
 		<div class="col-lg-4" *ngIf="hasNotes">
 			<div class="note-panel">
