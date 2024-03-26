@@ -251,6 +251,7 @@ export interface RespPostData {
 	date_post: string,
 	date_sent: string,
 	date_edit: string,
+	date_answered: string,
 
 	attachments: RespDocumentData[],
 

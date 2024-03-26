@@ -2,6 +2,7 @@
 import { RespPostData, RespAccountData, RespUserData, RespDocumentData, RespTrancheData,ReqBodyGetPosts,FileUploadDTO } from './data-models';
 
 export function createDefaultRespPostData(): RespPostData {
+	let date = new Date().toDateString();
   return {
     id: 0,
     q_num: 0,
@@ -9,9 +10,10 @@ export function createDefaultRespPostData(): RespPostData {
     category: '',
     q_text: '',
     post_by: null, // replace with a default RespUserData object if needed
-    date_post: new Date().toDateString(),
-    date_sent: new Date().toDateString(),
-    date_edit: new Date().toDateString(),
+    date_post: date,
+    date_sent: date,
+    date_edit: date,
+    date_answered: date,
     attachments: [],
     account: createDefaultRespAccountData(),
     // optional properties are not required to be set
