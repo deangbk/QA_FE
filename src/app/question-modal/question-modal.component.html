@@ -23,30 +23,30 @@
 	<hr>
 	
 	<div>
-		<h4 class="text-black">
+		<h4 class="text-muted">
 			Question
 			<span class="small">
 				- <i>Date Posted: {{question.date_post | date:'yyyy-MM-dd, HH:mm'}}</i>
 			</span>
 		</h4>
-		<p class="text-muted mb-4">{{question.q_text}}</p>
+		<p class="text-black mb-4">{{question.q_text}}</p>
 	</div>
 	
-	<div *ngIf="question.a_text != null">
-		<h4 class="text-black">
+	<div *ngIf="question.a_text != null; else noAnswer">
+		<h4 class="text-muted">
 			Answer
 			<span class="small">
 				- <i>Date Answered: {{question.date_answered | date:'yyyy-MM-dd, HH:mm'}}</i>
 			</span>
 		</h4>
-		<p class="text-muted "> {{question.a_text}}</p>
+		<p class="text-black">{{question.a_text}}</p>
 	</div>
-	<div *ngIf="question.a_text == null">
+	<ng-template #noAnswer>
 		<p class="text-black">Question has not been answered.</p>
-	</div>
+	</ng-template>
 	
 	<hr>
-
+	
 	<h4 class="text-black">Documents</h4>
 	<div *ngFor="let doc of question.attachments">
 		<p>
