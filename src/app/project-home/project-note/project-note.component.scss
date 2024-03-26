@@ -1,20 +1,21 @@
 
-	
-.note-panel {
-	overflow-y: scroll;
-	height: 90vh;
-	
-	padding-left: 1em;
-	padding-right: 1em;
-}
-
-#sectionStickyNotes {
-	padding-bottom: 0.3em;
-}
-
 .note {
+	#icons-group {
+		display: flex;
+		column-gap: 0.5em;
+	}
+	
 	i.bi {
 		font-size: 1.4em;
+	}
+	i.bi-trash-fill {
+		cursor: pointer;
+		
+		color: gray;
+		transition: 0.2s ease-in-out;
+	}
+	i.bi-trash-fill:hover {
+		color: red;
 	}
 	
 	.note-footer {
@@ -29,9 +30,6 @@
 	}
 }
 
-::ng-deep #sectionStickyNotes .card-header {
-	background-color: rgb(235, 235, 255);
-}
 ::ng-deep .card {
 	margin-bottom: 1em;
 	

@@ -1,0 +1,31 @@
+
+<app-card class="note" blockClass="table-border-style" [options]="false" [customHeader]="true">
+	<!-- Custom card header -->
+	<!-- app-card has content projection on .app-card-header -->
+	<div class="app-card-header" 
+		[ngStyle]="pinned && { 'background-color': 'rgb(235, 235, 255)' }">
+		
+		<div class="d-flex justify-content-between">
+			<h5>{{text}}</h5>
+			<div id="icons-group">
+				<i class="bi bi-pin-angle" *ngIf="pinned"></i>
+				<i class="bi bi-trash-fill" *ngIf="deletable" 
+					(click)="callbackClickDelete()"
+					title="Delete note"></i>
+			</div>
+		</div>
+	</div>
+	
+	<div *ngIf="description != null && description.length > 0">
+		<p>{{description}}</p>
+		<hr />
+	</div>
+	<div class="note-footer">
+		<p>Posted by
+			<a href="javascript:">
+				<i>{{postBy}}</i>
+			</a>
+			at {{postDate | date:'yyyy-MM-dd, HH:mm'}}
+		</p>
+	</div>
+</app-card>

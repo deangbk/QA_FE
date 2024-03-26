@@ -38,52 +38,26 @@
 			</app-card>
 		</div>
 		
-		<div class="col-lg-4 note-panel" *ngIf="hasNotes">
-			<div *ngFor="let n of projectStickyNotes" id="sectionStickyNotes">
-				<app-card class="note" blockClass="table-border-style" [options]="false" [customHeader]="true">
-					<!-- Custom card header -->
-					<!-- app-card has content projection on .app-card-header -->
-					<div class="app-card-header">
-						<div class="d-flex justify-content-between">
-							<h5>{{n.text}}</h5>
-							<i class="bi bi-pin-angle"></i>
-						</div>
-					</div>
-					
-					<div *ngIf="n.description != null && n.description.length > 0">
-						<p>{{n.description}}</p>
-						<hr />
-					</div>
-					<div class="note-footer">
-						<p>Posted by
-							<a href="javascript:">
-								<i>{{n.post_by.display_name}}</i>
-							</a>
-							at {{n.date_post | date:'yyyy-MM-dd, HH:mm'}}
-						</p>
-					</div>
-				</app-card>
-			</div>
+		<div class="col-lg-4" *ngIf="hasNotes">
+			<div class="note-panel">
+				<div *ngFor="let n of projectStickyNotes" id="sectionStickyNotes">
+					<app-project-note [text]="n.text" [description]="n.description" 
+						[postBy]="n.post_by.display_name" [postDate]="n.date_post"
+						[pinned]="true" [deletable]="isStaff"
+						(onDelete)="callbackDeleteNote(n)" />
+				</div>
+				
+				<hr />
+				<h3 class="text-muted">Latest Updates</h3>
+				
+				<div *ngFor="let n of projectNormalNotes">
+					<app-project-note [text]="n.text" [description]="n.description" 
+						[postBy]="n.post_by.display_name" [postDate]="n.date_post"
+						[pinned]="false" [deletable]="isStaff"
+						(onDelete)="callbackDeleteNote(n)" />
+				</div>
+			</div> <!-- notePanel -->
 			
-			<hr />
-			<h3 class="text-muted">Latest Updates</h3>
-			
-			<div *ngFor="let n of projectNormalNotes">
-				<app-card cardTitle="{{n.text}}" class="note" blockClass="table-border-style" [options]="false">
-					<div *ngIf="n.description != null && n.description.length > 0">
-						<p>{{n.description}}</p>
-						<hr />
-					</div>
-					<div class="note-footer">
-						<p>Posted by
-							<a href="javascript:">
-								<i>{{n.post_by.display_name}}</i>
-							</a>
-							at {{n.date_post | date:'yyyy-MM-dd, HH:mm'}}
-						</p>
-					</div>
-				</app-card>
-			</div>
-		</div>
+		</div> <!-- col-lg-4 -->
 	</div>
 </div>
