@@ -5,7 +5,7 @@
 			Question #{{question.q_num}} -
 			<span class="small">
 				Last edited:
-				{{question.date_edit | date}}
+				{{question.date_edit | date:'yyyy-MM-dd, HH:mm'}}
 				<br>
 			</span>
 		</h4>
@@ -26,7 +26,7 @@
 		<h4 class="text-black">
 			Question
 			<span class="small">
-				- <i>Date Posted: {{question.date_post | date}}</i>
+				- <i>Date Posted: {{question.date_post | date:'yyyy-MM-dd, HH:mm'}}</i>
 			</span>
 		</h4>
 		<p class="text-muted mb-4">{{question.q_text}}</p>
@@ -36,7 +36,7 @@
 		<h4 class="text-black">
 			Answer
 			<span class="small">
-				- <i>Date Answered: {{question.date_answered | date}}</i>
+				- <i>Date Answered: {{question.date_answered | date:'yyyy-MM-dd, HH:mm'}}</i>
 			</span>
 		</h4>
 		<p class="text-muted "> {{question.a_text}}</p>
