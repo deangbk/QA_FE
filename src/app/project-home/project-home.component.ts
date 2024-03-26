@@ -3,13 +3,18 @@ import {
 } from '@angular/core';
 import { Input, Output } from '@angular/core';
 
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotifierService } from 'angular-notifier';
+
+import { Option, Some, None } from 'ts-results';
 
 import { DataService } from '../data/data.service';
 import { SecurityService } from '../security/security.service';
 
 import * as Models from "../data/data-models";
 import { Helpers } from '../helpers';
+
+import { AddNoteModalComponent } from './add-note-modal/add-note-modal.component';
 
 @Component({
   selector: 'app-project-home',
@@ -25,6 +30,7 @@ export class ProjectHomeComponent {
 		private dataService: DataService,
 		private securityService: SecurityService,
 		
+		public modalService: NgbModal,
 		private notifier: NotifierService,
 	) {
 		this.projectId = securityService.getProjectId();
@@ -98,6 +104,30 @@ export class ProjectHomeComponent {
 	
 	// -----------------------------------------------------
 	
+	callbackAddNote() {
+		const modalRef = this.modalService.open(AddNoteModalComponent, {
+			backdrop: 'static',
+		});
+		const inst = modalRef.componentInstance as AddNoteModalComponent;
+		
+		inst.result.subscribe(async (result: Option<Models.ReqBodyAddNote>) => {
+			if (result.some) {
+				const data = result.val;
+				console.log(data);
+				
+				const res = await Helpers.observableAsPromise(
+					this.dataService.noteAdd(data));
+				if (res.ok) {
+					this.notifier.notify('success', `Note posted successfully!`);
+					this.fetchData();
+				}
+				else {
+					console.log(res.val);
+					this.notifier.notify('error', 'Server Error: ' + Helpers.formatHttpError(res.val));
+				}
+			}
+		});
+	}
 	
 	callbackDeleteNote(note: Models.RespNoteData) {
 		console.log(note.num);

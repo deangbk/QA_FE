@@ -64,6 +64,7 @@ import { BaseChartComponent } from './charts/base-chart/base-chart.component';
 import { CircleChartComponent } from './charts/circle-chart/circle-chart.component';
 import { ViewStatsComponent } from './staff-section/view-stats/view-stats.component';
 import { ProjectHomeComponent } from './project-home/project-home.component';
+import { AddNoteModalComponent } from './project-home/add-note-modal/add-note-modal.component';
 import { ProjectNoteComponent } from './project-home/project-note/project-note.component';
 //import { QApprovePipe } from './pipes/q-approve.pipe';
 
@@ -154,6 +155,7 @@ const customNotifierOptions: NotifierOptions = {
     CircleChartComponent,
     ViewStatsComponent,
     ProjectHomeComponent,
+    AddNoteModalComponent,
     ProjectNoteComponent,
    // QApprovePipe,
 

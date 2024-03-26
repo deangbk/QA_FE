@@ -55,6 +55,15 @@
 				</div>
 			</div> <!-- notePanel -->
 			
+			<ng-container *ngIf="isStaff">
+				<hr />
+				<div class="d-flex justify-content-center">
+					<a href="javascript:" (click)="callbackAddNote()">
+						<i class="fas fa-plus"></i>
+						Post a new note
+					</a>
+				</div>
+			</ng-container>
 		</div> <!-- col-lg-4 -->
 	</div>
 </div>
