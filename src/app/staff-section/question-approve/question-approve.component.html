@@ -85,7 +85,7 @@
 						<td>{{q.a_text}}</td>
 						<td><button class="btn btn-sm btn-success" *ngIf="q.a_approve_by; else noAApproval" [ngbPopover]="'UnApprove Answer'" triggers="mouseenter:mouseleave" (click)="setApprovals(q.id,false,'answer')">Yes</button> <ng-template #noAApproval> <button class="btn btn-sm btn-warning" [ngbPopover]="'Approve Answer'" triggers="mouseenter:mouseleave" (click)="setApprovals(q.id,true,'answer')">No</button></ng-template></td>
 						<!-- <td>{{q.d}}</td> -->
-						<td>{{q.date_a_approve | date}}</td>
+						<td>{{q.date_answered | date}}</td>
 						<td>
 							<button class="btn btn-sm btn-primary" (click)="uploadPage(q.id)" 	><i class="feather icon-upload"></i> </button> <i *ngIf="q.attachments && q.attachments.length > 0" class="feather icon-paperclip text-black" [ngbPopover]="displayDocNames(q.attachments)"
 								[openDelay]="100"
