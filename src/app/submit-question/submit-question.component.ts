@@ -87,15 +87,13 @@ export class SubmitQuestionComponent {
 		if (res.ok) {
 			this.tranchesData = res.val;
 			
-			console.log(this.tranchesData);
+			//console.log(this.tranchesData);
+			this.headerLoaded = true;
 		}
 		else {
 			console.log(res.val);
-			//this.notifier.notify('error', "Server Error: " + err.status);
 			this.notifier.notify('error', "Server Error: " + Helpers.formatHttpError(res.val));
 		}
-		
-		this.headerLoaded = true;
 	}
 	async getUserList() {
 		let res = await Helpers.observableAsPromise(
@@ -155,7 +153,6 @@ export class SubmitQuestionComponent {
 		
 			postAs: null,
 		});
-		console.log("adding blank q")
 	}
 	addNewQuestion(question?: AddQuestionEntry) {
 		this.addingQuestionsData.push({
