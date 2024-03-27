@@ -19,7 +19,7 @@
 	}
 }
 
-.select-type-group {
+.input-group-row {
 	margin-bottom: 1em;
 }
 
@@ -33,9 +33,6 @@
 }
 .question-add-entry h4 {
 	margin-bottom: 0.5em;
-}
-.question-add-entry .input-group-category {
-	margin-bottom: 1em;
 }
 
 .submit-area {
@@ -54,10 +51,10 @@
 .custom-select-height {
 	height: 40px  !important; /* adjust this value as needed */
 	padding: 10px !important; 
-  }
-  .select-container {
+}
+.select-container {
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-end;
 	height: 80%; // adjust this value as needed
-  }
+}

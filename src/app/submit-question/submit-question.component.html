@@ -35,9 +35,8 @@
 						</div>
 					</div>
 					
-					<div class="row">
-						<div class="col-lg-4 select-type-group">
-							
+					<div class="row input-group-row">
+						<div class="col-lg-4">
 							<h4>Question Type</h4>
 							<div class="radio-group">
 								<form>
@@ -90,12 +89,12 @@
 								</select>
 							</div>
 						</div>
-					</div> <!-- row -->
+					</div> <!-- row input-group-row -->
 					
 					<hr />
 					
-					<div class="row">
-						<div class="col-lg-4 input-group-category">
+					<div class="row input-group-row">
+						<div class="col-lg-4">
 							<h4>Question Category</h4>
 							<select class="form-control" [(ngModel)]="i.category">
 								<option *ngFor="let si of categorySelectItems" [ngValue]="si.id">
@@ -113,13 +112,15 @@
 								</ng-select>
 							</div>
 						</ng-container>
-						
+					</div> <!-- row input-group-row -->
+					
+					<div class="row input-group-row">
 						<div class="form-group">
 							<h4>Question</h4>
 							<textarea class="form-control" id="question-text-area" rows="4"
 								[(ngModel)]="i.text"></textarea>
 						</div>
-					</div> <!-- row -->
+					</div> <!-- row input-group-row -->
 					
 					<br />
 					<a href="javascript:" (click)="addNewQuestion(i)">
