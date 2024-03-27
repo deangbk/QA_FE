@@ -69,7 +69,7 @@ export class Helpers {
 		return new Promise((resolve, reject) => {
 			ob.subscribe({
 				next: (x) => resolve(new Ok(x)),
-				error: (e) => reject(new Err(e)),
+				error: (e) => resolve(new Err(e)),
 			});
 		});
 	}
