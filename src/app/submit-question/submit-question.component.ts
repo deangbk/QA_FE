@@ -199,7 +199,7 @@ export class SubmitQuestionComponent {
 					else if (entry.text.length == 0) {
 						throw new Error("Please add question text");
 					}
-					else if (this.listUser.findIndex(x => x.id == entry.postAs) == -1) {
+					else if (entry.postAs != null && this.listUser.findIndex(x => x.id == entry.postAs) == -1) {
 						throw new Error("Invalid user ID (user not found)");
 					}
 					else if (this.categorySelectItems.findIndex(x => x.id == entry.category) == -1) {

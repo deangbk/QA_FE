@@ -111,16 +111,6 @@
 								<ng-select [items]="listUser" bindLabel="user_name" bindValue="id"
 									placeholder="Enter User" [(ngModel)]="i.postAs">
 								</ng-select>
-								<!-- <input class="form-control" id="user-id-input" placeholder="Enter user ID" pattern="[0-9]*" [(ngModel)]="i.postAs" /> -->
-								
-								<!-- <div *ngIf="isOnlyNumbers(i.postAs); else notANumber">
-									<small id="userIdHelp" class="form-text text-muted">
-										Leave empty to post as yourself</small>
-								</div>
-								<ng-template #notANumber>
-									<small id="userIdHelp" class="form-text alert-danger">
-										User ID must be a number</small>
-								</ng-template> -->
 							</div>
 						</ng-container>
 						
