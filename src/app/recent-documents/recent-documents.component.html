@@ -12,7 +12,7 @@
 			<div class="row">
 				<input type="text" class="form-control bg-transparent" 
 					placeholder="Search by file name" 
-					[(ngModel)]="filter.searchText" (change)="callbackUpdateList()">
+					[(ngModel)]="filter.searchText" (input)="callbackUpdateList()">
 			</div>
 			<br>
 			<div class="row filter-text-row">
@@ -43,7 +43,7 @@
 			<table class="table table-hover">
 				<thead>
 					<tr>
-						<ng-container *ngIf="enableModifyData">
+						<ng-container *ngIf="isStaff">
 							<th></th>
 						</ng-container>
 						
@@ -53,7 +53,7 @@
 						<th>Description</th>
 						<th>From</th>
 						
-						<ng-container *ngIf="enableModifyData">
+						<ng-container *ngIf="isStaff">
 							<th>Printable</th>
 						</ng-container>
 					</tr>
@@ -61,7 +61,7 @@
 				<tbody>
 					<ng-container *ngFor="let i of listDocumentDisplay; let indexOfelement=index;">
 					<tr  *ngIf="indexOfelement >= listStart && indexOfelement <= listEnd">
-						<td *ngIf="enableModifyData">
+						<td *ngIf="isStaff">
 							<div class="form-check">
 								<input type="checkbox" 
 									(change)="callbackSetItemSelected(i)" 
@@ -90,7 +90,7 @@
 							Account <i>#{{getIdText(i.data)}}</i>
 						</td>
 						
-						<td *ngIf="enableModifyData">
+						<td *ngIf="isStaff">
 							<div class="d-flex justify-content-center align-items-center">
 								<i style="color: green;" class="feather icon-check" *ngIf="i.data.allow_print"></i>
 								<i style="color: red;" class="feather icon-x" *ngIf="!i.data.allow_print"></i>
@@ -104,7 +104,7 @@
 			<ngb-pagination [collectionSize]="listDocuments.length" [(page)]="page" [boundaryLinks]="true"  [pageSize]="pageSize" (pageChange)="onPageChange($event)"/>
 		</div>
 		
-		<ng-container *ngIf="enableModifyData">
+		<ng-container *ngIf="isStaff">
 			<div class="col-sm-2"><h3>Edit Selected items </h3></div>
 			<div class="col-sm-4">
 				<div id="actions-box">
@@ -148,7 +148,7 @@
 					</div>
 				</div>
 			</div>
-		</ng-container> <!-- *ngIf="enableModifyData" -->
+		</ng-container> <!-- *ngIf="isStaff" -->
 	</div>
 		
 		</div>

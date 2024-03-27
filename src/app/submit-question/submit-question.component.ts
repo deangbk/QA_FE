@@ -24,6 +24,8 @@ class AddQuestionEntry {
 	
 	//postAs?: string;
 	postAs?: number;
+	
+	approve: boolean;
 }
 
 @Component({
@@ -87,15 +89,13 @@ export class SubmitQuestionComponent {
 		if (res.ok) {
 			this.tranchesData = res.val;
 			
-			console.log(this.tranchesData);
+			//console.log(this.tranchesData);
+			this.headerLoaded = true;
 		}
 		else {
 			console.log(res.val);
-			//this.notifier.notify('error', "Server Error: " + err.status);
 			this.notifier.notify('error', "Server Error: " + Helpers.formatHttpError(res.val));
 		}
-		
-		this.headerLoaded = true;
 	}
 	async getUserList() {
 		let res = await Helpers.observableAsPromise(
@@ -154,8 +154,8 @@ export class SubmitQuestionComponent {
 			text: '',
 		
 			postAs: null,
+			approve: true,
 		});
-		console.log("adding blank q")
 	}
 	addNewQuestion(question?: AddQuestionEntry) {
 		this.addingQuestionsData.push({
@@ -165,7 +165,9 @@ export class SubmitQuestionComponent {
 			text: '',
 			accountId: question.accountId,
 			trancheId: question.trancheId,
+			
 			postAs: question.postAs,
+			approve: true,
 		});
 		
 	}
@@ -199,7 +201,7 @@ export class SubmitQuestionComponent {
 					else if (entry.text.length == 0) {
 						throw new Error("Please add question text");
 					}
-					else if (this.listUser.findIndex(x => x.id == entry.postAs) == -1) {
+					else if (entry.postAs != null && this.listUser.findIndex(x => x.id == entry.postAs) == -1) {
 						throw new Error("Invalid user ID (user not found)");
 					}
 					else if (this.categorySelectItems.findIndex(x => x.id == entry.category) == -1) {
@@ -224,14 +226,15 @@ export class SubmitQuestionComponent {
 				text: x.text,
 				category: x.category,
 				post_as: this.isStaff ? (isNaN(x.postAs) ? null : x.postAs) : null,
+				approve: this.isStaff ? x.approve : false,
 			} as Models.ReqBodyCreatePost));
 			
-			console.log(questionsData);
+			//console.log(questionsData);
 			
 			let res = await Helpers.observableAsPromise(
 				this.dataService.postBulkCreate(questionsData));
 			if (res.ok) {
-				console.log(res.val);
+				//console.log(res.val);
 				
 				this.notifier.notify("success",
 					`Submitted ${count} question${count > 1 ? 's' : ''}`);

@@ -6,6 +6,7 @@ import { Input, Output } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotifierService } from 'angular-notifier';
 
+import { combineLatestWith } from 'rxjs';
 import { Option, Some, None } from 'ts-results';
 
 import { DataService } from '../data/data.service';
@@ -15,6 +16,7 @@ import * as Models from "../data/data-models";
 import { Helpers } from '../helpers';
 
 import { AddNoteModalComponent } from './add-note-modal/add-note-modal.component';
+
 
 @Component({
   selector: 'app-project-home',
@@ -55,35 +57,37 @@ export class ProjectHomeComponent {
 		this.projectStickyNotes = [];
 		this.projectNormalNotes = [];
 		
-		const obspProject = Helpers.observableAsPromise(this.dataService.projectGetInfo());
-		const obspNotes = Helpers.observableAsPromise(this.dataService.noteGetInProject());
+		const obspProject$ = this.dataService.projectGetInfo();
+		const obspNotes$ = this.dataService.noteGetInProject();
 		
-		await Promise.all([obspProject, obspNotes])
-			.then(([resProject, resNotes]) => {
-				this.projectInfo = resProject.unwrap();
+		obspProject$.pipe(combineLatestWith(obspNotes$))
+			.subscribe({
+				next: ([project, notes]) => {
+					this.projectInfo = project;
 				
-				this.projectInfo.description =
-					"Welcome to the Transaction Website for the Sealed Bid Public Auction of the " +
-					"Bank of Ayudhya (the \"Bank\")'s Non-Performing Loan Portfolio #1/2024.\n" +
+					this.projectInfo.description =
+						"Welcome to the Transaction Website for the Sealed Bid Public Auction of the " +
+						"Bank of Ayudhya (the \"Bank\")'s Non-Performing Loan Portfolio #1/2024.\n" +
+						
+						"During the course of Due Diligence, Qualified Investors may post their questions " +
+						"pertaining to the Transaction and receive responses from the Bank through the " +
+						"Question & Answer section in accordance with the conditions set forth herein and in the CIM. " +
+						"All general questions and answers will be available to every Qualified Investor, " +
+						"while those relating to a specific Tranche and / or NPL account(s) will be available to " +
+						"Qualified Investors who have registered to participate in the specific Tranche in question.\n" +
+						
+						"Please be reminded that Information contained in this Transaction Website is subject to " +
+						"the Confidentiality Undertaking executed by the Qualified Investors in connection with this Transaction.";
+					this.descriptionTextLines = this.projectInfo.description.split('\n')
 					
-					"During the course of Due Diligence, Qualified Investors may post their questions " +
-					"pertaining to the Transaction and receive responses from the Bank through the " +
-					"Question & Answer section in accordance with the conditions set forth herein and in the CIM. " +
-					"All general questions and answers will be available to every Qualified Investor, " +
-					"while those relating to a specific Tranche and / or NPL account(s) will be available to " +
-					"Qualified Investors who have registered to participate in the specific Tranche in question.\n" +
+					this.refreshNotesList(notes);
 					
-					"Please be reminded that Information contained in this Transaction Website is subject to " +
-					"the Confidentiality Undertaking executed by the Qualified Investors in connection with this Transaction.";
-				this.descriptionTextLines = this.projectInfo.description.split('\n')
-				
-				this.refreshNotesList(resNotes.unwrap());
-				
-				this.projectReady = true;
-			})
-			.catch(e => {
-				console.log(e);
-				this.notifier.notify('error', 'Server Error: ' + Helpers.formatHttpError(e));
+					this.projectReady = true;
+				},
+				error: e => {
+					console.log(e);
+					this.notifier.notify('error', 'Server Error: ' + Helpers.formatHttpError(e));
+				},
 			});
 	}
 	refreshNotesList(notesAll: Models.RespNoteData[]) {
@@ -113,7 +117,7 @@ export class ProjectHomeComponent {
 		inst.result.subscribe(async (result: Option<Models.ReqBodyAddNote>) => {
 			if (result.some) {
 				const data = result.val;
-				console.log(data);
+				//console.log(data);
 				
 				const res = await Helpers.observableAsPromise(
 					this.dataService.noteAdd(data));

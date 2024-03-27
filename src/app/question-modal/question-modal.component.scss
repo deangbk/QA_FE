@@ -2,10 +2,24 @@
 .flex-between {
 	display: flex;
 	justify-content: space-between;
-	
-	width: 90%;
+	align-items: center;
 }
 
 h4 {
 	margin-bottom: 0.5em;
+}
+
+.qa-box {
+	margin-bottom: 1em;
+	
+	h4 {
+		margin-bottom: 0.1em;
+	}
+	.date-text {
+		color: gray;
+		font-size: 0.8em;
+		
+		//margin-left: 15%;
+		margin-bottom: 1em;
+	}
 }

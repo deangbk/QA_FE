@@ -346,11 +346,10 @@ export class DataService {
 		desc: Models.ReqBodyUploadDocumentWithFile)
 	{
 		var form = Helpers.bodyToHttpFormData(desc);
+		
 		files.forEach((file, index) => {
 			form.append('files', file, file.name);
 		});
-		
-		console.log(form);
 		
 		return <Observable<number>>
 			this._post_as_form(`document/upload/file`, form);
