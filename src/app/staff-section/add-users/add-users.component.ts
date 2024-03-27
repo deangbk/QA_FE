@@ -100,7 +100,7 @@ export class AddUsersComponent implements OnInit {
 				}
 			}
 			
-			console.log(this.listUsersDTO);
+			//console.log(this.listUsersDTO);
 		};
 		setTimeout(() => reader.readAsBinaryString(file), 400);
 	}

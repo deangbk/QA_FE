@@ -70,8 +70,8 @@ export class QuestionApproveComponent {
 		};
 		this.isManager = this.sService.isManager();
 		this.isUser = this.sService.isUser();
-		console.log("Is Manager:" + this.isManager);
-		console.log("Is User:" + this.isUser);
+		//console.log("Is Manager:" + this.isManager);
+		//console.log("Is User:" + this.isUser);
 		
 		this.getQuestions(this.paginate).subscribe({
 			next: (data) => {
@@ -80,7 +80,7 @@ export class QuestionApproveComponent {
 				this.filteredQuestions = data;
 				this.filteredQuestionsCount = data.length;
 
-				console.log(this.questions);
+				//console.log(this.questions);
 
 				this.getAccounts();
 			},
@@ -235,7 +235,7 @@ export class QuestionApproveComponent {
 		this.dataService.postApproveQuestion(approvals).subscribe(
 			response => {
 				this.showNotification("success", notifMess);
-				console.log(response);
+				//console.log(response);
 				this.displayQApproveBy(approvals);
 			},
 			error => {

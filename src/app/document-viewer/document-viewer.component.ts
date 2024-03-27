@@ -56,8 +56,6 @@ export class DocumentViewerComponent implements OnInit, AfterViewInit {
 		this.route.paramMap.subscribe(params => {
 			var idFromRoute = params.get('id');
 			this.documentId = idFromRoute != "" ? parseInt(idFromRoute) : undefined;
-			
-			console.log(this.documentId);
 		});
 		
 		this.fetchPdf();
@@ -75,7 +73,7 @@ export class DocumentViewerComponent implements OnInit, AfterViewInit {
 				this.documentInfo = info.val;
 				this.documentReady = true;
 				
-				console.log(this.documentInfo);
+				//console.log(this.documentInfo);
 				
 				{
 					// TODO: Maybe add hover popups
@@ -136,12 +134,11 @@ export class DocumentViewerComponent implements OnInit, AfterViewInit {
 	
 	callbackArrow(dir: boolean) {
 		if (this.documentInfo != null) {
-			console.log("Arrow click: " + dir);
+			//console.log("Arrow click: " + dir);
 		}
 	}
 	
 	callbackPrint() {
-		console.log("Print click");
 		if (this.documentInfo != null && this.documentInfo.allow_print) {
 			// TODO: Maybe bring up the print menu without opening the pdf in another window
 			window.open(this.pdfSource);

@@ -78,8 +78,8 @@ export class QuestionsDisplayComponent implements OnInit {
 				
 				this.filteredQuestions = [...data.posts];
 				this.filteredQuestionsCount = data.posts.length;
-				console.log("processed");
-				console.log(this.questions);
+				//console.log("processed");
+				//console.log(this.questions);
 				
 				this.getAccounts();
 			},

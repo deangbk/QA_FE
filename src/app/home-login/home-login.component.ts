@@ -25,7 +25,7 @@ export class HomeLoginComponent implements OnInit {
 	token: object;
 	
 	ngOnInit(): void {
-		console.log(this.securityService.getToken());
+		//console.log(this.securityService.getToken());
 	}
 
 	onSelectRole(role: string) {

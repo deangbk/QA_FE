@@ -83,7 +83,7 @@ private notifier: NotifierService;
 		if (res.ok) {
 			this.tranchesData = res.val;
 			
-			console.log(this.tranchesData);
+			//console.log(this.tranchesData);
 		}
 		else {
 			console.log(res.val);
@@ -167,8 +167,8 @@ private notifier: NotifierService;
 			with_account: this.upDetails.accountId,
 		};
 		
-		console.log(this.upDetails);
-		console.log(model);
+		//console.log(this.upDetails);
+		//console.log(model);
 	
 		{
 			
@@ -238,6 +238,6 @@ getAccounts(accounts:Models.RespAccountData[]){
 setAccount(){
 this.upReady=true;
 this.upDetails.accountId = +this.selectedAccount;
-console.log(this.upDetails); // if tranche s changed and a default acount is set then this is not triggered
+//console.log(this.upDetails); // if tranche s changed and a default acount is set then this is not triggered
 }
 }
