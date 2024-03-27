@@ -39,6 +39,7 @@ class ListItem {
 export class RecentDocumentsComponent implements OnInit {
 	// TODO: Replace with your actual projectId
 	projectId = 1;
+	isStaff = false;
 	
 	initFilterType: string;
 	typeSelectLabels = [
@@ -60,8 +61,6 @@ export class RecentDocumentsComponent implements OnInit {
 	listEnd=2000;
 	pageSize: number = 10;
 	paginate: Models.ReqBodyPaginate = null;
-
-	enableModifyData: boolean;
 	
 	constructor(
 		private dataService: DataService,
@@ -74,7 +73,10 @@ export class RecentDocumentsComponent implements OnInit {
 		public modalService: NgbModal,
 		
 		private notifier: NotifierService,
-	) { 
+	) {
+		this.projectId = securityService.getProjectId();
+		this.isStaff = securityService.isStaff();
+		
 		this.filter = {
 			searchText: '',
 			type: -1,
@@ -94,7 +96,7 @@ export class RecentDocumentsComponent implements OnInit {
 			}
 		}
 		
-		this.enableModifyData = securityService.isStaff();
+		
 	}
 	
 	buttonLoading = '';
@@ -167,7 +169,7 @@ export class RecentDocumentsComponent implements OnInit {
 		}
 	}
 	callbackUpdateList() {
-		console.log(this.filter);
+		//console.log(this.filter);
 		var listRes: Models.RespDocumentData[];
 		
 		switch (this.filter.type) {
@@ -262,7 +264,6 @@ export class RecentDocumentsComponent implements OnInit {
 		}
 		else {
 			console.log(res.val);
-			
 			this.notifier.notify('error', 'Server Error: ' + Helpers.formatHttpError(res.val));
 		}
 		
@@ -302,6 +303,7 @@ export class RecentDocumentsComponent implements OnInit {
 		}
 		else {
 			console.log(res.val);
+			this.notifier.notify('error', 'Server Error: ' + Helpers.formatHttpError(res.val));
 		}
 
 		this.buttonLoading = '';
