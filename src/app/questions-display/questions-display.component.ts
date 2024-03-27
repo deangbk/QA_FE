@@ -13,6 +13,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import * as XLSX from 'xlsx';
 
+import { QuestionModalData, QuestionModalComponent } from '../question-modal/question-modal.component';
+
 @Component({
   selector: 'app-questions-display',
   templateUrl: './questions-display.component.html',
@@ -46,7 +48,9 @@ export class QuestionsDisplayComponent implements OnInit {
 	paginate: Models.ReqBodyPaginate = null;
 
 	
-	constructor(private dataService: DataService, private sService: SecurityService) { }
+	constructor(
+		private dataService: DataService, private sService: SecurityService,
+		public modalService: NgbModal,) { }
 	
 	ngOnInit() {
 		
@@ -107,9 +111,15 @@ export class QuestionsDisplayComponent implements OnInit {
 
 	
 	openMyModal(event, question: Models.RespPostData) {
-		document.querySelector('#' + event).classList.add('md-show');
-		this.singleQuestion=question;
-	  }
+		//document.querySelector('#' + event).classList.add('md-show');
+		//this.singleQuestion=question;
+		
+		const modalRef = this.modalService.open(QuestionModalComponent, {
+			//centered: true,
+			scrollable: true,
+		});
+		modalRef.componentInstance.question = question;
+	}
 	
 	  closeMyModal(event) {
 		event.target.parentElement.parentElement.parentElement.classList.remove('md-show');

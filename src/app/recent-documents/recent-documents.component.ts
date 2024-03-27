@@ -315,7 +315,10 @@ export class RecentDocumentsComponent implements OnInit {
 	}
 	
 	callbackNavigateToQuestion(data: Models.RespDocumentData) {
-		const modalRef = this.modalService.open(QuestionModalComponent);
+		const modalRef = this.modalService.open(QuestionModalComponent, {
+			//centered: true,
+			scrollable: true,
+		});
 		modalRef.componentInstance.question = data.assoc_post as Models.RespPostData;
 		
 		return false;
