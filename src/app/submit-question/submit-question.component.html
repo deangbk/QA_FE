@@ -122,6 +122,14 @@
 						</div>
 					</div> <!-- row input-group-row -->
 					
+					<div class="row input-group-row" *ngIf="isStaff">
+						<div class="form-group">
+							<input type="checkbox" class="form-check-input" id="approve-checkbox" 
+								[(ngModel)]="i.approve"/>
+							<label class="form-check-label" for="approve-checkbox">Approve</label>
+						</div>
+					</div> <!-- row input-group-row -->
+					
 					<br />
 					<a href="javascript:" (click)="addNewQuestion(i)">
 						<p style="margin: 0px;"><i class="fas fa-plus"></i> Add another question?</p>

@@ -24,6 +24,8 @@ class AddQuestionEntry {
 	
 	//postAs?: string;
 	postAs?: number;
+	
+	approve: boolean;
 }
 
 @Component({
@@ -152,6 +154,7 @@ export class SubmitQuestionComponent {
 			text: '',
 		
 			postAs: null,
+			approve: true,
 		});
 	}
 	addNewQuestion(question?: AddQuestionEntry) {
@@ -162,7 +165,9 @@ export class SubmitQuestionComponent {
 			text: '',
 			accountId: question.accountId,
 			trancheId: question.trancheId,
+			
 			postAs: question.postAs,
+			approve: true,
 		});
 		
 	}
@@ -221,14 +226,15 @@ export class SubmitQuestionComponent {
 				text: x.text,
 				category: x.category,
 				post_as: this.isStaff ? (isNaN(x.postAs) ? null : x.postAs) : null,
+				approve: this.isStaff ? x.approve : false,
 			} as Models.ReqBodyCreatePost));
 			
-			console.log(questionsData);
+			//console.log(questionsData);
 			
 			let res = await Helpers.observableAsPromise(
 				this.dataService.postBulkCreate(questionsData));
 			if (res.ok) {
-				console.log(res.val);
+				//console.log(res.val);
 				
 				this.notifier.notify("success",
 					`Submitted ${count} question${count > 1 ? 's' : ''}`);

@@ -87,9 +87,13 @@ export interface ReqBodyGetPostsWithPaginate {
 
 export interface ReqBodyCreatePost {
 	account?: number,
+	
 	text: string,
 	category?: string,
+	
 	post_as?: number,
+	approve?: boolean,
+	
 	date_sent?: string,
 }
 export interface ReqBodySetAnswer {
