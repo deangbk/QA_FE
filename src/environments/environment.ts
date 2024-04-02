@@ -5,9 +5,9 @@
 import packageInfo from '../../package.json';
 
 export const environment = {
-  appVersion: packageInfo.version,
-  production: true,
-  apiUrl: 'http://localhost:4200'
+	appVersion: packageInfo.version,
+	production: true,
+	apiUrl: 'https://localhost:7203/api',
 };
 /*
  * For easier debugging in development mode, you can import the following file
