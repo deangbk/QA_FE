@@ -78,7 +78,8 @@ export class SubmitQuestionComponent {
 
 	ngOnInit(): void {
 		this.fetchData();
-		this.getUserList();
+		if (this.isStaff)
+			this.getUserList();
 		
 		this.addFirstQuestion();
 	}
