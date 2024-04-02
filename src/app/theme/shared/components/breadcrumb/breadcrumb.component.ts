@@ -1,5 +1,5 @@
 // Angular import
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
@@ -11,7 +11,7 @@ import { NavigationItem } from '../navigation/navigation';
 	templateUrl: './breadcrumb.component.html',
 	styleUrls: ['./breadcrumb.component.scss']
 })
-export class BreadcrumbComponent {
+export class BreadcrumbComponent implements OnInit {
 	// public props
 	@Input() type: string;
 	//navigation;
@@ -23,21 +23,28 @@ export class BreadcrumbComponent {
 	// Constructor
 	constructor(private _router: Router, public nav: NavigationItem, private titleService: Title) {
 		//this.navigation = NavigationItem.get();
-		this.setBreadcrumb();
+		
 		this.type = 'theme2';
 	}
-
+	
+	ngOnInit() {
+		this.refreshNavigation(this._router.url);
+	}
+	
 	// public method
 	setBreadcrumb() {
 		let routerUrl: string;
 		this._router.events.subscribe((router: NavigationEnd) => {
 			routerUrl = router.urlAfterRedirects;
 			if (routerUrl && typeof routerUrl === 'string') {
-				this.breadcrumbList.length = 0;
-				const activeLink = router.url;
-				this.filterNavigation(activeLink);
+				this.refreshNavigation(router.url);
 			}
 		});
+	}
+	
+	refreshNavigation(url: string) {
+		this.breadcrumbList.length = 0;
+		this.filterNavigation(url);
 	}
 
 	filterNavigation(activeLink) {

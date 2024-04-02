@@ -1,4 +1,4 @@
-import { Component, NgZone } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { Location, LocationStrategy } from '@angular/common';
 
 import { DattaConfig } from '../../../app-config';
@@ -10,7 +10,7 @@ import { SecurityService } from 'src/app/security/security.service';
 	templateUrl: './any.component.html',
 	styleUrls: ['./any.component.scss']
 })
-export class LayoutAnyComponent {
+export class LayoutAnyComponent implements OnInit {
 	navItems: NavigationItem[];
 	
 	config;
@@ -43,15 +43,15 @@ export class LayoutAnyComponent {
 
 		this.navCollapsed = this.windowWidth >= 992 ? DattaConfig.isCollapseMenu : false;
 		this.navCollapsedMob = false;
+	}
+	
+	ngOnInit() {
+		this.navItems = NavigationPreset.User;
 		
-		{
-			this.navItems = NavigationPreset.User;
-			
-			if (securityService.isAdmin())
-				this.navItems = NavigationPreset.Admin;
-			else if (securityService.isManager())
-				this.navItems = NavigationPreset.Staff;
-		}
+		if (this.securityService.isAdmin())
+			this.navItems = NavigationPreset.Admin;
+		else if (this.securityService.isManager())
+			this.navItems = NavigationPreset.Staff;
 	}
 
 	navMobClick() {
