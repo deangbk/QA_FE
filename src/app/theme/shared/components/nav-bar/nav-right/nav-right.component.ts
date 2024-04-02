@@ -37,7 +37,12 @@ export class NavRightComponent implements DoCheck {
 		this.visibleUserList = false;
 		this.chatMessage = false;
 	}
-
+	
+	getUserName() {
+		let name: string = this.securityService.getTokenField('name');
+		return name;
+	}
+	
 	onChatToggle(friend_id) {
 		this.friendId = friend_id;
 		this.chatMessage = !this.chatMessage;
@@ -53,6 +58,6 @@ export class NavRightComponent implements DoCheck {
 
 	callbackLogout() {
 		this.securityService.logout();
-		this.router.navigate([`/login`]);
+		this.router.navigate([`/login/sign`]);
 	}
 }
