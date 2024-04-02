@@ -78,7 +78,7 @@ const routes: Routes = [
 		path: 'login',
 		//component: GuestComponent,
 		children: [
-			//{ path: 'login', component: HomeLoginComponent },
+			{ path: '', redirectTo: '/login/sign' },
 			
 			// {
 			

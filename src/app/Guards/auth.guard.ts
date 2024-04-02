@@ -15,19 +15,20 @@ export class AuthGuard implements CanActivate {
 	{
 		// Early return if authentication is invalid, redirect to login
 		if (!this.securityService.isAuthenticated()) {
-			this.router.navigate(['/login']);
+			this.router.navigate(['/login/sign']);
 			return false;
 		}
 		
 		// Must have any of the provided roles to be granted access
 		const expectRoles = next.data['roles'] as string[];
+		//console.log(expectRoles, this.securityService.getTokenField('role'));
 		
 		for (let role of expectRoles) {
 			if (this.securityService.hasRole(role))
 				return true;
 		}
 		
-		this.router.navigate(['/login']);
+		this.router.navigate(['/login/sign']);
 		return false;
 	}
 }
