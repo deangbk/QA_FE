@@ -33,45 +33,50 @@ const routes: Routes = [
 		},
 		
 		children: [
-			{ path: 'main', component: ProjectHomeComponent },
-			
-			{ path: 'question/:id', component: QuestionsDisplayComponent },
-			{ path: 'questions/account', component: QuestionsAccountComponent },
-			{ path: 'questions/general', component: QuestionsGeneralComponent },
-			{ path: 'questions/submit', component: SubmitQuestionComponent },
-			
-			{ path: 'docs/pdf/:id', component: DocumentViewerComponent },
-			{ path: 'docs/recent/:type', component: RecentDocumentsComponent },
-			{ path: 'docs/recent', redirectTo: 'docs/recent/all' },
-		]
-	},
-	{
-		path: 'staff',
-		canActivate: [AuthGuard],
-		data: {
-			roles: ['manager'],
-		},
-		
-		children: [
-			{ path: 'viewusers', component: ViewUsersComponent },
-			{ path: 'addusers', component: AddUsersComponent },
-			{ path: 'qmanage/:id', component: EditQuestionComponent },
-			{ path: 'qapprove', component: QuestionApproveComponent },
-			{ path: 'docupload/:qId', component: UploadDocumentsComponent },
-			
-			{ path: 'stats', component: ViewStatsComponent },
-		],
-	},
-	{
-		path: 'admin',
-		canActivate: [AuthGuard],
-		data: {
-			roles: ['admin'],
-		},
+			{
+				path: '',
+				children: [
+					{ path: 'main', component: ProjectHomeComponent },
+					
+					{ path: 'question/:id', component: QuestionsDisplayComponent },
+					{ path: 'questions/account', component: QuestionsAccountComponent },
+					{ path: 'questions/general', component: QuestionsGeneralComponent },
+					{ path: 'questions/submit', component: SubmitQuestionComponent },
+					
+					{ path: 'docs/pdf/:id', component: DocumentViewerComponent },
+					{ path: 'docs/recent/:type', component: RecentDocumentsComponent },
+					{ path: 'docs/recent', redirectTo: 'docs/recent/all' },
+				]
+			},
+			{
+				path: 'staff',
+				canActivate: [AuthGuard],
+				data: {
+					roles: ['manager', 'admin'],
+				},
+				
+				children: [
+					{ path: 'viewusers', component: ViewUsersComponent },
+					{ path: 'addusers', component: AddUsersComponent },
+					{ path: 'qmanage/:id', component: EditQuestionComponent },
+					{ path: 'qapprove', component: QuestionApproveComponent },
+					{ path: 'docupload/:qId', component: UploadDocumentsComponent },
 
-		children: [
-			
-		],
+					{ path: 'stats', component: ViewStatsComponent },
+				],
+			},
+			{
+				path: 'admin',
+				canActivate: [AuthGuard],
+				data: {
+					roles: ['admin'],
+				},
+				
+				children: [
+					
+				],
+			},
+		]
 	},
 	
 	{
