@@ -1,11 +1,14 @@
-import { Injectable } from '@angular/core';
+import { EnvironmentInjector, Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
+import { environment } from 'src/environments/environment';
+
 import { Helpers } from "../helpers";
 import * as Models from "./data-models";
+
 @Injectable({
 	providedIn: 'root'
 })
@@ -13,8 +16,9 @@ export class DataService {
 	baseUrl: string = '';
 
 	constructor(private http: HttpClient) {
-	//	this.baseUrl = 'https://localhost:7203/api';
-this.baseUrl='https://backendqa.azurewebsites.net/api';
+		//this.baseUrl = 'https://localhost:7203/api';
+		//this.baseUrl = 'https://backendqa.azurewebsites.net/api';
+		this.baseUrl = environment.apiUrl;
 	}
 	
 	// -----------------------------------------------------

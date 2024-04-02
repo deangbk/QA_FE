@@ -14,27 +14,31 @@ import { FileUploadModule } from '@iplab/ngx-file-upload';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AdminComponent } from './theme/layout/admin/admin.component';
-import { GuestComponent } from './theme/layout/guest/guest.component';
-import { ConfigurationComponent } from './theme/layout/admin/configuration/configuration.component';
-import { NavBarComponent } from './theme/layout/admin/nav-bar/nav-bar.component';
-import { NavigationComponent } from './theme/layout/admin/navigation/navigation.component';
-import { NavContentComponent } from './theme/layout/admin/navigation/nav-content/nav-content.component';
-import { NavLogoComponent } from './theme/layout/admin/navigation/nav-logo/nav-logo.component';
-import { NavCollapseComponent } from './theme/layout/admin/navigation/nav-content/nav-collapse/nav-collapse.component';
-import { NavGroupComponent } from './theme/layout/admin/navigation/nav-content/nav-group/nav-group.component';
-import { NavItemComponent } from './theme/layout/admin/navigation/nav-content/nav-item/nav-item.component';
-import { NavLeftComponent } from './theme/layout/admin/nav-bar/nav-left/nav-left.component';
-import { NavRightComponent } from './theme/layout/admin/nav-bar/nav-right/nav-right.component';
-import { NavSearchComponent } from './theme/layout/admin/nav-bar/nav-left/nav-search/nav-search.component';
-import { ChatMsgComponent } from './theme/layout/admin/nav-bar/nav-right/chat-msg/chat-msg.component';
-import { ChatUserListComponent } from './theme/layout/admin/nav-bar/nav-right/chat-user-list/chat-user-list.component';
-import { FriendComponent } from './theme/layout/admin/nav-bar/nav-right/chat-user-list/friend/friend.component';
+
+import { LayoutAnyComponent } from './theme/layout/any/any.component';
+
+import { ConfigurationComponent } from './theme/shared/components/configuration/configuration.component';
+import { NavBarComponent } from './theme/shared/components/nav-bar/nav-bar.component';
+import { NavigationComponent } from './theme/shared/components/navigation/navigation.component';
+import { NavContentComponent } from './theme/shared/components/navigation/nav-content/nav-content.component';
+import { NavLogoComponent } from './theme/shared/components/navigation/nav-logo/nav-logo.component';
+import { NavCollapseComponent } from './theme/shared/components/navigation/nav-content/nav-collapse/nav-collapse.component';
+import { NavGroupComponent } from './theme/shared/components/navigation/nav-content/nav-group/nav-group.component';
+import { NavItemComponent } from './theme/shared/components/navigation/nav-content/nav-item/nav-item.component';
+import { NavLeftComponent } from './theme/shared/components/nav-bar/nav-left/nav-left.component';
+import { NavRightComponent } from './theme/shared/components/nav-bar/nav-right/nav-right.component';
+import { NavSearchComponent } from './theme/shared/components/nav-bar/nav-left/nav-search/nav-search.component';
+import { ChatMsgComponent } from './theme/shared/components/nav-bar/nav-right/chat-msg/chat-msg.component';
+import { ChatUserListComponent } from './theme/shared/components/nav-bar/nav-right/chat-user-list/chat-user-list.component';
+import { FriendComponent } from './theme/shared/components/nav-bar/nav-right/chat-user-list/friend/friend.component';
+import { NavigationItem } from './theme/shared/components/navigation/navigation';
+
 import { SharedModule } from './theme/shared/shared.module';
-import { NavigationItem } from './theme/layout/admin/navigation/navigation';
 import { ToggleFullScreenDirective } from './theme/shared/full-screen/toggle-full-screen';
 import { BreadcrumbModule } from './theme/shared/components/breadcrumb/breadcrumb.module';
+
 import { QuestionsDisplayComponent } from './questions-display/questions-display.component';
+
 import { DataService } from './data/data.service';
 import { SecurityService } from './security/security.service';
 import { JwtInterceptorService } from './security/jwt-interceptor.service';
@@ -43,9 +47,9 @@ import { HomeLoginComponent } from './home-login/home-login.component';
 import { DocumentViewerComponent } from './document-viewer/document-viewer.component';
 
 import { PdfViewerModule } from 'ng2-pdf-viewer';
-import { SearchPipe } from './Pipes/search.pipe';
-import { SearchBasicPipe } from './Pipes/search-basic.pipe';
-import { QApprovePipe } from './Pipes/q-approve.pipe';
+import { SearchPipe } from './pipes/search.pipe';
+import { SearchBasicPipe } from './pipes/search-basic.pipe';
+import { QApprovePipe } from './pipes/q-approve.pipe';
 import { RecentDocumentsComponent } from './recent-documents/recent-documents.component';
 import { QuestionModalComponent } from './question-modal/question-modal.component';
 
@@ -115,8 +119,7 @@ const customNotifierOptions: NotifierOptions = {
 @NgModule({
 	declarations: [
 		AppComponent,
-		AdminComponent,
-		GuestComponent,
+		LayoutAnyComponent,
 		ConfigurationComponent,
 		NavBarComponent,
 		NavigationComponent,

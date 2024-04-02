@@ -22,7 +22,7 @@ export class ConfigurationComponent implements OnInit {
   navActiveColor!: string;
   navTitleColor!: string;
   menuTitleHide!: boolean;
-
+  
   constructor(private zone: NgZone, private location: Location, private locationStrategy: LocationStrategy) {}
 
   ngOnInit() {
