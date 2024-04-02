@@ -8,7 +8,6 @@ import { ActivatedRouteSnapshot, RouterStateSnapshot,UrlTree } from '@angular/ro
 	providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-
 	constructor(private securityService: SecurityService, private router: Router) { }
 
 	canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot):

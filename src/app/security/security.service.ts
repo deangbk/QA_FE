@@ -116,7 +116,7 @@ export class SecurityService {
 		//console.log('Identity claims: ' + JSON.stringify(this.tokenData));
 	}
 	
-	public getTokenField(field: string) {
+	public getTokenField(field: string): any | undefined {
 		if (this.tokenData === null)
 			this.fetchToken();
 		return this.tokenData[field];

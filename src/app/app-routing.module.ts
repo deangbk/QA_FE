@@ -21,7 +21,7 @@ import { ProjectHomeComponent } from './project-home/project-home.component';
 const routes: Routes = [
 	{
 		path: '',
-		redirectTo: '/login/sign',
+		redirectTo: '/main',
 		pathMatch: 'full'
 	},
 	{
@@ -33,12 +33,6 @@ const routes: Routes = [
 		},
 		
 		children: [
-			{
-				path: '',
-				redirectTo: '/login/sign',
-				pathMatch: 'full'
-			},
-			
 			{ path: 'main', component: ProjectHomeComponent },
 			
 			{ path: 'question/:id', component: QuestionsDisplayComponent },
@@ -98,7 +92,9 @@ const routes: Routes = [
 			//  loadChildren: () => import('./demo/pages/maintenance/maintenance.module').then((m) => m.MaintenanceModule)
 			},
 		]
-	}
+	},
+	
+	{ path: '**', component: ProjectHomeComponent },
 ];
 
 @NgModule({
