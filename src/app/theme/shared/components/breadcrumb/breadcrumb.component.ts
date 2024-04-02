@@ -123,6 +123,6 @@ export class BreadcrumbComponent {
 			}
 		});
 		this.navigationList = result;
-		this.titleService.setTitle(title + ' | Datta able Angular Template');
+		this.titleService.setTitle(title + ' | NPL Portfolio Platform');
 	}
 }

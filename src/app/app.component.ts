@@ -7,8 +7,8 @@ import { NavigationEnd, Router } from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'datta-able';
-
+  title = 'npl-portfolio';
+  
   constructor(private router: Router) {}
 
   ngOnInit() {
