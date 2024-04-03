@@ -28,7 +28,7 @@
 								<th>Company</th>
 								<th>Tranches</th>
 								
-								<ng-container *ngIf="enableStaff()">
+								<ng-container *ngIf="isAdmin">
 									<th>Add as Staff</th>
 								</ng-container>
 							</tr>
@@ -40,7 +40,7 @@
 								<td>{{i.company}}</td>
 								<td>{{i.tranches.toString()}}</td>
 								
-								<td *ngIf="enableStaff()">
+								<td *ngIf="isAdmin">
 									<div class="d-flex align-items-center">
 										<i style="color: green;" class="feather icon-check" *ngIf="i.staff"></i>
 										<i style="color: red;" class="feather icon-x" *ngIf="!i.staff"></i>

@@ -31,6 +31,7 @@ interface ExcelDataRow {
 export class AddUsersComponent implements OnInit {
 	// TODO: Replace with the actual projectId
 	projectId = 1;
+	isAdmin = false;
 	
 	@ViewChild("file") file: ElementRef;
 	
@@ -41,6 +42,7 @@ export class AddUsersComponent implements OnInit {
 		private notifier: NotifierService,
 	) {
 		this.projectId = securityService.getProjectId();
+		this.isAdmin = securityService.isAdmin();
 	}
 	
 	uploaded = false;
@@ -51,10 +53,6 @@ export class AddUsersComponent implements OnInit {
 	listAddedUsersData: Models.RespBulkUserCreate[] = [];
 	addReady = false;
 	addError: string = null;
-	
-	enableStaff() {
-		return this.securityService.isAdmin();
-	}
 	
 	// -----------------------------------------------------
 	
@@ -94,7 +92,7 @@ export class AddUsersComponent implements OnInit {
 					staff: x.staff ?? false,
 				} as Models.ReqBodyCreateUser));
 			
-			if (!this.enableStaff()) {
+			if (!this.isAdmin) {
 				for (let u of this.listUsersDTO) {
 					u.staff = false;
 				}
@@ -151,8 +149,8 @@ export class AddUsersComponent implements OnInit {
 		let str = this.listAddedUsersData.map(x => (
 			'{\n' +
 			`    id:       ${x.id},\n` +
-			`    username: ${x.user},\n` +
-			`    password: ${x.pass}\n` +
+			`    username: \"${x.user}\",\n` +
+			`    password: \"${x.pass}\"\n` +
 			'}'
 		)).join(',\n');
 		
