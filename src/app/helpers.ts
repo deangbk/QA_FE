@@ -9,7 +9,11 @@ import { Result, Err, Ok, Option, Some, None } from 'ts-results';
 
 export class Helpers {
 	public static formatHttpError(e: HttpErrorResponse) {
-		return `(code ${e.status}) ${e.statusText}`;
+		let text = e.ok ? e.statusText : e.error;
+		if (typeof text != 'string')
+			text = e.statusText;
+			
+		return `(code ${e.status}) ${text}`;
 	}
 	
 	public static bodyToHttpFormData(body: any) {
