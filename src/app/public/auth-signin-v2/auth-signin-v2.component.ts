@@ -24,8 +24,8 @@ export class AuthSigninV2Component implements OnInit {
 	projectId = 1;
 	
   // public method
-  usernameValue = '0@test.admin';
-  userPassword = 'pasaworda55';
+  usernameValue = '';//'0@test.admin';
+  userPassword = '';//pasaworda55';
 
   loginForm!: FormGroup;
   loading = false;
