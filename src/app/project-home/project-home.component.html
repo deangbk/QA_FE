@@ -35,8 +35,8 @@
 			</app-card>
 		</div> <!-- col-lg-8 -->
 		
-		<div class="col-lg-4" *ngIf="hasNotes">
-			<div class="note-panel">
+		<div class="col-lg-4">
+			<div class="note-panel" *ngIf="hasNotes">
 				<div *ngFor="let n of projectStickyNotes" id="sectionStickyNotes">
 					<app-project-note [text]="n.text" [description]="n.description" 
 						[postBy]="n.post_by.display_name" [postDate]="n.date_post"
