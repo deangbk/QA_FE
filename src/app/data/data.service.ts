@@ -156,6 +156,10 @@ export class DataService {
 			this._get(`user/${userId}?${query}`);
 	}
 	
+	public userDelete(userId: number) {
+		return this._delete(`user/${userId}`);
+	}
+	
 	// -----------------------------------------------------
 	// Project
 
