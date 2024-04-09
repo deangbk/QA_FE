@@ -33,7 +33,7 @@ export class ModalLine {
 export class ConfirmDeleteModalComponent {
 	@Input() public title = 'Confirm deletion?';
 	@Input() public content: ModalLine[] = [
-		ModalLine.danger('This action cannot be undone.'),
+		ModalLine.danger('This action cannot be undone!'),
 	];
 	
 	@Output() public result: EventEmitter<boolean> = new EventEmitter();

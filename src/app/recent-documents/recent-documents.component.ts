@@ -260,7 +260,7 @@ export class RecentDocumentsComponent implements OnInit {
 			
 			this.callbackUpdateList();
 			
-			this.notifier.notify('success', `${res.val} documents updated`);
+			this.notifier.notify('success', `${res.val} document(s) updated`);
 		}
 		else {
 			console.log(res.val);
@@ -281,8 +281,8 @@ export class RecentDocumentsComponent implements OnInit {
 		{
 			modalInst.title = 'Confirm document deletion?';
 			modalInst.content = [
-				ModalLine.normal(`${selectedItems.length} documents will be deleted.`),
-				ModalLine.danger(`This action cannot be undone.`),
+				ModalLine.normal(`${selectedItems.length} document(s) will be deleted.`),
+				ModalLine.danger(`This action cannot be undone!`),
 			];
 		}
 		
@@ -306,7 +306,7 @@ export class RecentDocumentsComponent implements OnInit {
 			this.callbackUpdateList(); */
 			await this.fetchData();
 			
-			this.notifier.notify('success', `${res.val} documents deleted`);
+			this.notifier.notify('success', `${res.val} document(s) deleted`);
 		}
 		else {
 			console.log(res.val);
