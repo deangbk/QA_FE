@@ -11,7 +11,7 @@ import * as Models from "../data/data-models";
   styleUrls: ['./home-login.component.scss']
 })
 export class HomeLoginComponent implements OnInit {
-	// TODO: Replace with the actual projectId
+	// TODO: Create a system for choosing projectId to login to
 	projectId = 1;
 	
 	constructor(private router: Router, private dataService: DataService,
