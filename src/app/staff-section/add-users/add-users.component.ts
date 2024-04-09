@@ -29,7 +29,6 @@ interface ExcelDataRow {
 	styleUrls: ['./add-users.component.scss']
 })
 export class AddUsersComponent implements OnInit {
-	// TODO: Replace with the actual projectId
 	projectId = 1;
 	isAdmin = false;
 	

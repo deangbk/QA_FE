@@ -23,7 +23,6 @@ import { AddNoteModalComponent } from '../modals/add-note-modal/add-note-modal.c
 	styleUrls: ['./project-home.component.scss']
 })
 export class ProjectHomeComponent {
-	// TODO: Replace with the actual projectId
 	projectId = 1;
 	isStaff = false;
 	

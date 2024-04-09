@@ -37,7 +37,6 @@ class ListItem {
 	styleUrls: ['./recent-documents.component.scss']
 })
 export class RecentDocumentsComponent implements OnInit {
-	// TODO: Replace with your actual projectId
 	projectId = 1;
 	isStaff = false;
 	
