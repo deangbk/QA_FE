@@ -15,13 +15,12 @@ import { SecurityService } from '../security/security.service';
 import * as Models from "../data/data-models";
 import { Helpers } from '../helpers';
 
-import { AddNoteModalComponent } from './add-note-modal/add-note-modal.component';
-
+import { AddNoteModalComponent } from '../modals/add-note-modal/add-note-modal.component';
 
 @Component({
-  selector: 'app-project-home',
-  templateUrl: './project-home.component.html',
-  styleUrls: ['./project-home.component.scss']
+	selector: 'app-project-home',
+	templateUrl: './project-home.component.html',
+	styleUrls: ['./project-home.component.scss']
 })
 export class ProjectHomeComponent {
 	// TODO: Replace with the actual projectId

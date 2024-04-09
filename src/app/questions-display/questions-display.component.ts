@@ -13,7 +13,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import * as XLSX from 'xlsx';
 
-import { QuestionModalData, QuestionModalComponent } from '../question-modal/question-modal.component';
+import { QuestionModalData, QuestionModalComponent } from '../modals/question-modal/question-modal.component';
 
 @Component({
   selector: 'app-questions-display',

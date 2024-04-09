@@ -8,8 +8,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { NotifierService } from 'angular-notifier';
 
-import { QuestionModalData, QuestionModalComponent } from '../question-modal/question-modal.component';
-import { ConfirmDeleteModalComponent } from './confirm-delete-modal/confirm-delete-modal.component';
+import { QuestionModalData, QuestionModalComponent } from '../modals/question-modal/question-modal.component';
+import { ConfirmDeleteModalComponent, ModalLine } from '../modals/confirm-delete-modal/confirm-delete-modal.component';
 
 import { DataService } from '../data/data.service';
 import { SecurityService } from '../security/security.service';
@@ -277,9 +277,16 @@ export class RecentDocumentsComponent implements OnInit {
 			return;
 		
 		const modalRef = this.modalService.open(ConfirmDeleteModalComponent);
-		modalRef.componentInstance.deleteCount = selectedItems.length;
+		const modalInst = modalRef.componentInstance as ConfirmDeleteModalComponent;
+		{
+			modalInst.title = 'Confirm document deletion?';
+			modalInst.content = [
+				ModalLine.normal(`${selectedItems.length} documents will be deleted.`),
+				ModalLine.danger(`This action cannot be undone.`),
+			];
+		}
 		
-		modalRef.componentInstance.result.subscribe((result) => {
+		modalInst.result.subscribe((result) => {
 			if (result)
 				this.deleteDocuments(selectedItems);
 		});

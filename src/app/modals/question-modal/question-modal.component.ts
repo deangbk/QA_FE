@@ -7,12 +7,12 @@ import { Router } from '@angular/router';
 
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { DataService } from '../data/data.service';
-import { SecurityService } from '../security/security.service';
+import { DataService } from '../../data/data.service';
+import { SecurityService } from '../../security/security.service';
 
-import * as Models from "../data/data-models";
+import * as Models from "../../data/data-models";
 
-import { Helpers } from '../helpers';
+import { Helpers } from '../../helpers';
 
 export class QuestionModalData {
 	question: Models.RespPostData;

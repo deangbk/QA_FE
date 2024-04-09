@@ -1,12 +1,14 @@
 
 <div class="modal-header">
-	<h2 class="modal-title" id="modal-basic-title">Confirm document deletion?</h2>
+	<h2 class="modal-title" id="modal-basic-title">{{title}}</h2>
 	<button type="button" class="btn-close" aria-label="Close" 
 		(click)="callbackAction(false)"></button>
 </div>
 <div class="modal-body">
-	<h3 *ngIf="deleteCount>0">{{deleteCount}} items will be deleted.</h3>
-	<h3 style="color: red;">This action cannot be undone.</h3>
+	<ng-container *ngFor="let line of content">
+		<h3 *ngIf="!line.red">{{line.str}}</h3>
+		<h3 *ngIf="line.red" style="color: red;">{{line.str}}</h3>
+	</ng-container>
 	
 	<div class="d-flex justify-content-center align-items-center">
 		<button type="button" class="btn btn-primary" (click)="callbackAction(false)">

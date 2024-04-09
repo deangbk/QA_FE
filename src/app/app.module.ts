@@ -51,12 +51,12 @@ import { SearchPipe } from './pipes/search.pipe';
 import { SearchBasicPipe } from './pipes/search-basic.pipe';
 import { QApprovePipe } from './pipes/q-approve.pipe';
 import { RecentDocumentsComponent } from './recent-documents/recent-documents.component';
-import { QuestionModalComponent } from './question-modal/question-modal.component';
+
 
 import { QuestionsGeneralComponent } from './questions-general/questions-general.component';
 import { QuestionsAccountComponent } from './questions-account/questions-account.component';
 
-import { ConfirmDeleteModalComponent } from './recent-documents/confirm-delete-modal/confirm-delete-modal.component';
+
 import { QuestionApproveComponent } from './staff-section/question-approve/question-approve.component';
 import { UploadDocumentsComponent } from './staff-section/upload-documents/upload-documents.component';
 import { AddUsersComponent } from './staff-section/add-users/add-users.component';
@@ -68,9 +68,13 @@ import { BaseChartComponent } from './charts/base-chart/base-chart.component';
 import { CircleChartComponent } from './charts/circle-chart/circle-chart.component';
 import { ViewStatsComponent } from './staff-section/view-stats/view-stats.component';
 import { ProjectHomeComponent } from './project-home/project-home.component';
-import { AddNoteModalComponent } from './project-home/add-note-modal/add-note-modal.component';
+
 import { ProjectNoteComponent } from './project-home/project-note/project-note.component';
 //import { QApprovePipe } from './pipes/q-approve.pipe';
+
+import { QuestionModalComponent } from './modals/question-modal/question-modal.component';
+import { ConfirmDeleteModalComponent } from './modals/confirm-delete-modal/confirm-delete-modal.component';
+import { AddNoteModalComponent } from './modals/add-note-modal/add-note-modal.component';
 
 const customNotifierOptions: NotifierOptions = {
 	position: {

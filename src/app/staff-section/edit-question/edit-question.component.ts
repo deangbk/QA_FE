@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
 import { Mode } from 'fs';
 import { createDefaultRespPostData, initReqBodyGetPosts } from '../../data/model-initializers';
 import { NotifierService } from 'angular-notifier';
-import { ConfirmDeleteModalComponent } from '../../recent-documents/confirm-delete-modal/confirm-delete-modal.component';
+import { ConfirmDeleteModalComponent, ModalLine } from '../../modals/confirm-delete-modal/confirm-delete-modal.component';
 import { Helpers } from '../../helpers';
 
 
@@ -93,10 +93,15 @@ export class EditQuestionComponent {
   
 	async deleteDocument(docId: number) {
 		const modalRef = this.modalService.open(ConfirmDeleteModalComponent);
-		modalRef.componentInstance.title = 'Delete Question';
-		modalRef.componentInstance.message = 'Are you sure you want to delete this question?';
+		const modalInst = modalRef.componentInstance as ConfirmDeleteModalComponent;
+		{
+			modalInst.title = 'Delete question?';
+			modalInst.content = [
+				ModalLine.normal(`Are you sure you want to delete this question?`),
+			];
+		}
 
-		modalRef.componentInstance.result.subscribe((result) => {
+		modalInst.result.subscribe((result) => {
 			if (result)
 				this.deleteIds.push(docId);
 			
