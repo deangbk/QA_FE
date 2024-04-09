@@ -111,12 +111,12 @@ export class DataService {
 		return <Observable<number>>
 			this._put(`manage/grant/access/${trancheId}/${userId}`);
 	}
-	public managerGrantAccessFromFile(trancheId: number, file: File) {
+	/* public managerGrantAccessFromFile(trancheId: number, file: File) {
 		var form = new FormData();
 		form.append('file', file, file.name);
 		return <Observable<number>>
 			this._put(`manage/grant/access/file/${trancheId}`, form);
-	}
+	} */
 	public managerRemoveAccess(trancheId: number, userId: number) {
 		return <Observable<number>>
 			this._delete(`manage/ungrant/access/${trancheId}/${userId}`);
