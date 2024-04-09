@@ -1,18 +1,22 @@
 import {
-	Component, OnInit, ChangeDetectorRef,
+	Component, OnInit,
 	Input, Output,
 } from '@angular/core';
-import { Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { Observable } from 'rxjs';
+import { Observable, combineLatestWith } from 'rxjs';
+
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NotifierService } from 'angular-notifier';
 
 import { DataService } from '../../data/data.service';
 import { SecurityService } from '../../security/security.service';
 
 import * as Models from "../../data/data-models";
-
 import { Helpers } from '../../helpers';
+
+import { ConfirmDeleteModalComponent, ModalLine } from '../../modals/confirm-delete-modal/confirm-delete-modal.component';
+
+// TODO: Create system to assign/unassign project managers
 
 @Component({
 	selector: 'app-view-users',
@@ -21,22 +25,23 @@ import { Helpers } from '../../helpers';
 })
 export class ViewUsersComponent {
 	projectId = 1;
-
+	isAdmin = false;
+	
 	constructor(
 		private dataService: DataService,
 		private securityService: SecurityService,
-		private router: Router,
+		
+		private modalService: NgbModal,
+		private notifier: NotifierService,
 	) {
 		this.projectId = securityService.getProjectId();
+		this.isAdmin = securityService.isAdmin();
 	}
 
 	dataReady = false;
+	listManagers: Models.RespUserData[] = [];
 	listUsers: Models.RespUserData[] = [];
 	
-	enableStaff() {
-		return this.securityService.isAdmin();
-	}
-
 	// -----------------------------------------------------
 
 	ngOnInit(): void {
@@ -46,21 +51,59 @@ export class ViewUsersComponent {
 	async fetchData() {
 		this.dataReady = false;
 		
-		let res = await Helpers.observableAsPromise(<Observable<Models.RespUserData[]>>
-			this.dataService.projectGetUsers(1));
+		const obspUsers$ = this.dataService.projectGetUsers(1) as Observable<Models.RespUserData[]>;
+		const obspManagers$ = this.dataService.projectGetManagers(1) as Observable<Models.RespUserData[]>;
+		
+		obspUsers$.pipe(combineLatestWith(obspManagers$))
+			.subscribe({
+				next: ([users, managers]) => {
+					this.listUsers = users;
+					this.listManagers = managers;
+
+					this.dataReady = true;
+				},
+				error: e => {
+					console.log(e);
+					this.notifier.notify('error', 'Server Error: ' + Helpers.formatHttpError(e));
+				},
+			});
+	}
+	
+	// -----------------------------------------------------
+	
+	getTrancheFormatted(u: Models.RespUserData) {
+		return u.tranches.map(x => x.name).join(', ');
+	}
+	
+	// -----------------------------------------------------
+	
+	callbackDeleteUser(id: number) {
+		const modalRef = this.modalService.open(ConfirmDeleteModalComponent);
+		const modalInst = modalRef.componentInstance as ConfirmDeleteModalComponent;
+		{
+			modalInst.title = 'Delete user?';
+			modalInst.content = [
+				ModalLine.normal(`All questions made by the user will also be deleted.`),
+				ModalLine.danger(`This action cannot be undone!`),
+			];
+		}
+		
+		modalInst.result.subscribe((result) => {
+			if (result)
+				this.deleteUser(id);
+		});
+	}
+	async deleteUser(id: number) {
+		let res = await Helpers.observableAsPromise(
+			this.dataService.userDelete(id));
 		if (res.ok) {
-			this.listUsers = res.val;
+			await this.fetchData();
+			
+			this.notifier.notify('success', `User deleted`);
 		}
 		else {
 			console.log(res.val);
+			this.notifier.notify('error', 'Server Error: ' + Helpers.formatHttpError(res.val));
 		}
-		
-		this.dataReady = true;
-	}
-
-	// -----------------------------------------------------
-
-	getTrancheFormatted(u: Models.RespUserData) {
-		return u.tranches.map(x => x.name).join(', ');
 	}
 }
