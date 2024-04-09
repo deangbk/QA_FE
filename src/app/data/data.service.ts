@@ -167,13 +167,13 @@ export class DataService {
 		return <Observable<Models.RespTrancheData[]>>
 			this._get(`project/tranches`);
 	}
-	public projectGetUsers(details = 0) {
+	public projectGetUsers(details = -1) {
 		var query = Helpers.bodyToHttpQueryString({},
 			["details", details]);
 		return <Observable<number[]> | Observable<Models.RespUserData[]>>
 			this._get(`project/users?${query}`);
 	}
-	public projectGetManagers(details = 0) {
+	public projectGetManagers(details = -1) {
 		var query = Helpers.bodyToHttpQueryString({},
 			["details", details]);
 		return <Observable<number[]> | Observable<Models.RespUserData[]>>
