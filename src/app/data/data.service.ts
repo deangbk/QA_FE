@@ -405,4 +405,19 @@ export class DataService {
      
 		return this.postGet({}, null);
 	}
+	
+	// -----------------------------------------------------
+	
+	public telemetryAddQuestionView(id: number) {
+		return this._post(`log/add/question/${id}`);
+	}
+	public telemetryAddAccountView(id: number) {
+		return this._post(`log/add/account/${id}`);
+	}
+	public telemetryAddTrancheView(id: number) {
+		return this._post(`log/add/tranche/${id}`);
+	}
+	public telemetryAddDocumentView(id: number) {
+		return this._post(`log/add/document/${id}`);
+	}
 }
