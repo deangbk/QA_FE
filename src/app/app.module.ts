@@ -11,6 +11,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { FileUploadModule } from '@iplab/ngx-file-upload';
+import { NgxEditorModule } from 'ngx-editor';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -186,16 +187,19 @@ const customNotifierOptions: NotifierOptions = {
 	imports: [
 		BrowserModule, AppRoutingModule, SharedModule,
 		BrowserAnimationsModule, BreadcrumbModule,
+		
 		HttpClientModule,
 		PdfViewerModule,
 		NgSelectModule,
+		
 		NgbModule,
 		NgbPaginationModule,
 		FormsModule,
 		FileUploadModule,
+		NgxEditorModule,
 		
 		MatIconModule, MatButtonModule, 
-		NotifierModule.withConfig(customNotifierOptions)
+		NotifierModule.withConfig(customNotifierOptions),
 	],
 })
 export class AppModule {}
