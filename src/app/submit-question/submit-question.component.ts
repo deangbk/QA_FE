@@ -33,7 +33,7 @@ class AddQuestionEntry {
 	templateUrl: './submit-question.component.html',
 	styleUrls: ['./submit-question.component.scss'],
 })
-export class SubmitQuestionComponent {
+export class SubmitQuestionComponent implements OnInit {
 	projectId = 1;
 	isStaff: boolean;
 

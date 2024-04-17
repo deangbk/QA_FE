@@ -1,6 +1,6 @@
 
 // Angular import
-import { Component} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -24,7 +24,7 @@ import { FileUploadValidators, FileUploadModule } from '@iplab/ngx-file-upload';
   templateUrl: './upload-documents.component.html',
   styleUrls: ['./upload-documents.component.scss']
 })
-export class UploadDocumentsComponent {
+export class UploadDocumentsComponent implements OnInit {
 	projectId = 1;
 	
 	upDetails: Models.FileUploadDTO = initializeFileUploadDTO();

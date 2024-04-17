@@ -19,7 +19,7 @@ import { Helpers } from '../../helpers';
 	templateUrl: './manage-project.component.html',
 	styleUrls: ['./manage-project.component.scss']
 })
-export class ManageProjectComponent {
+export class ManageProjectComponent implements OnInit {
 	projectId = 1;
 
 	constructor(

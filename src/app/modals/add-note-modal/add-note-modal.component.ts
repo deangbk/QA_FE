@@ -16,7 +16,7 @@ import { Helpers } from '../../helpers';
 	templateUrl: './add-note-modal.component.html',
 	styleUrls: ['./add-note-modal.component.scss']
 })
-export class AddNoteModalComponent {
+export class AddNoteModalComponent implements OnInit {
 	@Output() public result: EventEmitter<any> = new EventEmitter();
 	
 	constructor(

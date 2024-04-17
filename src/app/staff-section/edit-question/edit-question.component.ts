@@ -21,7 +21,7 @@ import { Helpers } from '../../helpers';
   templateUrl: './edit-question.component.html',
   styleUrls: ['./edit-question.component.scss']
 })
-export class EditQuestionComponent {
+export class EditQuestionComponent implements OnInit {
   question: Models.RespPostData;
   questionId: number;
   qFilter: Models.ReqBodyGetPosts;

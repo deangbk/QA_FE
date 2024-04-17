@@ -22,8 +22,8 @@ import { NotifierService } from 'angular-notifier';
 	templateUrl: './question-approve.component.html',
 	styleUrls: ['./question-approve.component.scss']
 })
-export class QuestionApproveComponent {
-
+export class QuestionApproveComponent implements OnInit {
+	
 
 	questions: Models.RespPostData[];
 	searchText: string;

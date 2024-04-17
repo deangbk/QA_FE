@@ -22,7 +22,7 @@ import { AddNoteModalComponent } from '../modals/add-note-modal/add-note-modal.c
 	templateUrl: './project-home.component.html',
 	styleUrls: ['./project-home.component.scss']
 })
-export class ProjectHomeComponent {
+export class ProjectHomeComponent implements OnInit {
 	projectId = 1;
 	isStaff = false;
 	

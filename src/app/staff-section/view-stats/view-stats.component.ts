@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { ChartData, ChartOptions } from "chart.js";
 import { Context } from 'chartjs-plugin-datalabels';
@@ -9,7 +9,7 @@ import ChartDataLabels from "chartjs-plugin-datalabels";
   templateUrl: './view-stats.component.html',
   styleUrls: ['./view-stats.component.scss']
 })
-export class ViewStatsComponent {
+export class ViewStatsComponent implements OnInit {
   response_Data: ChartData;
 	response_Opt: ChartOptions;
 	

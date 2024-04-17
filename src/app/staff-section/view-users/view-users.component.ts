@@ -23,7 +23,7 @@ import { ConfirmDeleteModalComponent, ModalLine } from '../../modals/confirm-del
 	templateUrl: './view-users.component.html',
 	styleUrls: ['./view-users.component.scss']
 })
-export class ViewUsersComponent {
+export class ViewUsersComponent implements OnInit {
 	projectId = 1;
 	isAdmin = false;
 	
@@ -59,7 +59,7 @@ export class ViewUsersComponent {
 				next: ([users, managers]) => {
 					this.listUsers = users;
 					this.listManagers = managers;
-
+					
 					this.dataReady = true;
 				},
 				error: e => {
