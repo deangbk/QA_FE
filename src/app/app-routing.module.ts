@@ -17,6 +17,7 @@ import { SubmitQuestionComponent } from './submit-question/submit-question.compo
 import { UploadDocumentsComponent } from './staff-section/upload-documents/upload-documents.component';
 import { ViewStatsComponent } from './staff-section/view-stats/view-stats.component';
 import { ProjectHomeComponent } from './project-home/project-home.component';
+import { ManageProjectComponent } from './admin-section/manage-project/manage-project.component';
 
 const routes: Routes = [
 	{
@@ -73,7 +74,7 @@ const routes: Routes = [
 				},
 				
 				children: [
-					
+					{ path: 'project', component: ManageProjectComponent },
 				],
 			},
 		]
