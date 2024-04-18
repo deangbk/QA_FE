@@ -2,6 +2,8 @@ import {
 	Component, OnInit,
 	Input, Output,
 } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 
 import { Observable, combineLatestWith } from 'rxjs';
 
@@ -17,11 +19,11 @@ import { Helpers } from '../../helpers';
 @Component({
 	selector: 'app-manage-project',
 	templateUrl: './manage-project.component.html',
-	styleUrls: ['./manage-project.component.scss']
+	styleUrls: ['./manage-project.component.scss'],
 })
 export class ManageProjectComponent implements OnInit {
 	projectId = 1;
-
+	
 	constructor(
 		private dataService: DataService,
 		private securityService: SecurityService,
@@ -32,8 +34,32 @@ export class ManageProjectComponent implements OnInit {
 		this.projectId = securityService.getProjectId();
 	}
 	
-	// -----------------------------------------------------
-
+	dataReady = false;
+	projectInfo: Models.RespProjectData = null;
 	
 	// -----------------------------------------------------
+	
+	ngOnInit(): void {
+		this.fetchData();
+	}
+	
+	async fetchData() {
+		this.dataReady = false;
+		
+		let resProject = await Helpers.observableAsPromise(
+			this.dataService.projectGetInfo());
+		if (resProject.ok) {
+			this.projectInfo = resProject.val;
+			
+			this.dataReady = true;
+		}
+		else {
+			let e = resProject.val as HttpErrorResponse;
+			console.log(e);
+			this.notifier.notify('error', 'Server Error: ' + Helpers.formatHttpError(e));
+		}
+	}
+	
+	// -----------------------------------------------------
+	
 }

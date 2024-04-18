@@ -1,0 +1,13 @@
+
+#project-name-line {
+	display: flex;
+	column-gap: 0.8em;
+
+	.bi-pencil {
+		cursor: pointer;
+	}
+}
+
+::ng-deep .NgxEditor__Wrapper#showDesc {
+	border: 0px;
+}
