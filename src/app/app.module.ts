@@ -78,6 +78,7 @@ import { ConfirmDeleteModalComponent } from './modals/confirm-delete-modal/confi
 import { AddNoteModalComponent } from './modals/add-note-modal/add-note-modal.component';
 import { ManageProjectComponent } from './admin-section/manage-project/manage-project.component';
 import { ProjectEditInfoComponent } from './admin-section/manage-project/project-edit-info/project-edit-info.component';
+import { ProjectEditTranchesComponent } from './admin-section/manage-project/project-edit-tranches/project-edit-tranches.component';
 
 const customNotifierOptions: NotifierOptions = {
 	position: {
@@ -169,6 +170,7 @@ const customNotifierOptions: NotifierOptions = {
     ProjectNoteComponent,
     ManageProjectComponent,
     ProjectEditInfoComponent,
+    ProjectEditTranchesComponent,
    // QApprovePipe,
 
 
