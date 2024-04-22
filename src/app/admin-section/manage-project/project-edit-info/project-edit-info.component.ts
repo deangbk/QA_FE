@@ -5,6 +5,7 @@ import {
 } from '@angular/core';
 
 import { Editor, Toolbar } from 'ngx-editor';
+import * as sanitizeHtml from 'sanitize-html';
 
 import { DataService } from '../../../data/data.service';
 import { SecurityService } from '../../../security/security.service';
@@ -85,6 +86,6 @@ export class ProjectEditInfoComponent implements OnInit, OnDestroy {
 
 	callbackEditorChange(html: object) {
 		//console.log(html);
-		this.project.description = this.descHtml;
+		this.project.description = sanitizeHtml(this.descHtml);
 	}
 }
