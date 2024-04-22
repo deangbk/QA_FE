@@ -50,9 +50,17 @@
                 <label for="checkbox-fill-a1" class="cr"> Save credentials</label>
               </div>
             </div>
-            <div class="d-grid mt-4">
-              <button class="btn btn-primary"> Login </button>
-            </div>
+			
+			<div class="d-grid mt-4">
+				<button *ngIf="!loading"
+					class="btn btn-primary">Login</button>
+				<button *ngIf="loading"
+					class="btn btn-primary" type="button" disabled>
+					<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+					Verifying credentials...
+				</button>
+			</div>
+			
             <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{ error }}</div>
           </form>
           <!-- <p class="mb-2 text-muted">Forgot password? <a [routerLink]="['/auth/reset-passwordv2']">Reset</a></p>
