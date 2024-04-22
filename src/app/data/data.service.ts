@@ -278,23 +278,23 @@ export class DataService {
 	// -----------------------------------------------------
 	// Comment
 
-	public commentGetInPost(postId: number) {
+	public postGetComments(postId: number) {
 		return <Observable<Models.RespCommentData[]>>
-			this._get(`comment/${postId}`);
+			this._get(`post/${postId}/comment`);
 	}
-	public commentAdd(postId: number, add: Models.ReqBodyAddComment) {
+	public postAddComment(postId: number, add: Models.ReqBodyAddComment) {
 		return <Observable<number>>
-			this._post(`comment/${postId}`, add);
+			this._post(`post/${postId}/comment`, add);
 	}
-	public commentDelete(postId: number, num: number) {
+	public postDeleteComment(postId: number, num: number) {
 		var query = Helpers.bodyToHttpQueryString({},
 			["num", num]);
 		return <Observable<number>>
-			this._delete(`comment/${postId}?${query}`);
+			this._delete(`post/${postId}/comment?${query}`);
 	}
-	public commentClear(postId: number) {
+	public postClearComment(postId: number) {
 		return <Observable<number>>
-			this._delete(`comment/all/${postId}`);
+			this._delete(`post/${postId}/comment/all`);
 	}
 
 	// -----------------------------------------------------
