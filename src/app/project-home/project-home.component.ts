@@ -142,6 +142,6 @@ export class ProjectHomeComponent implements OnInit {
 			error: x => {
 				this.notifier.notify('error', 'Server Error: ' + Helpers.formatHttpError(x));
 			},
-		})
+		});
 	}
 }

@@ -9,9 +9,13 @@ import { Result, Err, Ok, Option, Some, None } from 'ts-results';
 
 export class Helpers {
 	public static formatHttpError(e: HttpErrorResponse) {
-		let text = e.ok ? e.statusText : e.error;
-		if (typeof text != 'string')
+		let text = '';
+		if (!e.ok && e.error != null) {
+			text = e.error.title;
+		}
+		else if (e.error != null) {
 			text = e.statusText;
+		}
 			
 		return `(code ${e.status}) ${text}`;
 	}
