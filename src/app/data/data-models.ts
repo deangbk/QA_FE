@@ -12,6 +12,13 @@ export interface ReqBodyCreateProject {
 	tranches: string,
 }
 
+export interface ReqBodyCreateTranche {
+	name: string,
+}
+export interface ReqBodyEditTranche {
+	name?: string,
+}
+
 export interface ReqBodyCreateUser {
 	email: string,
 	name: string,
@@ -179,24 +186,6 @@ export interface ReqBodyGetDocument {
 
 // -----------------------------------------------------
 
-export interface RespLoginToken {
-	token: string,
-	expiration: string,
-}
-
-export interface RespBulkUserCreate {
-	id: number,
-	user: string,
-	pass: string,
-}
-
-export interface RespGetPost {
-	count_total: number,
-	posts: RespPostData[],
-}
-
-// -----------------------------------------------------
-
 export interface RespProjectData {
 	id: number,
 	name: string,
@@ -335,4 +324,26 @@ export interface RespNoteData {
 	// -----------------------------
 
 	post_by?: RespUserData,
+}
+
+// -----------------------------------------------------
+
+export interface RespLoginToken {
+	token: string,
+	expiration: string,
+}
+
+export interface RespBulkUserCreate {
+	id: number,
+	user: string,
+	pass: string,
+}
+
+export interface RespGetPost {
+	count_total: number,
+	posts: RespPostData[],
+}
+
+export interface RespTrancheDataEx extends RespTrancheData {
+	posts: number[],
 }

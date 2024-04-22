@@ -192,6 +192,34 @@ export class DataService {
 		return <Observable<number>>
 			this._post(`project/create`, create);
 	}
+	
+	// -----------------------------------------------------
+	// Tranche
+	
+	public trancheGetInfo(trancheId: number, details: number = 0) {
+		var query = Helpers.bodyToHttpQueryString({},
+			["details", details]);
+		return <Observable<Models.RespTrancheData>>
+			this._get(`tranche/${trancheId}?${query}`);
+	}
+	public trancheGetInfoEx(trancheIds: number[]) {
+		var query = trancheIds.map(x => `ids=${x}`).join('&');
+		return <Observable<Models.RespTrancheDataEx[]>>
+			this._get(`tranche/ex?${query}`);
+	}
+	
+	public trancheCreate(create: Models.ReqBodyCreateTranche) {
+		return <Observable<number>>
+			this._post(`tranche/add`, create);
+	}
+	public trancheEdit(trancheId: number, edit: Models.ReqBodyEditTranche) {
+		return <Observable<number>>
+			this._put(`tranche/edit/${trancheId}`, edit);
+	}
+	public trancheDelete(trancheId: number) {
+		return <Observable<number>>
+			this._delete(`tranche/${trancheId}`);
+	}
 
 	// -----------------------------------------------------
 	// Note
