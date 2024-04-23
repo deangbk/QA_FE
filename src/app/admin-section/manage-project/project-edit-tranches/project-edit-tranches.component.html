@@ -1,1 +1,30 @@
-<p>project-edit-tranches works!</p>
+
+<app-card cardTitle="Tranches" [options]="false" blockClass="table-border-style">
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Accounts #</th>
+				<th>Posts #</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let i of tranches;">
+				<td>{{i.id}}</td>
+				<td>{{i.name}}</td>
+				<td>{{i.accounts.length}}</td>
+				<td>{{i.posts.length}}</td>
+				<td>
+					<div class="icons-box">
+						<i class="edit-button bi bi-pencil"
+							(click)="callbackEdit(i)"></i>
+						<i class="delete-button feather icon-x"
+							(click)="callbackDelete(i)"></i>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</app-card>

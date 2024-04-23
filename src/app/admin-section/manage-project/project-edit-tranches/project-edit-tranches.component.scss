@@ -1,0 +1,17 @@
+
+.icons-box {
+	display: flex;
+	column-gap: 1em;
+	align-items: center;
+	
+	justify-content: right;
+	padding-right: 2em;
+	
+	i {
+		cursor: pointer;
+	}
+	.delete-button {
+		color: red;
+		font-size: 1.2em;
+	}
+}

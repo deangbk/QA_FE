@@ -7,11 +7,12 @@
 <div class="container" *ngIf="dataReady">
 	
 	<div class="row">
-		<project-edit-info [project]="projectInfo"></project-edit-info>
+		<project-edit-info [project]="projectInfo" />
 	</div> <!-- class="row" -->
 	
 	<div class="row">
-		
+		<project-edit-tranches [tranches]="tranchesInfo" 
+			(onrefresh)="callbackRefreshView()" />
 	</div> <!-- class="row" -->
 	
 </div> <!-- class="container" -->

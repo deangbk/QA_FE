@@ -36,6 +36,7 @@ export class ManageProjectComponent implements OnInit {
 	
 	dataReady = false;
 	projectInfo: Models.RespProjectData = null;
+	tranchesInfo: Models.RespTrancheDataEx[] = [];
 	
 	// -----------------------------------------------------
 	
@@ -44,22 +45,41 @@ export class ManageProjectComponent implements OnInit {
 	}
 	
 	async fetchData() {
+		var _throwErr = (e: HttpErrorResponse) => {
+			console.log(e);
+			this.notifier.notify('error', 'Server Error: ' + Helpers.formatHttpError(e));
+		};
+		
 		this.dataReady = false;
 		
 		let resProject = await Helpers.observableAsPromise(
 			this.dataService.projectGetInfo());
 		if (resProject.ok) {
 			this.projectInfo = resProject.val;
-			
-			this.dataReady = true;
 		}
 		else {
-			let e = resProject.val as HttpErrorResponse;
-			console.log(e);
-			this.notifier.notify('error', 'Server Error: ' + Helpers.formatHttpError(e));
+			_throwErr(resProject.val);
+			return;
 		}
+		
+		let projectTranches = this.projectInfo.tranches.map(x => x.id);
+		
+		let resTranches = await Helpers.observableAsPromise(
+			this.dataService.trancheGetInfoEx(projectTranches));
+		if (resTranches.ok) {
+			this.tranchesInfo = resTranches.val;
+		}
+		else {
+			_throwErr(resTranches.val);
+			return;
+		}
+		
+		this.dataReady = true;
 	}
 	
 	// -----------------------------------------------------
 	
+	callbackRefreshView() {
+		this.fetchData();
+	}
 }
