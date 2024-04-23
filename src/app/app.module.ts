@@ -76,6 +76,7 @@ import { AddNoteModalComponent } from './modals/add-note-modal/add-note-modal.co
 import { ManageProjectComponent } from './admin-section/manage-project/manage-project.component';
 import { ProjectEditInfoComponent } from './admin-section/manage-project/project-edit-info/project-edit-info.component';
 import { ProjectEditTranchesComponent } from './admin-section/manage-project/project-edit-tranches/project-edit-tranches.component';
+import { TrancheEditModalComponent } from './modals/tranche-edit-modal/tranche-edit-modal.component';
 
 const customNotifierOptions: NotifierOptions = {
 	position: {
@@ -145,7 +146,7 @@ const customNotifierOptions: NotifierOptions = {
 		QApprovePipe ,
   RecentDocumentsComponent,
   QuestionModalComponent,
-
+  
   QuestionsGeneralComponent,
   QuestionsAccountComponent,
 
@@ -165,6 +166,7 @@ const customNotifierOptions: NotifierOptions = {
     ManageProjectComponent,
     ProjectEditInfoComponent,
     ProjectEditTranchesComponent,
+    TrancheEditModalComponent,
    // QApprovePipe,
 
 
