@@ -1,6 +1,6 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { Location, LocationStrategy } from '@angular/common';
-import { DattaConfig } from 'src/app/app-config';
+import { DattaConfig } from 'app/app-config';
 
 @Component({
   selector: 'app-configuration',

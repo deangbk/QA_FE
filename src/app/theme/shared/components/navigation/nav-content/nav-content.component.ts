@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, NgZone, OnInit, Output, ViewChild } from '@angular/core';
 import { NavigationItem } from '../navigation';
-import { DattaConfig } from 'src/app/app-config';
+import { DattaConfig } from 'app/app-config';
 import { Location, LocationStrategy } from '@angular/common';
-import { environment } from 'src/environments/environment';
+import { environment } from 'environments/environment';
 
 @Component({
 	selector: 'app-nav-content',

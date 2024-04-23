@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { NavigationItem } from '../../navigation';
-import { DattaConfig } from 'src/app/app-config';
+import { DattaConfig } from 'app/app-config';
 import { Location, LocationStrategy } from '@angular/common';
 
 @Component({

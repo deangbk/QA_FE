@@ -1,7 +1,7 @@
 import { Component, Input, NgZone, OnInit } from '@angular/core';
 import { NavigationItem } from '../../navigation';
 import { Location, LocationStrategy } from '@angular/common';
-import { DattaConfig } from 'src/app/app-config';
+import { DattaConfig } from 'app/app-config';
 
 @Component({
   selector: 'app-nav-group',

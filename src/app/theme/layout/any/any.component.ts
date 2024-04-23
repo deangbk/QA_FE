@@ -1,9 +1,9 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { Location, LocationStrategy } from '@angular/common';
 
-import { DattaConfig } from '../../../app-config';
+import { DattaConfig } from 'app/app-config';
 import { NavigationItem, NavigationPreset } from '../../shared/components/navigation/navigation';
-import { SecurityService } from 'src/app/security/security.service';
+import { SecurityService } from 'app/security/security.service';
 
 @Component({
 	selector: 'app-layout-any',

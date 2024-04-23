@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { DattaConfig } from 'src/app/app-config';
+import { DattaConfig } from 'app/app-config';
 
 import { NavigationItem, NavigationPreset } from './navigation';
 
@@ -16,7 +16,7 @@ export class NavigationComponent {
 	navCollapsed;
 	navCollapsedMob;
 	windowWidth: number;
-
+	
 	constructor() {
 		this.windowWidth = window.innerWidth;
 		this.navCollapsed = this.windowWidth >= 992 ? DattaConfig.isCollapseMenu : false;

@@ -1,7 +1,7 @@
 // Angular import
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SharedModule } from 'src/app/theme/shared/shared.module';
+import { SharedModule } from 'app/theme/shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { DataService } from '../../data/data.service';
 import { SecurityService } from '../../security/security.service';
@@ -10,7 +10,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Helpers } from 'src/app/helpers';
+import { Helpers } from 'app/helpers';
 
 //import { AuthenticationService } from 'src/app/theme/shared/service/authentication.service';
 

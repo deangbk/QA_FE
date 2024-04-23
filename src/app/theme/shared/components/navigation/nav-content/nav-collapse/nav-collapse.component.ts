@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { NavigationItem } from '../../navigation';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { DattaConfig } from 'src/app/app-config';
+import { DattaConfig } from 'app/app-config';
 
 @Component({
   selector: 'app-nav-collapse',

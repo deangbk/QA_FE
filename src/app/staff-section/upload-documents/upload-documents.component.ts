@@ -4,8 +4,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { SharedModule } from 'src/app/theme/shared/shared.module';
-import { initializeFileUploadDTO,initializeRespAccountData,initializeRespTrancheData } from 'src/app/data/model-initializers';
+import { initializeFileUploadDTO, initializeRespAccountData, initializeRespTrancheData }
+	from 'app/data/model-initializers';
 import { NotifierService } from 'angular-notifier';
 
 import { DataService } from '../../data/data.service';

@@ -4,7 +4,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { DattaConfig } from '../../../../../app-config';
 
 import { Router } from '@angular/router';
-import { SecurityService } from 'src/app/security/security.service';
+import { SecurityService } from 'app/security/security.service';
 
 @Component({
 	selector: 'app-nav-right',
