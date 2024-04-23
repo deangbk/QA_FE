@@ -29,9 +29,6 @@ import { NavItemComponent } from './theme/shared/components/navigation/nav-conte
 import { NavLeftComponent } from './theme/shared/components/nav-bar/nav-left/nav-left.component';
 import { NavRightComponent } from './theme/shared/components/nav-bar/nav-right/nav-right.component';
 import { NavSearchComponent } from './theme/shared/components/nav-bar/nav-left/nav-search/nav-search.component';
-import { ChatMsgComponent } from './theme/shared/components/nav-bar/nav-right/chat-msg/chat-msg.component';
-import { ChatUserListComponent } from './theme/shared/components/nav-bar/nav-right/chat-user-list/chat-user-list.component';
-import { FriendComponent } from './theme/shared/components/nav-bar/nav-right/chat-user-list/friend/friend.component';
 import { NavigationItem } from './theme/shared/components/navigation/navigation';
 
 import { SharedModule } from './theme/shared/shared.module';
@@ -139,9 +136,6 @@ const customNotifierOptions: NotifierOptions = {
 		NavLeftComponent,
 		NavRightComponent,
 		NavSearchComponent,
-		ChatMsgComponent,
-		ChatUserListComponent,
-		FriendComponent,
 		ToggleFullScreenDirective,
 		QuestionsDisplayComponent,
 		HomeLoginComponent,
