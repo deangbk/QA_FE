@@ -4,11 +4,12 @@ import {
 	ViewChild, ElementRef,
 } from '@angular/core';
 
-import { DataService } from '../../../data/data.service';
-import { SecurityService } from '../../../security/security.service';
 
-import * as Models from "../../../data/data-models";
-import { Helpers } from '../../../helpers';
+import { DataService } from 'app/data/data.service';
+import { SecurityService } from 'app/security/security.service';
+
+import * as Models from 'app/data/data-models';
+import { Helpers } from 'app/helpers';
 
 @Component({
 	selector: 'project-edit-tranches',

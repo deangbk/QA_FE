@@ -11,9 +11,9 @@ import * as XLSX from 'xlsx';
 import { DataService } from '../../data/data.service';
 import { SecurityService } from '../../security/security.service';
 
-import * as Models from "../../data/data-models";
+import * as Models from 'app/data/data-models';
 
-import { Helpers } from '../../helpers';
+import { Helpers } from 'app/helpers';
 
 interface ExcelDataRow {
 	email: string;

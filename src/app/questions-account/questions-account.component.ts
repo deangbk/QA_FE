@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { QuestionsDisplayComponent } from '../questions-display/questions-display.component';
+import { QuestionsDisplayComponent } from 'app/questions-display/questions-display.component';
 
 @Component({
  

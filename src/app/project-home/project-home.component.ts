@@ -12,8 +12,8 @@ import { Option, Some, None } from 'ts-results';
 import { DataService } from '../data/data.service';
 import { SecurityService } from '../security/security.service';
 
-import * as Models from "../data/data-models";
-import { Helpers } from '../helpers';
+import * as Models from 'app/data/data-models';
+import { Helpers } from 'app/helpers';
 
 import { AddNoteModalComponent } from '../modals/add-note-modal/add-note-modal.component';
 

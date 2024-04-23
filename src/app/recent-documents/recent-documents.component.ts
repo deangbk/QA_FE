@@ -14,10 +14,10 @@ import { ConfirmDeleteModalComponent, ModalLine } from '../modals/confirm-delete
 import { DataService } from '../data/data.service';
 import { SecurityService } from '../security/security.service';
 
-import * as Models from "../data/data-models";
+import * as Models from 'app/data/data-models';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { Helpers } from '../helpers';
+import { Helpers } from 'app/helpers';
 
 class SearchFilter {
 	public searchText: string;

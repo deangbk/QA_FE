@@ -5,7 +5,7 @@ import { Input, Output, EventEmitter } from '@angular/core';
 
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { Helpers } from '../../helpers';
+import { Helpers } from 'app/helpers';
 
 export class ModalLine {
 	public str: string;

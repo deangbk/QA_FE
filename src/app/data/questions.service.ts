@@ -3,10 +3,10 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { Helpers } from "../helpers";
+import { Helpers } from 'app/helpers';
 
 import { DataService } from './data.service';
-import * as Models from "./data-models";
+import * as Models from 'app/data/data-models';
 
 @Injectable({
 	providedIn: 'root'

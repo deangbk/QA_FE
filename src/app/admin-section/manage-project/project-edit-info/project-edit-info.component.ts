@@ -10,8 +10,8 @@ import * as sanitizeHtml from 'sanitize-html';
 import { DataService } from '../../../data/data.service';
 import { SecurityService } from '../../../security/security.service';
 
-import * as Models from "../../../data/data-models";
-import { Helpers } from '../../../helpers';
+import * as Models from 'app/data/data-models';
+import { Helpers } from 'app/helpers';
 
 @Component({
 	selector: 'project-edit-info',

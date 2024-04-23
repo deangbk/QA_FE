@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { DataService } from '../data/data.service';
 import { SecurityService } from '../security/security.service';
-import * as Models from "../data/data-models";
+import * as Models from 'app/data/data-models';
 
 @Component({
   selector: 'app-home-login',

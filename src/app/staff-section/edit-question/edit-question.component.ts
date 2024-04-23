@@ -6,14 +6,14 @@ import { Component, OnInit, TemplateRef, Input } from '@angular/core';
 import { QuestionsService } from '../../data/questions.service';
 import { DataService } from '../../data/data.service';
 import { SecurityService } from '../../security/security.service';
-import * as Models from "../../data/data-models"; // Import your models
+import * as Models from 'app/data/data-models'; // Import your models
 import { NgbModal, NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { Mode } from 'fs';
 import { createDefaultRespPostData, initReqBodyGetPosts } from '../../data/model-initializers';
 import { NotifierService } from 'angular-notifier';
 import { ConfirmDeleteModalComponent, ModalLine } from '../../modals/confirm-delete-modal/confirm-delete-modal.component';
-import { Helpers } from '../../helpers';
+import { Helpers } from 'app/helpers';
 
 
 @Component({

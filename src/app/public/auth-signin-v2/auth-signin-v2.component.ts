@@ -12,7 +12,7 @@ import { first } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Helpers } from 'app/helpers';
 
-//import { AuthenticationService } from 'src/app/theme/shared/service/authentication.service';
+//import { AuthenticationService } from 'theme/shared/service/authentication.service';
 
 @Component({
 	selector: 'app-auth-signin-v2',

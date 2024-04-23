@@ -8,8 +8,8 @@ import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { Option, Some, None } from 'ts-results';
 
-import * as Models from "../../data/data-models";
-import { Helpers } from '../../helpers';
+import * as Models from 'app/data/data-models';
+import { Helpers } from 'app/helpers';
 
 @Component({
 	selector: 'app-add-note-modal',

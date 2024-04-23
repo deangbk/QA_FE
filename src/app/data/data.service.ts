@@ -6,8 +6,8 @@ import { catchError } from 'rxjs/operators';
 
 import { environment } from 'environments/environment';
 
-import { Helpers } from "../helpers";
-import * as Models from "./data-models";
+import { Helpers } from 'app/helpers';
+import * as Models from 'app/data/data-models';
 
 @Injectable({
 	providedIn: 'root'

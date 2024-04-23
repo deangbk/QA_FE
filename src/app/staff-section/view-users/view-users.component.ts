@@ -11,8 +11,8 @@ import { NotifierService } from 'angular-notifier';
 import { DataService } from '../../data/data.service';
 import { SecurityService } from '../../security/security.service';
 
-import * as Models from "../../data/data-models";
-import { Helpers } from '../../helpers';
+import * as Models from 'app/data/data-models';
+import { Helpers } from 'app/helpers';
 
 import { ConfirmDeleteModalComponent, ModalLine } from '../../modals/confirm-delete-modal/confirm-delete-modal.component';
 

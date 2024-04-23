@@ -3,7 +3,7 @@ import {
 } from '@angular/core';
 import { Input, Output, EventEmitter } from '@angular/core';
 
-import { Helpers } from '../../helpers';
+import { Helpers } from 'app/helpers';
 
 @Component({
 	selector: 'app-project-note',
