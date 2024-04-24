@@ -12,9 +12,7 @@
           </div>
           <ul class="breadcrumb">
             <li class="breadcrumb-item">
-              <a [routerLink]="['/sample-page']" *ngIf="type === 'theme3'">Home</a>
-              <a [routerLink]="['/sample-page']" *ngIf="type === 'theme2'">Home</a>
-              <a [routerLink]="['/sample-page']" *ngIf="type === 'theme1'">Home</a>
+              <a href="/">Site</a>
             </li>
             <ng-container *ngFor="let breadcrumb of navigationList">
               <li class="breadcrumb-item" *ngIf="breadcrumb.url !== false">

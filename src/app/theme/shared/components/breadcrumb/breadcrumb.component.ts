@@ -29,6 +29,7 @@ export class BreadcrumbComponent implements OnInit {
 	
 	ngOnInit() {
 		this.refreshNavigation(this._router.url);
+		this.setBreadcrumb();
 	}
 	
 	// public method
