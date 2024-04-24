@@ -1,25 +1,34 @@
 
 <div class="modal-header">
-	<h2 class="modal-title" id="modal-basic-title">Edit Tranche</h2>
+	<h2 class="modal-title" id="modal-basic-title">
+		<ng-container *ngIf="!creating">Edit Tranche</ng-container>
+		<ng-container *ngIf="creating">Create Tranche</ng-container>
+	</h2>
 	<button type="button" class="btn-close" aria-label="Close" (click)="callbackAction(false)"></button>
 </div>
 <div class="modal-body">
-	<h4>ID: <span class="text-muted">#{{tranche.id}}</span></h4>
+	<h4 *ngIf="!creating">
+		ID: <span class="text-muted">#{{tranche.id}}</span>
+	</h4>
 	
 	<div class="form-group">
 		<label for="title-text-input">Name</label>
 		<input class="form-control" id="title-text-input"
 			[(ngModel)]="name" />
 	</div>
+	<div *ngIf="getNameError() != null">
+		<p class="small text-danger">{{getNameError()}}</p>
+	</div>
 	
 	<br />
 	
 	<div class="d-flex justify-content-center align-items-center">
-		<button type="button" class="btn btn-primary" (click)="callbackAction(false)">
-			Cancel
-		</button>
-		<button type="button" class="btn btn-danger" (click)="callbackAction(true)">
+		<button type="button" class="btn btn-primary" (click)="callbackAction(true)"
+			[disabled]="getNameError() != null">
 			Confirm
+		</button>
+		<button type="button" class="btn btn-secondary" (click)="callbackAction(false)">
+			Cancel
 		</button>
 	</div>
 </div>
