@@ -202,10 +202,9 @@ export class DataService {
 		return <Observable<Models.RespTrancheData>>
 			this._get(`tranche/${trancheId}?${query}`);
 	}
-	public trancheGetInfoEx(trancheIds: number[]) {
-		var query = trancheIds.map(x => `ids=${x}`).join('&');
+	public trancheGetInfoEx() {
 		return <Observable<Models.RespTrancheDataEx[]>>
-			this._get(`tranche/ex?${query}`);
+			this._get(`tranche/ex`);
 	}
 	
 	public trancheCreate(create: Models.ReqBodyCreateTranche) {

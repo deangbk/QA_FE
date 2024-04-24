@@ -62,10 +62,8 @@ export class ManageProjectComponent implements OnInit {
 			return;
 		}
 		
-		let projectTranches = this.projectInfo.tranches.map(x => x.id);
-		
 		let resTranches = await Helpers.observableAsPromise(
-			this.dataService.trancheGetInfoEx(projectTranches));
+			this.dataService.trancheGetInfoEx());
 		if (resTranches.ok) {
 			this.tranchesInfo = resTranches.val;
 		}
