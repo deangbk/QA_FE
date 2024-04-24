@@ -45,39 +45,55 @@ export class ManageProjectComponent implements OnInit {
 	}
 	
 	async fetchData() {
-		var _throwErr = (e: HttpErrorResponse) => {
+		try {
+			this.dataReady = false;
+			
+			await this.fetchProject();
+			await this.fetchTranches();
+			
+			this.dataReady = true;
+		}
+		catch (_e) {
+			let e = _e as HttpErrorResponse;
 			console.log(e);
 			this.notifier.notify('error', 'Server Error: ' + Helpers.formatHttpError(e));
-		};
-		
-		this.dataReady = false;
-		
-		let resProject = await Helpers.observableAsPromise(
+		}
+	}
+	async fetchProject() {
+		let res = await Helpers.observableAsPromise(
 			this.dataService.projectGetInfo());
-		if (resProject.ok) {
-			this.projectInfo = resProject.val;
+		if (res.ok) {
+			this.projectInfo = res.val;
 		}
 		else {
-			_throwErr(resProject.val);
-			return;
+			throw res.val;
 		}
-		
-		let resTranches = await Helpers.observableAsPromise(
+	}
+	async fetchTranches() {
+		let res = await Helpers.observableAsPromise(
 			this.dataService.trancheGetInfoEx());
-		if (resTranches.ok) {
-			this.tranchesInfo = resTranches.val;
+		if (res.ok) {
+			this.tranchesInfo = res.val;
 		}
 		else {
-			_throwErr(resTranches.val);
-			return;
+			throw res.val;
 		}
-		
-		this.dataReady = true;
 	}
 	
 	// -----------------------------------------------------
 	
-	callbackRefreshView() {
-		this.fetchData();
+	async callbackRefreshTranches() {
+		try {
+			this.dataReady = false;
+			
+			await this.fetchTranches();
+			
+			this.dataReady = true;
+		}
+		catch (_e) {
+			let e = _e as HttpErrorResponse;
+			console.log(e);
+			this.notifier.notify('error', 'Server Error: ' + Helpers.formatHttpError(e));
+		}
 	}
 }
