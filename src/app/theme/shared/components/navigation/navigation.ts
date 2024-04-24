@@ -78,7 +78,8 @@ export class NavigationPreset {
 		icon: 'feather icon-aperture',
 
 		children: [
-			NavigationItem.createItem('Manage Project', '/admin/project', null),
+			NavigationItem.createItem('Project Settings', '/admin/project', null),
+			NavigationItem.createItem('Project Managers', '/admin/staff', null),
 		],
 	};
 

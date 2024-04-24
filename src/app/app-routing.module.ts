@@ -18,6 +18,7 @@ import { UploadDocumentsComponent } from './staff-section/upload-documents/uploa
 import { ViewStatsComponent } from './staff-section/view-stats/view-stats.component';
 import { ProjectHomeComponent } from './project-home/project-home.component';
 import { ManageProjectComponent } from './admin-section/manage-project/manage-project.component';
+import { ManageStaffComponent } from './admin-section/manage-staff/manage-staff.component';
 
 const routes: Routes = [
 	{
@@ -75,6 +76,7 @@ const routes: Routes = [
 				
 				children: [
 					{ path: 'project', component: ManageProjectComponent },
+					{ path: 'staff', component: ManageStaffComponent },
 				],
 			},
 		]

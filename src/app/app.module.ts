@@ -77,6 +77,7 @@ import { ManageProjectComponent } from './admin-section/manage-project/manage-pr
 import { ProjectEditInfoComponent } from './admin-section/manage-project/project-edit-info/project-edit-info.component';
 import { ProjectEditTranchesComponent } from './admin-section/manage-project/project-edit-tranches/project-edit-tranches.component';
 import { TrancheEditModalComponent } from './modals/tranche-edit-modal/tranche-edit-modal.component';
+import { ManageStaffComponent } from './admin-section/manage-staff/manage-staff.component';
 
 const customNotifierOptions: NotifierOptions = {
 	position: {
@@ -167,6 +168,7 @@ const customNotifierOptions: NotifierOptions = {
     ProjectEditInfoComponent,
     ProjectEditTranchesComponent,
     TrancheEditModalComponent,
+    ManageStaffComponent,
    // QApprovePipe,
 
 
