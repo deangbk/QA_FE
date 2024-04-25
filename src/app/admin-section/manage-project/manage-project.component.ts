@@ -44,6 +44,11 @@ export class ManageProjectComponent implements OnInit {
 		this.fetchData();
 	}
 	
+	setError(e: HttpErrorResponse) {
+		console.log(e);
+		this.notifier.notify('error', 'Server Error: ' + Helpers.formatHttpError(e));
+	}
+	
 	async fetchData() {
 		try {
 			this.dataReady = false;
@@ -54,9 +59,7 @@ export class ManageProjectComponent implements OnInit {
 			this.dataReady = true;
 		}
 		catch (_e) {
-			let e = _e as HttpErrorResponse;
-			console.log(e);
-			this.notifier.notify('error', 'Server Error: ' + Helpers.formatHttpError(e));
+			this.setError(_e);
 		}
 	}
 	async fetchProject() {
@@ -82,6 +85,10 @@ export class ManageProjectComponent implements OnInit {
 	
 	// -----------------------------------------------------
 	
+	async callbackRefreshProject() {
+		await this.fetchData();
+	}
+	
 	async callbackRefreshTranches() {
 		try {
 			this.dataReady = false;
@@ -91,9 +98,7 @@ export class ManageProjectComponent implements OnInit {
 			this.dataReady = true;
 		}
 		catch (_e) {
-			let e = _e as HttpErrorResponse;
-			console.log(e);
-			this.notifier.notify('error', 'Server Error: ' + Helpers.formatHttpError(e));
+			this.setError(_e);
 		}
 	}
 }

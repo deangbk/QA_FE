@@ -7,7 +7,8 @@
 <div class="container" *ngIf="dataReady">
 	
 	<div class="row">
-		<project-edit-info [project]="projectInfo" />
+		<project-edit-info [project]="projectInfo" 
+			(onrefresh)="callbackRefreshProject()" />
 	</div> <!-- class="row" -->
 	
 	<div class="row">

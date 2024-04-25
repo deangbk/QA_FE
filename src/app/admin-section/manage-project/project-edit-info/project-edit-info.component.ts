@@ -127,6 +127,22 @@ export class ProjectEditInfoComponent implements OnInit, OnDestroy {
 	}
 	
 	async callbackUpdateInfo() {
-		// TODO: Send data
+		this.callbackEditTitle();
+		this.callbackEditorChange(null);
+		
+		{
+			console.log(this.modelEdit);
+			
+			let res = await Helpers.observableAsPromise(
+				this.dataService.projectEdit(this.modelEdit));
+			if (res.ok) {
+				this.notifier.notify('success', "Project edited!");
+				this.onrefresh.emit();
+			}
+			else {
+				let e = res.val;
+				this.notifier.notify('error', 'Server Error: ' + Helpers.formatHttpError(e));
+			}
+		}
 	}
 }
