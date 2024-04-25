@@ -1,4 +1,4 @@
-import { EnvironmentInjector, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 
 import { Observable, throwError } from 'rxjs';
@@ -434,20 +434,5 @@ export class DataService {
 		.pipe(catchError(this.handleError)); */
      
 		return this.postGet({}, null);
-	}
-	
-	// -----------------------------------------------------
-	
-	public telemetryAddQuestionView(id: number) {
-		return this._post(`log/add/question/${id}`);
-	}
-	public telemetryAddAccountView(id: number) {
-		return this._post(`log/add/account/${id}`);
-	}
-	public telemetryAddTrancheView(id: number) {
-		return this._post(`log/add/tranche/${id}`);
-	}
-	public telemetryAddDocumentView(id: number) {
-		return this._post(`log/add/document/${id}`);
 	}
 }
