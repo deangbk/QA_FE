@@ -14,7 +14,7 @@ import * as Models from 'app/data/data-models';
 })
 export class DataService {
 	baseUrl: string = '';
-
+	
 	constructor(private http: HttpClient) {
 	//	this.baseUrl = 'https://localhost:7203/api';
 		this.baseUrl = 'https://backendqa.azurewebsites.net/api';
@@ -191,6 +191,9 @@ export class DataService {
 	public projectCreate(create: Models.ReqBodyCreateProject) {
 		return <Observable<number>>
 			this._post(`project/create`, create);
+	}
+	public projectEdit(edit: Models.ReqBodyEditProject) {
+		return this._put(`project/edit`, edit);
 	}
 	
 	// -----------------------------------------------------

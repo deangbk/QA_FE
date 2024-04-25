@@ -11,6 +11,17 @@ export interface ReqBodyCreateProject {
 	date_end: string,
 	tranches: string,
 }
+export interface ReqBodyEditProject {
+	name?: string,
+	display_name?: string,
+	company?: string,
+	description?: string,
+	
+	date_end?: string,
+	
+	url_logo?: string,
+	url_banner?: string,
+}
 
 export interface ReqBodyCreateTranche {
 	name: string,
@@ -192,16 +203,16 @@ export interface RespProjectData {
 	display_name: string,
 	date_start: string,
 	date_end: string,
-
+	
 	// -----------------------------
 	
 	description?: string,
 	company?: string,
 	url_logo?: string,
 	url_banner?: string,
-
+	
 	// -----------------------------
-
+	
 	tranches?: RespTrancheData[],
 }
 
