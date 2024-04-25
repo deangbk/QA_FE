@@ -1,3 +1,7 @@
+
+// -----------------------------------------------------
+// Angular modules
+
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -7,11 +11,19 @@ import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 
+// -----------------------------------------------------
+// External library modules
+
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbPaginationModule, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
+
 import { NgSelectModule } from '@ng-select/ng-select';
-import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+
 import { FileUploadModule } from '@iplab/ngx-file-upload';
+
 import { NgxEditorModule } from 'ngx-editor';
+
+// -----------------------------------------------------
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -195,7 +207,7 @@ const customNotifierOptions: NotifierOptions = {
 		NgSelectModule,
 		
 		NgbModule,
-		NgbPaginationModule,
+		NgbPaginationModule, NgbDatepickerModule,
 		FormsModule,
 		FileUploadModule,
 		NgxEditorModule,

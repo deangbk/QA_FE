@@ -1,4 +1,10 @@
 
+.form-group {
+	h4 {
+		margin-bottom: 0.5em;
+	}
+}
+
 #project-name-line {
 	display: flex;
 	column-gap: 0.8em;
@@ -6,8 +12,4 @@
 	.bi-pencil {
 		cursor: pointer;
 	}
-}
-
-::ng-deep .NgxEditor__Wrapper#showDesc {
-	border: 0px;
 }

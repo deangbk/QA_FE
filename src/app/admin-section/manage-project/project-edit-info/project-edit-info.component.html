@@ -1,61 +1,66 @@
 
-<app-card [options]="false" [customHeader]="true">
-	<!-- Custom header; app-card has content projection on .app-card-header -->
-	<div class="app-card-header">
-		<div *ngIf="!editingTitle">
-			<div id="project-name-line" 
-				(mouseover)="showTitleEditIcon = true" 
-				(mouseout) ="showTitleEditIcon = false">
-				
-				<h5>{{project.display_name}}</h5>
-				<div id="icons-group">
-					<i class="bi bi-pencil" 
-						[style.visibility]="showTitleEditIcon ? 'visible' : 'hidden'"
-						(click)="callbackClickEditTitle(true)"></i>
-				</div>
-			</div>
+<app-card cardTitle="Project Info" [options]="false">
+	
+	<div class="form-group">
+		<h4>Name</h4>
+		<input class="form-control" id="name-text-input" 
+			[(ngModel)]="modelEdit.name"/>
+	</div>
+	
+	<hr />
+	<div class="form-group">
+		<h4>Display Name</h4>
+		<input class="form-control" id="display-text-input" 
+			(keyup.enter)="callbackEditTitle()"
+			(blur)       ="callbackEditTitle()"
+			[(ngModel)]="modelEdit.display_name" />
+	</div>
+	
+	<hr />
+	<div class="form-group">
+		<h4>Description</h4>
+		<div class="NgxEditor__Wrapper" id="desc-edit">
+			<ngx-editor-menu [editor]="editor" [toolbar]="editorToolbar" />
+			<ngx-editor [editor]="editor"
+				[placeholder]="'Type here...'"
+				[(ngModel)]="modelEdit.description" 
+				(ngModelChange)="callbackEditorChange($event)">
+			</ngx-editor>
 		</div>
-		<div *ngIf="editingTitle">
-			<div class="form-group">
-				<input class="form-control" id="title-text-input" 
-					[(ngModel)]="project.display_name" 
-					(keyup.enter)="callbackClickEditTitle(false)"
-					(blur)       ="callbackClickEditTitle(false)"
-					#elemTitleTextInput/>
+	</div>
+	
+	<hr />
+	<div class="form-group">
+		<h4>Company Name</h4>
+		<input class="form-control" id="company-input" 
+			[(ngModel)]="modelEdit.company" />
+	</div>
+	
+	<hr />
+	<div class="form-group">
+		<h4>End Date</h4>
+		<div class="row">
+			<div class="col-4">
+				<input type="text" class="form-control" 
+					[minDate]="minEndDate()"
+					#dp="ngbDatepicker" 
+					ngbDatepicker readonly
+					[(ngModel)]="this.project.date_end">
+			</div>
+			<div class="col-3">
+				<button type="button" class="btn btn-secondary" 
+					(click)="dp.toggle()" 
+					[attr.aria-expanded]="dp.isOpen">
+					Select Date
+				</button>
 			</div>
 		</div>
 	</div>
 	
-	<div>
-		<div *ngIf="!editingDescription">
-			<div class="NgxEditor__Wrapper" id="showDesc">
-				<ngx-editor [editor]="editor"
-					[disabled]="true"
-					[(ngModel)]="descHtml">
-				</ngx-editor>
-			</div>
-			<!-- <div id="showDesc" [innerHTML]="descHtml"></div> -->
-			
-			<hr />
-			<button type="button" class="btn btn-primary"
-				(click)="callbackClickEditDesc(true)">
-				Edit Description
-			</button>
-		</div>
-		<div *ngIf="editingDescription">
-			<div class="NgxEditor__Wrapper" id="editDesc">
-				<ngx-editor-menu [editor]="editor" [toolbar]="editorToolbar" />
-				<ngx-editor [editor]="editor"
-					[(ngModel)]="descHtml" 
-					(ngModelChange)="callbackEditorChange($event)">
-				</ngx-editor>
-			</div>
-			
-			<br />
-			<button type="button" class="btn btn-primary"
-				(click)="callbackClickEditDesc(false)">
-				Confirm Edit
-			</button>
-		</div>
-	</div>
+	<hr />
+	<button type="button" class="btn btn-primary"
+		(click)="callbackUpdateInfo()">
+		Update Project Info
+	</button>
+	
 </app-card>
