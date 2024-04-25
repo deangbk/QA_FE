@@ -29,6 +29,10 @@
 	}
 }
 
+::ng-deep .NgxEditor__Wrapper#desc-display {
+	border: 0px;
+}
+
 ::ng-deep #sectionStickyNotes .card-header {
 	background-color: rgb(235, 235, 255);
 }

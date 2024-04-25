@@ -10,27 +10,12 @@
 			<app-card cardTitle="{{projectInfo.display_name}}" [options]="false" blockClass="table-border-style">
 				<h3>{{projectInfo.company}}</h3>
 				
-				<div *ngIf="descriptionTextLines.length > 0; else noDescription">
-					<p *ngFor="let i of descriptionTextLines">{{i}}</p>
-				</div>
-				<ng-template #noDescription>
-					<p class="text-muted">
-						<i>No description provided.</i>
-					</p>
-				</ng-template>
-				
 				<hr />
-				
-				<p>The Q&A period for this transaction is as following</p>
-				<div class="row">
-					<span class="small"><i>
-						Begins {{projectInfo.date_start | date}}
-					</i></span>
-				</div>
-				<div class="row">
-					<span class="small"><i>
-						{{getEndText()}} {{projectInfo.date_end | date}}
-					</i></span>
+				<div class="NgxEditor__Wrapper" id="desc-display">
+					<ngx-editor [editor]="editor" [disabled]="true"
+						[placeholder]="'No description provided'"
+						[(ngModel)]="projectInfo.description">
+					</ngx-editor>
 				</div>
 			</app-card>
 		</div> <!-- col-lg-8 -->
