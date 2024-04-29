@@ -17,6 +17,7 @@ export interface ReqBodyEditProject {
 	company?: string,
 	description?: string,
 	
+	date_start?: string,
 	date_end?: string,
 	
 	url_logo?: string,

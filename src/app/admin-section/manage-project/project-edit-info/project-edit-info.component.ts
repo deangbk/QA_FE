@@ -5,7 +5,7 @@ import {
 	ViewChild, ElementRef,
 } from '@angular/core';
 
-import { NgbDateStruct, NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDate, NgbDateStruct, NgbDateAdapter, NgbDatepicker } from '@ng-bootstrap/ng-bootstrap';
 import { NotifierService } from 'angular-notifier';
 
 import { Editor, Toolbar } from 'ngx-editor';
@@ -22,9 +22,9 @@ export class CustomDateAdapter extends NgbDateAdapter<string> {
 		if (value) {
 			const date = new Date(value);
 			return {
-				day: date.getDate(),
-				month: date.getMonth(),
-				year: date.getFullYear(),
+				day: date.getUTCDate(),
+				month: date.getUTCMonth(),
+				year: date.getUTCFullYear(),
 			};
 		}
 		return null;
@@ -33,10 +33,10 @@ export class CustomDateAdapter extends NgbDateAdapter<string> {
 	toModel(ngDate: NgbDateStruct | null): string | null {
 		if (ngDate) {
 			let date = new Date();
-			date.setDate(ngDate.day);
-			date.setMonth(ngDate.month);
-			date.setFullYear(ngDate.year);
-			return date.toUTCString();
+			date.setUTCDate(ngDate.day);
+			date.setUTCMonth(ngDate.month);
+			date.setUTCFullYear(ngDate.year);
+			return date.toISOString();
 		}
 		return null;
 	}
@@ -66,6 +66,8 @@ export class ProjectEditInfoComponent implements OnInit, OnDestroy {
 		private dateAdapter: NgbDateAdapter<string>,
 	) {}
 	
+	modelEdit: Models.ReqBodyEditProject = {};
+	
 	editorToolbar: Toolbar = [
 		['bold', 'italic'],
 		['underline', 'strike'],
@@ -77,7 +79,9 @@ export class ProjectEditInfoComponent implements OnInit, OnDestroy {
 	];
 	editor: Editor = null;
 	
-	modelEdit: Models.ReqBodyEditProject = {};
+	dateHover: NgbDate = null;
+	dateFrom: NgbDate;
+	dateTo: NgbDate;
 	
 	// -----------------------------------------------------
 	
@@ -88,12 +92,12 @@ export class ProjectEditInfoComponent implements OnInit, OnDestroy {
 			description: this.project.description ?? '',
 			company: this.project.company ?? '',
 			
+			date_start: this.project.date_start,
 			date_end: this.project.date_end,
 			
 			url_logo: this.project.url_logo,
 			url_banner: this.project.url_banner,
 		};
-		console.log(this.modelEdit);
 		
 		this.editor = new Editor();
 	}
@@ -103,13 +107,27 @@ export class ProjectEditInfoComponent implements OnInit, OnDestroy {
 	
 	// -----------------------------------------------------
 	
-	minEndDate() : NgbDateStruct {
-		let date = new Date();
-		return {
-			day: date.getDate() + 1,
-			month: date.getMonth(),
-			year: date.getFullYear(),
+	rangeStartDate(): NgbDateStruct[] {
+		let date = new Date(this.project.date_end);
+		date.setDate(date.getDate() - 1);
+		
+		let ngDate = {
+			day: date.getUTCDate(),
+			month: date.getUTCMonth(),
+			year: date.getUTCFullYear(),
 		};
+		return [null, ngDate];
+	}
+	rangeEndDate(): NgbDateStruct[] {
+		let date = new Date(this.project.date_start);
+		date.setDate(date.getDate() + 1);
+		
+		let ngDate = {
+			day: date.getUTCDate(),
+			month: date.getUTCMonth(),
+			year: date.getUTCFullYear(),
+		};
+		return [ngDate, null];
 	}
 	
 	// -----------------------------------------------------
@@ -124,6 +142,10 @@ export class ProjectEditInfoComponent implements OnInit, OnDestroy {
 
 	callbackEditorChange(html: object) {
 		//this.modelEdit.description = sanitizeHtml(this.modelEdit.description);
+	}
+	
+	callbackSelectDate() {
+		
 	}
 	
 	async callbackUpdateInfo() {

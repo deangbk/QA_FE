@@ -38,21 +38,29 @@
 	
 	<hr />
 	<div class="form-group">
-		<h4>End Date</h4>
 		<div class="row">
 			<div class="col-4">
-				<input type="text" class="form-control" 
-					[minDate]="minEndDate()"
-					#dp="ngbDatepicker" 
-					ngbDatepicker readonly
-					[(ngModel)]="this.project.date_end">
+				<h4>Project Start Date</h4>
+				<div class="input-group">
+					<input class="form-control" 
+						[maxDate]="rangeStartDate()[1]"
+						[(ngModel)]="this.modelEdit.date_start" ngbDatepicker readonly
+						#ds="ngbDatepicker" />
+					<button class="btn btn-secondary bi bi-calendar3" 
+						(click)="ds.toggle()" type="button"></button>
+				</div>
 			</div>
-			<div class="col-3">
-				<button type="button" class="btn btn-secondary" 
-					(click)="dp.toggle()" 
-					[attr.aria-expanded]="dp.isOpen">
-					Select Date
-				</button>
+			
+			<div class="col-4">
+				<h4>Project End Date</h4>
+				<div class="input-group">
+					<input class="form-control" 
+						[minDate]="rangeEndDate()[0]" [maxDate]="rangeEndDate()[1]"
+						[(ngModel)]="this.modelEdit.date_end" ngbDatepicker readonly
+						#de="ngbDatepicker" />
+					<button class="btn btn-secondary bi bi-calendar3" 
+						(click)="de.toggle()" type="button"></button>
+				</div>
 			</div>
 		</div>
 	</div>
