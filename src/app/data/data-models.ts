@@ -19,9 +19,6 @@ export interface ReqBodyEditProject {
 	
 	date_start?: string,
 	date_end?: string,
-	
-	url_logo?: string,
-	url_banner?: string,
 }
 
 export interface ReqBodyCreateTranche {

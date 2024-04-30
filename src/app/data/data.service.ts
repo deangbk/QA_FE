@@ -196,6 +196,37 @@ export class DataService {
 		return this._put(`project/edit`, edit);
 	}
 	
+	public projectGetLogo() {
+		const httpOptions = {
+			responseType: 'blob' as 'json',
+		};
+		let res = this.http
+			.get(`${this.baseUrl}/project/logo`, httpOptions)
+			.pipe(catchError(this.handleError));
+		return <Observable<Blob>>res;
+	}
+	public projectGetBanner() {
+		const httpOptions = {
+			responseType: 'blob' as 'json',
+		};
+		let res = this.http
+			.get(`${this.baseUrl}/project/banner`, httpOptions)
+			.pipe(catchError(this.handleError));
+		return <Observable<Blob>>res;
+	}
+	public projectEditLogo(file: File) {
+		var form = new FormData();
+		form.set('file', file, file.name);
+		
+		return this._put_as_form(`project/logo/logo`, form);
+	}
+	public projectEditBanner(file: File) {
+		var form = new FormData();
+		form.set('file', file, file.name);
+		
+		return this._put_as_form(`project/logo/banner`, form);
+	}
+	
 	// -----------------------------------------------------
 	// Tranche
 	

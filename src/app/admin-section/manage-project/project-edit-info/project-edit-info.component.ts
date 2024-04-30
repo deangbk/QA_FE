@@ -94,9 +94,6 @@ export class ProjectEditInfoComponent implements OnInit, OnDestroy {
 			
 			date_start: this.project.date_start,
 			date_end: this.project.date_end,
-			
-			url_logo: this.project.url_logo,
-			url_banner: this.project.url_banner,
 		};
 		
 		this.editor = new Editor();
@@ -142,10 +139,6 @@ export class ProjectEditInfoComponent implements OnInit, OnDestroy {
 
 	callbackEditorChange(html: object) {
 		//this.modelEdit.description = sanitizeHtml(this.modelEdit.description);
-	}
-	
-	callbackSelectDate() {
-		
 	}
 	
 	async callbackUpdateInfo() {
