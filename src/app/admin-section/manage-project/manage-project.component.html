@@ -12,6 +12,11 @@
 	</div> <!-- class="row" -->
 	
 	<div class="row">
+		<project-edit-logo [project]="projectInfo" 
+			(onrefresh)="callbackRefreshProject()" />
+	</div> <!-- class="row" -->
+	
+	<div class="row">
 		<project-edit-tranches [tranches]="tranchesInfo" 
 			(onrefresh)="callbackRefreshTranches()" />
 	</div> <!-- class="row" -->

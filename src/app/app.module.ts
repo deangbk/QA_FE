@@ -90,6 +90,8 @@ import { ProjectEditInfoComponent } from './admin-section/manage-project/project
 import { ProjectEditTranchesComponent } from './admin-section/manage-project/project-edit-tranches/project-edit-tranches.component';
 import { TrancheEditModalComponent } from './modals/tranche-edit-modal/tranche-edit-modal.component';
 import { ManageStaffComponent } from './admin-section/manage-staff/manage-staff.component';
+import { ProjectEditLogoComponent } from './admin-section/manage-project/project-edit-logo/project-edit-logo.component';
+import { ImageDisplayEditComponent } from './admin-section/manage-project/project-edit-logo/image-display-edit/image-display-edit.component';
 import { SelectImageModalComponent } from './modals/select-image-modal/select-image-modal.component';
 
 const customNotifierOptions: NotifierOptions = {
@@ -182,6 +184,8 @@ const customNotifierOptions: NotifierOptions = {
     ProjectEditTranchesComponent,
     TrancheEditModalComponent,
     ManageStaffComponent,
+    ProjectEditLogoComponent,
+    ImageDisplayEditComponent,
     SelectImageModalComponent,
    // QApprovePipe,
 
