@@ -1,0 +1,34 @@
+
+.upload-box {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	
+	padding-top: 2em;
+	padding-bottom: 2em;
+	background-color: aliceblue;
+	
+	border: 1px solid darkblue;
+	border-radius: 10px;
+	
+	.feather {
+		color: cornflowerblue;
+		font-size: 5em;
+		margin-bottom: 1rem;
+	}
+	img {
+		display: block;
+		max-width: 90%;
+		width: auto;
+		height: auto;
+		
+		margin-bottom: 1rem;
+	}
+	h3 {
+		margin-bottom: 0px;
+	}
+}
+.upload-box:hover {
+	cursor: pointer;
+}

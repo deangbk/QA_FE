@@ -1,0 +1,36 @@
+
+<div class="modal-header">
+	<h2 class="modal-title" id="modal-basic-title">
+		{{title}}
+	</h2>
+	<button type="button" class="btn-close" aria-label="Close" (click)="callbackAction(false)"></button>
+</div>
+<div class="modal-body">
+	<div (click)="callbackClickUpload()">
+		<div class="upload-box" *ngIf="file == null">
+			<i class="feather icon-file-text"></i>
+			<h3>Click to upload image</h3>
+		</div>
+		<div class="upload-box" *ngIf="file != null">
+			<img [src]="fileUrl" alt="Image" />
+			<h3>Click to change image</h3>
+		</div>
+	</div>
+	
+	<br />
+	
+	<div class="d-flex justify-content-center align-items-center">
+		<button type="button" class="btn btn-primary" (click)="callbackAction(true)"
+			[disabled]="file == null">
+			Confirm
+		</button>
+		<button type="button" class="btn btn-secondary" (click)="callbackAction(false)">
+			Cancel
+		</button>
+	</div>
+</div>
+
+<input type="file" style="display: none;" 
+	accept="image/*" 
+	(change)="callbackGetUploadFile($event)" 
+	#fileModal />
