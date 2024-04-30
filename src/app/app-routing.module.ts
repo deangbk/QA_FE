@@ -27,6 +27,11 @@ const routes: Routes = [
 		pathMatch: 'full'
 	},
 	{
+		path: 'home',
+		redirectTo: '/main',
+		pathMatch: 'full'
+	},
+	{
 		path: '',
 		component: LayoutAnyComponent,
 		canActivate: [AuthGuard],
