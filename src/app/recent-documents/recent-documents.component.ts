@@ -38,7 +38,7 @@ class ListItem {
 })
 export class RecentDocumentsComponent implements OnInit {
 	projectId = 1;
-	isStaff = false;
+	isElevated = false;
 	
 	initFilterType: string;
 	typeSelectLabels = [
@@ -74,7 +74,7 @@ export class RecentDocumentsComponent implements OnInit {
 		private notifier: NotifierService,
 	) {
 		this.projectId = securityService.getProjectId();
-		this.isStaff = securityService.isStaff();
+		this.isElevated = securityService.isElevated();
 		
 		this.filter = {
 			searchText: '',

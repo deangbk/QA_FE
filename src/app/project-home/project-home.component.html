@@ -25,7 +25,7 @@
 				<div *ngFor="let n of projectStickyNotes" id="sectionStickyNotes">
 					<app-project-note [text]="n.text" [description]="n.description" 
 						[postBy]="n.post_by.display_name" [postDate]="n.date_post"
-						[pinned]="true" [deletable]="isStaff"
+						[pinned]="true" [deletable]="isElevated"
 						(onDelete)="callbackDeleteNote(n)" />
 				</div>
 				
@@ -35,12 +35,12 @@
 				<div *ngFor="let n of projectNormalNotes">
 					<app-project-note [text]="n.text" [description]="n.description" 
 						[postBy]="n.post_by.display_name" [postDate]="n.date_post"
-						[pinned]="false" [deletable]="isStaff"
+						[pinned]="false" [deletable]="isElevated"
 						(onDelete)="callbackDeleteNote(n)" />
 				</div>
 			</div> <!-- notePanel -->
 			
-			<ng-container *ngIf="isStaff">
+			<ng-container *ngIf="isElevated">
 				<hr />
 				<div class="d-flex justify-content-center">
 					<a href="javascript:" (click)="callbackAddNote()">

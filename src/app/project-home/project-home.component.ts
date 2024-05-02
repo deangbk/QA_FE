@@ -25,7 +25,7 @@ import { AddNoteModalComponent } from '../modals/add-note-modal/add-note-modal.c
 })
 export class ProjectHomeComponent implements OnInit, OnDestroy {
 	projectId = 1;
-	isStaff = false;
+	isElevated = false;
 	
 	constructor(
 		private dataService: DataService,
@@ -35,7 +35,7 @@ export class ProjectHomeComponent implements OnInit, OnDestroy {
 		private notifier: NotifierService,
 	) {
 		this.projectId = securityService.getProjectId();
-		this.isStaff = securityService.isStaff();
+		this.isElevated = securityService.isElevated();
 	}
 	
 	projectReady = false;

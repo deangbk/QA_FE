@@ -28,7 +28,7 @@ export class DocumentViewerComponent implements OnInit, AfterViewInit {
 	// https://stackblitz.com/edit/angular-10-pdf-viewer-example
 	// https://www.npmjs.com/package/ng2-pdf-viewer#render-text-mode
 	
-	isStaff: boolean;
+	isElevated: boolean;
 	
 	constructor(
 		private dataService: DataService,
@@ -36,7 +36,7 @@ export class DocumentViewerComponent implements OnInit, AfterViewInit {
 		private changeDetector: ChangeDetectorRef,
 		private route: ActivatedRoute)
 	{ 
-		this.isStaff = securityService.isStaff();
+		this.isElevated = securityService.isElevated();
 	}
 	
 	documentReady = false;

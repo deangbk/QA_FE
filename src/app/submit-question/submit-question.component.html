@@ -102,7 +102,7 @@
 								</option>
 							</select>
 						</div>
-						<ng-container *ngIf="isStaff">
+						<ng-container *ngIf="isElevated">
 							<div class="col-lg-4"></div>
 							<div class="col-lg-4">
 								<h4>Post as user</h4>
@@ -122,7 +122,7 @@
 						</div>
 					</div> <!-- row input-group-row -->
 					
-					<div class="row input-group-row" *ngIf="isStaff">
+					<div class="row input-group-row" *ngIf="isElevated">
 						<div class="form-group">
 							<input type="checkbox" class="form-check-input" id="approve-checkbox" 
 								[(ngModel)]="i.approve"/>

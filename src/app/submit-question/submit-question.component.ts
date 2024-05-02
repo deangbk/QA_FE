@@ -35,7 +35,7 @@ class AddQuestionEntry {
 })
 export class SubmitQuestionComponent implements OnInit {
 	projectId = 1;
-	isStaff: boolean;
+	isElevated: boolean;
 
 	constructor(
 		private dataService: DataService,
@@ -44,7 +44,7 @@ export class SubmitQuestionComponent implements OnInit {
 		private notifier: NotifierService,
 	) {
 		this.projectId = securityService.getProjectId();
-		this.isStaff = securityService.isStaff();
+		this.isElevated = securityService.isElevated();
 	}
 	
 	buttonLoading = '';
@@ -78,7 +78,7 @@ export class SubmitQuestionComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.fetchData();
-		if (this.isStaff)
+		if (this.isElevated)
 			this.getUserList();
 		
 		this.addFirstQuestion();
@@ -226,8 +226,8 @@ export class SubmitQuestionComponent implements OnInit {
 				account: x.isAccount ? x.accountId : null,
 				text: x.text,
 				category: x.category,
-				post_as: this.isStaff ? (isNaN(x.postAs) ? null : x.postAs) : null,
-				approve: this.isStaff ? x.approve : false,
+				post_as: this.isElevated ? (isNaN(x.postAs) ? null : x.postAs) : null,
+				approve: this.isElevated ? x.approve : false,
 			} as Models.ReqBodyCreatePost));
 			
 			//console.log(questionsData);
