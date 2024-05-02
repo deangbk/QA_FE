@@ -9,6 +9,9 @@ import { Result, Err, Ok, Option, Some, None } from 'ts-results';
 
 export class Helpers {
 	public static formatHttpError(e: HttpErrorResponse) {
+		if (e.ok)
+			return `No error`;
+		
 		let text = '';
 		if (!e.ok && e.error != null) {
 			text = e.error.title;
@@ -16,8 +19,11 @@ export class Helpers {
 		else if (e.error != null) {
 			text = e.statusText;
 		}
-			
-		return `(code ${e.status}) ${text}`;
+		
+		if (e.status != 0)
+			return `(code ${e.status}) ${text}`;
+		else
+			return `Failed to connect to server`;
 	}
 	
 	public static bodyToHttpFormData(body: any) {
