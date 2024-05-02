@@ -14,12 +14,21 @@
 					<tr>
 						<th>Username</th>
 						<th>Email</th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr *ngFor="let i of listManagers;">
 						<td>{{i.display_name}}</td>
 						<td>{{i.user_name}}</td>
+						<td>
+							<ng-container *ngIf="isAdmin">
+								<div class="icons-box">
+									<i class="change-role-icon feather icon-arrow-down"
+										(click)="callbackChangeRole(i.id, false)"></i>
+								</div>
+							</ng-container>
+						</td>
 					</tr>
 				</tbody>
 			</table>
@@ -45,12 +54,14 @@
 						<td>{{i.user_name}}</td>
 						<td>{{getTrancheFormatted(i)}}</td>
 						<td>
-							<ng-container *ngIf="isAdmin">
-								<div class="d-flex align-items-center">
-									<i style="color: red;" class="delete-button feather icon-x"
-										(click)="callbackDeleteUser(i.id)"></i>
-								</div>
-							</ng-container>
+							<div class="icons-box" *ngIf="isElevated">
+								<i class="change-role-icon feather icon-arrow-up"
+									(click)="callbackChangeRole(i.id, true)"
+									*ngIf="isAdmin"></i>
+								
+								<i class="delete-button feather icon-x"
+									(click)="callbackDeleteUser(i.id)"></i>
+							</div>
 						</td>
 					</tr>
 				</tbody>

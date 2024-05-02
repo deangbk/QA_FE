@@ -35,6 +35,7 @@ export class ConfirmDeleteModalComponent {
 	@Input() public content: ModalLine[] = [
 		ModalLine.danger('This action cannot be undone!'),
 	];
+	@Input() public alternateColor = false;
 	
 	@Output() public result: EventEmitter<boolean> = new EventEmitter();
 	

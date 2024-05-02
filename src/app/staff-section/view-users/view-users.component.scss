@@ -1,6 +1,21 @@
 
-.delete-button.feather {
+.icons-box {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	column-gap: 0.4em;
+}
+
+.delete-button {
 	cursor: pointer;
 	
+	color: red;
+	font-size: 1.5em;
+}
+
+.change-role-icon {
+	cursor: pointer;
+	
+	color: mediumslateblue;
 	font-size: 1.5em;
 }
