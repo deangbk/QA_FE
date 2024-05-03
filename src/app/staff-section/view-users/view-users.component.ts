@@ -62,7 +62,9 @@ export class ViewUsersComponent implements OnInit {
 					this.listUsers = users;
 					this.listManagers = managers;
 					
-					this.dataReady = true;
+					setTimeout(() => {
+						this.dataReady = true;
+					}, 100);
 				},
 				error: e => {
 					console.log(e);
@@ -153,7 +155,5 @@ export class ViewUsersComponent implements OnInit {
 			console.log(res.val);
 			this.notifier.notify('error', 'Server Error: ' + Helpers.formatHttpError(res.val));
 		}
-		
-		this.dataReady = true;
 	}
 }
