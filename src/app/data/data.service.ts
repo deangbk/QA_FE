@@ -156,6 +156,9 @@ export class DataService {
 			this._get(`user/${userId}?${query}`);
 	}
 	
+	public userEdit(userId: number, edit: Models.ReqBodyEditUser) {
+		return this._put(`user/edit/${userId}`, edit);
+	}
 	public userDelete(userId: number) {
 		return this._delete(`user/${userId}`);
 	}

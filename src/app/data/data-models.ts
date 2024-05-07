@@ -35,6 +35,10 @@ export interface ReqBodyCreateUser {
 	tranches?: string[],
 	staff?: boolean,
 }
+export interface ReqBodyEditUser {
+	display_name?: string,
+	tranches?: string[],
+}
 
 export interface ReqBodyAddNote {
 	text: string,
@@ -226,7 +230,7 @@ export interface RespTrancheData {
 export interface RespUserData {
 	id: number,
 	display_name: string,
-
+	
 	// -----------------------------
 
 	user_name?: string,
