@@ -2,6 +2,7 @@ import {
 	Component, OnInit,
 	Input, Output,
 } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 
 import { Observable, combineLatestWith } from 'rxjs';
 
@@ -15,8 +16,7 @@ import * as Models from 'app/data/data-models';
 import { Helpers } from 'app/helpers';
 
 import { ConfirmDeleteModalComponent, ModalLine } from '../../modals/confirm-delete-modal/confirm-delete-modal.component';
-
-// TODO: Create system to assign/unassign project managers
+import { EditUserModalComponent, UserEditModel } from '../../modals/edit-user-modal/edit-user-modal.component';
 
 @Component({
 	selector: 'app-view-users',
@@ -41,6 +41,7 @@ export class ViewUsersComponent implements OnInit {
 	}
 
 	dataReady = false;
+	listTranches: Models.RespTrancheData[] = [];
 	listManagers: Models.RespUserData[] = [];
 	listUsers: Models.RespUserData[] = [];
 	
@@ -50,27 +51,50 @@ export class ViewUsersComponent implements OnInit {
 		this.fetchData();
 	}
 	
+	async refreshUsers() {
+		[this.listUsers, this.listManagers] = await this.fetchData_Users();
+		
+		setTimeout(() => {
+			this.dataReady = true;
+		}, 100);
+	}
+	
+	async fetchData_Tranches() {
+		let res = await Helpers.observableAsPromise(
+			this.dataService.projectGetInfo());
+		if (res.ok) {
+			return res.val.tranches;
+		}
+		throw res.val as HttpErrorResponse;
+	}
+	async fetchData_Users() {
+		const obsUsers = this.dataService.projectGetUsers(1) as Observable<Models.RespUserData[]>;
+		const obsManagers = this.dataService.projectGetManagers(1) as Observable<Models.RespUserData[]>;
+
+		let res = await Helpers.observableAsPromise(
+			obsUsers.pipe(combineLatestWith(obsManagers)));
+		if (res.ok) {
+			return res.val;
+		}
+		throw res.val as HttpErrorResponse;
+	}
 	async fetchData() {
 		this.dataReady = false;
 		
-		const obsUsers = this.dataService.projectGetUsers(1) as Observable<Models.RespUserData[]>;
-		const obsManagers = this.dataService.projectGetManagers(1) as Observable<Models.RespUserData[]>;
-		
-		obsUsers.pipe(combineLatestWith(obsManagers))
-			.subscribe({
-				next: ([users, managers]) => {
-					this.listUsers = users;
-					this.listManagers = managers;
-					
-					setTimeout(() => {
-						this.dataReady = true;
-					}, 100);
-				},
-				error: e => {
-					console.log(e);
-					this.notifier.notify('error', 'Server Error: ' + Helpers.formatHttpError(e));
-				},
-			});
+		await this.catchErr(async () => {
+			this.listTranches = await this.fetchData_Tranches();
+			await this.refreshUsers();
+		});
+	}
+	
+	async catchErr(fn: () => Promise<void>) {
+		try {
+			await fn();
+		}
+		catch (e) {
+			console.log(e);
+			this.notifier.notify('error', 'Server Error: ' + Helpers.formatHttpError(e));
+		}
 	}
 	
 	// -----------------------------------------------------
@@ -98,17 +122,18 @@ export class ViewUsersComponent implements OnInit {
 		});
 	}
 	async deleteUser(id: number) {
-		let res = await Helpers.observableAsPromise(
-			this.dataService.userDelete(id));
-		if (res.ok) {
-			await this.fetchData();
-			
-			this.notifier.notify('success', `User deleted`);
-		}
-		else {
-			console.log(res.val);
-			this.notifier.notify('error', 'Server Error: ' + Helpers.formatHttpError(res.val));
-		}
+		await this.catchErr(async () => {
+			let res = await Helpers.observableAsPromise(
+				this.dataService.userDelete(id));
+			if (res.ok) {
+				this.notifier.notify('success', `User deleted`);
+				
+				await this.catchErr(async () => {
+					await this.refreshUsers();
+				});
+			}
+			else throw res.val;
+		});
 	}
 	
 	callbackChangeRole(id: number, promote: boolean) {
@@ -141,19 +166,55 @@ export class ViewUsersComponent implements OnInit {
 	async changeUserRole(id: number, promote: boolean) {
 		this.dataReady = false;
 		
-		let obsCall = promote ?
-			this.dataService.adminGrantManagers(this.projectId, [id]) :
-			this.dataService.adminRemoveManager(this.projectId, id);
+		await this.catchErr(async () => {
+			let obsCall = promote ?
+				this.dataService.adminGrantManagers(this.projectId, [id]) :
+				this.dataService.adminRemoveManager(this.projectId, id);
+
+			let res = await Helpers.observableAsPromise(obsCall);
+			if (res.ok) {
+				this.notifier.notify('success', `User role changed!`);
+
+				await this.catchErr(async () => {
+					await this.refreshUsers();
+				});
+			}
+			else throw res.val;
+		});
+	}
+	
+	callbackEditUser(user: Models.RespUserData) {
+		const modalRef = this.modalService.open(EditUserModalComponent);
+		const modalInst = modalRef.componentInstance as EditUserModalComponent;
+		{
+			modalInst.tranches = this.listTranches;
+			modalInst.user = user;
+		}
 		
-		let res = await Helpers.observableAsPromise(obsCall);
-		if (res.ok) {
-			await this.fetchData();
-			
-			this.notifier.notify('success', `User role changed!`);
-		}
-		else {
-			console.log(res.val);
-			this.notifier.notify('error', 'Server Error: ' + Helpers.formatHttpError(res.val));
-		}
+		modalInst.result.subscribe((result) => {
+			if (result.some) {
+				let resultVal = result.unwrap();
+				let editModel = {
+					display_name: resultVal.display_name,
+					tranches: resultVal.tranches.map(x => x.name),
+				} as Models.ReqBodyEditUser;
+				
+				this.dataReady = false;
+				
+				this.catchErr(async () => {
+					let res = await Helpers.observableAsPromise(
+						this.dataService.userEdit(user.id, editModel));
+					if (res.ok) {
+						this.notifier.notify('success', `User edited!`);
+						
+						user.display_name = resultVal.display_name;
+						user.tranches = resultVal.tranches;
+					
+						this.dataReady = true;
+					}
+					else throw res.val;
+				});
+			}
+		});
 	}
 }

@@ -12,22 +12,26 @@
 			<table class="table table-hover">
 				<thead>
 					<tr>
+						<th *ngIf="isAdmin">
+							User ID
+						</th>
 						<th>Username</th>
 						<th>Email</th>
-						<th></th>
+						<th *ngIf="isAdmin"></th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr *ngFor="let i of listManagers;">
+						<td *ngIf="isAdmin">
+							{{i.id}}
+						</td>
 						<td>{{i.display_name}}</td>
 						<td>{{i.user_name}}</td>
-						<td>
-							<ng-container *ngIf="isAdmin">
-								<div class="icons-box">
-									<i class="change-role-icon feather icon-arrow-down"
-										(click)="callbackChangeRole(i.id, false)"></i>
-								</div>
-							</ng-container>
+						<td *ngIf="isAdmin">
+							<div class="icons-box">
+								<i class="change-role-icon feather icon-arrow-down"
+									(click)="callbackChangeRole(i.id, false)"></i>
+							</div>
 						</td>
 					</tr>
 				</tbody>
@@ -40,6 +44,7 @@
 			<table class="table table-hover">
 				<thead>
 					<tr>
+						<th></th>
 						<th>User ID</th>
 						<th>Username</th>
 						<th>Email</th>
@@ -49,17 +54,25 @@
 				</thead>
 				<tbody>
 					<tr *ngFor="let i of listUsers;">
+						<td>
+							<button class="btn btn-sm btn-primary" 
+								(click)="callbackEditUser(i)">
+								<div class="btn-inner">
+									<i class="feather icon-edit"></i>
+								</div>
+							</button>
+						</td>
 						<td>{{i.id}}</td>
 						<td>{{i.display_name}}</td>
 						<td>{{i.user_name}}</td>
 						<td>{{getTrancheFormatted(i)}}</td>
 						<td>
 							<div class="icons-box" *ngIf="isElevated">
-								<i class="change-role-icon feather icon-arrow-up"
+								<i class="change-icon feather icon-arrow-up"
 									(click)="callbackChangeRole(i.id, true)"
 									*ngIf="isAdmin"></i>
 								
-								<i class="delete-button feather icon-x"
+								<i class="delete-icon feather icon-x"
 									(click)="callbackDeleteUser(i.id)"></i>
 							</div>
 						</td>

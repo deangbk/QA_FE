@@ -93,6 +93,7 @@ import { ManageStaffComponent } from './admin-section/manage-staff/manage-staff.
 import { ProjectEditLogoComponent } from './admin-section/manage-project/project-edit-logo/project-edit-logo.component';
 import { ImageDisplayEditComponent } from './admin-section/manage-project/project-edit-logo/image-display-edit/image-display-edit.component';
 import { SelectImageModalComponent } from './modals/select-image-modal/select-image-modal.component';
+import { EditUserModalComponent } from './modals/edit-user-modal/edit-user-modal.component';
 
 const customNotifierOptions: NotifierOptions = {
 	position: {
@@ -187,6 +188,7 @@ const customNotifierOptions: NotifierOptions = {
     ProjectEditLogoComponent,
     ImageDisplayEditComponent,
     SelectImageModalComponent,
+    EditUserModalComponent,
    // QApprovePipe,
 
 
