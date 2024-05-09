@@ -4,6 +4,8 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { DattaConfig } from '../../../../../app-config';
 
 import { Router } from '@angular/router';
+
+import { ProjectService } from 'app/data/project.service';
 import { SecurityService } from 'app/security/security.service';
 
 @Component({
@@ -27,15 +29,24 @@ export class NavRightComponent implements DoCheck {
 	chatMessage: boolean;
 	friendId;
 	config = DattaConfig;
+	
+	bannerUrl = '';
 
-	constructor(config: NgbDropdownConfig,
-
+	constructor(
+		config: NgbDropdownConfig,
 		private router: Router,
+		
+		private projectService: ProjectService,
 		private securityService: SecurityService,
 	) {
 		config.placement = 'bottom-right';
 		this.visibleUserList = false;
 		this.chatMessage = false;
+		
+		this.projectService.observeImagesLoad()
+			.subscribe(_ => {
+				this.bannerUrl = this.projectService.urlProjectBanner;
+			});
 	}
 	
 	getUserName() {
