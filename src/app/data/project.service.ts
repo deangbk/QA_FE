@@ -24,8 +24,9 @@ export class ProjectService {
 	urlProjectLogo: string = '';
 	
 	private obsProjectLoading: Rx.Subject<any>;
+	private obsContentLoading: Rx.Subject<any>;
 	private obsImagesLoading: Rx.Subject<any>;
-	private loading = [false, false];
+	private loading = [false, false, false];
 	
 	constructor(
 		private router: Router,
@@ -36,6 +37,7 @@ export class ProjectService {
 		private notifier: NotifierService,
 	) { 
 		this.obsProjectLoading = new Rx.Subject();
+		this.obsContentLoading = new Rx.Subject();
 		this.obsImagesLoading = new Rx.Subject();
 	}
 	
@@ -43,35 +45,37 @@ export class ProjectService {
 	
 	public reloadProject() {
 		this.loading[0] = true;
-		//console.log('reloadProject');
-		
 		return Rx.from(this.fetchProjectData());
 	}
-	public reloadImages() {
+	public reloadContent() {
 		this.loading[1] = true;
-		//console.log('reloadImages');
-		
+		return Rx.from(this.fetchProjectContent());
+	}
+	public reloadImages() {
+		this.loading[2] = true;
 		return Rx.from(this.fetchProjectImages());
 	}
 	public reloadAll() {
 		return Rx.forkJoin([
 			this.reloadProject(),
+			this.reloadContent(),
 			this.reloadImages(),
 		]);
 	}
 	
-	public projectLoading() {
-		return this.loading[0];
-	}
-	public imagesLoading() {
-		return this.loading[1];
-	}
+	public projectLoading() { return this.loading[0]; }
+	public contentLoading() { return this.loading[1]; }
+	public imagesLoading() { return this.loading[2]; }
 	public anyLoading() {
-		return this.projectLoading() || this.imagesLoading();
+		// any is true
+		return this.loading.find(x => x) != null;
 	}
 	
 	public observeProjectLoad() {
 		return this.obsProjectLoading;
+	}
+	public observeContentLoad() {
+		return this.obsContentLoading;
 	}
 	public observeImagesLoad() {
 		return this.obsImagesLoading;
@@ -79,6 +83,9 @@ export class ProjectService {
 	
 	public waitForProjectLoad() {
 		return Helpers.waitUntil(() => !this.projectLoading());
+	}
+	public waitForContentLoad() {
+		return Helpers.waitUntil(() => !this.contentLoading());
 	}
 	public waitForImagesLoad() {
 		return Helpers.waitUntil(() => !this.imagesLoading());
@@ -89,31 +96,28 @@ export class ProjectService {
 	
 	// -----------------------------------------------------
 	
-	// TODO: These are probably still quite buggy
-	
-	private finishProjectLoad() {
-		console.log('finishProjectLoad');
-		
-		this.loading[0] = false;
-		this.obsProjectLoading.next(null);
-	}
-	private finishImagesLoad() {
-		console.log('finishImagesLoad');
-		
-		this.loading[1] = false;
-		this.obsImagesLoading.next(null);
-	}
-	
 	private async fetchProjectData() {
 		let res = await Helpers.observableAsPromise(
-			Rx.forkJoin([
-				this.dataService.projectGetInfo(),
-				this.dataService.projectCountContent(),
-			])
-		);
+			this.dataService.projectGetInfo());
 		if (res.ok) {
-			[this.projectData, this.projectContents] = res.val;
-			this.finishProjectLoad();
+			this.projectData = res.val;
+			
+			this.loading[0] = false;
+			this.obsProjectLoading.next(null);
+		}
+		else {
+			let e = res.val as HttpErrorResponse;
+			this.notifier.notify('error', 'Server Error: ' + Helpers.formatHttpError(e));
+		}
+	}
+	private async fetchProjectContent() {
+		let res = await Helpers.observableAsPromise(
+			this.dataService.projectCountContent());
+		if (res.ok) {
+			this.projectContents = res.val;
+
+			this.loading[1] = false;
+			this.obsContentLoading.next(null);
 		}
 		else {
 			let e = res.val as HttpErrorResponse;
@@ -148,7 +152,9 @@ export class ProjectService {
 		);
 		if (res.ok) {
 			[this.urlProjectLogo, this.urlProjectBanner] = res.val;
-			this.finishImagesLoad();
+			
+			this.loading[2] = false;
+			this.obsImagesLoading.next(null);
 		}
 		else {
 			this.notifier.notify('error', 'Server Error: ' + Helpers.formatHttpError(res.val));
