@@ -17,6 +17,7 @@ import { Helpers } from 'app/helpers';
 
 // third party
 import { FileUploadValidators, FileUploadModule } from '@iplab/ngx-file-upload';
+import { ProjectService } from 'app/data/project.service';
 
 
 @Component({
@@ -45,11 +46,14 @@ private notifier: NotifierService;
 
 	constructor(
 		private dataService: DataService, private securityService: SecurityService,
-		private route: ActivatedRoute, notifier: NotifierService,) {
-    this.questionId = +this.route.snapshot.paramMap.get('qId');
-    console.log(this.questionId);
-    this.notifier = notifier;
-  }
+		private route: ActivatedRoute, notifier: NotifierService,
+		
+		private projectService: ProjectService,
+	) {
+		this.questionId = +this.route.snapshot.paramMap.get('qId');
+		console.log(this.questionId);
+		this.notifier = notifier;
+	}
   
 
 	demoForm = new UntypedFormGroup({
@@ -179,6 +183,7 @@ private notifier: NotifierService;
 				this.showNotification('success', 'Document uploaded successfully');
 				
 				this.demoForm.get('files').reset([]);
+				this.projectService.reloadContent();
 			}
 			else {
 				this.showNotification('error', 'Document upload error: '

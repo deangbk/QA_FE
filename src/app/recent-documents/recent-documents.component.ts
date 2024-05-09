@@ -12,6 +12,7 @@ import { QuestionModalData, QuestionModalComponent } from '../modals/question-mo
 import { ConfirmDeleteModalComponent, ModalLine } from '../modals/confirm-delete-modal/confirm-delete-modal.component';
 
 import { DataService } from '../data/data.service';
+import { ProjectService } from 'app/data/project.service';
 import { SecurityService } from '../security/security.service';
 
 import * as Models from 'app/data/data-models';
@@ -63,6 +64,7 @@ export class RecentDocumentsComponent implements OnInit {
 	
 	constructor(
 		private dataService: DataService,
+		private projectService: ProjectService,
 		private securityService: SecurityService,
 		
 		private location: Location,
@@ -304,6 +306,7 @@ export class RecentDocumentsComponent implements OnInit {
 			
 			this.callbackUpdateList(); */
 			await this.fetchData();
+			this.projectService.reloadContent();
 			
 			this.notifier.notify('success', `${res.val} document(s) deleted`);
 		}

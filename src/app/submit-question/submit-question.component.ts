@@ -6,8 +6,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 import { NotifierService } from 'angular-notifier';
 
-import { DataService } from '../data/data.service';
-import { SecurityService } from '../security/security.service';
+import { DataService } from 'app/data/data.service';
+import { ProjectService } from 'app/data/project.service';
+import { SecurityService } from 'app/security/security.service';
 
 import * as Models from 'app/data/data-models';
 
@@ -39,6 +40,7 @@ export class SubmitQuestionComponent implements OnInit {
 
 	constructor(
 		private dataService: DataService,
+		private projectService: ProjectService,
 		private securityService: SecurityService,
 		
 		private notifier: NotifierService,
@@ -243,6 +245,8 @@ export class SubmitQuestionComponent implements OnInit {
 				this.addingQuestionsData = [];
 				this.addFirstQuestion();
 				this.buttonLoading = '';
+				
+				this.projectService.reloadContent();
 			}
 			else {
 				console.log(res.val);
