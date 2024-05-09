@@ -30,7 +30,11 @@ export class NavContentComponent implements OnInit, AfterViewInit {
 	@ViewChild('navbarContent', { static: false }) navbarContent!: ElementRef;
 	@ViewChild('navbarWrapper', { static: false }) navbarWrapper!: ElementRef;
 
-	constructor(public nav: NavigationItem, private zone: NgZone, private location: Location, private locationStrategy: LocationStrategy) {
+	constructor(
+		private zone: NgZone,
+		private location: Location,
+		private locationStrategy: LocationStrategy,
+	) {
 		this.config = DattaConfig;
 		this.windowWidth = window.innerWidth;
 

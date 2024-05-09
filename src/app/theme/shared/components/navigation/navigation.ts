@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 
+import { ProjectService } from 'app/data/project.service';
+
 @Injectable()
 export class NavigationItem {
 	id: string;
@@ -30,7 +32,46 @@ export class NavigationItem {
 			
 			url: url,
 			icon: icon,
+		};
+	}
+	static createBadgeItem(title: string, url: string, icon?: string, badge?: string): NavigationItem {
+		return {
+			type: 'item',
+			classes: 'nav-item',
+
+			id: 'it-' + title.split(/\s+/).join('-'),
+			title: title,
+
+			url: url,
+			icon: icon,
+			
+			badge: badge ? { title: '$' + badge } : null,
+		};
+	}
+}
+
+@Injectable()
+export class NavigationBadgeFormatter {
+	constructor(
+		private projectService: ProjectService,
+	) { }
+	
+	public format(item: NavigationItem): string {
+		if (item.badge && !this.projectService.projectLoading()) {
+			if (item.badge.title != null && item.badge.title.startsWith('$')) {
+				let symbol = item.badge.title.substring(1);
+				console.log(symbol, this.projectService.projectContents);
+				switch (symbol) {
+					case 'pgeneral':
+						return '' + this.projectService.projectContents.gen_posts;
+					case 'paccount':
+						return '' + this.projectService.projectContents.acc_posts;
+					case 'documents':
+						return '' + this.projectService.projectContents.documents;
+				}
+			}
 		}
+		return null;
 	}
 }
 
@@ -49,11 +90,14 @@ export class NavigationPreset {
 		title: 'Questions',
 		type: 'group',
 		children: [
-			NavigationItem.createItem('General Questions', '/questions/general', 'feather icon-clipboard'),
-			NavigationItem.createItem('Account Questions', '/questions/account', 'feather icon-layers'),
+			NavigationItem.createBadgeItem('General Questions', '/questions/general',
+				'feather icon-clipboard', 'pgeneral'),
+			NavigationItem.createBadgeItem('Account Questions', '/questions/account',
+				'feather icon-layers', 'paccount'),
 			NavigationItem.createItem('Submit a Question', '/questions/submit', 'bi bi-question'),
 
-			NavigationItem.createItem('Recent Documents', '/docs/recent', 'bi bi-file-earmark'),
+			NavigationItem.createBadgeItem('Recent Documents', '/docs/recent',
+				'bi bi-file-earmark', 'documents'),
 		],
 	};
 	private static _ITEMS_STAFF: NavigationItem = {
@@ -63,12 +107,12 @@ export class NavigationPreset {
 		icon: 'bi bi-database-fill',
 	
 		children: [
-			NavigationItem.createItem('View Project Users', '/staff/viewusers', null),
-			NavigationItem.createItem('Create Project Users', '/staff/addusers', null),
-
-			NavigationItem.createItem('Approve Questions', '/staff/qapprove', null),
-			// NavigationItem.createItem('Manage Question', '/staff/qmanage', null),
-			NavigationItem.createItem('Upload Documents', '/staff/docupload/0', null),
+			NavigationItem.createItem('View Project Users', '/staff/viewusers'),
+			NavigationItem.createItem('Create Project Users', '/staff/addusers'),
+			
+			NavigationItem.createItem('Approve Questions', '/staff/qapprove'),
+			// NavigationItem.createItem('Manage Question', '/staff/qmanage'),
+			NavigationItem.createItem('Upload Documents', '/staff/docupload/0'),
 		],
 	};
 	private static _ITEMS_ADMIN: NavigationItem = {
@@ -78,8 +122,8 @@ export class NavigationPreset {
 		icon: 'feather icon-aperture',
 
 		children: [
-			NavigationItem.createItem('Project Settings', '/admin/project', null),
-			NavigationItem.createItem('Project Managers', '/admin/staff', null),
+			NavigationItem.createItem('Project Settings', '/admin/project'),
+			NavigationItem.createItem('Project Managers', '/admin/staff'),
 		],
 	};
 

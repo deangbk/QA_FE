@@ -1,8 +1,12 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { Location, LocationStrategy } from '@angular/common';
+import { Router, NavigationStart } from '@angular/router';
 
 import { DattaConfig } from 'app/app-config';
 import { NavigationItem, NavigationPreset } from '../../shared/components/navigation/navigation';
+
+import { DataService } from 'app/data/data.service';
+import { ProjectService } from 'app/data/project.service';
 import { SecurityService } from 'app/security/security.service';
 
 @Component({
@@ -21,8 +25,12 @@ export class LayoutAnyComponent implements OnInit {
 	constructor(
 		private zone: NgZone, private location: Location,
 		private locationStrategy: LocationStrategy,
-		private securityService: SecurityService)
-	{
+		private router: Router,
+		
+		private dataService: DataService,
+		private projectService: ProjectService,
+		private securityService: SecurityService,
+	) {
 		this.config = DattaConfig;
 		
 		let current_url = this.location.path();
@@ -46,14 +54,18 @@ export class LayoutAnyComponent implements OnInit {
 	}
 	
 	ngOnInit() {
-		this.navItems = NavigationPreset.User;
+		this.projectService.reloadAll().subscribe();
 		
-		if (this.securityService.isAdmin())
-			this.navItems = NavigationPreset.Admin;
-		else if (this.securityService.isManager())
-			this.navItems = NavigationPreset.Staff;
+		{
+			this.navItems = NavigationPreset.User;
+		
+			if (this.securityService.isAdmin())
+				this.navItems = NavigationPreset.Admin;
+			else if (this.securityService.isManager())
+				this.navItems = NavigationPreset.Staff;
+		}
 	}
-
+	
 	navMobClick() {
 		if (this.navCollapsedMob && !document.querySelector('app-navigation.pcoded-navbar')?.classList.contains('mob-open')) {
 			this.navCollapsedMob = !this.navCollapsedMob;

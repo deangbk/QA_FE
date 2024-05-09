@@ -1,22 +1,52 @@
-import { Component, Input } from '@angular/core';
-import { NavigationItem } from '../../navigation';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { NavigationItem, NavigationBadgeFormatter } from '../../navigation';
 import { DattaConfig } from 'app/app-config';
 import { Location, LocationStrategy } from '@angular/common';
+
+import * as Rx from 'rxjs';
+
+import { ProjectService } from 'app/data/project.service';
 
 @Component({
   selector: 'app-nav-item',
   templateUrl: './nav-item.component.html',
   styleUrls: ['./nav-item.component.scss']
 })
-export class NavItemComponent {
-  @Input() item!: NavigationItem;
-  config;
-  themeLayout: string;
+export class NavItemComponent implements OnInit, OnChanges, OnDestroy {
+	@Input() item!: NavigationItem;
+	config;
+	themeLayout: string;
+	
+	subscription: Rx.Subscription;
+	badgeTitle: string = null;
 
-  constructor(private location: Location, private locationStrategy: LocationStrategy) {
-    this.themeLayout = DattaConfig.layout;
-  }
-
+	constructor(
+		private location: Location, private locationStrategy: LocationStrategy,
+		
+		private projectService: ProjectService,
+		private formatter: NavigationBadgeFormatter,
+	) {
+		this.themeLayout = DattaConfig.layout;
+	}
+	
+	ngOnInit(): void {
+		this.subscription = this.projectService.observeContentLoad()
+			.subscribe({
+				next: _ => this.formatBadgeTitle(),
+			});
+	}
+	ngOnChanges(changes: SimpleChanges) {
+		this.formatBadgeTitle();
+	}
+	ngOnDestroy(): void {
+		this.subscription.unsubscribe();
+	}
+	
+	formatBadgeTitle() {
+		this.badgeTitle = this.formatter.format(this.item);
+		//console.log(this.badgeTitle);
+	}
+  
   closeOtherMenu(event: MouseEvent) {
     if (DattaConfig.layout === 'vertical') {
       const ele = event.target as HTMLElement;

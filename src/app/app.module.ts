@@ -41,7 +41,7 @@ import { NavItemComponent } from './theme/shared/components/navigation/nav-conte
 import { NavLeftComponent } from './theme/shared/components/nav-bar/nav-left/nav-left.component';
 import { NavRightComponent } from './theme/shared/components/nav-bar/nav-right/nav-right.component';
 import { NavSearchComponent } from './theme/shared/components/nav-bar/nav-left/nav-search/nav-search.component';
-import { NavigationItem } from './theme/shared/components/navigation/navigation';
+import { NavigationItem, NavigationBadgeFormatter } from './theme/shared/components/navigation/navigation';
 
 import { SharedModule } from './theme/shared/shared.module';
 import { ToggleFullScreenDirective } from './theme/shared/full-screen/toggle-full-screen';
@@ -196,14 +196,17 @@ const customNotifierOptions: NotifierOptions = {
 
 		
 	],
-	providers: [NavigationItem,
+	providers: [
+		NavigationItem,
+		NavigationBadgeFormatter,
+		
 		DataService,
-			SecurityService,
-			{
-				provide: HTTP_INTERCEPTORS,
-				useClass: JwtInterceptorService,
-				multi: true,
-			}
+		SecurityService,
+		{
+			provide: HTTP_INTERCEPTORS,
+			useClass: JwtInterceptorService,
+			multi: true,
+		}
 	],
 	bootstrap: [AppComponent],
 	imports: [
