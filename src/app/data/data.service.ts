@@ -187,7 +187,7 @@ export class DataService {
 			this._get(`project/managers?${query}`);
 	}
 	public projectCountContent() {
-		return <Observable<number[]>>
+		return <Observable<Models.RespCountContent>>
 			this._get(`project/content`);
 	}
 

@@ -352,6 +352,12 @@ export interface RespBulkUserCreate {
 	pass: string,
 }
 
+export interface RespCountContent {
+	gen_posts: number,
+	acc_posts: number,
+	documents: number,
+}
+
 export interface RespGetPost {
 	count_total: number,
 	posts: RespPostData[],
