@@ -6,12 +6,11 @@ import {
 } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { Observable } from 'rxjs';
-
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotifierService } from 'angular-notifier';
 
 import { DataService } from 'app/data/data.service';
+import { ProjectService } from 'app/data/project.service';
 import { SecurityService } from 'app/security/security.service';
 
 import * as Models from 'app/data/data-models';
@@ -32,6 +31,7 @@ export class ImageDisplayEditComponent implements OnInit, OnChanges {
 
 	constructor(
 		private dataService: DataService,
+		private projectService: ProjectService,
 		private securityService: SecurityService,
 		
 		public modalService: NgbModal,
@@ -55,35 +55,12 @@ export class ImageDisplayEditComponent implements OnInit, OnChanges {
 	async fetchData() {
 		this.loading = true;
 		
-		let res = await Helpers.observableAsPromise(this.logo ? 
-			this.dataService.projectGetLogo() :
-			this.dataService.projectGetBanner());
-		if (res.ok) {
-			let blob = res.val;
-			this.readFileToBlobURL(blob);
+		await this.projectService.waitForImagesLoad();
+		{
+			this.urlResource = this.logo ?
+				this.projectService.urlProjectLogo :
+				this.projectService.urlProjectBanner;
 		}
-		else {
-			let e = res.val as HttpErrorResponse;
-			if (e.status == 404) {
-				this.urlResource = '';
-				this.loading = false;
-			}
-			else {
-				this.notifier.notify('error', 'Server Error: ' + Helpers.formatHttpError(e));
-			}
-		}
-	}
-	
-	// -----------------------------------------------------
-	
-	readFileToBlobURL(file: File | Blob) {
-		let reader = new FileReader();
-
-		reader.readAsDataURL(file);
-		reader.onloadend = () => {
-			this.urlResource = reader.result as string;
-			this.loading = false;
-		};
 	}
 	
 	// -----------------------------------------------------
@@ -97,7 +74,12 @@ export class ImageDisplayEditComponent implements OnInit, OnChanges {
 				const file = result.val;
 				
 				this.loading = true;
-				this.readFileToBlobURL(file);
+				Helpers.fileToBlobURL(file).subscribe({
+					next: x => {
+						this.urlResource = x;
+						this.loading = false;
+					},
+				})
 				
 				//console.log(data);
 				{
@@ -108,6 +90,7 @@ export class ImageDisplayEditComponent implements OnInit, OnChanges {
 					const res = await Helpers.observableAsPromise(obsUpload);
 					if (res.ok) {
 						this.notifier.notify('success', `Image updated successfully!`);
+						this.projectService.reloadImages();
 					}
 					else {
 						console.log(res.val);

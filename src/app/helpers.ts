@@ -58,14 +58,31 @@ export class Helpers {
 	}
 
 	// -----------------------------------------------------
-
+	
 	public static arrayBufferToByteArray(buffer: ArrayBuffer) {
 		const textDecoder = new TextDecoder('utf-8');
 		const decodedBase64 = textDecoder.decode(buffer);
 		return Uint8Array.from(
 			atob(decodedBase64), c => c.charCodeAt(0))
 	}
-
+	
+	public static fileToBlobURL(file: File | Blob): Observable<string> {
+		let reader = new FileReader();
+		
+		reader.readAsDataURL(file);
+		
+		return new Observable(ob => {
+			reader.onloadend = () => {
+				ob.next(reader.result as string);
+				ob.complete();
+			};
+			reader.onabort = reader.onerror = () => {
+				ob.error();
+				ob.complete();
+			};
+		});
+	}
+	
 	// -----------------------------------------------------
 
 	public static waitUntil(cond: Function): Promise<any> {

@@ -7,10 +7,11 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotifierService } from 'angular-notifier';
 import { Editor } from 'ngx-editor';
 
-import { combineLatestWith } from 'rxjs';
+import * as Rx from 'rxjs';
 import { Option, Some, None } from 'ts-results';
 
 import { DataService } from '../data/data.service';
+import { ProjectService } from '../data/project.service';
 import { SecurityService } from '../security/security.service';
 
 import * as Models from 'app/data/data-models';
@@ -29,6 +30,7 @@ export class ProjectHomeComponent implements OnInit, OnDestroy {
 	
 	constructor(
 		private dataService: DataService,
+		private projectService: ProjectService,
 		private securityService: SecurityService,
 		
 		public modalService: NgbModal,
@@ -61,22 +63,19 @@ export class ProjectHomeComponent implements OnInit, OnDestroy {
 		this.projectStickyNotes = [];
 		this.projectNormalNotes = [];
 		
-		const obspProject$ = this.dataService.projectGetInfo();
-		const obspNotes$ = this.dataService.noteGetInProject();
-		
-		obspProject$.pipe(combineLatestWith(obspNotes$))
-			.subscribe({
-				next: ([project, notes]) => {
-					this.projectInfo = project;
-					this.refreshNotesList(notes);
-					
-					this.projectReady = true;
-				},
-				error: e => {
-					console.log(e);
-					this.notifier.notify('error', 'Server Error: ' + Helpers.formatHttpError(e));
-				},
-			});
+		await this.projectService.waitForProjectLoad();
+		this.dataService.noteGetInProject().subscribe({
+			next: (notes) => {
+				this.projectInfo = this.projectService.projectData;
+				this.refreshNotesList(notes);
+				
+				this.projectReady = true;
+			},
+			error: e => {
+				console.log(e);
+				this.notifier.notify('error', 'Server Error: ' + Helpers.formatHttpError(e));
+			},
+		});
 	}
 	refreshNotesList(notesAll: Models.RespNoteData[]) {
 		this.hasNotes = notesAll.length > 0;

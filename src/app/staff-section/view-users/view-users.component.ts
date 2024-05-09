@@ -4,7 +4,8 @@ import {
 } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { Observable, combineLatestWith } from 'rxjs';
+import * as Rx from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotifierService } from 'angular-notifier';
@@ -70,9 +71,9 @@ export class ViewUsersComponent implements OnInit {
 	async fetchData_Users() {
 		const obsUsers = this.dataService.projectGetUsers(1) as Observable<Models.RespUserData[]>;
 		const obsManagers = this.dataService.projectGetManagers(1) as Observable<Models.RespUserData[]>;
-
+		
 		let res = await Helpers.observableAsPromise(
-			obsUsers.pipe(combineLatestWith(obsManagers)));
+			Rx.forkJoin([obsUsers, obsManagers]));
 		if (res.ok) {
 			return res.val;
 		}

@@ -5,12 +5,11 @@ import {
 import { HttpErrorResponse } from '@angular/common/http';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 
-import { Observable, combineLatestWith } from 'rxjs';
-
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotifierService } from 'angular-notifier';
 
 import { DataService } from '../../data/data.service';
+import { ProjectService } from 'app/data/project.service';
 import { SecurityService } from '../../security/security.service';
 
 import * as Models from 'app/data/data-models';
@@ -26,6 +25,7 @@ export class ManageProjectComponent implements OnInit {
 	
 	constructor(
 		private dataService: DataService,
+		private projectService: ProjectService,
 		private securityService: SecurityService,
 		
 		private modalService: NgbModal,
@@ -63,14 +63,8 @@ export class ManageProjectComponent implements OnInit {
 		}
 	}
 	async fetchProject() {
-		let res = await Helpers.observableAsPromise(
-			this.dataService.projectGetInfo());
-		if (res.ok) {
-			this.projectInfo = res.val;
-		}
-		else {
-			throw res.val;
-		}
+		await this.projectService.waitForProjectLoad();
+		this.projectInfo = this.projectService.projectData;
 	}
 	async fetchTranches() {
 		let res = await Helpers.observableAsPromise(
@@ -86,7 +80,15 @@ export class ManageProjectComponent implements OnInit {
 	// -----------------------------------------------------
 	
 	async callbackRefreshProject() {
-		await this.fetchData();
+		this.projectService.reloadProject();
+		
+		{
+			this.dataReady = false;
+			
+			await this.fetchProject();
+			
+			this.dataReady = true;
+		}
 	}
 	
 	async callbackRefreshTranches() {
