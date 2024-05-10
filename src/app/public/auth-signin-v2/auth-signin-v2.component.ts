@@ -23,7 +23,7 @@ import { Helpers } from 'app/helpers';
 })
 export class AuthSigninV2Component implements OnInit {
 	// TODO: Replace with the actual projectId
-	projectId = 1;
+	project = "BayPortfolioSale";
 
 	// public method
 	usernameValue = '';//'0@test.admin';
@@ -81,7 +81,7 @@ export class AuthSigninV2Component implements OnInit {
 
 		this.error = '';
 		this.loading = true;
-		this.securityService.tryLogin(this.projectId, this.usernameValue ?? '', this.userPassword ?? '').subscribe({
+		this.securityService.tryLogin(this.project, this.usernameValue ?? '', this.userPassword ?? '').subscribe({
 			next: x => {
 				this.securityService.saveLoginToken(x);
 				this.router.navigate(['/main']);

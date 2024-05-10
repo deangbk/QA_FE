@@ -12,7 +12,6 @@ import { Helpers } from 'app/helpers';
 	providedIn: 'root'
 })
 export class SecurityService {
-	
 	constructor(private dataService: DataService) { }
 	
 	private tokenData: any = null;
@@ -22,10 +21,9 @@ export class SecurityService {
 		//this.removeLoginToken();
 		
 		const token = localStorage.getItem('l-token');
-		//console.log(token+" token");
 		if (!token) return false;
 		
-		const expiration = <string>localStorage.getItem('l-expire');
+		const expiration = localStorage.getItem('l-expire');
 		const expirationDate = new Date(expiration);
 		if (expirationDate <= new Date()) {
 			// Session already expired, nuke the token
@@ -45,6 +43,12 @@ export class SecurityService {
 		
 		var idProj = this.getTokenField('project');
 		return Number(idProj);
+	}
+	public getProjectName(): string {
+		if (!this.isAuthenticated()) return "";
+		
+		var name = this.getTokenField('project_name');
+		return name;
 	}
 	public getUserID(): number {
 		if (!this.isAuthenticated()) return -1;
@@ -79,19 +83,16 @@ export class SecurityService {
 		return this.isAdmin() || this.isManager();
 	}
 	
-	public tryLogin(projectId: number, username: string, password: string):
+	public tryLogin(project: string, username: string, password: string):
 		Observable<Models.RespLoginToken>
 	{
-		return this.dataService.login(projectId, username, password);
+		return this.dataService.login(project, username, password);
 	}
 	public logout() {
 		this.removeLoginToken();
 	}
 	
 	public saveLoginToken(authRes: Models.RespLoginToken) {
-		// Remove existing token storage
-		//console.log(authRes['Token']);
-	//	console.log("savToken-"+ authRes.Token);
 		this.removeLoginToken();
 		
 		//console.log('Storing tokens...'+authRes.Token+' '+authRes.Expiration);
