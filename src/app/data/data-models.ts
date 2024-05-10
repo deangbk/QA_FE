@@ -6,6 +6,7 @@ export interface ReqBodyLogin {
 
 export interface ReqBodyCreateProject {
 	name: string,
+	display_name: string,
 	company: string,
 	date_start: string,
 	date_end: string,
