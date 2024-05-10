@@ -50,6 +50,7 @@ import { BreadcrumbModule } from './theme/shared/components/breadcrumb/breadcrum
 import { QuestionsDisplayComponent } from './questions-display/questions-display.component';
 
 import { DataService } from './data/data.service';
+import { TelemetryService } from './data/telemetry.service';
 import { SecurityService } from './security/security.service';
 import { JwtInterceptorService } from './security/jwt-interceptor.service';
 
@@ -201,6 +202,7 @@ const customNotifierOptions: NotifierOptions = {
 		NavigationBadgeFormatter,
 		
 		DataService,
+		TelemetryService,
 		SecurityService,
 		{
 			provide: HTTP_INTERCEPTORS,

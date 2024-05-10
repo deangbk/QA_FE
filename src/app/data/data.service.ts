@@ -9,25 +9,22 @@ import { environment } from 'environments/environment';
 import { Helpers } from 'app/helpers';
 import * as Models from 'app/data/data-models';
 
-@Injectable({
-	providedIn: 'root'
-})
-export class DataService {
+export class DataServiceBase {
 	baseUrl: string = '';
 	
-	constructor(private http: HttpClient) {
-	//	this.baseUrl = 'https://localhost:7203/api';
-		this.baseUrl = 'https://backendqa.azurewebsites.net/api';
-		//this.baseUrl = environment.apiUrl;
+	constructor(protected http: HttpClient) {
+		//this.baseUrl = 'https://localhost:7203/api';
+		//this.baseUrl = 'https://backendqa.azurewebsites.net/api';
+		this.baseUrl = environment.apiUrl;
 	}
-	
+
 	// -----------------------------------------------------
 
 	protected handleError(error: HttpErrorResponse) {
 		console.log(error);
 		return throwError(() => error);
 	}
-	
+
 	protected _get(url: string) {
 		return this.http
 			.get(`${this.baseUrl}/${url}`)
@@ -52,7 +49,7 @@ export class DataService {
 	protected _post_as_form(url: string, form?: any) {
 		const headers = new HttpHeaders();
 		headers.append('Content-Type', 'multipart/form-data');
-		
+
 		return this.http
 			.post(`${this.baseUrl}/${url}`, form, { 'headers': headers })
 			.pipe(catchError(this.handleError));
@@ -60,12 +57,19 @@ export class DataService {
 	protected _put_as_form(url: string, form?: any) {
 		const headers = new HttpHeaders();
 		headers.append('Content-Type', 'multipart/form-data');
-		
+
 		return this.http
 			.put(`${this.baseUrl}/${url}`, form, { 'headers': headers })
 			.pipe(catchError(this.handleError));
 	}
+}
 
+@Injectable()
+export class DataService extends DataServiceBase {
+	constructor(private _http: HttpClient) {
+		super(_http);
+	}
+	
 	// -----------------------------------------------------
 	// Auth
 
@@ -77,7 +81,7 @@ export class DataService {
 		return <Observable<Models.RespLoginToken>>
 			this._post(`auth/login/${projectId}`, body);
 	}
-
+	
 	// -----------------------------------------------------
 	// Admin
 
