@@ -45,7 +45,11 @@ export class QuestionsDisplayComponent implements OnInit {
 	listEnd=2000;
 	pageSize: number = 10;
 	paginate: Models.ReqBodyPaginate = null;
-
+	
+	// TODO: Add call to logTrancheView
+	
+	// Dean, if you are reading this, please tell me where I could do that because I'm sorry but 
+	//   I genuinely cannot make heads of tails of your code (x_x)
 	
 	constructor(
 		private dataService: DataService, private sService: SecurityService,

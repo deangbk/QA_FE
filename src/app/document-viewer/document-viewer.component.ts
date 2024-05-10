@@ -9,6 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Md5 } from 'ts-md5';
 
 import { DataService } from '../data/data.service';
+import { TelemetryService } from '../data/telemetry.service';
 import { SecurityService } from '../security/security.service';
 
 import * as Models from 'app/data/data-models';
@@ -31,11 +32,13 @@ export class DocumentViewerComponent implements OnInit, AfterViewInit {
 	isElevated: boolean;
 	
 	constructor(
-		private dataService: DataService,
-		private securityService: SecurityService,
 		private changeDetector: ChangeDetectorRef,
-		private route: ActivatedRoute)
-	{ 
+		private route: ActivatedRoute,
+		
+		private dataService: DataService,
+		private telemetryService: TelemetryService,
+		private securityService: SecurityService,
+	) { 
 		this.isElevated = securityService.isElevated();
 	}
 	
@@ -56,6 +59,8 @@ export class DocumentViewerComponent implements OnInit, AfterViewInit {
 		this.route.paramMap.subscribe(params => {
 			var idFromRoute = params.get('id');
 			this.documentId = idFromRoute != "" ? parseInt(idFromRoute) : undefined;
+			
+			this.telemetryService.logDocumentView(this.documentId);
 		});
 		
 		this.fetchPdf();

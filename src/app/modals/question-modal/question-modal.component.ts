@@ -7,11 +7,11 @@ import { Router } from '@angular/router';
 
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { DataService } from '../../data/data.service';
-import { SecurityService } from '../../security/security.service';
+import { DataService } from 'app/data/data.service';
+import { TelemetryService } from 'app/data/telemetry.service';
+import { SecurityService } from 'app/security/security.service';
 
 import * as Models from 'app/data/data-models';
-
 import { Helpers } from 'app/helpers';
 
 export class QuestionModalData {
@@ -27,18 +27,18 @@ export class QuestionModalComponent implements OnInit {
 	@Input() public question: Models.RespPostData = undefined;
 	
 	constructor(
-		private dataService: DataService,
-		private securityService: SecurityService,
 		private router: Router,
 		public activeModal: NgbActiveModal,
 		
-		//private modalData: QuestionModalData,
+		private dataService: DataService,
+		private telemetryService: TelemetryService,
+		private securityService: SecurityService,
 	) { 
 		//console.log(this.modalData);
 	}
 	
 	ngOnInit() {
-		
+		this.telemetryService.logQuestionView(this.question.id);
 	}
 	
 	// -----------------------------------------------------
