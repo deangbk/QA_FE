@@ -8,6 +8,9 @@ import * as Models from 'app/data/data-models';
 
 import { Helpers } from 'app/helpers';
 
+const FIELD_TOKEN = 'l-token';
+const FIELD_EXP = 'l-expire';
+
 @Injectable({
 	providedIn: 'root'
 })
@@ -16,48 +19,51 @@ export class SecurityService {
 	
 	private tokenData: any = null;
 	
-	public isAuthenticated(): boolean {
-		//return true;
-		//this.removeLoginToken();
-		
-		const token = localStorage.getItem('l-token');
-		if (!token) return false;
-		
-		const expiration = localStorage.getItem('l-expire');
-		const expirationDate = new Date(expiration);
-		if (expirationDate <= new Date()) {
-			// Session already expired, nuke the token
-			this.removeLoginToken();
+	public isValid(): boolean {
+		const token = localStorage.getItem(FIELD_TOKEN);
+		if (!token)
 			return false;
-		}
+		
+		const expiration = localStorage.getItem(FIELD_EXP);
+		const expirationDate = new Date(expiration);
+		if (expirationDate <= new Date())
+			return false;
 		
 		return true;
 	}
+	public isAuthenticated(): boolean {
+		let res = this.isValid();
+		if (!res) {
+			// Nuke the token if session expired
+			this.removeLoginToken();
+		}
+		return res;
+	}
 	
 	public getToken(): string {
-		return localStorage.getItem('l-token') ?? '';
+		return localStorage.getItem(FIELD_TOKEN) ?? '';
 	}
 	
 	public getProjectId(): number {
-		if (!this.isAuthenticated()) return -1;
+		if (!this.isValid()) return -1;
 		
 		var idProj = this.getTokenField('project');
 		return Number(idProj);
 	}
 	public getProjectName(): string {
-		if (!this.isAuthenticated()) return "";
+		if (!this.isValid()) return "";
 		
 		var name = this.getTokenField('project_name');
 		return name;
 	}
 	public getUserID(): number {
-		if (!this.isAuthenticated()) return -1;
+		if (!this.isValid()) return -1;
 
 		var idClaim = this.getTokenField('id');
 		return Number(idClaim);
 	}
 	public hasRole(role: string): boolean {
-		if (!this.isAuthenticated()) return false;
+		if (!this.isValid()) return false;
 		
 		var rolesClaim = this.getTokenField('role');
 		if (Array.isArray(rolesClaim)) {
@@ -97,14 +103,14 @@ export class SecurityService {
 		
 		//console.log('Storing tokens...'+authRes.Token+' '+authRes.Expiration);
 		
-		localStorage.setItem('l-token', authRes.token);
-		localStorage.setItem('l-expire', authRes.expiration);
+		localStorage.setItem(FIELD_TOKEN, authRes.token);
+		localStorage.setItem(FIELD_EXP, authRes.expiration);
 	}
 	public removeLoginToken() {
 		console.log('Removing stored tokens...');
 		
-		localStorage.removeItem('l-token');
-		localStorage.removeItem('l-expire');
+		localStorage.removeItem(FIELD_TOKEN);
+		localStorage.removeItem(FIELD_EXP);
 		
 		this.tokenData = null;
 	}
