@@ -47,14 +47,14 @@ export class SecurityService {
 	public getProjectId(): number {
 		if (!this.isValid()) return -1;
 		
-		var idProj = this.getTokenField('project');
+		var idProj = this.getTokenField('proj');
 		return Number(idProj);
 	}
 	public getProjectName(): string {
 		if (!this.isValid()) return "";
 		
-		var name = this.getTokenField('project_name');
-		return name;
+		var name = this.getTokenField('projn');
+		return name ?? "";
 	}
 	public getUserID(): number {
 		if (!this.isValid()) return -1;
