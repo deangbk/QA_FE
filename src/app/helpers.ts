@@ -20,6 +20,9 @@ export class Helpers {
 			text = e.statusText;
 		}
 		
+		if (text === undefined)
+			text = e.error;
+		
 		if (e.status != 0)
 			return `(code ${e.status}) ${text}`;
 		else
