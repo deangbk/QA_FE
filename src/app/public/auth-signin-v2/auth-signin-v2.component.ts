@@ -1,18 +1,29 @@
 // Angular import
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SharedModule } from 'app/theme/shared/shared.module';
-import { RouterModule } from '@angular/router';
-import { DataService } from '../../data/data.service';
-import { SecurityService } from '../../security/security.service';
-
-import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { first } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
+import { RouterModule, Router, ActivatedRoute } from '@angular/router';
+import {
+	FormBuilder, FormGroup,
+	Validators, ValidatorFn, AbstractControl, ValidationErrors,
+} from '@angular/forms';
+
+import { SharedModule } from 'app/theme/shared/shared.module';
+
+import { DataService } from 'app/data/data.service';
+import { ProjectService } from 'app/data/project.service';
+import { SecurityService } from 'app/security/security.service';
+
 import { Helpers } from 'app/helpers';
 
 //import { AuthenticationService } from 'theme/shared/service/authentication.service';
+
+interface LoginForm {
+	username: string,
+	password: string,
+	project: string,
+	save: boolean,
+}
 
 @Component({
 	selector: 'app-auth-signin-v2',
@@ -24,35 +35,51 @@ import { Helpers } from 'app/helpers';
 export class AuthSigninV2Component implements OnInit {
 	// TODO: Replace with the actual projectId
 	project = "BayPortfolioSale";
-
+	
 	// public method
-	usernameValue = '';//'0@test.admin';
-	userPassword = '';//pasaworda55';
-
+	static savedLogin: LoginForm = {
+		username: '',
+		password: '',
+		project: 'BayPortFolioSale',
+		save: false,
+	}
+	loginData: LoginForm = AuthSigninV2Component.savedLogin;
+	
 	loginForm!: FormGroup;
+	
 	loading = false;
 	submitted = false;
 	error = '';
 
 	constructor(
-		private formBuilder: FormBuilder,
 		private route: ActivatedRoute,
 		private router: Router,
+		
+		private formBuilder: FormBuilder,
+		
 		private dataService: DataService,
-		private securityService: SecurityService
+		private projectService: ProjectService,
+		private securityService: SecurityService,
 	) {
 		// Redirect to home if already logged in
 		/* if (securityService.isAuthenticated()) {
 			this.router.navigate(['/main']);
 		} */
 	}
-
+	
 	ngOnInit() {
-		this.loginForm = this.formBuilder.group({
-			email: ['', Validators.required],
-			password: ['', Validators.required]
-		});
-
+		{
+			const saved = AuthSigninV2Component.savedLogin;
+			this.loginForm = this.formBuilder.group({
+				email: [saved.username, Validators.required],
+				password: [saved.password, Validators.required],
+				project: [saved.project, [
+					Validators.pattern(/[A-Za-z0-9_-]+/),
+					Validators.required,
+				]],
+			});
+		}
+		
 		const togglePassword = document.querySelector('#togglePassword');
 		const password = document.querySelector('#password');
 
@@ -70,43 +97,38 @@ export class AuthSigninV2Component implements OnInit {
 	get f() {
 		return this.loginForm.controls;
 	}
-
+	
 	onSubmit() {
 		this.submitted = true;
-
-		// stop here if form is invalid
-		if (this.loginForm.invalid) {
+		
+		if (this.loginForm.invalid)
 			return;
-		}
-
+		
+		let formVal = this.f;
+		this.loginData.username = formVal['email'].value ?? '';
+		this.loginData.password = formVal['password'].value ?? '';
+		this.loginData.project = formVal['project'].value ?? '';
+		
 		this.error = '';
 		this.loading = true;
-		this.securityService.tryLogin(this.project, this.usernameValue ?? '', this.userPassword ?? '').subscribe({
-			next: x => {
-				this.securityService.saveLoginToken(x);
-				this.router.navigate(['/main']);
-			},
-			error: (x: HttpErrorResponse) => {
-				let err = Helpers.formatHttpError(x);
-				
-				console.log(err);
-				
-				this.loading = false;
-				this.error = err;
-			},
-		});
-
-		//   this.authenticationService
-		//     .login(this.f?.['email']?.value, this.f?.['password']?.value)
-		//     .pipe(first())
-		//     .subscribe({
-		//       next: () => {
-		//         this.router.navigate(['/dashboard/default']);
-		//       },
-		//       error: (error) => {
-		//         this.error = error;
-		//         this.loading = false;
-		//       }
-		//     });
+		this.securityService
+			.tryLogin(this.loginData.project,
+				this.loginData.username, this.loginData.password)
+			.subscribe({
+				next: x => {
+					this.securityService.saveLoginToken(x);
+					
+					let projectName = this.securityService.getProjectName();
+					this.router.navigate([projectName, 'home']);
+				},
+				error: (x: HttpErrorResponse) => {
+					let err = Helpers.formatHttpError(x);
+					
+					console.log(err);
+					
+					this.loading = false;
+					this.error = err;
+				},
+			});
 	}
 }

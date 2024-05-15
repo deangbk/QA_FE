@@ -15,7 +15,7 @@ export class AuthGuard implements CanActivate {
 	{
 		// Early return if authentication is invalid, redirect to login
 		if (!this.securityService.isAuthenticated()) {
-			this.router.navigate(['/login/sign']);
+			this.router.navigate(['/login']);
 			return false;
 		}
 		
@@ -28,7 +28,7 @@ export class AuthGuard implements CanActivate {
 				return true;
 		}
 		
-		this.router.navigate(['/login/sign']);
+		this.router.navigate(['/login']);
 		return false;
 	}
 }

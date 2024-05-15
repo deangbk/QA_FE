@@ -1,11 +1,14 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Location, LocationStrategy } from '@angular/common';
+import { Router } from '@angular/router';
+
 import { NavigationItem, NavigationBadgeFormatter } from '../../navigation';
 import { DattaConfig } from 'app/app-config';
-import { Location, LocationStrategy } from '@angular/common';
 
 import * as Rx from 'rxjs';
 
 import { ProjectService } from 'app/data/project.service';
+import { SecurityService } from 'app/security/security.service';
 
 @Component({
   selector: 'app-nav-item',
@@ -21,9 +24,11 @@ export class NavItemComponent implements OnInit, OnChanges, OnDestroy {
 	badgeTitle: string = null;
 
 	constructor(
+		private router: Router,
 		private location: Location, private locationStrategy: LocationStrategy,
 		
 		private projectService: ProjectService,
+		private securityService: SecurityService,
 		private formatter: NavigationBadgeFormatter,
 	) {
 		this.themeLayout = DattaConfig.layout;
@@ -45,6 +50,18 @@ export class NavItemComponent implements OnInit, OnChanges, OnDestroy {
 	formatBadgeTitle() {
 		this.badgeTitle = this.formatter.format(this.item);
 		//console.log(this.badgeTitle);
+	}
+	
+	getNavigateLink() {
+		let orgUrl = this.item.url;
+		let links = orgUrl.split('/');
+		
+		if (!orgUrl.includes('login')) {
+			return ['../', this.securityService.getProjectName(), ...links];
+		}
+		else {
+			return ['../', ...links];
+		}
 	}
   
   closeOtherMenu(event: MouseEvent) {

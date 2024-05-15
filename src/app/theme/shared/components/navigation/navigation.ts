@@ -81,8 +81,8 @@ export class NavigationPreset {
 		title: 'Main',
 		type: 'group',
 		children: [
-			NavigationItem.createItem('Project Home', '/main', 'feather icon-home'),
-			NavigationItem.createItem('User Login', '/login/sign', 'user icon-sidebar'),
+			NavigationItem.createItem('Project Home', 'home', 'feather icon-home'),
+			NavigationItem.createItem('User Login', 'login', 'user icon-sidebar'),
 		],
 	};
 	private static _ITEMS_SITE: NavigationItem = {
@@ -90,13 +90,13 @@ export class NavigationPreset {
 		title: 'Questions',
 		type: 'group',
 		children: [
-			NavigationItem.createBadgeItem('General Questions', '/questions/general',
+			NavigationItem.createBadgeItem('General Questions', 'questions/general',
 				'feather icon-clipboard', 'pgeneral'),
-			NavigationItem.createBadgeItem('Account Questions', '/questions/account',
+			NavigationItem.createBadgeItem('Account Questions', 'questions/account',
 				'feather icon-layers', 'paccount'),
-			NavigationItem.createItem('Submit a Question', '/questions/submit', 'bi bi-question'),
+			NavigationItem.createItem('Submit a Question', 'questions/submit', 'bi bi-question'),
 
-			NavigationItem.createBadgeItem('Recent Documents', '/docs/recent',
+			NavigationItem.createBadgeItem('Recent Documents', 'docs/recent',
 				'bi bi-file-earmark', 'documents'),
 		],
 	};
@@ -107,12 +107,12 @@ export class NavigationPreset {
 		icon: 'bi bi-database-fill',
 	
 		children: [
-			NavigationItem.createItem('View Project Users', '/staff/viewusers'),
-			NavigationItem.createItem('Create Project Users', '/staff/addusers'),
+			NavigationItem.createItem('View Project Users', 'staff/viewusers'),
+			NavigationItem.createItem('Create Project Users', 'staff/addusers'),
 			
-			NavigationItem.createItem('Approve Questions', '/staff/qapprove'),
-			// NavigationItem.createItem('Manage Question', '/staff/qmanage'),
-			NavigationItem.createItem('Upload Documents', '/staff/docupload/0'),
+			NavigationItem.createItem('Approve Questions', 'staff/qapprove'),
+			// NavigationItem.createItem('Manage Question', 'staff/qmanage'),
+			NavigationItem.createItem('Upload Documents', 'staff/docupload/0'),
 		],
 	};
 	private static _ITEMS_ADMIN: NavigationItem = {
@@ -122,8 +122,8 @@ export class NavigationPreset {
 		icon: 'feather icon-aperture',
 
 		children: [
-			NavigationItem.createItem('Project Settings', '/admin/project'),
-			NavigationItem.createItem('Project Managers', '/admin/staff'),
+			NavigationItem.createItem('Project Settings', 'admin/project'),
+			NavigationItem.createItem('Project Managers', 'admin/staff'),
 		],
 	};
 

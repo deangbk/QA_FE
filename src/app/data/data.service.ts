@@ -70,6 +70,8 @@ export class DataService extends DataServiceBase {
 		super(_http);
 	}
 	
+	// TODO: Automatically refresh token if expired
+	
 	// -----------------------------------------------------
 	// Auth
 
@@ -84,7 +86,7 @@ export class DataService extends DataServiceBase {
 	
 	// -----------------------------------------------------
 	// Admin
-
+	
 	public adminGrantRole(userId: number, role: string) {
 		return this._put(`admin/grant/role/${userId}/${role}`);
 	}
