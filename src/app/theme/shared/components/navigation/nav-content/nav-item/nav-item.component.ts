@@ -11,9 +11,9 @@ import { ProjectService } from 'app/data/project.service';
 import { SecurityService } from 'app/security/security.service';
 
 @Component({
-  selector: 'app-nav-item',
-  templateUrl: './nav-item.component.html',
-  styleUrls: ['./nav-item.component.scss']
+	selector: 'app-nav-item',
+	templateUrl: './nav-item.component.html',
+	styleUrls: ['./nav-item.component.scss']
 })
 export class NavItemComponent implements OnInit, OnChanges, OnDestroy {
 	@Input() item!: NavigationItem;
@@ -56,6 +56,7 @@ export class NavItemComponent implements OnInit, OnChanges, OnDestroy {
 		let orgUrl = this.item.url;
 		let links = orgUrl.split('/');
 		
+		// TODO: Remove this hack
 		if (!orgUrl.includes('login')) {
 			return ['../', this.securityService.getProjectName(), ...links];
 		}

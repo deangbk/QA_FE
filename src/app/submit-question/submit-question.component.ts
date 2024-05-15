@@ -147,7 +147,7 @@ export class SubmitQuestionComponent implements OnInit {
 	
 	// -----------------------------------------------------
 	
-	// TODO: Add animations
+	// TODO: Add animations?
 
 	addFirstQuestion() {
 		this.addingQuestionsData.push({

@@ -33,9 +33,6 @@ interface LoginForm {
 	styleUrls: ['./auth-signin-v2.component.scss']
 })
 export class AuthSigninV2Component implements OnInit {
-	// TODO: Replace with the actual projectId
-	project = "BayPortfolioSale";
-	
 	// public method
 	static savedLogin: LoginForm = {
 		username: '',
@@ -108,6 +105,8 @@ export class AuthSigninV2Component implements OnInit {
 		this.loginData.username = formVal['email'].value ?? '';
 		this.loginData.password = formVal['password'].value ?? '';
 		this.loginData.project = formVal['project'].value ?? '';
+		
+		// TODO: Save auth info if checked
 		
 		this.error = '';
 		this.loading = true;

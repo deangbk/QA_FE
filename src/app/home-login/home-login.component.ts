@@ -11,6 +11,8 @@ import * as Models from 'app/data/data-models';
   styleUrls: ['./home-login.component.scss']
 })
 export class HomeLoginComponent implements OnInit {
+	// Warning: Currently unused, login page is handled by AuthSigninV2Component at the moment
+	
 	project = "BayPortfolioSale";
 	
 	constructor(private router: Router, private dataService: DataService,
@@ -32,8 +34,6 @@ export class HomeLoginComponent implements OnInit {
 	}
 	
 	onSubmit() {
-		// TODO: Get project name from page route
-		
 		if (this.username != null && this.password != null) {
 			this.securityService.tryLogin(this.project, this.username.value, this.password.value)
 				.subscribe({
