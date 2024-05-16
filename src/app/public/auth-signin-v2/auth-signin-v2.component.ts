@@ -1,5 +1,5 @@
 // Angular import
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { RouterModule, Router, ActivatedRoute } from '@angular/router';
@@ -33,7 +33,8 @@ interface LoginForm {
 	styleUrls: ['./auth-signin-v2.component.scss']
 })
 export class AuthSigninV2Component implements OnInit {
-	// public method
+	static signInTo: string = null;
+	
 	static savedLogin: LoginForm = {
 		username: '',
 		password: '',
@@ -56,7 +57,7 @@ export class AuthSigninV2Component implements OnInit {
 		
 		private dataService: DataService,
 		private projectService: ProjectService,
-		private securityService: SecurityService,
+		public securityService: SecurityService,
 	) {
 		// Redirect to home if already logged in
 		/* if (securityService.isAuthenticated()) {
@@ -75,6 +76,10 @@ export class AuthSigninV2Component implements OnInit {
 					Validators.required,
 				]],
 			});
+			
+			if (AuthSigninV2Component.signInTo != null)
+				this.f['project'].setValue(AuthSigninV2Component.signInTo);
+			AuthSigninV2Component.signInTo = null;
 		}
 		
 		const togglePassword = document.querySelector('#togglePassword');
@@ -89,7 +94,7 @@ export class AuthSigninV2Component implements OnInit {
 			this.classList.toggle('ti-eye-off');
 		});
 	}
-
+	
 	// convenience getter for easy access to form fields
 	get f() {
 		return this.loginForm.controls;
@@ -106,7 +111,11 @@ export class AuthSigninV2Component implements OnInit {
 		this.loginData.password = formVal['password'].value ?? '';
 		this.loginData.project = formVal['project'].value ?? '';
 		
-		// TODO: Save auth info if checked
+		if (this.loginData.save) {
+			AuthSigninV2Component.savedLogin.username = this.loginData.username;
+			AuthSigninV2Component.savedLogin.password = this.loginData.password;
+			AuthSigninV2Component.savedLogin.project = this.loginData.project;
+		}
 		
 		this.error = '';
 		this.loading = true;

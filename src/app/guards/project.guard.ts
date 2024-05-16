@@ -11,6 +11,8 @@ import * as Rx from 'rxjs';
 import { ProjectService } from 'app/data/project.service';
 import { SecurityService } from 'app/security/security.service';
 
+import { AuthSigninV2Component } from 'app/public/auth-signin-v2/auth-signin-v2.component';
+
 @Injectable({
 	providedIn: 'root'
 })
@@ -39,9 +41,9 @@ export class ProjectGuard implements CanActivate {
 				return true;
 		}
 		
-		// TODO: Autofill the "project" field of the login page with projectInRoute
-		
+		AuthSigninV2Component.signInTo = projectInRoute;
 		this.router.navigate(['login']);
+		
 		//this.notifier.notify('error', "Invalid credentials");
 		return false;
 	}

@@ -5,6 +5,18 @@
     background-position: center;
   }
 
+#loggedInInfo {
+	margin-bottom: 1em;
+	
+	p:last-child {
+		margin-bottom: 0px;
+	}
+	a {
+		text-decoration: underline;
+		color: inherit;
+	}
+}
+
   /**====== Alert css end ======**/
 /**  =====================
       Authentication css start
