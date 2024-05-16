@@ -18,9 +18,11 @@
 				<td>{{i.posts.length}}</td>
 				<td>
 					<div class="icons-box">
-						<i class="edit-button bi bi-pencil"
+						<i title="Edit tranche info"
+							class="edit-button bi bi-pencil"
 							(click)="callbackEdit(i)"></i>
-						<i class="delete-button feather icon-x"
+						<i title="Delete tranche"
+							class="delete-button feather icon-x"
 							(click)="callbackDelete(i)"></i>
 					</div>
 				</td>
@@ -30,7 +32,8 @@
 		<br />
 		<a href="javascript:" (click)="callbackCreate()">
 			<p style="margin: 0px;">
-				<i class="fas fa-plus"></i>
+				<i title="Create new tranche"
+					class="fas fa-plus"></i>
 				<span>
 					Create new tranche
 				</span>

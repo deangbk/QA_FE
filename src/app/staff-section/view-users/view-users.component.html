@@ -29,7 +29,8 @@
 						<td>{{i.user_name}}</td>
 						<td *ngIf="isAdmin">
 							<div class="icons-box">
-								<i class="change-icon feather icon-arrow-down"
+								<i title="Demote to user"
+									class="change-icon feather icon-arrow-down"
 									(click)="callbackChangeRole(i.id, false)"></i>
 							</div>
 						</td>
@@ -58,7 +59,8 @@
 							<button class="btn btn-sm btn-primary" 
 								(click)="callbackEditUser(i)">
 								<div class="btn-inner">
-									<i class="feather icon-edit"></i>
+									<i title="Edit user info" 
+										class="feather icon-edit"></i>
 								</div>
 							</button>
 						</td>
@@ -68,11 +70,13 @@
 						<td>{{getTrancheFormatted(i)}}</td>
 						<td>
 							<div class="icons-box" *ngIf="isElevated">
-								<i class="change-icon feather icon-arrow-up"
+								<i title="Promote to manager"
+									class="change-icon feather icon-arrow-up"
 									(click)="callbackChangeRole(i.id, true)"
 									*ngIf="isAdmin"></i>
 								
-								<i class="delete-icon feather icon-x"
+								<i title="Delete user"
+									class="delete-icon feather icon-x"
 									(click)="callbackDeleteUser(i.id)"></i>
 							</div>
 						</td>

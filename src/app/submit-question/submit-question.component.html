@@ -31,7 +31,9 @@
 					<div class="app-card-header">
 						<div class="d-flex justify-content-between">
 							<h5>Question #{{idx + 1}}</h5>
-							<i class="feather icon-x card-close" (click)="removeQuestion(idx)" *ngIf="idx > 0"></i>
+							<i title="Close"
+								class="feather icon-x card-close" 
+								(click)="removeQuestion(idx)" *ngIf="idx > 0"></i>
 						</div>
 					</div>
 					
@@ -132,7 +134,9 @@
 					
 					<br />
 					<a href="javascript:" (click)="addNewQuestion(i)">
-						<p style="margin: 0px;"><i class="fas fa-plus"></i> Add another question?</p>
+						<p style="margin: 0px;">
+							<i class="fas fa-plus"></i> Add another question?
+						</p>
 					</a>
 				</app-card>
 			</ng-container>
