@@ -138,10 +138,10 @@ export class ProjectService {
 			])
 				.pipe(
 					Rx.catchError(e => {
-						let propagate = _handleErr(e);
-						if (propagate != null)
-							return Rx.throwError(() => propagate);
-						return null;
+						const err = e as HttpErrorResponse;
+						return err.status != 404 ?
+							Rx.of(null) :
+							Rx.throwError(() => err);
 					}),
 					Rx.mergeMap(
 						(x: Blob[]) => Rx.forkJoin(
@@ -157,7 +157,9 @@ export class ProjectService {
 			this.obsImagesLoading.next(null);
 		}
 		else {
-			this.notifier.notify('error', 'Server Error: ' + Helpers.formatHttpError(res.val));
+			const err = res.val as HttpErrorResponse;
+			if (err.status != 404)
+				this.notifier.notify('error', 'Server Error: ' + Helpers.formatHttpError(res.val));
 		}
 	}
 }
