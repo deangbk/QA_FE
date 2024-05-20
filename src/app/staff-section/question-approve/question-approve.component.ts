@@ -1,8 +1,5 @@
 import { Component, OnInit, TemplateRef, Input } from '@angular/core';
 
-import { DataService } from '../../data/data.service';
-import { QuestionsService } from '../../data/questions.service';
-import { SecurityService } from '../../security/security.service';
 import { CommonModule } from '@angular/common';
 import * as Models from 'app/data/data-models'; // Import your models
 import { has } from 'lodash';
@@ -13,8 +10,11 @@ import { NgbModal, NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { Helpers } from 'app/helpers';
 import * as XLSX from 'xlsx';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
+
+import { DataService } from 'app/data/data.service';
+import { SecurityService } from 'app/security/security.service';
 
 @Component({
 	selector: 'app-question-approve',
@@ -40,15 +40,21 @@ export class QuestionApproveComponent implements OnInit {
 	filteredQuestionsCount: number;
 	filteredQuestions: Models.RespPostData[];
 	indexOfelement: number;
-	private notifier: NotifierService;
 	page = 1;
 	listStart = 0;
 	listEnd = 2000;
 	pageSize: number = 10;
 	paginate: Models.ReqBodyPaginate = null;
-
-	constructor(private dataService: DataService, private qService: QuestionsService, private sService: SecurityService, private router: Router, notifier: NotifierService) {
-		this.notifier = notifier;
+	
+	constructor(
+		private router: Router, private route: ActivatedRoute,
+		
+		private dataService: DataService,
+		private securityService: SecurityService,
+		
+		private notifier: NotifierService,
+	) {
+		
 	}
 
 	ngOnInit() {
@@ -67,8 +73,8 @@ export class QuestionApproveComponent implements OnInit {
 			category: ''
 
 		};
-		this.isManager = this.sService.isManager();
-		this.isUser = this.sService.isUser();
+		this.isManager = this.securityService.isManager();
+		this.isUser = this.securityService.isUser();
 		//console.log("Is Manager:" + this.isManager);
 		//console.log("Is User:" + this.isUser);
 		
@@ -153,15 +159,15 @@ export class QuestionApproveComponent implements OnInit {
 	}
 	uploadPage(qId: number) {
 		console.log(qId);
-		this.router.navigate(['staff/docupload/' + qId]);
+		this.router.navigate(['../docupload/' + qId],
+			{ relativeTo: this.route });
 	}
 	editQuestion(question: Models.RespPostData) {
-		//this.router.navigate(['staff/qmanage/'+question.id]);
-
 		let url = this.router.serializeUrl(
-			this.router.createUrlTree(['staff/qmanage/' + question.id])
+			this.router.createUrlTree(['../qmanage/' + question.id],
+				{ relativeTo: this.route })
 		);
-
+		
 		window.open(url, '_blank');
 	}
 	displayDocNames(docs: Models.RespDocumentData[]) {
