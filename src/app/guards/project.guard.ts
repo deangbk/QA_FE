@@ -32,7 +32,7 @@ export class ProjectGuard implements CanActivate {
 	{
 		//console.log('ProjectGuard: ', next, next.params);
 		
-		let projectInRoute = next.params['project'] as string;
+		let projectInRoute = next.paramMap.get('project');
 		if (projectInRoute != null && this.securityService.isValid()) {
 			let expected = this.securityService.getProjectName().toLowerCase();
 			//console.log(expected, projectInRoute);
@@ -41,8 +41,7 @@ export class ProjectGuard implements CanActivate {
 				return true;
 		}
 		
-		AuthSigninV2Component.signInTo = projectInRoute;
-		this.router.navigate(['login']);
+		this.router.navigate(['/', projectInRoute, 'login']);
 		
 		//this.notifier.notify('error', "Invalid credentials");
 		return false;

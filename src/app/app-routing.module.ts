@@ -31,11 +31,15 @@ const routes: Routes = [
 		redirectTo: 'login',
 		pathMatch: 'full',
 	},
+	
 	{
 		path: 'login',
 		component: AuthSigninV2Component,
 	},
-	
+	{
+		path: ':project/login',
+		component: AuthSigninV2Component,
+	},
 	{
 		path: ':project',
 		component: LayoutAnyComponent,
@@ -86,6 +90,8 @@ const routes: Routes = [
 					{ path: 'staff', component: ManageStaffComponent },
 				],
 			},
+			
+			{ path: '**', redirectTo: 'home' },
 		]
 	},
 	{

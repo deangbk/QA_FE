@@ -33,8 +33,6 @@ interface LoginForm {
 	styleUrls: ['./auth-signin-v2.component.scss']
 })
 export class AuthSigninV2Component implements OnInit {
-	static signInTo: string = null;
-	
 	static savedLogin: LoginForm = {
 		username: '',
 		password: '',
@@ -59,13 +57,12 @@ export class AuthSigninV2Component implements OnInit {
 		private projectService: ProjectService,
 		public securityService: SecurityService,
 	) {
-		// Redirect to home if already logged in
-		/* if (securityService.isAuthenticated()) {
-			this.router.navigate(['/main']);
-		} */
+		
 	}
 	
 	ngOnInit() {
+		const targetProject = this.route.snapshot.paramMap.get('project');
+		
 		{
 			const saved = AuthSigninV2Component.savedLogin;
 			this.loginForm = this.formBuilder.group({
@@ -77,9 +74,8 @@ export class AuthSigninV2Component implements OnInit {
 				]],
 			});
 			
-			if (AuthSigninV2Component.signInTo != null)
-				this.f['project'].setValue(AuthSigninV2Component.signInTo);
-			AuthSigninV2Component.signInTo = null;
+			if (targetProject != null)
+				this.f['project'].setValue(targetProject);
 		}
 		
 		const togglePassword = document.querySelector('#togglePassword');
@@ -127,7 +123,7 @@ export class AuthSigninV2Component implements OnInit {
 					this.securityService.saveLoginToken(x);
 					
 					let projectName = this.securityService.getProjectName();
-					this.router.navigate([projectName, 'home']);
+					this.router.navigate(['/', projectName, 'home']);
 				},
 				error: (x: HttpErrorResponse) => {
 					let err = Helpers.formatHttpError(x);
