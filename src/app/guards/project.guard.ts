@@ -35,7 +35,7 @@ export class ProjectGuard implements CanActivate {
 		let projectInRoute = next.params['project'] as string;
 		if (projectInRoute != null && this.securityService.isValid()) {
 			let expected = this.securityService.getProjectName().toLowerCase();
-			console.log(expected, projectInRoute);
+			//console.log(expected, projectInRoute);
 			
 			if (expected == projectInRoute.toLowerCase())
 				return true;

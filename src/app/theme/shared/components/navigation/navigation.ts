@@ -60,7 +60,8 @@ export class NavigationBadgeFormatter {
 		if (item.badge && !this.projectService.projectLoading()) {
 			if (item.badge.title != null && item.badge.title.startsWith('$')) {
 				let symbol = item.badge.title.substring(1);
-				console.log(symbol, this.projectService.projectContents);
+				//console.log(symbol, this.projectService.projectContents);
+				
 				switch (symbol) {
 					case 'pgeneral':
 						return '' + this.projectService.projectContents.gen_posts;
