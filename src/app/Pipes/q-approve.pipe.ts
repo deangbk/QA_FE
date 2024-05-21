@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { QuestionApproveComponent } from '../staff-section/question-approve/question-approve.component';
+import { QuestionApproveComponent } from '../projects/staff-section/question-approve/question-approve.component';
 
 @Pipe({
   name: 'qApprove'

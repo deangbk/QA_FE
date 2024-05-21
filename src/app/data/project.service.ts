@@ -138,6 +138,8 @@ export class ProjectService {
 			])
 				.pipe(
 					Rx.catchError(e => {
+						// Map 404 to null to make it so that they're not treated as critical errors
+						
 						const err = e as HttpErrorResponse;
 						return err.status != 404 ?
 							Rx.of(null) :

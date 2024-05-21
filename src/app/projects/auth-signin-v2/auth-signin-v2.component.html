@@ -1,0 +1,98 @@
+<div class="auth-wrapper aut-bg-img-side cotainer-fiuid align-items-stretch">
+	<div class="row align-items-center w-100 align-items-stretch bg-white">
+		<div class="d-none d-lg-flex col-lg-8 aut-bg-img align-items-center d-flex justify-content-center">
+			<div class="col-md-8">
+				<h1 class="text-white mb-5">Thai Npl</h1>
+				<p class="text-white">
+					Log in here to access the Thai Npl platform.
+					This platform is for the Q&A portion of the process, and is managed by Baker Tilly Thailand.
+				</p>
+			</div>
+		</div>
+		<div class="col-lg-4 align-items-stret h-100 align-items-center d-flex justify-content-center">
+			<div class="auth-content">
+				<div class="mb-4 text-center">
+					<i class="feather icon-unlock auth-icon"></i>
+					
+					<h3>Login</h3>
+				</div>
+				
+				<div *ngIf="securityService.isValid()" id="loggedInInfo">
+					<div class="alert alert-info mt-3 mb-0">
+						<p>
+							You are currently logged in to 
+							<i>{{securityService.getProjectName()}}</i>
+						</p>
+						<p>
+							Click 
+							<a [routerLink]="getHomeNavigation()">here</a> 
+							to return to project home
+						</p>
+					</div>
+				</div>
+				
+				<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+					<div>
+						<h4>Project Name</h4>
+						<input
+							type="text" id="project"
+							formControlName="project"
+							class="form-control"
+							[ngClass]="{ 'is-invalid': submitted && f?.['project'].errors }"
+						/>
+						<div *ngIf="submitted && f?.['project'].errors" class="invalid-feedback"></div>
+					</div>
+					<hr />
+					
+					<div class="mb-3">
+						<h5>Email</h5>
+						<input
+							type="text" id="email"
+							formControlName="email"
+							class="form-control"
+							[ngClass]="{ 'is-invalid': submitted && f?.['email'].errors }"
+						/>
+						<div *ngIf="submitted && f?.['email'].errors" class="invalid-feedback"></div>
+					</div>
+					<div class="mb-4">
+						<!-- <label class="form-label">Password</label> -->
+						<h5>Password</h5>
+						<input
+							type="password" id="password"
+							formControlName="password"
+							class="form-control"
+							[ngClass]="{ 'is-invalid': submitted && f?.['password'].errors }"
+						/>
+						<i class="ti ti-eye" id="togglePassword"></i>
+						<div *ngIf="submitted && f?.['password'].errors" class="invalid-feedback"></div>
+					</div>
+					
+					<div class="form-group text-left text-center">
+						<div class="checkbox checkbox-fill d-inline">
+							<input type="checkbox" name="checkbox-fill-1" id="checkbox-fill-a1" 
+								[(ngModel)]="loginData.save"/>
+							<label for="checkbox-fill-a1" class="cr">Remember Credentials?</label>
+						</div>
+					</div>
+					
+					<div class="d-grid mt-4">
+						<button *ngIf="!loading"
+							class="btn btn-primary">
+							Login
+						</button>
+						<button *ngIf="loading" class="btn btn-primary" type="button" disabled>
+							<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+							Verifying credentials...
+						</button>
+					</div>
+					
+					<div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{ error }}</div>
+				</form>
+				<!-- <p class="mb-2 text-muted">Forgot password? <a [routerLink]="['/auth/reset-passwordv2']">Reset</a></p>
+				<p class="mb-0 text-muted">Don’t have an account? <a [routerLink]="['/auth/signupv2']">Sign up</a></p> -->
+				
+			</div> <!-- auth-content -->
+		</div> <!-- col-lg-4 align-items-stret h-100 align-items-center d-flex justify-content-center -->
+	</div>
+</div>
+  

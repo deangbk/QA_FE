@@ -11,8 +11,6 @@ import * as Rx from 'rxjs';
 import { ProjectService } from 'app/data/project.service';
 import { SecurityService } from 'app/security/security.service';
 
-import { AuthSigninV2Component } from 'app/public/auth-signin-v2/auth-signin-v2.component';
-
 @Injectable({
 	providedIn: 'root'
 })

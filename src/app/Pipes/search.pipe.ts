@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { QuestionsDisplayComponent } from '../questions-display/questions-display.component';
+import { QuestionsDisplayComponent } from '../projects/questions-display/questions-display.component';
 
 @Pipe({
   name: 'search'

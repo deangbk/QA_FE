@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
-import { DataService } from '../data/data.service';
+import { DataService } from 'app/data/data.service';
 import * as Models from 'app/data/data-models';
 
 import { Helpers } from 'app/helpers';

@@ -1,0 +1,23 @@
+
+<div class="">
+	<div class="col-lg-8">
+		<!-- <a [routerLink]="['/home']" class="b-brand"> -->
+		<div>
+			<i class="fas fa-cube fa-2x" *ngIf="navCollapsed"> </i> 
+			
+			<!-- <img src="assets/images/Bakertilly-logo-white.png" 
+				class="img-fluid" alt="logo" *ngIf="!navCollapsed" /> -->
+			<img class="img-fluid" alt="logo" *ngIf="!navCollapsed" 
+				[src]="logoUrl"/>
+		
+			<span class="b-title"></span>
+		</div>
+	</div>
+	<div class="col-lg-4">
+		<a href="javascript:" class="mobile-menu" 
+			[ngClass]="{ on: navCollapsed }" id="mobile-collapse" 
+			(click)="navCollapse()">
+			<span></span>
+		</a>
+	</div>
+</div>
