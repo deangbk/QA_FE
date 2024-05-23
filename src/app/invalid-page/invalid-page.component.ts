@@ -25,12 +25,8 @@ export class InvalidPageComponent implements OnInit {
 	}
 	
 	ngOnInit(): void {
-		/* if (this.securityService.isValid()) {
-			const currentProject = this.securityService.getProjectName();
-			this.router.navigate(['/', currentProject, 'home']);
-		}
-		else {
-			this.router.navigate(['/login']);
-		} */
+		// Piece of shit Angular
+		// (See app-routing.module.ts)
+		this.router.navigate(['project']);
 	}
 }
