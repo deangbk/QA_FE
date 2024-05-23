@@ -8,6 +8,8 @@ import { ProjectGuard } from '../guards/project.guard';
 import { LayoutProjectsComponent } from './projects.component';
 
 import { AuthSigninV2Component } from './auth-signin-v2/auth-signin-v2.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
+
 import { HomeComponent } from './home/home.component';
 
 import { QuestionsDisplayComponent } from './questions-display/questions-display.component';
@@ -27,11 +29,12 @@ import { ViewStatsComponent } from './staff-section/view-stats/view-stats.compon
 import { ManageProjectComponent } from './admin-section/manage-project/manage-project.component';
 import { ManageStaffComponent } from './admin-section/manage-staff/manage-staff.component';
 
-function _load<T>(path: string) {
-	return () => import(path).then(x => x.T);
-}
-
 const routes: Routes = [
+	{
+		path: '',
+		component: LandingPageComponent,
+	},
+	
 	{
 		path: ':project',
 		

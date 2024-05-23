@@ -80,6 +80,7 @@ import { ProjectEditLogoComponent } from './admin-section/manage-project/project
 import { ImageDisplayEditComponent } from './admin-section/manage-project/project-edit-logo/image-display-edit/image-display-edit.component';
 import { ProjectEditTranchesComponent } from './admin-section/manage-project/project-edit-tranches/project-edit-tranches.component';
 import { ManageStaffComponent } from './admin-section/manage-staff/manage-staff.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
 
 // -----------------------------------------------------
 
@@ -122,6 +123,7 @@ import { ManageStaffComponent } from './admin-section/manage-staff/manage-staff.
 		QApprovePipe,
 		
 		AuthSigninV2Component,
+		LandingPageComponent,
 		
 		HomeComponent, ProjectNoteComponent,
 
