@@ -458,7 +458,7 @@ export class DataService extends DataServiceBase {
 		return <Observable<number>>
 			this._post(`document/bulk/delete`, documentIds);
 	}
-
+	
 	// -----------------------------------------------------
 	
 	public getQuestions(filter: Models.ReqBodyGetPosts): Observable<Models.RespGetPost> {
@@ -474,5 +474,24 @@ export class DataService extends DataServiceBase {
 		.pipe(catchError(this.handleError)); */
      
 		return this.postGet({}, null);
+	}
+	
+	// -----------------------------------------------------
+	// Unauth
+	
+	public unauthFindProject(name: string) {
+		return <Observable<Models.RespProjectData>>
+			this._get(`unauth/project?name=${name}`);
+	}
+	public unauthGetProjectLogo(name: string) {
+		const url = `unauth/project/logo?name=${name}`;
+		const httpOptions = {
+			responseType: 'blob' as 'json',
+		};
+		
+		let res = this.http
+			.get(`${this.baseUrl}/${url}`, httpOptions)
+			.pipe(catchError(this.handleError));
+		return <Observable<Blob>>res;
 	}
 }
