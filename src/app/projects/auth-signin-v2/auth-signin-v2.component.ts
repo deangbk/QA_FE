@@ -18,7 +18,6 @@ import { Helpers } from 'app/helpers';
 interface LoginForm {
 	username: string,
 	password: string,
-	project: string,
 	save: boolean,
 }
 
@@ -28,10 +27,13 @@ interface LoginForm {
 	styleUrls: ['./auth-signin-v2.component.scss']
 })
 export class AuthSigninV2Component implements OnInit {
+	targetProject: string;
+	projectStatus = 'load';
+	projectName: string;
+	
 	static savedLogin: LoginForm = {
 		username: '',
 		password: '',
-		project: 'BayPortFolioSale',
 		save: false,
 	}
 	loginData: LoginForm = AuthSigninV2Component.savedLogin;
@@ -56,33 +58,44 @@ export class AuthSigninV2Component implements OnInit {
 	}
 	
 	ngOnInit() {
-		const targetProject = this.route.snapshot.paramMap.get('project');
+		this.targetProject = this.route.snapshot.paramMap.get('project');
 		
+		this.findProject();
+	
 		{
-			const saved = AuthSigninV2Component.savedLogin;
-			this.loginForm = this.formBuilder.group({
-				email: [saved.username, Validators.required],
-				password: [saved.password, Validators.required],
-				project: [saved.project, [
-					Validators.pattern(/[A-Za-z0-9_-]+/),
-					Validators.required,
-				]],
+			const togglePassword = document.querySelector('#togglePassword');
+			const password = document.querySelector('#password');
+
+			togglePassword.addEventListener('click', function () {
+				// toggle the type attribute
+				const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+				password.setAttribute('type', type);
+
+				// toggle the icon
+				this.classList.toggle('ti-eye-off');
 			});
-			
-			if (targetProject != null)
-				this.f['project'].setValue(targetProject);
 		}
-		
-		const togglePassword = document.querySelector('#togglePassword');
-		const password = document.querySelector('#password');
-
-		togglePassword.addEventListener('click', function () {
-			// toggle the type attribute
-			const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-			password.setAttribute('type', type);
-
-			// toggle the icon
-			this.classList.toggle('ti-eye-off');
+	}
+	
+	// TODO: Maybe load and display logo as well?
+	findProject() {
+		this.dataService.unauthFindProject(this.targetProject).subscribe({
+			next: x => {
+				{
+					const saved = AuthSigninV2Component.savedLogin;
+					this.loginForm = this.formBuilder.group({
+						email: [saved.username, Validators.required],
+						password: [saved.password, Validators.required],
+					});
+				}
+				
+				this.projectName = x.display_name;
+				
+				this.projectStatus = 'ok';
+			},
+			error: e => {
+				this.projectStatus = 'error';
+			},
 		});
 	}
 	
@@ -105,18 +118,16 @@ export class AuthSigninV2Component implements OnInit {
 		let formVal = this.f;
 		this.loginData.username = formVal['email'].value ?? '';
 		this.loginData.password = formVal['password'].value ?? '';
-		this.loginData.project = formVal['project'].value ?? '';
 		
 		if (this.loginData.save) {
 			AuthSigninV2Component.savedLogin.username = this.loginData.username;
 			AuthSigninV2Component.savedLogin.password = this.loginData.password;
-			AuthSigninV2Component.savedLogin.project = this.loginData.project;
 		}
 		
 		this.error = '';
 		this.loading = true;
 		this.securityService
-			.tryLogin(this.loginData.project,
+			.tryLogin(this.targetProject,
 				this.loginData.username, this.loginData.password)
 			.subscribe({
 				next: x => {
@@ -124,7 +135,6 @@ export class AuthSigninV2Component implements OnInit {
 					
 					let tree = this.router.createUrlTree(this.getHomeNavigation());
 					let url = this.router.serializeUrl(tree);
-					console.log(url);
 					this.router.navigateByUrl(url);
 				},
 				error: (x: HttpErrorResponse) => {
