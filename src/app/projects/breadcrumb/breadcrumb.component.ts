@@ -4,7 +4,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
 // project import
-import { NavigationItem } from '../navigation/navigation';
+import { NavigationItem } from 'app/shared/components/navigation/navigation';
 
 @Component({
 	selector: 'app-breadcrumb',
@@ -21,7 +21,7 @@ export class BreadcrumbComponent implements OnInit {
 	@Input() navigation: NavigationItem[] = [];
 	
 	// Constructor
-	constructor(private _router: Router, public nav: NavigationItem, private titleService: Title) {
+	constructor(private _router: Router, private titleService: Title) {
 		//this.navigation = NavigationItem.get();
 		
 		this.type = 'theme2';

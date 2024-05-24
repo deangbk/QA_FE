@@ -8,7 +8,14 @@
 	(NavCollapse)="this.navCollapsed = !this.navCollapsed"
 	(NavCollapsedMob)="navMobClick()"
 	[navItems]="navItems"
-></app-navigation>
+>
+	<!-- Content projection on .custom-nav-logo -->
+	<div class="custom-nav-logo">
+		<a [routerLink]="['home']">
+			<img class="img-fluid" alt="logo" [src]="logoUrl" />
+		</a>
+	</div>
+</app-navigation>
 
 <app-nav-bar class="navbar pcoded-header navbar-expand-lg navbar-light" (NavCollapsedMob)="navMobClick()"></app-nav-bar>
 <div class="pcoded-main-container">

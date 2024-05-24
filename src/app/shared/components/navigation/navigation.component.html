@@ -1,0 +1,9 @@
+<nav>
+	<div class="navbar-wrapper">
+		<app-nav-logo [navCollapsed]="navCollapsed" (NavCollapse)="navCollapse()" class="navbar-brand header-logo">
+			<ng-content select=".custom-nav-logo"></ng-content>
+		</app-nav-logo>
+		<app-nav-content [navigation]="navItems"
+			(NavCollapsedMob)="navCollapseMob()" class="scroll-div w-100"></app-nav-content>
+	</div>
+</nav>

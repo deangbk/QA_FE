@@ -3,7 +3,8 @@ import { Location, LocationStrategy } from '@angular/common';
 import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 
 import { DattaConfig } from 'app/app-config';
-import { NavigationItem, NavigationPreset } from './navigation/navigation';
+import { NavigationItem } from 'app/shared/components/navigation/navigation';
+import { NavigationPreset } from './navigation';
 
 import { DataService } from 'app/data/data.service';
 import { ProjectService } from 'app/data/project.service';
@@ -21,6 +22,8 @@ export class LayoutProjectsComponent implements OnInit {
 	navCollapsed;
 	navCollapsedMob: boolean;
 	windowWidth: number;
+	
+	logoUrl = '';
 
 	constructor(
 		private zone: NgZone, private location: Location,
@@ -76,6 +79,11 @@ export class LayoutProjectsComponent implements OnInit {
 				//console.log(routerUrl);
 			}
 		});
+		
+		this.projectService.observeImagesLoad()
+			.subscribe(_ => {
+				this.logoUrl = this.projectService.urlProjectLogo;
+			});
 	}
 	
 	navMobClick() {

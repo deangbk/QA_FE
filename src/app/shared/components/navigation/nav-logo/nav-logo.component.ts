@@ -1,7 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { ProjectService } from 'app/data/project.service';
-
 @Component({
 	selector: 'app-nav-logo',
 	templateUrl: './nav-logo.component.html',
@@ -12,15 +10,8 @@ export class NavLogoComponent {
 	@Output() NavCollapse = new EventEmitter();
 	public windowWidth: number;
 	
-	logoUrl = '';
-	
-	constructor(private projectService: ProjectService) {
+	constructor() {
 		this.windowWidth = window.innerWidth;
-		
-		this.projectService.observeImagesLoad()
-			.subscribe(_ => {
-				this.logoUrl = this.projectService.urlProjectLogo;
-			});
 	}
 	
 	navCollapse() {

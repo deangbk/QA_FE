@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DattaConfig } from 'app/app-config';
 
-import { NavigationItem, NavigationPreset } from './navigation';
+import { NavigationItem } from './navigation';
 
 @Component({
 	selector: 'app-navigation',

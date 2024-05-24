@@ -4,13 +4,15 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 
 // -----------------------------------------------------
 // External library modules
+
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FileUploadModule } from '@iplab/ngx-file-upload';
@@ -32,13 +34,8 @@ import { ConfigurationComponent } from './configuration/configuration.component'
 
 import { BreadcrumbModule } from './breadcrumb/breadcrumb.module';
 
-import { NavigationComponent } from './navigation/navigation.component';
-import { NavContentComponent } from './navigation/nav-content/nav-content.component';
-import { NavLogoComponent } from './navigation/nav-logo/nav-logo.component';
-import { NavCollapseComponent } from './navigation/nav-content/nav-collapse/nav-collapse.component';
-import { NavGroupComponent } from './navigation/nav-content/nav-group/nav-group.component';
-import { NavItemComponent } from './navigation/nav-content/nav-item/nav-item.component';
-import { NavigationItem, NavigationBadgeFormatter } from './navigation/navigation';
+import { ProjectNavigationBadgeFormatter } from './navigation';
+import { NavigationBadgeFormatter } from '../shared/components/navigation/navigation';
 
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { NavLeftComponent } from './nav-bar/nav-left/nav-left.component';
@@ -87,8 +84,11 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 @NgModule({
 	imports: [
 		CommonModule,
-		FormsModule,
+		FormsModule, ReactiveFormsModule,
 		MatIconModule, MatButtonModule,
+		
+		NgbModule,
+		
 		NgSelectModule,
 		FileUploadModule,
 		PdfViewerModule,
@@ -103,10 +103,6 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 	],
 	declarations: [
 		ConfigurationComponent, LayoutProjectsComponent,
-		
-		NavigationComponent,
-		NavContentComponent, NavLogoComponent,
-		NavCollapseComponent, NavGroupComponent, NavItemComponent,
 		
 		NavBarComponent,
 		NavLeftComponent, NavRightComponent, NavSearchComponent,
@@ -148,8 +144,10 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 		ManageStaffComponent,
 	],
 	providers: [
-		NavigationItem,
-		NavigationBadgeFormatter,
+		{
+			provide: NavigationBadgeFormatter,
+			useClass: ProjectNavigationBadgeFormatter
+		},
 	]
 })
 export class ProjectsModule { }

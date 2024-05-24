@@ -2,56 +2,37 @@ import { Injectable } from '@angular/core';
 
 import { ProjectService } from 'app/data/project.service';
 
-@Injectable()
-export class NavigationItem {
-	id: string;
-	title: string;
-	type: 'item' | 'collapse' | 'group';
-	translate?: string;
-	icon?: string;
-	hidden?: boolean;
-	url?: string;
-	classes?: string;
-	exactMatch?: boolean;
-	external?: boolean;
-	target?: boolean;
-	breadcrumbs?: boolean;
-	badge?: {
-		title?: string;
-		type?: string;
+import { NavigationBadgeFormatter, NavigationItem } from 'app/shared/components/navigation/navigation';
+
+function createItem(title: string, url: string, icon?: string): NavigationItem {
+	return {
+		type: 'item',
+		classes: 'nav-item',
+		
+		id: 'it-' + title.split(/\s+/).join('-'),
+		title: title,
+		
+		url: url,
+		icon: icon,
 	};
-	children?: NavigationItem[];
-	
-	static createItem(title: string, url: string, icon?: string): NavigationItem {
-		return {
-			type: 'item',
-			classes: 'nav-item',
-			
-			id: 'it-' + title.split(/\s+/).join('-'),
-			title: title,
-			
-			url: url,
-			icon: icon,
-		};
-	}
-	static createBadgeItem(title: string, url: string, icon?: string, badge?: string): NavigationItem {
-		return {
-			type: 'item',
-			classes: 'nav-item',
+}
+function createBadgeItem(title: string, url: string, icon?: string, badge?: string): NavigationItem {
+	return {
+		type: 'item',
+		classes: 'nav-item',
 
-			id: 'it-' + title.split(/\s+/).join('-'),
-			title: title,
-
-			url: url,
-			icon: icon,
-			
-			badge: badge ? { title: '$' + badge } : null,
-		};
-	}
+		id: 'it-' + title.split(/\s+/).join('-'),
+		title: title,
+		
+		url: url,
+		icon: icon,
+		
+		badge: badge ? { title: '$' + badge } : null,
+	};
 }
 
 @Injectable()
-export class NavigationBadgeFormatter {
+export class ProjectNavigationBadgeFormatter implements NavigationBadgeFormatter {
 	constructor(
 		private projectService: ProjectService,
 	) { }
@@ -82,8 +63,8 @@ export class NavigationPreset {
 		title: 'Main',
 		type: 'group',
 		children: [
-			NavigationItem.createItem('Project Home', 'home', 'feather icon-home'),
-			//NavigationItem.createItem('User Login', 'login', 'user icon-sidebar'),
+			createItem('Project Home', 'home', 'feather icon-home'),
+			//createItem('User Login', 'login', 'user icon-sidebar'),
 		],
 	};
 	private static _ITEMS_SITE: NavigationItem = {
@@ -91,13 +72,13 @@ export class NavigationPreset {
 		title: 'Questions',
 		type: 'group',
 		children: [
-			NavigationItem.createBadgeItem('General Questions', 'questions/general',
+			createBadgeItem('General Questions', 'questions/general',
 				'feather icon-clipboard', 'pgeneral'),
-			NavigationItem.createBadgeItem('Account Questions', 'questions/account',
+			createBadgeItem('Account Questions', 'questions/account',
 				'feather icon-layers', 'paccount'),
-			NavigationItem.createItem('Submit a Question', 'questions/submit', 'bi bi-question'),
+			createItem('Submit a Question', 'questions/submit', 'bi bi-question'),
 
-			NavigationItem.createBadgeItem('Recent Documents', 'docs/recent',
+			createBadgeItem('Recent Documents', 'docs/recent',
 				'bi bi-file-earmark', 'documents'),
 		],
 	};
@@ -108,12 +89,12 @@ export class NavigationPreset {
 		icon: 'bi bi-database-fill',
 	
 		children: [
-			NavigationItem.createItem('View Project Users', 'staff/viewusers'),
-			NavigationItem.createItem('Create Project Users', 'staff/addusers'),
+			createItem('View Project Users', 'staff/viewusers'),
+			createItem('Create Project Users', 'staff/addusers'),
 			
-			NavigationItem.createItem('Approve Questions', 'staff/qapprove'),
-			// NavigationItem.createItem('Manage Question', 'staff/qmanage'),
-			NavigationItem.createItem('Upload Documents', 'staff/docupload/0'),
+			createItem('Approve Questions', 'staff/qapprove'),
+			//createItem('Manage Question', 'staff/qmanage'),
+			createItem('Upload Documents', 'staff/docupload/0'),
 		],
 	};
 	private static _ITEMS_ADMIN: NavigationItem = {
@@ -123,8 +104,8 @@ export class NavigationPreset {
 		icon: 'feather icon-aperture',
 
 		children: [
-			NavigationItem.createItem('Project Settings', 'admin/project'),
-			NavigationItem.createItem('Project Managers', 'admin/staff'),
+			createItem('Project Settings', 'admin/project'),
+			createItem('Project Managers', 'admin/staff'),
 		],
 	};
 
