@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, Optional, SimpleChanges } from '@angular/core';
 import { Location, LocationStrategy } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -29,7 +29,7 @@ export class NavItemComponent implements OnInit, OnChanges, OnDestroy {
 		
 		private projectService: ProjectService,
 		private securityService: SecurityService,
-		private formatter: NavigationBadgeFormatter,
+		@Optional() private formatter: NavigationBadgeFormatter,
 	) {
 		this.themeLayout = DattaConfig.layout;
 	}
@@ -48,7 +48,7 @@ export class NavItemComponent implements OnInit, OnChanges, OnDestroy {
 	}
 	
 	formatBadgeTitle() {
-		this.badgeTitle = this.formatter.format(this.item);
+		this.badgeTitle = this.formatter?.format(this.item);
 		//console.log(this.badgeTitle);
 	}
 	
