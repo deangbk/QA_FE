@@ -10,19 +10,19 @@ const routes: Routes = [
 		redirectTo: 'project',
 	}, */
 	
+	// Admin portal
+	{
+		path: 'admin',
+		loadChildren: () => import('./admin/admin.module').then(x => x.AdminModule),
+	},
+	
 	// User portal
 	{
 		path: 'project',
 		loadChildren: () => import('./projects/projects.module').then(x => x.ProjectsModule),
 	},
 	
-	// Admin portal
-	/* {
-		path: 'admin',
-		loadChildren: () => import('./admin/admin.module').then(x => x.AdminModule),
-	}, */
-	
-	{ path: '**', component: InvalidPageComponent },
+	//{ path: '**', component: InvalidPageComponent },
 ];
 
 @NgModule({
