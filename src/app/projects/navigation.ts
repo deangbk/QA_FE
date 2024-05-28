@@ -2,34 +2,10 @@ import { Injectable } from '@angular/core';
 
 import { ProjectService } from './service/project.service';
 
-import { NavigationBadgeFormatter, NavigationItem } from 'app/shared/components/navigation/navigation';
-
-function createItem(title: string, url: string, icon?: string): NavigationItem {
-	return {
-		type: 'item',
-		classes: 'nav-item',
-		
-		id: 'it-' + title.split(/\s+/).join('-'),
-		title: title,
-		
-		url: url,
-		icon: icon,
-	};
-}
-function createBadgeItem(title: string, url: string, icon?: string, badge?: string): NavigationItem {
-	return {
-		type: 'item',
-		classes: 'nav-item',
-
-		id: 'it-' + title.split(/\s+/).join('-'),
-		title: title,
-		
-		url: url,
-		icon: icon,
-		
-		badge: badge ? { title: '$' + badge } : null,
-	};
-}
+import {
+	NavigationBadgeFormatter, NavigationItem ,
+	createItem, createBadgeItem,
+} from 'app/shared/components/navigation/navigation';
 
 @Injectable()
 export class ProjectNavigationBadgeFormatter implements NavigationBadgeFormatter {

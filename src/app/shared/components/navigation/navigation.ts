@@ -24,3 +24,30 @@ export interface NavigationItem {
 export abstract class NavigationBadgeFormatter {
 	public abstract format(item: NavigationItem): string;
 }
+
+export function createItem(title: string, url: string, icon?: string): NavigationItem {
+	return {
+		type: 'item',
+		classes: 'nav-item',
+
+		id: 'it-' + title.split(/\s+/).join('-'),
+		title: title,
+
+		url: url,
+		icon: icon,
+	};
+}
+export function createBadgeItem(title: string, url: string, icon?: string, badge?: string): NavigationItem {
+	return {
+		type: 'item',
+		classes: 'nav-item',
+
+		id: 'it-' + title.split(/\s+/).join('-'),
+		title: title,
+
+		url: url,
+		icon: icon,
+
+		badge: badge ? { title: '$' + badge } : null,
+	};
+}
