@@ -18,8 +18,6 @@ export abstract class SecurityService {
 	)
 		: Observable<any>;
 	
-	protected isIdentityValid(): boolean { return true; }
-	
 	public abstract storeLoginToken(authRes: any): void;
 	public abstract removeLoginToken(): void;
 	
@@ -35,7 +33,7 @@ export abstract class SecurityService {
 		if (expirationDate <= new Date())
 			return false;
 		
-		return this.isIdentityValid();
+		return true;
 	}
 	public isAuthenticated(): boolean {
 		let res = this.isValidToken();
