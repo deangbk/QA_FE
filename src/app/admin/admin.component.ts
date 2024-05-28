@@ -7,12 +7,17 @@ import { DattaConfig } from 'app/app-config';
 import { DataService } from 'app/data/data.service';
 import { SecurityService } from 'app/security/security.service';
 
+import { NavigationItem } from 'app/shared/components/navigation/navigation';
+import { NavigationPreset } from './navigation';
+
 @Component({
 	selector: 'app-layout-admin',
 	templateUrl: './admin.component.html',
 	styleUrls: ['./admin.component.scss']
 })
 export class LayoutAdminComponent implements OnInit {
+	navItems: NavigationItem[];
+	
 	config;
 	
 	constructor(
@@ -29,8 +34,6 @@ export class LayoutAdminComponent implements OnInit {
 	}
 	
 	ngOnInit() {
-		
+		this.navItems = NavigationPreset.Admin;
 	}
-	
-	
 }

@@ -1,4 +1,17 @@
 
+<app-navigation
+	class="pcoded-navbar"
+	[ngClass]="{
+		'theme-horizontal': this.config['layout'] === 'horizontal'
+	}"
+	[navItems]="navItems"
+>
+	<!-- Content projection on .custom-nav-logo -->
+	<div class="custom-nav-logo">
+		<i class="feather icon-compass"></i>
+		<h2>Admin Panel</h2>
+	</div>
+</app-navigation>
 
 <div class="pcoded-main-container">
 	<div class="pcoded-wrapper">

@@ -17,7 +17,6 @@ const KEY_EXPIRE = 'EXP';
 export class ProjectSecurityService extends SecurityService {
 	constructor(private dataService: DataService) {
 		super();
-		console.log('ProjectSecurityService ctor');
 	}
 	
 	override getToken(): string {
