@@ -4,6 +4,8 @@ import { DattaConfig } from 'app/app-config';
 import { Location, LocationStrategy } from '@angular/common';
 import { environment } from 'environments/environment';
 
+import * as Rx from 'rxjs';
+
 @Component({
 	selector: 'app-nav-content',
 	templateUrl: './nav-content.component.html',
@@ -29,7 +31,9 @@ export class NavContentComponent implements OnInit, AfterViewInit {
 	
 	@ViewChild('navbarContent', { static: false }) navbarContent!: ElementRef;
 	@ViewChild('navbarWrapper', { static: false }) navbarWrapper!: ElementRef;
-
+	
+	obsUpdateBadge = new Rx.Subject<void>();
+	
 	constructor(
 		private zone: NgZone,
 		private location: Location,
@@ -153,5 +157,10 @@ export class NavContentComponent implements OnInit, AfterViewInit {
 				last_parent.classList.add('active');
 			}
 		}
+	}
+	
+	public formatNavItemsBadge() {
+		//console.log('NavContentComponent -> formatNavItemsBadge');
+		this.obsUpdateBadge.next();
 	}
 }

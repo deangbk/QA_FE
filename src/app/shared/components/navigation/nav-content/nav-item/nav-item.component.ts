@@ -7,8 +7,9 @@ import { DattaConfig } from 'app/app-config';
 
 import * as Rx from 'rxjs';
 
-import { ProjectService } from 'app/data/project.service';
 import { SecurityService } from 'app/security/security.service';
+
+import { NavContentComponent } from '../nav-content.component';
 
 @Component({
 	selector: 'app-nav-item',
@@ -24,10 +25,11 @@ export class NavItemComponent implements OnInit, OnChanges, OnDestroy {
 	badgeTitle: string = null;
 
 	constructor(
+		private parent: NavContentComponent,
+		
 		private router: Router,
 		private location: Location, private locationStrategy: LocationStrategy,
 		
-		private projectService: ProjectService,
 		private securityService: SecurityService,
 		@Optional() private formatter: NavigationBadgeFormatter,
 	) {
@@ -35,10 +37,9 @@ export class NavItemComponent implements OnInit, OnChanges, OnDestroy {
 	}
 	
 	ngOnInit(): void {
-		this.subscription = this.projectService.observeContentLoad()
-			.subscribe({
-				next: _ => this.formatBadgeTitle(),
-			});
+		this.subscription = this.parent.obsUpdateBadge.subscribe({
+			next: () => { this.formatBadgeTitle(); },
+		});
 	}
 	ngOnChanges(changes: SimpleChanges) {
 		this.formatBadgeTitle();

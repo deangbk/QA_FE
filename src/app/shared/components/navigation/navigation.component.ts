@@ -1,7 +1,9 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { DattaConfig } from 'app/app-config';
 
 import { NavigationItem } from './navigation';
+
+import { NavContentComponent } from './nav-content/nav-content.component';
 
 @Component({
 	selector: 'app-navigation',
@@ -9,6 +11,8 @@ import { NavigationItem } from './navigation';
 	styleUrls: ['./navigation.component.scss']
 })
 export class NavigationComponent {
+	@ViewChild('navContent') navContent: NavContentComponent;
+	
 	@Input() navItems: NavigationItem[] = [];
 	
 	@Output() NavCollapse = new EventEmitter();
@@ -34,5 +38,9 @@ export class NavigationComponent {
 		if (this.windowWidth < 992) {
 			this.NavCollapsedMob.emit();
 		}
+	}
+	
+	public formatNavItemsBadge() {
+		this.navContent.formatNavItemsBadge();
 	}
 }

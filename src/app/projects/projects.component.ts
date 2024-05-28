@@ -1,10 +1,11 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
 import { Location, LocationStrategy } from '@angular/common';
 import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 
 import { DattaConfig } from 'app/app-config';
 
 import { NavigationItem } from 'app/shared/components/navigation/navigation';
+import { NavigationComponent } from 'app/shared/components/navigation/navigation.component';
 import { NavigationPreset } from './navigation';
 
 import { DataService } from 'app/data/data.service';
@@ -17,6 +18,8 @@ import { ProjectService } from './service/project.service';
 	styleUrls: ['./projects.component.scss']
 })
 export class LayoutProjectsComponent implements OnInit {
+	@ViewChild('navigation') navigation: NavigationComponent;
+	
 	navItems: NavigationItem[];
 	
 	config;
@@ -84,6 +87,11 @@ export class LayoutProjectsComponent implements OnInit {
 		this.projectService.observeImagesLoad()
 			.subscribe(_ => {
 				this.logoUrl = this.projectService.urlProjectLogo;
+			});
+		this.projectService.observeContentLoad()
+			.subscribe(_ => {
+				//console.log('LayoutProjectsComponent -> formatNavItemsBadge');
+				this.navigation.formatNavItemsBadge();
 			});
 	}
 	
