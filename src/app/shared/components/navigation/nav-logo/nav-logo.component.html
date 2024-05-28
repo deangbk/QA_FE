@@ -1,18 +1,15 @@
 
-<div class="">
-	<div class="col-lg-8">
-		<div>
-			<i class="fas fa-cube fa-2x" *ngIf="navCollapsed"></i>
-			<ng-content *ngIf="!navCollapsed"></ng-content>
-		
-			<span class="b-title"></span>
-		</div>
-	</div>
-	<div class="col-lg-4">
+<div>
+	<!-- <i class="fas fa-cube fa-2x" *ngIf="navCollapsed"></i> -->
+	<ng-content></ng-content>
+	
+	<span class="b-title"></span>
+	
+	<!-- <div class="col-lg-4">
 		<a href="javascript:" class="mobile-menu" 
 			[ngClass]="{ on: navCollapsed }" id="mobile-collapse" 
 			(click)="navCollapse()">
 			<span></span>
 		</a>
-	</div>
+	</div> -->
 </div>

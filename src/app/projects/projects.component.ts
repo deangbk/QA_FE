@@ -23,8 +23,6 @@ export class LayoutProjectsComponent implements OnInit {
 	navItems: NavigationItem[];
 	
 	config;
-	navCollapsed;
-	navCollapsedMob: boolean;
 	windowWidth: number;
 	
 	logoUrl = '';
@@ -47,17 +45,6 @@ export class LayoutProjectsComponent implements OnInit {
 		}
 
 		this.windowWidth = window.innerWidth;
-
-		if (
-			current_url === baseHref + '/layout/collapse-menu' ||
-			current_url === baseHref + '/layout/box' ||
-			(this.windowWidth >= 992 && this.windowWidth <= 1024)
-		) {
-			DattaConfig.isCollapseMenu = true;
-		}
-
-		this.navCollapsed = this.windowWidth >= 992 ? DattaConfig.isCollapseMenu : false;
-		this.navCollapsedMob = false;
 	}
 	
 	ngOnInit() {
@@ -93,16 +80,5 @@ export class LayoutProjectsComponent implements OnInit {
 				//console.log('LayoutProjectsComponent -> formatNavItemsBadge');
 				this.navigation.formatNavItemsBadge();
 			});
-	}
-	
-	navMobClick() {
-		if (this.navCollapsedMob && !document.querySelector('app-navigation.pcoded-navbar')?.classList.contains('mob-open')) {
-			this.navCollapsedMob = !this.navCollapsedMob;
-			setTimeout(() => {
-				this.navCollapsedMob = !this.navCollapsedMob;
-			}, 100);
-		} else {
-			this.navCollapsedMob = !this.navCollapsedMob;
-		}
 	}
 }

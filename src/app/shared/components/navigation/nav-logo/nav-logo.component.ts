@@ -14,10 +14,10 @@ export class NavLogoComponent {
 		this.windowWidth = window.innerWidth;
 	}
 	
-	navCollapse() {
+	/* navCollapse() {
 		if (this.windowWidth >= 992) {
 			this.navCollapsed = !this.navCollapsed;
 			this.NavCollapse.emit();
 		}
-	}
+	} */
 }

@@ -1,12 +1,8 @@
 <app-navigation
 	class="pcoded-navbar"
 	[ngClass]="{
-		'navbar-collapsed': navCollapsed,
-		'theme-horizontal': this.config['layout'] === 'horizontal',
-		'mob-open': navCollapsedMob
+		'theme-horizontal': this.config['layout'] === 'horizontal'
 	}"
-	(NavCollapse)="this.navCollapsed = !this.navCollapsed"
-	(NavCollapsedMob)="navMobClick()"
 	[navItems]="navItems"
 	#navigation
 >
@@ -18,7 +14,7 @@
 	</div>
 </app-navigation>
 
-<app-nav-bar class="navbar pcoded-header navbar-expand-lg navbar-light" (NavCollapsedMob)="navMobClick()"></app-nav-bar>
+<app-nav-bar class="navbar pcoded-header navbar-expand-lg navbar-light"></app-nav-bar>
 <div class="pcoded-main-container">
 	<div class="pcoded-wrapper">
 		<div class="pcoded-content">
