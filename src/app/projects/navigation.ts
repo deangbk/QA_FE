@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { ProjectService } from 'app/data/project.service';
+import { ProjectService } from './service/project.service';
 
 import { NavigationBadgeFormatter, NavigationItem } from 'app/shared/components/navigation/navigation';
 

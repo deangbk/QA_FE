@@ -5,11 +5,8 @@ import { Observable } from 'rxjs';
 
 import { SecurityService } from './security.service';
 
-@Injectable({
-	providedIn: 'root'
-})
+@Injectable()
 export class JwtInterceptorService implements HttpInterceptor {
-	
 	constructor(private securityService: SecurityService) {
 	}
 	

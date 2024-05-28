@@ -11,8 +11,8 @@ import * as Rx from 'rxjs';
 import { Option, Some, None } from 'ts-results';
 
 import { DataService } from 'app/data/data.service';
-import { ProjectService } from 'app/data/project.service';
 import { SecurityService } from 'app/security/security.service';
+import { ProjectService } from '../service/project.service';
 
 import * as Models from 'app/data/data-models';
 import { Helpers } from 'app/helpers';

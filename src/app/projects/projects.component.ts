@@ -3,12 +3,13 @@ import { Location, LocationStrategy } from '@angular/common';
 import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 
 import { DattaConfig } from 'app/app-config';
+
 import { NavigationItem } from 'app/shared/components/navigation/navigation';
 import { NavigationPreset } from './navigation';
 
 import { DataService } from 'app/data/data.service';
-import { ProjectService } from 'app/data/project.service';
 import { SecurityService } from 'app/security/security.service';
+import { ProjectService } from './service/project.service';
 
 @Component({
 	selector: 'app-layout-projects',

@@ -29,9 +29,6 @@ import { ConfigurationComponent } from './projects/configuration/configuration.c
 import { SharedModule } from './shared/shared.module';
 import { ToggleFullScreenDirective } from './shared/full-screen/toggle-full-screen';
 
-import { DataService } from './data/data.service';
-import { TelemetryService } from './data/telemetry.service';
-import { SecurityService } from './security/security.service';
 import { JwtInterceptorService } from './security/jwt-interceptor.service';
 
 import { InvalidPageComponent } from './invalid-page/invalid-page.component';
@@ -90,14 +87,7 @@ const customNotifierOptions: NotifierOptions = {
 		InvalidPageComponent,
 	],
 	providers: [
-		DataService,
-		TelemetryService,
-		SecurityService,
-		{
-			provide: HTTP_INTERCEPTORS,
-			useClass: JwtInterceptorService,
-			multi: true,
-		}
+		
 	],
 	bootstrap: [AppComponent],
 	imports: [

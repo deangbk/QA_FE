@@ -5,11 +5,11 @@ import { catchError } from 'rxjs/operators';
 
 import { Helpers } from 'app/helpers';
 
-import { DataService } from './data.service';
+import { DataService } from 'app/data/data.service';
 import * as Models from 'app/data/data-models';
 
 @Injectable({
-	providedIn: 'root'
+	providedIn: 'root',
 })
 export class QuestionsService extends DataService {
 	public questionEdit(postID: number, edit: Models.RespPostData) {

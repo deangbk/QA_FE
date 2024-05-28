@@ -17,7 +17,8 @@ import { Helpers } from 'app/helpers';
 
 // third party
 import { FileUploadValidators, FileUploadModule } from '@iplab/ngx-file-upload';
-import { ProjectService } from 'app/data/project.service';
+
+import { ProjectService } from '../../service/project.service';
 
 
 @Component({

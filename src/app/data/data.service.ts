@@ -64,7 +64,9 @@ export class DataServiceBase {
 	}
 }
 
-@Injectable()
+@Injectable({
+	providedIn: 'root',
+})
 export class DataService extends DataServiceBase {
 	constructor(private _http: HttpClient) {
 		super(_http);
@@ -75,13 +77,17 @@ export class DataService extends DataServiceBase {
 	// -----------------------------------------------------
 	// Auth
 
-	public login(project: string, username: string, password: string) {
+	public login(project: string | null, username: string, password: string) {
 		var body: Models.ReqBodyLogin = {
 			email: username,
 			password: password,
 		};
+		var route = project != null ?
+			`auth/login/${project}` :
+			`auth/login`;
+		
 		return <Observable<Models.RespLoginToken>>
-			this._post(`auth/login/${project}`, body);
+			this._post(route, body);
 	}
 	
 	// -----------------------------------------------------

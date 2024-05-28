@@ -3,14 +3,16 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 import { NotifierService } from 'angular-notifier';
 
-import { DataServiceBase } from './data.service';
+import { DataServiceBase } from 'app/data/data.service';
 import * as Models from 'app/data/data-models';
 
 import { Helpers } from 'app/helpers';
 
 const DISPLAY_ERR = false;
 
-@Injectable()
+@Injectable({
+	providedIn: 'root',
+})
 export class TelemetryService extends DataServiceBase {
 	constructor(
 		_http: HttpClient,

@@ -8,8 +8,8 @@ import {
 } from '@angular/forms';
 
 import { DataService } from 'app/data/data.service';
-import { ProjectService } from 'app/data/project.service';
 import { SecurityService } from 'app/security/security.service';
+import { ProjectService } from '../service/project.service';
 
 import { Helpers } from 'app/helpers';
 
@@ -127,11 +127,10 @@ export class AuthSigninV2Component implements OnInit {
 		this.error = '';
 		this.loading = true;
 		this.securityService
-			.tryLogin(this.targetProject,
-				this.loginData.username, this.loginData.password)
+			.tryLogin(this.targetProject, this.loginData.username, this.loginData.password)
 			.subscribe({
 				next: x => {
-					this.securityService.saveLoginToken(x);
+					this.securityService.storeLoginToken(x);
 					
 					let tree = this.router.createUrlTree(this.getHomeNavigation());
 					let url = this.router.serializeUrl(tree);

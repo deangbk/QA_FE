@@ -17,7 +17,7 @@ export class AuthGuard implements CanActivate {
 		Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
 	{
 		const project = this.route.snapshot.paramMap.get('project');
-		console.log('AuthGuard: ', project, this.route);
+		//console.log('AuthGuard: ', project, this.route);
 		
 		if (this.securityService.isAuthenticated()) {
 			// Must have any of the provided roles to be granted access
@@ -28,6 +28,8 @@ export class AuthGuard implements CanActivate {
 					return true;
 			}
 		}
+		
+		console.log('AuthGuard', project);
 		
 		this.router.navigateByUrl(`/project/${project}/login`);
 		return false;

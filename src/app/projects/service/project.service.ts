@@ -5,7 +5,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { NotifierService } from 'angular-notifier';
 
 import * as Rx from 'rxjs';
-import { Observable } from 'rxjs';
 
 import { DataService } from 'app/data/data.service';
 import { SecurityService } from 'app/security/security.service';
@@ -13,9 +12,7 @@ import { SecurityService } from 'app/security/security.service';
 import * as Models from 'app/data/data-models';
 import { Helpers } from 'app/helpers';
 
-@Injectable({
-	providedIn: 'root'
-})
+@Injectable()
 export class ProjectService {
 	projectData: Models.RespProjectData;
 	projectContents: Models.RespCountContent;

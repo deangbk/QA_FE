@@ -8,31 +8,37 @@ import * as Models from 'app/data/data-models';
 
 import { Helpers } from 'app/helpers';
 
-const FIELD_TOKEN = 'l-token';
-const FIELD_EXP = 'l-expire';
-
-@Injectable({
-	providedIn: 'root'
-})
-export class SecurityService {
-	constructor(private dataService: DataService) { }
+@Injectable()
+export abstract class SecurityService {
+	public abstract getToken(): string;
+	protected abstract getExpiration(): string;
 	
-	private tokenData: any = null;
+	public abstract tryLogin(
+		project: string | null, username: string, password: string
+	)
+		: Observable<any>;
 	
-	public isValid(): boolean {
-		const token = localStorage.getItem(FIELD_TOKEN);
-		if (!token)
+	protected isIdentityValid(): boolean { return true; }
+	
+	public abstract storeLoginToken(authRes: any): void;
+	public abstract removeLoginToken(): void;
+	
+	// -----------------------------------------------------
+	
+	protected tokenData: any = null;
+	
+	public isValidToken(): boolean {
+		if (!this.getToken())
 			return false;
 		
-		const expiration = localStorage.getItem(FIELD_EXP);
-		const expirationDate = new Date(expiration);
+		const expirationDate = new Date(this.getExpiration());
 		if (expirationDate <= new Date())
 			return false;
 		
-		return true;
+		return this.isIdentityValid();
 	}
 	public isAuthenticated(): boolean {
-		let res = this.isValid();
+		let res = this.isValidToken();
 		if (!res) {
 			// Nuke the token if session expired
 			this.removeLoginToken();
@@ -40,30 +46,32 @@ export class SecurityService {
 		return res;
 	}
 	
-	public getToken(): string {
-		return localStorage.getItem(FIELD_TOKEN) ?? '';
-	}
-	
 	public getProjectId(): number {
-		if (!this.isValid()) return -1;
+		if (!this.isValidToken()) return -1;
 		
 		var idProj = this.getTokenField('proj');
 		return Number(idProj);
 	}
 	public getProjectName(): string {
-		if (!this.isValid()) return "";
+		if (!this.isValidToken()) return "";
 		
 		var name = this.getTokenField('projn');
 		return name ?? "";
 	}
 	public getUserID(): number {
-		if (!this.isValid()) return -1;
+		if (!this.isValidToken()) return -1;
 
 		var idClaim = this.getTokenField('id');
 		return Number(idClaim);
 	}
+	public getUserName(): string {
+		if (!this.isValidToken()) return "";
+
+		var name = this.getTokenField('name');
+		return name ?? "";
+	}
 	public hasRole(role: string): boolean {
-		if (!this.isValid()) return false;
+		if (!this.isValidToken()) return false;
 		
 		var rolesClaim = this.getTokenField('role');
 		if (Array.isArray(rolesClaim)) {
@@ -89,43 +97,15 @@ export class SecurityService {
 		return this.isAdmin() || this.isManager();
 	}
 	
-	public tryLogin(project: string, username: string, password: string):
-		Observable<Models.RespLoginToken>
-	{
-		return this.dataService.login(project, username, password);
-	}
-	public logout() {
-		this.removeLoginToken();
-	}
-	
-	public saveLoginToken(authRes: Models.RespLoginToken) {
-		this.removeLoginToken();
-		
-		//console.log('Storing tokens...'+authRes.Token+' '+authRes.Expiration);
-		
-		localStorage.setItem(FIELD_TOKEN, authRes.token);
-		localStorage.setItem(FIELD_EXP, authRes.expiration);
-	}
-	public removeLoginToken() {
-		console.log('Removing stored tokens...');
-		
-		localStorage.removeItem(FIELD_TOKEN);
-		localStorage.removeItem(FIELD_EXP);
-		
-		this.tokenData = null;
-	}
-	
-	private fetchToken() {
+	protected decodeToken() {
 		// Decode JWT token
 		const tokenData = Helpers.parseJwt(this.getToken());
 		this.tokenData = tokenData;
-
-		//console.log('Identity claims: ' + JSON.stringify(this.tokenData));
 	}
 	
-	public getTokenField(field: string): any | undefined {
+	protected getTokenField(field: string): any | undefined {
 		if (this.tokenData === null)
-			this.fetchToken();
+			this.decodeToken();
 		return this.tokenData[field];
 	}
 }

@@ -12,8 +12,8 @@ import { QuestionModalData, QuestionModalComponent } from '../modals/question-mo
 import { ConfirmDeleteModalComponent, ModalLine } from '../modals/confirm-delete-modal/confirm-delete-modal.component';
 
 import { DataService } from 'app/data/data.service';
-import { ProjectService } from 'app/data/project.service';
 import { SecurityService } from 'app/security/security.service';
+import { ProjectService } from '../service/project.service';
 
 import * as Models from 'app/data/data-models';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';

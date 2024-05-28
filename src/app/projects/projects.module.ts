@@ -4,6 +4,8 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MatIconModule } from '@angular/material/icon';
@@ -22,6 +24,12 @@ import { NgxEditorModule } from 'ngx-editor';
 // -----------------------------------------------------
 
 import { SharedModule } from '../shared/shared.module';
+
+import {
+	ProjectService, ProjectSecurityService,
+} from './service';
+import { SecurityService } from 'app/security/security.service';
+import { JwtInterceptorService } from 'app/security/jwt-interceptor.service';
 
 import { SearchPipe } from 'app/pipes/search.pipe';
 import { SearchBasicPipe } from 'app/pipes/search-basic.pipe';
@@ -144,9 +152,19 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 		ManageStaffComponent,
 	],
 	providers: [
+		ProjectService,
+		{
+			provide: SecurityService,
+			useClass: ProjectSecurityService
+		},
 		{
 			provide: NavigationBadgeFormatter,
 			useClass: ProjectNavigationBadgeFormatter
+		},
+		{
+			provide: HTTP_INTERCEPTORS,
+			useClass: JwtInterceptorService,
+			multi: true,
 		},
 	]
 })

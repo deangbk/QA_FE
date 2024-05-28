@@ -2,8 +2,8 @@
 import { NgModule, Type } from '@angular/core';
 import { LoadChildrenCallback, RouterModule, Routes } from '@angular/router';
 
-import { AuthGuard } from '../guards/auth.guard';
-import { ProjectGuard } from '../guards/project.guard';
+import { AuthGuard } from './guards/auth.guard';
+import { ProjectGuard } from './guards/project.guard';
 
 import { LayoutProjectsComponent } from './projects.component';
 

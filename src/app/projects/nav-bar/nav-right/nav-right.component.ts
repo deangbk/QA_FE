@@ -5,8 +5,8 @@ import { DattaConfig } from 'app/app-config';
 
 import { Router } from '@angular/router';
 
-import { ProjectService } from 'app/data/project.service';
 import { SecurityService } from 'app/security/security.service';
+import { ProjectService } from '../../service/project.service';
 
 @Component({
 	selector: 'app-nav-right',
@@ -50,8 +50,7 @@ export class NavRightComponent implements DoCheck {
 	}
 	
 	getUserName() {
-		let name: string = this.securityService.getTokenField('name');
-		return name;
+		return this.securityService.getUserName();
 	}
 	
 	onChatToggle(friend_id) {
@@ -68,7 +67,7 @@ export class NavRightComponent implements DoCheck {
 	}
 
 	callbackLogout() {
-		this.securityService.logout();
+		this.securityService.removeLoginToken();
 		this.router.navigate([`/login/sign`]);
 	}
 }
