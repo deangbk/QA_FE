@@ -60,6 +60,7 @@ export class ImageDisplayEditComponent implements OnInit, OnChanges {
 			this.urlResource = this.logo ?
 				this.projectService.urlProjectLogo :
 				this.projectService.urlProjectBanner;
+			this.loading = false;
 		}
 	}
 	
