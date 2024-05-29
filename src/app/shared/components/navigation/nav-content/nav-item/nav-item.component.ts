@@ -57,13 +57,7 @@ export class NavItemComponent implements OnInit, OnChanges, OnDestroy {
 		let orgUrl = this.item.url;
 		let links = orgUrl.split('/');
 		
-		// TODO: Remove this hack
-		if (!orgUrl.includes('login')) {
-			return ['../', this.securityService.getProjectName(), ...links];
-		}
-		else {
-			return ['../', ...links];
-		}
+		return [...links];
 	}
   
   closeOtherMenu(event: MouseEvent) {
