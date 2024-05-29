@@ -20,9 +20,9 @@ export class ProjectService {
 	urlProjectBanner: string = '';
 	urlProjectLogo: string = '';
 	
-	private obsProjectLoading: Rx.Subject<any>;
-	private obsContentLoading: Rx.Subject<any>;
-	private obsImagesLoading: Rx.Subject<any>;
+	private obsProjectLoading: Rx.Subject<void>;
+	private obsContentLoading: Rx.Subject<void>;
+	private obsImagesLoading: Rx.Subject<void>;
 	private loading = [false, false, false];
 	
 	constructor(
@@ -100,7 +100,7 @@ export class ProjectService {
 			this.projectData = res.val;
 			
 			this.loading[0] = false;
-			this.obsProjectLoading.next(null);
+			this.obsProjectLoading.next();
 		}
 		else {
 			let e = res.val as HttpErrorResponse;
@@ -114,7 +114,7 @@ export class ProjectService {
 			this.projectContents = res.val;
 
 			this.loading[1] = false;
-			this.obsContentLoading.next(null);
+			this.obsContentLoading.next();
 		}
 		else {
 			let e = res.val as HttpErrorResponse;
@@ -153,7 +153,7 @@ export class ProjectService {
 			[this.urlProjectLogo, this.urlProjectBanner] = res.val;
 			
 			this.loading[2] = false;
-			this.obsImagesLoading.next(null);
+			this.obsImagesLoading.next();
 		}
 		else {
 			const err = res.val as HttpErrorResponse;
