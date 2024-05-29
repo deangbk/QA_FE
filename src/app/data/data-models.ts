@@ -40,6 +40,10 @@ export interface ReqBodyEditUser {
 	display_name?: string,
 	tranches?: string[],
 }
+export interface ReqBodyChangePassword {
+	old: string,
+	new: string,
+}
 
 export interface ReqBodyAddNote {
 	text: string,

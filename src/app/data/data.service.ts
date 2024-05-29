@@ -175,9 +175,21 @@ export class DataService extends DataServiceBase {
 		return this._delete(`user/${userId}`);
 	}
 	
+	public userChangeSelfPassword(data: Models.ReqBodyChangePassword) {
+		return this._put(`edit/password`, data);
+	}
+	public userResetPassword(userId: number) {
+		return this._put(`reset/password/${userId}`);
+	}
+	
 	// -----------------------------------------------------
 	// Project
-
+	
+	public projectGetAll() {
+		return <Observable<Models.RespProjectData[]>>
+			this._get(`project/all`);
+	}
+	
 	public projectGetInfo() {
 		return <Observable<Models.RespProjectData>>
 			this._get(`project`);
