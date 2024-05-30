@@ -68,7 +68,7 @@ export class ManageProjectComponent implements OnInit {
 	}
 	async fetchTranches() {
 		let res = await Helpers.observableAsPromise(
-			this.dataService.trancheGetInfoEx());
+			this.dataService.projectGetTranchesEx());
 		if (res.ok) {
 			this.tranchesInfo = res.val;
 		}

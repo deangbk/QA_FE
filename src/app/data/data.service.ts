@@ -194,10 +194,27 @@ export class DataService extends DataServiceBase {
 		return <Observable<Models.RespProjectData>>
 			this._get(`project`);
 	}
+	public projectGetInfo2(id: number) {
+		return <Observable<Models.RespProjectData>>
+			this._get(`project/${id}`);
+	}
 	public projectGetTranches() {
 		return <Observable<Models.RespTrancheData[]>>
 			this._get(`project/tranches`);
 	}
+	public projectGetTranches2(id: number) {
+		return <Observable<Models.RespTrancheData[]>>
+			this._get(`project/${id}/tranches`);
+	}
+	public projectGetTranchesEx() {
+		return <Observable<Models.RespTrancheDataEx[]>>
+			this._get(`project/tranches/ex`);
+	}
+	public projectGetTranchesEx2(id: number) {
+		return <Observable<Models.RespTrancheDataEx[]>>
+			this._get(`project/${id}/tranches/ex`);
+	}
+	
 	public projectGetUsers(details = -1) {
 		var query = Helpers.bodyToHttpQueryString({},
 			["details", details]);
@@ -262,10 +279,6 @@ export class DataService extends DataServiceBase {
 			["details", details]);
 		return <Observable<Models.RespTrancheData>>
 			this._get(`tranche/${trancheId}?${query}`);
-	}
-	public trancheGetInfoEx() {
-		return <Observable<Models.RespTrancheDataEx[]>>
-			this._get(`tranche/ex`);
 	}
 	
 	public trancheCreate(create: Models.ReqBodyCreateTranche) {

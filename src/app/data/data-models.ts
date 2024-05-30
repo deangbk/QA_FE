@@ -220,7 +220,7 @@ export interface RespProjectData {
 	
 	// -----------------------------
 	
-	tranches?: RespTrancheData[],
+	tranches?: RespTrancheData[],	// Available only for superusers
 }
 
 export interface RespTrancheData {
