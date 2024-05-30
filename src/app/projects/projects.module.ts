@@ -79,11 +79,7 @@ import { ViewUsersComponent } from './staff-section/view-users/view-users.compon
 import { UploadDocumentsComponent } from './staff-section/upload-documents/upload-documents.component';
 import { ViewStatsComponent } from './staff-section/view-stats/view-stats.component';
 
-import { ManageProjectComponent } from './admin-section/manage-project/manage-project.component';
-import { ProjectEditInfoComponent } from './admin-section/manage-project/project-edit-info/project-edit-info.component';
-import { ProjectEditLogoComponent } from './admin-section/manage-project/project-edit-logo/project-edit-logo.component';
-import { ImageDisplayEditComponent } from './admin-section/manage-project/project-edit-logo/image-display-edit/image-display-edit.component';
-import { ProjectEditTranchesComponent } from './admin-section/manage-project/project-edit-tranches/project-edit-tranches.component';
+import { ManageProjectModule } from './admin-section/manage-project/manage-project.module';
 import { ManageStaffComponent } from './admin-section/manage-staff/manage-staff.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 
@@ -108,6 +104,8 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 		BreadcrumbModule,
 		
 		ChartsModule,
+		
+		ManageProjectModule,
 	],
 	declarations: [
 		ConfigurationComponent, LayoutProjectsComponent,
@@ -145,10 +143,6 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 		UploadDocumentsComponent,
 		ViewStatsComponent,
 		
-		ManageProjectComponent,
-		ProjectEditInfoComponent,
-		ProjectEditLogoComponent, ImageDisplayEditComponent,
-		ProjectEditTranchesComponent,
 		ManageStaffComponent,
 	],
 	providers: [

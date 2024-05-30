@@ -5,10 +5,7 @@ import {
 	ViewChild, ElementRef,
 } from '@angular/core';
 
-import { NgbDate, NgbDateStruct, NgbDateAdapter, NgbDatepicker } from '@ng-bootstrap/ng-bootstrap';
 import { NotifierService } from 'angular-notifier';
-
-import { Editor, Toolbar } from 'ngx-editor';
 
 import { DataService } from 'app/data/data.service';
 import { SecurityService } from 'app/security/security.service';
