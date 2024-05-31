@@ -70,8 +70,9 @@ export class AuthAdminComponent implements OnInit {
 				next: x => {
 					this.securityService.storeLoginToken(x);
 					if (this.securityService.hasRole('admin')) {
-						console.log('navigate home');
-						this.router.navigateByUrl('/admin/home');
+						let tree = this.router.createUrlTree(['/', 'admin', 'home']);
+						let url = this.router.serializeUrl(tree);
+						this.router.navigateByUrl(url);
 					}
 					else {
 						this.securityService.removeLoginToken();
