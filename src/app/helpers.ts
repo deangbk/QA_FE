@@ -13,20 +13,19 @@ export class Helpers {
 			return `No error`;
 		
 		let text = '';
-		if (!e.ok && e.error != null) {
+		if (!e.ok && e.error != null)
 			text = e.error.title;
-		}
-		else if (e.error != null) {
+		else if (e.error != null)
 			text = e.statusText;
-		}
-		
 		if (text === undefined)
 			text = e.error;
 		
-		if (e.status != 0)
-			return `(code ${e.status}) ${text}`;
-		else
+		if (e.status == 0)
 			return `Failed to connect to server`;
+		else if (e.status != 400)
+			return `${text}`;
+		else
+			return `(code ${e.status}) ${text}`;
 	}
 	
 	public static bodyToHttpFormData(body: any) {
