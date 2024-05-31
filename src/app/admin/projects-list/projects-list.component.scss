@@ -1,0 +1,28 @@
+
+.btn {
+	margin: 0px;
+	padding: 0.5em;
+}
+
+.btn-inner {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	.icon-edit {
+		font-size: 1em;
+	}
+}
+
+.table td {
+	vertical-align: middle;
+}
+
+.fa-plus {
+	margin-right: 0.5em;
+}
+
+#create-box > * {
+	margin: 0px;
+	padding: 8px;
+}

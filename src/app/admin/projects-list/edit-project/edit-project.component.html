@@ -1,0 +1,19 @@
+
+<div *ngIf="!dataReady">
+	<div class="d-flex justify-content-center">
+		<div class="spinner-border" role="status"></div>
+	</div>
+</div>
+<div class="container" *ngIf="dataReady">
+	
+	<div class="row">
+		<project-edit-info [project]="projectInfo" 
+			(onrefresh)="callbackRefresh()" />
+	</div> <!-- class="row" -->
+	
+	<div class="row">
+		<project-edit-tranches [tranches]="tranchesInfo" 
+			(onrefresh)="callbackRefresh()" />
+	</div> <!-- class="row" -->
+	
+</div> <!-- class="container" -->

@@ -32,6 +32,11 @@ import { LayoutAdminComponent } from './admin.component';
 import { AuthAdminComponent } from './admin-signin/admin-signin.component';
 import { AdminHomeComponent } from './admin-home/admin-home.component';
 
+import { ProjectsListComponent } from './projects-list/projects-list.component';
+import { EditProjectComponent } from './projects-list/edit-project/edit-project.component';
+
+import { ManageProjectModule } from '../projects/admin-section/manage-project/manage-project.module';
+
 // -----------------------------------------------------
 
 @NgModule({
@@ -44,16 +49,21 @@ import { AdminHomeComponent } from './admin-home/admin-home.component';
 
 		NgSelectModule,
 		FileUploadModule,
-
-		AdminRoutingModule,
-
+		
 		SharedModule,
+		
+		AdminRoutingModule,
+		
+		ManageProjectModule,
 	],
 	declarations: [
 		LayoutAdminComponent,
 		
 		AuthAdminComponent,
 		AdminHomeComponent,
+		
+		ProjectsListComponent,
+		EditProjectComponent,
 	],
 	providers: [
 		{
