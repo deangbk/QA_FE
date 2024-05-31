@@ -78,6 +78,15 @@ export class ProjectsListComponent implements OnInit {
 	}
 	
 	callbackCreateProject() {
-		// TODO: Implement project create modal
+		const modalRef = this.modalService.open(CreateProjectModalComponent,
+			{
+				backdrop: 'static',
+			}
+		);
+		const inst = modalRef.componentInstance as CreateProjectModalComponent;
+		
+		inst.ok.subscribe(() => {
+			// TODO: Refresh view
+		});
 	}
 }

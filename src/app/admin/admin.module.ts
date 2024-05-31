@@ -35,6 +35,8 @@ import { AdminHomeComponent } from './admin-home/admin-home.component';
 import { ProjectsListComponent } from './projects-list/projects-list.component';
 import { EditProjectComponent } from './projects-list/edit-project/edit-project.component';
 
+import { ModalsModule } from './modals/modals.module';
+
 import { ManageProjectModule } from '../projects/admin-section/manage-project/manage-project.module';
 
 // -----------------------------------------------------
@@ -53,6 +55,8 @@ import { ManageProjectModule } from '../projects/admin-section/manage-project/ma
 		SharedModule,
 		
 		AdminRoutingModule,
+		
+		ModalsModule,
 		
 		ManageProjectModule,
 	],
