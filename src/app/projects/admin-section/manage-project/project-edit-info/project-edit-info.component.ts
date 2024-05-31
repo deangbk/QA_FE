@@ -21,24 +21,41 @@ export class CustomDateAdapter extends NgbDateAdapter<string> {
 	fromModel(value: string | null): NgbDateStruct | null {
 		if (value) {
 			const date = new Date(value);
-			return {
-				day: date.getUTCDate(),
-				month: date.getUTCMonth(),
-				year: date.getUTCFullYear(),
-			};
+			return DateHelper.fromDate(date);
 		}
 		return null;
 	}
 	
 	toModel(ngDate: NgbDateStruct | null): string | null {
 		if (ngDate) {
-			let date = new Date();
-			date.setUTCDate(ngDate.day);
-			date.setUTCMonth(ngDate.month);
-			date.setUTCFullYear(ngDate.year);
+			const date = DateHelper.toDate(ngDate);
 			return date.toISOString();
 		}
 		return null;
+	}
+}
+
+export class DateHelper {
+	static fromDate(date: Date): NgbDateStruct {
+		return {
+			day: date.getUTCDate(),
+			month: date.getUTCMonth(),
+			year: date.getUTCFullYear(),
+		};
+	}
+	static toDate(ngDate: NgbDateStruct): Date {
+		let date = new Date();
+		date.setUTCDate(ngDate.day);
+		date.setUTCMonth(ngDate.month);
+		date.setUTCFullYear(ngDate.year);
+		return date;
+	}
+	
+	static fromISO(date: string): NgbDateStruct {
+		return DateHelper.fromDate(new Date(date));
+	}
+	static toISO(ngDate: NgbDateStruct): string {
+		return DateHelper.toDate(ngDate).toISOString();
 	}
 }
 
