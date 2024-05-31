@@ -10,7 +10,7 @@ export interface ReqBodyCreateProject {
 	company: string,
 	date_start: string,
 	date_end: string,
-	tranches: string,
+	tranches: string[],
 }
 export interface ReqBodyEditProject {
 	name?: string,
