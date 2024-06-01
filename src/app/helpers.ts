@@ -22,7 +22,7 @@ export class Helpers {
 		
 		if (e.status == 0)
 			return `Failed to connect to server`;
-		else if (e.status != 400)
+		else if (e.status == 400)
 			return `${text}`;
 		else
 			return `(code ${e.status}) ${text}`;
