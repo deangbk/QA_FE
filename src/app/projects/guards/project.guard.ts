@@ -11,9 +11,7 @@ import * as Rx from 'rxjs';
 import { SecurityService } from 'app/security/security.service';
 import { ProjectService } from '../service/project.service';
 
-@Injectable({
-	providedIn: 'root'
-})
+@Injectable()
 export class ProjectGuard implements CanActivate {
 	constructor(
 		private router: Router,

@@ -26,6 +26,8 @@ import { SecurityService } from 'app/security/security.service';
 import { JwtInterceptorService } from 'app/security/jwt-interceptor.service';
 import { AdminSecurityService } from './service/security.service';
 
+import { AdminGuard } from './guards/admin.guard';
+
 import { AdminRoutingModule } from './admin-routing.module';
 import { LayoutAdminComponent } from './admin.component';
 
@@ -70,6 +72,7 @@ import { ManageProjectModule } from '../projects/admin-section/manage-project/ma
 		EditProjectComponent,
 	],
 	providers: [
+		AdminGuard,
 		{
 			provide: SecurityService,
 			useClass: AdminSecurityService
