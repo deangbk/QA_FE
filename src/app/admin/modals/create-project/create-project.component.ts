@@ -81,6 +81,25 @@ export class CreateProjectModalComponent implements OnInit {
 
 	// -----------------------------------------------------
 	
+	get rangeStartDate(): NgbDateStruct[] {
+		let now = new Date();
+		let date = new Date(this.model.date_end);
+		date.setDate(date.getDate() - 1);
+		
+		return [
+			DateHelper.fromDate(now),
+			DateHelper.fromDate(date)
+		];
+	}
+	get rangeEndDate(): NgbDateStruct[] {
+		let date = new Date(this.model.date_start);
+		date.setDate(date.getDate() + 1);
+		
+		return [DateHelper.fromDate(date), null];
+	}
+	
+	// -----------------------------------------------------
+	
 	get f() {
 		return this.form.controls;
 	}

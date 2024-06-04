@@ -30,6 +30,7 @@
 				<h4>Start Date</h4>
 				<div class="input-group">
 					<input class="form-control" 
+						[minDate]="rangeStartDate[0]" [maxDate]="rangeStartDate[1]"
 						[(ngModel)]="model.date_start" ngbDatepicker readonly
 						#ds="ngbDatepicker" />
 					<button class="btn btn-secondary bi bi-calendar3" 
@@ -41,6 +42,7 @@
 				<h4>End Date</h4>
 				<div class="input-group">
 					<input class="form-control" 
+						[minDate]="rangeEndDate[0]" [maxDate]="rangeEndDate[1]"
 						[(ngModel)]="model.date_end" ngbDatepicker readonly
 						#de="ngbDatepicker" />
 					<button class="btn btn-secondary bi bi-calendar3" 
