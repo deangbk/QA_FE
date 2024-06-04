@@ -44,10 +44,7 @@ export class DateHelper {
 		};
 	}
 	static toDate(ngDate: NgbDateStruct): Date {
-		let date = new Date();
-		date.setUTCDate(ngDate.day);
-		date.setUTCMonth(ngDate.month);
-		date.setUTCFullYear(ngDate.year);
+		let date = new Date(ngDate.year, ngDate.month, ngDate.day);
 		return date;
 	}
 	
