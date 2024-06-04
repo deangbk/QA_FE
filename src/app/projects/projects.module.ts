@@ -31,6 +31,9 @@ import {
 import { SecurityService } from 'app/security/security.service';
 import { JwtInterceptorService } from 'app/security/jwt-interceptor.service';
 
+import { AuthGuard } from './guards/auth.guard';
+import { ProjectGuard } from './guards/project.guard';
+
 import { SearchPipe } from 'app/pipes/search.pipe';
 import { SearchBasicPipe } from 'app/pipes/search-basic.pipe';
 import { QApprovePipe } from 'app/pipes/q-approve.pipe';
@@ -147,6 +150,7 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 	],
 	providers: [
 		ProjectService,
+		AuthGuard, ProjectGuard,
 		{
 			provide: SecurityService,
 			useClass: ProjectSecurityService

@@ -4,9 +4,7 @@ import { Observable } from 'rxjs';
 import { SecurityService } from 'app/security/security.service';
 import { ActivatedRouteSnapshot, RouterStateSnapshot,UrlTree } from '@angular/router';
 
-@Injectable({
-	providedIn: 'root'
-})
+@Injectable()
 export class AuthGuard implements CanActivate {
 	constructor(
 		private router: Router, private route: ActivatedRoute, 
