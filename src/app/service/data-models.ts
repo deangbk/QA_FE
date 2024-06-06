@@ -4,6 +4,10 @@ export interface ReqBodyLogin {
 	password: string,
 }
 
+export interface ReqBodyCreateAdmin {
+	email: string,
+}
+
 export interface ReqBodyCreateProject {
 	name: string,
 	display_name: string,

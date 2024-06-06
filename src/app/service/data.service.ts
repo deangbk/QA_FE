@@ -119,6 +119,14 @@ export class DataService extends DataServiceBase {
 			this._delete(`admin/ungrant/manage/${projectId}/${userId}`);
 	}
 	
+	public adminGetAll() {
+		return <Observable<Models.RespUserData[]>>
+			this._get(`admin/list`);
+	}
+	public adminCreate(create: Models.ReqBodyCreateAdmin) {
+		return this._post(`admin/create`, create);
+	}
+	
 	// -----------------------------------------------------
 	// Manager
 
