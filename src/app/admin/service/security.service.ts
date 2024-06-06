@@ -15,7 +15,7 @@ const KEY_EXPIRE = 'EXP2';
 
 @Injectable()
 export class AdminSecurityService extends SecurityService {
-	constructor(private dataService: DataService) {
+	constructor() {
 		super();
 	}
 	

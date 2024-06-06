@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Observable } from 'rxjs';
-
 import { DataService } from 'app/data/data.service';
 import * as Models from 'app/data/data-models';
 
@@ -15,7 +13,7 @@ const KEY_EXPIRE = 'EXP';
 
 @Injectable()
 export class ProjectSecurityService extends SecurityService {
-	constructor(private dataService: DataService) {
+	constructor() {
 		super();
 	}
 	

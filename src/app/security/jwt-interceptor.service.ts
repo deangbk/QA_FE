@@ -1,26 +1,29 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
-import { SecurityService } from './security.service';
+import { TOKEN } from '../data/data.service';
+
+// Service that adds JWT bearer tokens to intercepted outbound requests
 
 @Injectable()
 export class JwtInterceptorService implements HttpInterceptor {
-	constructor(private securityService: SecurityService) {
+	constructor() {
 	}
 	
 	intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-		const token = this.securityService.getToken();
-		//console.log('token', token);
-		if (token) {
-			// Add the bearer token to the HTTP request
+		if (req.context.has(TOKEN)) {
+			const token = req.context.get(TOKEN) as string;
+			//console.log('JwtInterceptorService ctx token: ', token);
+			
 			req = req.clone({
 				setHeaders: {
 					Authorization: `Bearer ${token}`,
 				}
 			});
 		}
+		
 		return next.handle(req);
 	}
 }

@@ -86,9 +86,6 @@ const customNotifierOptions: NotifierOptions = {
 		
 		InvalidPageComponent,
 	],
-	providers: [
-		
-	],
 	bootstrap: [AppComponent],
 	imports: [
 		CommonModule,
@@ -104,8 +101,14 @@ const customNotifierOptions: NotifierOptions = {
 		
 		MatIconModule, MatButtonModule,
 		
-		ProjectsModule,
-		//AdminModule,
+		//AdminModule, ProjectsModule,
+	],
+	providers: [
+		{
+			provide: HTTP_INTERCEPTORS,
+			useClass: JwtInterceptorService,
+			multi: true,
+		},
 	],
 })
 export class AppModule {}

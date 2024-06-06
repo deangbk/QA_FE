@@ -3,7 +3,6 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -22,9 +21,12 @@ import { FileUploadModule } from '@iplab/ngx-file-upload';
 
 import { SharedModule } from '../shared/shared.module';
 
+import {
+	AdminSecurityService,
+	AdminDataService,
+} from './service';
+import { DataService } from 'app/data/data.service';
 import { SecurityService } from 'app/security/security.service';
-import { JwtInterceptorService } from 'app/security/jwt-interceptor.service';
-import { AdminSecurityService } from './service/security.service';
 
 import { AdminGuard } from './guards/admin.guard';
 
@@ -72,16 +74,16 @@ import { ManageProjectModule } from '../projects/admin-section/manage-project/ma
 		EditProjectComponent,
 	],
 	providers: [
-		AdminGuard,
+		{
+			provide: DataService,
+			useClass: AdminDataService
+		},
 		{
 			provide: SecurityService,
 			useClass: AdminSecurityService
 		},
-		{
-			provide: HTTP_INTERCEPTORS,
-			useClass: JwtInterceptorService,
-			multi: true,
-		},
+		
+		AdminGuard,
 	],
 })
 export class AdminModule { }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpContext, HttpContextToken, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -8,6 +8,8 @@ import { environment } from 'environments/environment';
 
 import { Helpers } from 'app/helpers';
 import * as Models from 'app/data/data-models';
+
+export const TOKEN = new HttpContextToken<string>(() => null);
 
 export class DataServiceBase {
 	baseUrl: string = '';
@@ -18,6 +20,14 @@ export class DataServiceBase {
 		this.baseUrl = environment.apiUrl;
 	}
 
+	// -----------------------------------------------------
+
+	// Classes extending DataServiceBase may provide their own HTTP context tokens
+	// HTTP context tokens will be read by the HTTP interceptor classes
+	protected getContext(): HttpContext {
+		return new HttpContext();
+	}
+	
 	// -----------------------------------------------------
 
 	protected handleError(error: HttpErrorResponse) {
@@ -60,9 +70,6 @@ export class DataServiceBase {
 	}
 }
 
-@Injectable({
-	providedIn: 'root',
-})
 export class DataService extends DataServiceBase {
 	constructor(http: HttpClient) {
 		super(http);

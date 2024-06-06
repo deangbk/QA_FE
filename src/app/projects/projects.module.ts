@@ -4,7 +4,6 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -27,9 +26,10 @@ import { SharedModule } from '../shared/shared.module';
 
 import {
 	ProjectService, ProjectSecurityService,
+	ProjectDataService,
 } from './service';
+import { DataService } from 'app/data/data.service';
 import { SecurityService } from 'app/security/security.service';
-import { JwtInterceptorService } from 'app/security/jwt-interceptor.service';
 
 import { AuthGuard } from './guards/auth.guard';
 import { ProjectGuard } from './guards/project.guard';
@@ -149,20 +149,21 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 		ManageStaffComponent,
 	],
 	providers: [
-		ProjectService,
-		AuthGuard, ProjectGuard,
+		{
+			provide: DataService,
+			useClass: ProjectDataService
+		},
 		{
 			provide: SecurityService,
 			useClass: ProjectSecurityService
 		},
+		
+		ProjectService,
+		AuthGuard, ProjectGuard,
+		
 		{
 			provide: NavigationBadgeFormatter,
 			useClass: ProjectNavigationBadgeFormatter
-		},
-		{
-			provide: HTTP_INTERCEPTORS,
-			useClass: JwtInterceptorService,
-			multi: true,
 		},
 	]
 })

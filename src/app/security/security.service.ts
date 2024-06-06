@@ -8,7 +8,6 @@ import * as Models from 'app/data/data-models';
 
 import { Helpers } from 'app/helpers';
 
-@Injectable()
 export abstract class SecurityService {
 	public abstract getToken(): string;
 	protected abstract getExpiration(): string;
