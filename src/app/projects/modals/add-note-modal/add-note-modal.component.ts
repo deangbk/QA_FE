@@ -8,7 +8,7 @@ import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { Option, Some, None } from 'ts-results';
 
-import * as Models from 'app/data/data-models';
+import * as Models from 'app/service/data-models';
 import { Helpers } from 'app/helpers';
 
 @Component({

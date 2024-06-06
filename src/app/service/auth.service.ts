@@ -3,12 +3,12 @@ import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
-import { DataService } from 'app/data/data.service';
-import * as Models from 'app/data/data-models';
+import { DataService } from 'app/service/data.service';
+import * as Models from 'app/service/data-models';
 
 import { Helpers } from 'app/helpers';
 
-export abstract class SecurityService {
+export abstract class AuthService {
 	public abstract getToken(): string;
 	protected abstract getExpiration(): string;
 	

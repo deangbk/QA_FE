@@ -8,7 +8,7 @@ import { NotifierService } from 'angular-notifier';
  
 import * as Rx from 'rxjs';
 
-import { SecurityService } from 'app/security/security.service';
+import { AuthService } from 'app/service/auth.service';
 import { ProjectService } from '../service/project.service';
 
 @Injectable()
@@ -19,7 +19,7 @@ export class ProjectGuard implements CanActivate {
 		private notifier: NotifierService,
 		
 		private projectService: ProjectService,
-		private securityService: SecurityService,
+		private authService: AuthService,
 	) { }
 	
 	canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot):
@@ -29,8 +29,8 @@ export class ProjectGuard implements CanActivate {
 		//console.log('ProjectGuard: ', next, next.params);
 		
 		let projectInRoute = next.paramMap.get('project');
-		if (projectInRoute != null && this.securityService.isValidToken()) {
-			let expected = this.securityService.getProjectName().toLowerCase();
+		if (projectInRoute != null && this.authService.isValidToken()) {
+			let expected = this.authService.getProjectName().toLowerCase();
 			//console.log(expected, projectInRoute);
 			
 			if (expected == projectInRoute.toLowerCase())

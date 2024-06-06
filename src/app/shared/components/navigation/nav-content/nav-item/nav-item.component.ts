@@ -7,7 +7,7 @@ import { DattaConfig } from 'app/app-config';
 
 import * as Rx from 'rxjs';
 
-import { SecurityService } from 'app/security/security.service';
+import { AuthService } from 'app/service/auth.service';
 
 import { NavContentComponent } from '../nav-content.component';
 
@@ -30,7 +30,7 @@ export class NavItemComponent implements OnInit, OnChanges, OnDestroy {
 		private router: Router,
 		private location: Location, private locationStrategy: LocationStrategy,
 		
-		private securityService: SecurityService,
+		private authService: AuthService,
 		@Optional() private formatter: NavigationBadgeFormatter,
 	) {
 		this.themeLayout = DattaConfig.layout;

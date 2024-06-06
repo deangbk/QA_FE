@@ -8,8 +8,7 @@ import {
 	Validators, ValidatorFn, AbstractControl, ValidationErrors,
 } from '@angular/forms';
 
-import { DataService } from 'app/data/data.service';
-import { SecurityService } from 'app/security/security.service';
+import { DataService, AuthService } from 'app/service';
 
 import { Helpers } from 'app/helpers';
 
@@ -32,7 +31,7 @@ export class AuthAdminComponent implements OnInit {
 		private formBuilder: FormBuilder,
 		
 		private dataService: DataService,
-		private securityService: SecurityService,
+		private authService: AuthService,
 	) {
 		
 	}
@@ -68,15 +67,15 @@ export class AuthAdminComponent implements OnInit {
 			.login(null, formUsername.value ?? '', formPassword.value ?? '')
 			.subscribe({
 				next: x => {
-					this.securityService.storeLoginToken(x);
-					if (this.securityService.hasRole('admin')) {
+					this.authService.storeLoginToken(x);
+					if (this.authService.hasRole('admin')) {
 						let tree = this.router.createUrlTree(['/', 'admin', 'home']);
 						let url = this.router.serializeUrl(tree);
 						//console.log(url);
 						this.router.navigateByUrl(url);
 					}
 					else {
-						this.securityService.removeLoginToken();
+						this.authService.removeLoginToken();
 						formUsername.reset();
 						formPassword.reset();
 						

@@ -31,11 +31,11 @@
 					<h3>Please log in with your provided credentials</h3>
 				</div>
 				
-				<div *ngIf="securityService.isValidToken()" id="loggedInInfo">
+				<div *ngIf="authService.isValidToken()" id="loggedInInfo">
 					<div class="alert alert-info mt-3 mb-0">
 						<p>
 							You are currently logged in to 
-							<i>{{securityService.getProjectName()}}</i>
+							<i>{{authService.getProjectName()}}</i>
 						</p>
 						<p>
 							Click 

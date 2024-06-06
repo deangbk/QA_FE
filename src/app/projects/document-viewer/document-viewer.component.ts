@@ -8,11 +8,8 @@ import { ActivatedRoute } from '@angular/router';
 
 import { Md5 } from 'ts-md5';
 
-import { DataService } from 'app/data/data.service';
-import { TelemetryService } from 'app/data/telemetry.service';
-import { SecurityService } from 'app/security/security.service';
-
-import * as Models from 'app/data/data-models';
+import { DataService, TelemetryService, AuthService } from 'app/service';
+import * as Models from 'app/service/data-models';
 
 import { Helpers } from 'app/helpers';
 
@@ -37,9 +34,9 @@ export class DocumentViewerComponent implements OnInit, AfterViewInit {
 		
 		private dataService: DataService,
 		private telemetryService: TelemetryService,
-		private securityService: SecurityService,
+		private authService: AuthService,
 	) { 
-		this.isElevated = securityService.isElevated();
+		this.isElevated = authService.isElevated();
 	}
 	
 	documentReady = false;
@@ -108,7 +105,7 @@ export class DocumentViewerComponent implements OnInit, AfterViewInit {
 						
 						var hashKeyBytes: number[];
 						{
-							const userID = this.securityService.getUserID();
+							const userID = this.authService.getUserID();
 							const md5 = Md5.hashStr(userID.toString());
 							hashKeyBytes = Array.from(
 								Helpers.chunkString(md5, 2), c => parseInt(c, 16));

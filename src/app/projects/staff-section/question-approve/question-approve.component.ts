@@ -1,9 +1,9 @@
 import { Component, OnInit, TemplateRef, Input } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
-import * as Models from 'app/data/data-models'; // Import your models
+import * as Models from 'app/service/data-models'; // Import your models
 import { has } from 'lodash';
-import { createDefaultRespPostData, initReqBodyGetPosts } from 'app/data/model-initializers';
+import { createDefaultRespPostData, initReqBodyGetPosts } from 'app/service/model-initializers';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { Observable, of, switchMap, tap } from 'rxjs';
 import { NgbModal, NgbPopover } from '@ng-bootstrap/ng-bootstrap';
@@ -13,8 +13,7 @@ import * as XLSX from 'xlsx';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
 
-import { DataService } from 'app/data/data.service';
-import { SecurityService } from 'app/security/security.service';
+import { DataService, AuthService } from 'app/service';
 
 @Component({
 	selector: 'app-question-approve',
@@ -50,7 +49,7 @@ export class QuestionApproveComponent implements OnInit {
 		private router: Router, private route: ActivatedRoute,
 		
 		private dataService: DataService,
-		private securityService: SecurityService,
+		private authService: AuthService,
 		
 		private notifier: NotifierService,
 	) {
@@ -73,8 +72,8 @@ export class QuestionApproveComponent implements OnInit {
 			category: ''
 
 		};
-		this.isManager = this.securityService.isManager();
-		this.isUser = this.securityService.isUser();
+		this.isManager = this.authService.isManager();
+		this.isUser = this.authService.isUser();
 		//console.log("Is Manager:" + this.isManager);
 		//console.log("Is User:" + this.isUser);
 		

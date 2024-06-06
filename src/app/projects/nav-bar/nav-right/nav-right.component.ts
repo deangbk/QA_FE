@@ -5,7 +5,7 @@ import { DattaConfig } from 'app/app-config';
 
 import { Router } from '@angular/router';
 
-import { SecurityService } from 'app/security/security.service';
+import { AuthService } from 'app/service';
 import { ProjectService } from '../../service/project.service';
 
 @Component({
@@ -37,7 +37,7 @@ export class NavRightComponent implements DoCheck {
 		private router: Router,
 		
 		private projectService: ProjectService,
-		private securityService: SecurityService,
+		private authService: AuthService,
 	) {
 		config.placement = 'bottom-right';
 		this.visibleUserList = false;
@@ -50,7 +50,7 @@ export class NavRightComponent implements DoCheck {
 	}
 	
 	getUserName() {
-		return this.securityService.getUserName();
+		return this.authService.getUserName();
 	}
 	
 	onChatToggle(friend_id) {
@@ -67,7 +67,7 @@ export class NavRightComponent implements DoCheck {
 	}
 
 	callbackLogout() {
-		this.securityService.removeLoginToken();
+		this.authService.removeLoginToken();
 		this.router.navigate([`/login/sign`]);
 	}
 }

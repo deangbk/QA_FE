@@ -7,13 +7,10 @@ import {
 	Validators, ValidatorFn, AbstractControl, ValidationErrors,
 } from '@angular/forms';
 
-import { DataService } from 'app/data/data.service';
-import { SecurityService } from 'app/security/security.service';
+import { DataService, AuthService } from 'app/service';
 import { ProjectService } from '../service/project.service';
 
 import { Helpers } from 'app/helpers';
-
-//import { AuthenticationService } from 'theme/shared/service/authentication.service';
 
 interface LoginForm {
 	username: string,
@@ -52,7 +49,7 @@ export class AuthSigninV2Component implements OnInit {
 		
 		private dataService: DataService,
 		private projectService: ProjectService,
-		public securityService: SecurityService,
+		public authService: AuthService,
 	) {
 		
 	}
@@ -105,7 +102,7 @@ export class AuthSigninV2Component implements OnInit {
 	}
 	
 	getHomeNavigation() {
-		let projectName = this.securityService.getProjectName();
+		let projectName = this.authService.getProjectName();
 		return ['/', 'project', projectName, 'home'];
 	}
 	
@@ -130,7 +127,7 @@ export class AuthSigninV2Component implements OnInit {
 			.login(this.targetProject, this.loginData.username, this.loginData.password)
 			.subscribe({
 				next: x => {
-					this.securityService.storeLoginToken(x);
+					this.authService.storeLoginToken(x);
 					
 					let tree = this.router.createUrlTree(this.getHomeNavigation());
 					let url = this.router.serializeUrl(tree);

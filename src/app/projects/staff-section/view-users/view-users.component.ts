@@ -10,10 +10,9 @@ import { Observable } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotifierService } from 'angular-notifier';
 
-import { DataService } from 'app/data/data.service';
-import { SecurityService } from 'app/security/security.service';
+import { DataService, AuthService } from 'app/service';
+import * as Models from 'app/service/data-models';
 
-import * as Models from 'app/data/data-models';
 import { Helpers } from 'app/helpers';
 
 import { ConfirmDeleteModalComponent, ModalLine } from '../../modals/confirm-delete-modal/confirm-delete-modal.component';
@@ -31,14 +30,14 @@ export class ViewUsersComponent implements OnInit {
 	
 	constructor(
 		private dataService: DataService,
-		private securityService: SecurityService,
+		private authService: AuthService,
 		
 		private modalService: NgbModal,
 		private notifier: NotifierService,
 	) {
-		this.projectId = securityService.getProjectId();
-		this.isAdmin = securityService.isAdmin();
-		this.isElevated = securityService.isElevated();
+		this.projectId = authService.getProjectId();
+		this.isAdmin = authService.isAdmin();
+		this.isElevated = authService.isElevated();
 	}
 
 	dataReady = false;

@@ -1,17 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpContext, HttpContextToken } from '@angular/common/http';
 
-import { DataService, TOKEN } from 'app/data/data.service';
-import { SecurityService } from 'app/security/security.service';
+import { DataService, TOKEN, AuthService } from 'app/service';
 
 // Provides auth token by reading from injected SecurityService
-// Injected SecurityService should be AdminSecurityService
+// Injected SecurityService should be AdminAuthService
 
 @Injectable()
 export class AdminDataService extends DataService {
 	constructor(
 		_http: HttpClient,
-		private securityService: SecurityService
+		private authService: AuthService
 	) {
 		super(_http);
 		console.log('AdminDataService');
@@ -20,7 +19,7 @@ export class AdminDataService extends DataService {
 	override getContext(): HttpContext {
 		let ctx = new HttpContext();
 		
-		const token = this.securityService.getToken();
+		const token = this.authService.getToken();
 		if (token) {
 			ctx.set(TOKEN, token);
 		}

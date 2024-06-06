@@ -4,8 +4,7 @@ import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 
 import { DattaConfig } from 'app/app-config';
 
-import { DataService } from 'app/data/data.service';
-import { SecurityService } from 'app/security/security.service';
+import { DataService } from 'app/service';
 
 import { NavigationItem } from 'app/shared/components/navigation/navigation';
 import { NavigationPreset } from './navigation';
@@ -26,7 +25,6 @@ export class LayoutAdminComponent implements OnInit {
 		private router: Router,
 		
 		private dataService: DataService,
-		private securityService: SecurityService,
 	) {
 		this.config = DattaConfig;
 		

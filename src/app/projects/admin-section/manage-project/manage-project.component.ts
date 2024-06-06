@@ -8,12 +8,12 @@ import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotifierService } from 'angular-notifier';
 
-import { DataService } from 'app/data/data.service';
-import { SecurityService } from 'app/security/security.service';
-import { ProjectService } from '../../service/project.service';
+import { DataService, AuthService } from 'app/service';
+import * as Models from 'app/service/data-models';
 
-import * as Models from 'app/data/data-models';
 import { Helpers } from 'app/helpers';
+
+import { ProjectService } from 'app/projects/service/project.service';
 
 @Component({
 	selector: 'app-manage-project',
@@ -26,12 +26,12 @@ export class ManageProjectComponent implements OnInit {
 	constructor(
 		private dataService: DataService,
 		private projectService: ProjectService,
-		private securityService: SecurityService,
+		private authService: AuthService,
 		
 		private modalService: NgbModal,
 		private notifier: NotifierService,
 	) {
-		this.projectId = securityService.getProjectId();
+		this.projectId = authService.getProjectId();
 	}
 	
 	dataReady = false;

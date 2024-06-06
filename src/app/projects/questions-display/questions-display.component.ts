@@ -1,11 +1,11 @@
 import { Component, OnInit, TemplateRef, Input } from '@angular/core';
 
-import { DataService } from 'app/data/data.service';
-import { SecurityService } from 'app/security/security.service';
+import { DataService, AuthService } from 'app/service';
+
 import { CommonModule } from '@angular/common';
-import * as Models from 'app/data/data-models'; // Import your models
+import * as Models from 'app/service/data-models'; // Import your models
 import { has } from 'lodash';
-import { createDefaultRespPostData, initReqBodyGetPosts } from 'app/data/model-initializers';
+import { createDefaultRespPostData, initReqBodyGetPosts } from 'app/service/model-initializers';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { Observable, of,switchMap,tap } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -52,7 +52,7 @@ export class QuestionsDisplayComponent implements OnInit {
 	//   I genuinely cannot make heads of tails of your code (x_x)
 	
 	constructor(
-		private dataService: DataService, private sService: SecurityService,
+		private dataService: DataService, private sService: AuthService,
 		public modalService: NgbModal,) { }
 	
 	ngOnInit() {

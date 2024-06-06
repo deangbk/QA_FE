@@ -4,8 +4,7 @@ import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
-import { DataService } from 'app/data/data.service';
-import { SecurityService } from 'app/security/security.service';
+import { DataService, AuthService } from 'app/service';
 
 import { Helpers } from 'app/helpers';
 
@@ -19,7 +18,7 @@ export class InvalidPageComponent implements OnInit {
 		private route: ActivatedRoute,
 		private router: Router,
 		
-		private securityService: SecurityService,
+		private authService: AuthService,
 	) {
 	
 	}

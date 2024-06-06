@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { DataService } from 'app/data/data.service';
-import * as Models from 'app/data/data-models';
-
-import { SecurityService } from 'app/security/security.service';
+import { DataService, AuthService } from 'app/service';
+import * as Models from 'app/service/data-models';
 
 import { Helpers } from 'app/helpers';
 
@@ -12,7 +10,7 @@ const KEY_TOKEN = 'TOKEN';
 const KEY_EXPIRE = 'EXP';
 
 @Injectable()
-export class ProjectSecurityService extends SecurityService {
+export class ProjectAuthService extends AuthService {
 	constructor() {
 		super();
 	}

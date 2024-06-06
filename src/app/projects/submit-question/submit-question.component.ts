@@ -6,14 +6,14 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 import { NotifierService } from 'angular-notifier';
 
-import { DataService } from 'app/data/data.service';
-import { SecurityService } from 'app/security/security.service';
-import { ProjectService } from '../service/project.service';
+import { Observable } from 'rxjs';
 
-import * as Models from 'app/data/data-models';
+import { DataService, AuthService } from 'app/service';
+import * as Models from 'app/service/data-models';
 
 import { Helpers } from 'app/helpers';
-import { Observable } from 'rxjs';
+
+import { ProjectService } from '../service/project.service';
 
 class AddQuestionEntry {
 	isAccount: boolean;
@@ -41,12 +41,12 @@ export class SubmitQuestionComponent implements OnInit {
 	constructor(
 		private dataService: DataService,
 		private projectService: ProjectService,
-		private securityService: SecurityService,
+		private authService: AuthService,
 		
 		private notifier: NotifierService,
 	) {
-		this.projectId = securityService.getProjectId();
-		this.isElevated = securityService.isElevated();
+		this.projectId = authService.getProjectId();
+		this.isElevated = authService.isElevated();
 	}
 	
 	buttonLoading = '';

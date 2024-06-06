@@ -8,9 +8,8 @@ import { NavigationItem } from 'app/shared/components/navigation/navigation';
 import { NavigationComponent } from 'app/shared/components/navigation/navigation.component';
 import { NavigationPreset } from './navigation';
 
-import { DataService } from 'app/data/data.service';
-import { SecurityService } from 'app/security/security.service';
-import { ProjectService } from './service/project.service';
+import { DataService, AuthService } from 'app/service';
+import { ProjectService } from './service';
 
 @Component({
 	selector: 'app-layout-projects',
@@ -34,7 +33,7 @@ export class LayoutProjectsComponent implements OnInit {
 		
 		private dataService: DataService,
 		private projectService: ProjectService,
-		private securityService: SecurityService,
+		private authService: AuthService,
 	) {
 		this.config = DattaConfig;
 		
@@ -53,9 +52,9 @@ export class LayoutProjectsComponent implements OnInit {
 		{
 			this.navItems = NavigationPreset.User;
 		
-			if (this.securityService.isAdmin())
+			if (this.authService.isAdmin())
 				this.navItems = NavigationPreset.Admin;
-			else if (this.securityService.isManager())
+			else if (this.authService.isManager())
 				this.navItems = NavigationPreset.Staff;
 		}
 		

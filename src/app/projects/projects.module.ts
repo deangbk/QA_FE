@@ -25,11 +25,10 @@ import { NgxEditorModule } from 'ngx-editor';
 import { SharedModule } from '../shared/shared.module';
 
 import {
-	ProjectService, ProjectSecurityService,
+	ProjectService, ProjectAuthService,
 	ProjectDataService,
 } from './service';
-import { DataService } from 'app/data/data.service';
-import { SecurityService } from 'app/security/security.service';
+import { DataService, AuthService } from 'app/service';
 
 import { AuthGuard } from './guards/auth.guard';
 import { ProjectGuard } from './guards/project.guard';
@@ -154,8 +153,8 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 			useClass: ProjectDataService
 		},
 		{
-			provide: SecurityService,
-			useClass: ProjectSecurityService
+			provide: AuthService,
+			useClass: ProjectAuthService
 		},
 		
 		ProjectService,

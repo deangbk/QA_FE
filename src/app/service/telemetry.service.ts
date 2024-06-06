@@ -3,8 +3,8 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 import { NotifierService } from 'angular-notifier';
 
-import { DataServiceBase } from 'app/data/data.service';
-import * as Models from 'app/data/data-models';
+import { DataServiceBase } from 'app/service/data.service';
+import * as Models from 'app/service/data-models';
 
 import { Helpers } from 'app/helpers';
 

@@ -6,19 +6,18 @@ import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
+import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { NotifierService } from 'angular-notifier';
 
 import { QuestionModalData, QuestionModalComponent } from '../modals/question-modal/question-modal.component';
 import { ConfirmDeleteModalComponent, ModalLine } from '../modals/confirm-delete-modal/confirm-delete-modal.component';
 
-import { DataService } from 'app/data/data.service';
-import { SecurityService } from 'app/security/security.service';
-import { ProjectService } from '../service/project.service';
-
-import * as Models from 'app/data/data-models';
-import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { DataService, AuthService } from 'app/service';
+import * as Models from 'app/service/data-models';
 
 import { Helpers } from 'app/helpers';
+
+import { ProjectService } from '../service/project.service';
 
 class SearchFilter {
 	public searchText: string;
@@ -65,7 +64,7 @@ export class RecentDocumentsComponent implements OnInit {
 	constructor(
 		private dataService: DataService,
 		private projectService: ProjectService,
-		private securityService: SecurityService,
+		private authService: AuthService,
 		
 		private location: Location,
 		private router: Router,
@@ -75,8 +74,8 @@ export class RecentDocumentsComponent implements OnInit {
 		
 		private notifier: NotifierService,
 	) {
-		this.projectId = securityService.getProjectId();
-		this.isElevated = securityService.isElevated();
+		this.projectId = authService.getProjectId();
+		this.isElevated = authService.isElevated();
 		
 		this.filter = {
 			searchText: '',

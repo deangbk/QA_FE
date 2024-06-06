@@ -8,10 +8,8 @@ import { NotifierService } from 'angular-notifier';
 
 import * as XLSX from 'xlsx';
 
-import { DataService } from 'app/data/data.service';
-import { SecurityService } from 'app/security/security.service';
-
-import * as Models from 'app/data/data-models';
+import { DataService, AuthService } from 'app/service';
+import * as Models from 'app/service/data-models';
 
 import { Helpers } from 'app/helpers';
 
@@ -36,12 +34,12 @@ export class AddUsersComponent implements OnInit {
 	
 	constructor(
 		private dataService: DataService,
-		private securityService: SecurityService,
+		private authService: AuthService,
 		
 		private notifier: NotifierService,
 	) {
-		this.projectId = securityService.getProjectId();
-		this.isAdmin = securityService.isAdmin();
+		this.projectId = authService.getProjectId();
+		this.isAdmin = authService.isAdmin();
 	}
 	
 	uploaded = false;

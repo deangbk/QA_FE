@@ -1,3 +1,3 @@
 export * from './data.service';
-export * from './security.service';
+export * from './auth.service';
 export * from './project.service';

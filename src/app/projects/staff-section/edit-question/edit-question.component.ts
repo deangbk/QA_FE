@@ -2,13 +2,12 @@
 import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit, TemplateRef, Input } from '@angular/core';
 
-import { DataService } from 'app/data/data.service';
-import { SecurityService } from 'app/security/security.service';
-import * as Models from 'app/data/data-models'; // Import your models
+import { DataService, AuthService } from 'app/service';
+import * as Models from 'app/service/data-models'; // Import your models
 import { NgbModal, NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { Mode } from 'fs';
-import { createDefaultRespPostData, initReqBodyGetPosts } from 'app/data/model-initializers';
+import { createDefaultRespPostData, initReqBodyGetPosts } from 'app/service/model-initializers';
 import { NotifierService } from 'angular-notifier';
 import { ConfirmDeleteModalComponent, ModalLine } from '../../modals/confirm-delete-modal/confirm-delete-modal.component';
 import { Helpers } from 'app/helpers';

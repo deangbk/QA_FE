@@ -7,15 +7,15 @@ import {
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotifierService } from 'angular-notifier';
 
-import { DataService } from 'app/data/data.service';
-import { SecurityService } from 'app/security/security.service';
+import { Observable } from 'rxjs';
 
-import * as Models from 'app/data/data-models';
+import { DataService, AuthService } from 'app/service';
+import * as Models from 'app/service/data-models';
+
 import { Helpers } from 'app/helpers';
 
 import { ModalLine, ConfirmDeleteModalComponent } from 'app/projects/modals/confirm-delete-modal/confirm-delete-modal.component';
 import { TrancheEditModalComponent, FnCheckDuplicate } from 'app/projects/modals/tranche-edit-modal/tranche-edit-modal.component';
-import { Observable } from 'rxjs';
 
 @Component({
 	selector: 'project-edit-tranches',
@@ -28,7 +28,7 @@ export class ProjectEditTranchesComponent implements OnInit {
 	
 	constructor(
 		private dataService: DataService,
-		private securityService: SecurityService,
+		private authService: AuthService,
 		
 		private modalService: NgbModal,
 		private notifier: NotifierService,

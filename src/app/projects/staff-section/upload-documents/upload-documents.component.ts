@@ -5,13 +5,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { initializeFileUploadDTO, initializeRespAccountData, initializeRespTrancheData }
-	from 'app/data/model-initializers';
+	from 'app/service/model-initializers';
 import { NotifierService } from 'angular-notifier';
 
-import { DataService } from 'app/data/data.service';
-import { SecurityService } from 'app/security/security.service';
-
-import * as Models from 'app/data/data-models';
+import { DataService, AuthService } from 'app/service';
+import * as Models from 'app/service/data-models';
 
 import { Helpers } from 'app/helpers';
 
@@ -46,7 +44,7 @@ private notifier: NotifierService;
 
 
 	constructor(
-		private dataService: DataService, private securityService: SecurityService,
+		private dataService: DataService, private authService: AuthService,
 		private route: ActivatedRoute, notifier: NotifierService,
 		
 		private projectService: ProjectService,
@@ -63,7 +61,7 @@ private notifier: NotifierService;
 	
 	});
 	ngOnInit(): void {
-		this.projectId = this.securityService.getProjectId();
+		this.projectId = this.authService.getProjectId();
 		
 		this.selectedAccount =initializeRespAccountData(); 
 		this.selectedTranche = initializeRespTrancheData();

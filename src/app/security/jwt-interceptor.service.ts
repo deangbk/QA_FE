@@ -3,7 +3,7 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/c
 
 import { Observable } from 'rxjs';
 
-import { TOKEN } from '../data/data.service';
+import { TOKEN } from '../service/data.service';
 
 // Service that adds JWT bearer tokens to intercepted outbound requests
 

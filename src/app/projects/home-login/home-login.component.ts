@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
-import { DataService } from 'app/data/data.service';
-import { SecurityService } from 'app/security/security.service';
-import * as Models from 'app/data/data-models';
+import { DataService } from 'app/service/data.service';
+import { AuthService } from 'app/service/auth.service';
+import * as Models from 'app/service/data-models';
 
 @Component({
   selector: 'app-home-login',
@@ -16,7 +16,7 @@ export class HomeLoginComponent implements OnInit {
 	project = "BayPortfolioSale";
 	
 	constructor(private router: Router, private dataService: DataService,
-		private securityService: SecurityService) { }
+		private authService: AuthService) { }
 	
 	hide = true;
 	userType: string = '';
@@ -26,7 +26,7 @@ export class HomeLoginComponent implements OnInit {
 	token: object;
 	
 	ngOnInit(): void {
-		//console.log(this.securityService.getToken());
+		//console.log(this.authService.getToken());
 	}
 
 	onSelectRole(role: string) {
@@ -35,10 +35,10 @@ export class HomeLoginComponent implements OnInit {
 	
 	onSubmit() {
 		if (this.username != null && this.password != null) {
-			this.securityService.tryLogin(this.project, this.username.value, this.password.value)
+			this.dataService.login(this.project, this.username.value, this.password.value)
 				.subscribe({
 					next: x => {
-						this.securityService.saveLoginToken(x);
+						this.authService.storeLoginToken(x);
 						//console.log(x);
 						this.router.navigate(['/main']);
 					},
@@ -55,6 +55,6 @@ export class HomeLoginComponent implements OnInit {
 			next: x => console.log(x),
 			error: x => console.log(x),
 		});
-		//this.securityService.removeLoginToken();
+		//this.authService.removeLoginToken();
 	}
 }

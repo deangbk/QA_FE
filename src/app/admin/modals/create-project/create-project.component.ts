@@ -17,9 +17,9 @@ import { NotifierService } from 'angular-notifier';
 
 import { Option, Some, None } from 'ts-results';
 
-import { DataService } from 'app/data/data.service';
+import { DataService } from 'app/service';
+import * as Models from 'app/service/data-models';
 
-import * as Models from 'app/data/data-models';
 import { Helpers } from 'app/helpers';
 
 import { DateHelper, CustomDateAdapter } from 'app/projects/admin-section/manage-project/project-edit-info/project-edit-info.component'

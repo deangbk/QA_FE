@@ -10,11 +10,11 @@ import { Editor } from 'ngx-editor';
 import * as Rx from 'rxjs';
 import { Option, Some, None } from 'ts-results';
 
-import { DataService } from 'app/data/data.service';
-import { SecurityService } from 'app/security/security.service';
+import { DataService } from 'app/service/data.service';
+import { AuthService } from 'app/service/auth.service';
 import { ProjectService } from '../service/project.service';
 
-import * as Models from 'app/data/data-models';
+import * as Models from 'app/service/data-models';
 import { Helpers } from 'app/helpers';
 
 import { AddNoteModalComponent } from '../modals/add-note-modal/add-note-modal.component';
@@ -31,13 +31,13 @@ export class HomeComponent implements OnInit, OnDestroy {
 	constructor(
 		private dataService: DataService,
 		private projectService: ProjectService,
-		private securityService: SecurityService,
+		private authService: AuthService,
 		
 		public modalService: NgbModal,
 		private notifier: NotifierService,
 	) {
-		this.projectId = securityService.getProjectId();
-		this.isElevated = securityService.isElevated();
+		this.projectId = authService.getProjectId();
+		this.isElevated = authService.isElevated();
 	}
 	
 	projectReady = false;

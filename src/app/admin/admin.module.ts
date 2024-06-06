@@ -22,11 +22,10 @@ import { FileUploadModule } from '@iplab/ngx-file-upload';
 import { SharedModule } from '../shared/shared.module';
 
 import {
-	AdminSecurityService,
+	AdminAuthService,
 	AdminDataService,
 } from './service';
-import { DataService } from 'app/data/data.service';
-import { SecurityService } from 'app/security/security.service';
+import { DataService, AuthService } from 'app/service';
 
 import { AdminGuard } from './guards/admin.guard';
 
@@ -79,8 +78,8 @@ import { ManageProjectModule } from '../projects/admin-section/manage-project/ma
 			useClass: AdminDataService
 		},
 		{
-			provide: SecurityService,
-			useClass: AdminSecurityService
+			provide: AuthService,
+			useClass: AdminAuthService
 		},
 		
 		AdminGuard,

@@ -7,7 +7,7 @@ import { catchError } from 'rxjs/operators';
 import { environment } from 'environments/environment';
 
 import { Helpers } from 'app/helpers';
-import * as Models from 'app/data/data-models';
+import * as Models from 'app/service/data-models';
 
 export const TOKEN = new HttpContextToken<string>(() => null);
 

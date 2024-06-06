@@ -10,10 +10,9 @@ import * as Rx from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotifierService } from 'angular-notifier';
 
-import { DataService } from 'app/data/data.service';
-import { SecurityService } from 'app/security/security.service';
+import { DataService, AuthService } from 'app/service';
+import * as Models from 'app/service/data-models';
 
-import * as Models from 'app/data/data-models';
 import { Helpers } from 'app/helpers';
 
 import { CreateProjectModalComponent } from '../modals/create-project/create-project.component';
