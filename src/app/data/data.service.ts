@@ -25,42 +25,38 @@ export class DataServiceBase {
 		return throwError(() => error);
 	}
 
-	protected _get(url: string) {
+	protected _get(url: string, options?: any): Observable<any> {
 		return this.http
-			.get(`${this.baseUrl}/${url}`)
+			.get(`${this.baseUrl}/${url}`, { ...options })
 			.pipe(catchError(this.handleError));
 	}
-	protected _post(url: string, body?: any) {
+	protected _post(url: string, body?: any, options?: any): Observable<any> {
 		return this.http
-			.post(`${this.baseUrl}/${url}`, body)
+			.post(`${this.baseUrl}/${url}`, body, { ...options })
 			.pipe(catchError(this.handleError));
 	}
-	protected _put(url: string, body?: any) {
+	protected _put(url: string, body?: any, options?: any): Observable<any> {
 		return this.http
-			.put(`${this.baseUrl}/${url}`, body)
+			.put(`${this.baseUrl}/${url}`, body, { ...options })
 			.pipe(catchError(this.handleError));
 	}
-	protected _delete(url: string) {
+	protected _delete(url: string, options?: any): Observable<any> {
 		return this.http
-			.delete(`${this.baseUrl}/${url}`)
+			.delete(`${this.baseUrl}/${url}`, { ...options })
 			.pipe(catchError(this.handleError));
 	}
 
 	protected _post_as_form(url: string, form?: any) {
 		const headers = new HttpHeaders();
 		headers.append('Content-Type', 'multipart/form-data');
-
-		return this.http
-			.post(`${this.baseUrl}/${url}`, form, { 'headers': headers })
-			.pipe(catchError(this.handleError));
+		
+		return this._post(url, form, { headers: headers });
 	}
 	protected _put_as_form(url: string, form?: any) {
 		const headers = new HttpHeaders();
 		headers.append('Content-Type', 'multipart/form-data');
-
-		return this.http
-			.put(`${this.baseUrl}/${url}`, form, { 'headers': headers })
-			.pipe(catchError(this.handleError));
+		
+		return this._put(url, form, { headers: headers });
 	}
 }
 
@@ -68,8 +64,8 @@ export class DataServiceBase {
 	providedIn: 'root',
 })
 export class DataService extends DataServiceBase {
-	constructor(private _http: HttpClient) {
-		super(_http);
+	constructor(http: HttpClient) {
+		super(http);
 	}
 	
 	// TODO: Automatically refresh token if expired
@@ -241,22 +237,16 @@ export class DataService extends DataServiceBase {
 	}
 	
 	public projectGetLogo() {
-		const httpOptions = {
+		const options = {
 			responseType: 'blob' as 'json',
 		};
-		let res = this.http
-			.get(`${this.baseUrl}/project/logo`, httpOptions)
-			.pipe(catchError(this.handleError));
-		return <Observable<Blob>>res;
+		return <Observable<Blob>>this._get(`project/logo`, options);
 	}
 	public projectGetBanner() {
-		const httpOptions = {
+		const options = {
 			responseType: 'blob' as 'json',
 		};
-		let res = this.http
-			.get(`${this.baseUrl}/project/banner`, httpOptions)
-			.pipe(catchError(this.handleError));
-		return <Observable<Blob>>res;
+		return <Observable<Blob>>this._get(`project/banner`, options);
 	}
 	public projectEditLogo(file: File) {
 		var form = new FormData();
@@ -408,13 +398,11 @@ export class DataService extends DataServiceBase {
 			this._get(`document/info/${documentId}?${query}`);
 	}
 	public documentGetFileData(documentId: number) {
-		const httpOptions = {
-			'responseType': 'arraybuffer' as 'json'
+		const options = {
+			responseType: 'arraybuffer' as 'json',
 		};
-		let res = this.http
-			.get(`${this.baseUrl}/document/stream/${documentId}`, httpOptions)
-			.pipe(catchError(this.handleError));
-		return <Observable<ArrayBuffer>>res;
+		return <Observable<ArrayBuffer>>
+			this._get(`document/stream/${documentId}`, options);
 	}
 
 	public documentGetInProject(details: number = 0) {
@@ -493,17 +481,9 @@ export class DataService extends DataServiceBase {
 	// -----------------------------------------------------
 	
 	public getQuestions(filter: Models.ReqBodyGetPosts): Observable<Models.RespGetPost> {
-		/* return this.http
-		.get(`${this.baseUrl}/post/get_page/1`)
-		.pipe(catchError(this.handleError)); */
-     
 		return this.postGet({}, null);
 	}
 	public getQuestionss(filter: Models.ReqBodyGetPosts): Observable<Models.RespGetPost> {
-		/* return this.http
-		.get(`${this.baseUrl}/post/get_page/1`)
-		.pipe(catchError(this.handleError)); */
-     
 		return this.postGet({}, null);
 	}
 	
@@ -515,14 +495,10 @@ export class DataService extends DataServiceBase {
 			this._get(`unauth/project?name=${name}`);
 	}
 	public unauthGetProjectLogo(name: string) {
-		const url = `unauth/project/logo?name=${name}`;
-		const httpOptions = {
+		const options = {
 			responseType: 'blob' as 'json',
 		};
-		
-		let res = this.http
-			.get(`${this.baseUrl}/${url}`, httpOptions)
-			.pipe(catchError(this.handleError));
-		return <Observable<Blob>>res;
+		return <Observable<Blob>>
+			this._get(`unauth/project/logo?name=${name}`, options);
 	}
 }
