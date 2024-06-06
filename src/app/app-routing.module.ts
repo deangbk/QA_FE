@@ -4,12 +4,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { InvalidPageComponent } from './invalid-page/invalid-page.component';
 
 const routes: Routes = [
-	// Broken for some reason
-	/* {
-		path: '',
-		redirectTo: 'project',
-	}, */
-	
 	// Admin portal
 	{
 		path: 'admin',

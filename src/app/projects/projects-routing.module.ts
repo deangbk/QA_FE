@@ -54,7 +54,7 @@ const routes: Routes = [
 				},
 				
 				children: [
-					{ path: '', redirectTo: 'home' },
+					{ path: '', redirectTo: 'home', pathMatch: 'full' },
 					
 					{ path: 'home', component: HomeComponent },
 					
@@ -65,7 +65,7 @@ const routes: Routes = [
 					
 					{ path: 'docs/pdf/:id', component: DocumentViewerComponent },
 					{ path: 'docs/recent/:type', component: RecentDocumentsComponent },
-					{ path: 'docs/recent', redirectTo: 'docs/recent/all' },
+					{ path: 'docs/recent', redirectTo: 'docs/recent/all', pathMatch: 'full' },
 					
 					{
 						path: 'staff',
@@ -98,7 +98,7 @@ const routes: Routes = [
 					},
 					
 					// Redirect invalid paths back to home
-					{ path: '**', redirectTo: 'home' },
+					{ path: '**', redirectTo: 'home', pathMatch: 'full' },
 				]
 			},
 		]

@@ -29,7 +29,7 @@ const routes: Routes = [
 				canActivate: [AdminGuard],
 				
 				children: [
-					{ path: '', redirectTo: 'home' },
+					{ path: '', redirectTo: 'home', pathMatch: 'full' },
 					
 					{ path: 'home', component: AdminHomeComponent },
 					
@@ -37,7 +37,7 @@ const routes: Routes = [
 					{ path: 'projects/manage/:id', component: EditProjectComponent },
 					
 					// Redirect invalid paths back to home
-					{ path: '**', redirectTo: 'home' },
+					{ path: '**', redirectTo: 'home', pathMatch: 'full' },
 				]
 			},
 		]
