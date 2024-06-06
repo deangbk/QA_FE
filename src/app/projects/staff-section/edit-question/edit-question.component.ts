@@ -2,7 +2,6 @@
 import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit, TemplateRef, Input } from '@angular/core';
 
-import { QuestionsService } from 'app/data/questions.service';
 import { DataService } from 'app/data/data.service';
 import { SecurityService } from 'app/security/security.service';
 import * as Models from 'app/data/data-models'; // Import your models
@@ -57,7 +56,7 @@ export class EditQuestionComponent implements OnInit {
 		});
 	}
 
-  constructor(private route: ActivatedRoute, private qService: QuestionsService, notifier: NotifierService, private dataService: DataService, public modalService: NgbModal,) {
+  constructor(private route: ActivatedRoute, notifier: NotifierService, private dataService: DataService, public modalService: NgbModal,) {
     // const navigation = this.router.getCurrentNavigation();
     // const state = navigation?.extras?.state as {data: any};
     this.questionId = +this.route.snapshot.paramMap.get('id');
@@ -84,11 +83,18 @@ export class EditQuestionComponent implements OnInit {
 		return this.dataService.managerGetPosts(this.qFilter, 1);
 	}
   
-  subQuestions() {
-    this.qFilter.id = this.questionId;
-    this.qFilter.type = "question";
-    return this.qService.postQ(this.question);
-  }
+	subQuestions() {
+		this.qFilter.id = this.questionId;
+		this.qFilter.type = "question";
+		
+		const edit: Models.ReqBodyEditPost = {
+			id: this.question.id,
+			category: this.question.category,
+			q_text: this.question.q_text,
+			a_text: this.question.a_text,
+		}
+		return this.dataService.postEdit(edit);
+	}
   
 	async deleteDocument(docId: number) {
 		const modalRef = this.modalService.open(ConfirmDeleteModalComponent);
@@ -146,14 +152,6 @@ export class EditQuestionComponent implements OnInit {
 	}
 
   submitQuestion() {
-    // this.qService.questionEdit(this.question.id, this.question).subscribe(response => {
-    //   // Handle the response here
-    //   console.log(response);
-    // }, error => {
-    //   // Handle the error here
-    //   console.log(error);
-    // });
-
     this.loading = true;
     this.subQuestions().subscribe({
       next: (data: any) => {
@@ -171,9 +169,5 @@ export class EditQuestionComponent implements OnInit {
         this.showNotification('error', 'Question was not updated');
       }
     });
-
-    // this.qFilter.id= this.questionId;
-    // this.qFilter.type = "question";
-    // return this.qService.postQ(this.projectId, this.qFilter, this.paginate);
   }
 }
