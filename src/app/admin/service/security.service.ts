@@ -39,12 +39,8 @@ export class AdminSecurityService extends SecurityService {
 		this.token = null;
 		this.expire = null;
 	}
-	
-	override tryLogin(
-		project: string | null, username: string, password: string
-	)
-		: Observable<any>
-	{
-		return this.dataService.login(project, username, password);
+
+		localStorage.removeItem(KEY_TOKEN);
+		localStorage.removeItem(KEY_EXPIRE);
 	}
 }

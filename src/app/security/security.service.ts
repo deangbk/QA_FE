@@ -13,11 +13,6 @@ export abstract class SecurityService {
 	public abstract getToken(): string;
 	protected abstract getExpiration(): string;
 	
-	public abstract tryLogin(
-		project: string | null, username: string, password: string
-	)
-		: Observable<any>;
-	
 	public abstract storeLoginToken(authRes: any): void;
 	public abstract removeLoginToken(): void;
 	

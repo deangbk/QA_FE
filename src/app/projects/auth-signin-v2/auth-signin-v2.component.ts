@@ -126,8 +126,8 @@ export class AuthSigninV2Component implements OnInit {
 		
 		this.error = '';
 		this.loading = true;
-		this.securityService
-			.tryLogin(this.targetProject, this.loginData.username, this.loginData.password)
+		this.dataService
+			.login(this.targetProject, this.loginData.username, this.loginData.password)
 			.subscribe({
 				next: x => {
 					this.securityService.storeLoginToken(x);

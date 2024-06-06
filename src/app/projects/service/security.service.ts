@@ -41,12 +41,4 @@ export class ProjectSecurityService extends SecurityService {
 		localStorage.removeItem(KEY_TOKEN);
 		localStorage.removeItem(KEY_EXPIRE);
 	}
-	
-	override tryLogin(
-		project: string | null, username: string, password: string
-	)
-		: Observable<any>
-	{
-		return this.dataService.login(project, username, password);
-	}
 }

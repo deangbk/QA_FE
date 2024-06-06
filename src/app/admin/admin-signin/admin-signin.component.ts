@@ -64,14 +64,15 @@ export class AuthAdminComponent implements OnInit {
 		
 		this.error = '';
 		this.loading = true;
-		this.securityService
-			.tryLogin(null, formUsername.value ?? '', formPassword.value ?? '')
+		this.dataService
+			.login(null, formUsername.value ?? '', formPassword.value ?? '')
 			.subscribe({
 				next: x => {
 					this.securityService.storeLoginToken(x);
 					if (this.securityService.hasRole('admin')) {
 						let tree = this.router.createUrlTree(['/', 'admin', 'home']);
 						let url = this.router.serializeUrl(tree);
+						console.log(url);
 						this.router.navigateByUrl(url);
 					}
 					else {
