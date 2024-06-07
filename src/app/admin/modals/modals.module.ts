@@ -14,6 +14,7 @@ import { NgxEditorModule } from 'ngx-editor';
 // -----------------------------------------------------
 
 import { CreateProjectModalComponent } from './create-project/create-project.component';
+import { CreateAdminModalComponent } from './create-admin/create-admin.component';
 
 // -----------------------------------------------------
 
@@ -32,6 +33,7 @@ import { CreateProjectModalComponent } from './create-project/create-project.com
 	],
 	declarations: [
 		CreateProjectModalComponent,
+		CreateAdminModalComponent,
 	],
 })
 export class ModalsModule { }

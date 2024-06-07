@@ -11,6 +11,7 @@ import { AdminHomeComponent } from './admin-home/admin-home.component';
 
 import { ProjectsListComponent } from './projects-list/projects-list.component';
 import { EditProjectComponent } from './projects-list/edit-project/edit-project.component';
+import { AdminsListComponent } from './admins-list/admins-list.component';
 
 const routes: Routes = [
 	{
@@ -35,6 +36,8 @@ const routes: Routes = [
 					
 					{ path: 'projects/manage', component: ProjectsListComponent },
 					{ path: 'projects/manage/:id', component: EditProjectComponent },
+					
+					{ path: 'site/admin', component: AdminsListComponent },
 					
 					// Redirect invalid paths back to home
 					{ path: '**', redirectTo: 'home', pathMatch: 'full' },

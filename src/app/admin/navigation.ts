@@ -30,6 +30,7 @@ export class NavigationPreset {
 		type: 'group',
 	
 		children: [
+			createItem('Administrators', 'site/admin', 'bi bi-gem'),
 			createItem('Site Settings', 'site/settings', 'bi bi-nut'),
 		],
 	};

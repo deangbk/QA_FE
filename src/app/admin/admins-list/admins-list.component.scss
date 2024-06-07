@@ -1,0 +1,29 @@
+
+.btn {
+	margin: 0px;
+	padding: 0.5em;
+}
+
+.btn-inner {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	.icon-edit {
+		font-size: 1em;
+	}
+}
+
+.table td {
+	vertical-align: middle;
+}
+
+#add-admin {
+	p {
+		padding: 0px;
+		margin: 0px;
+	}
+	i {
+		padding: 0.5em;
+	}
+}
