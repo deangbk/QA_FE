@@ -37,22 +37,22 @@ export class DataServiceBase {
 
 	protected _get(url: string, options?: any): Observable<any> {
 		return this.http
-			.get(`${this.baseUrl}/${url}`, { ...options })
+			.get(`${this.baseUrl}/${url}`, { ...options, context: this.getContext() })
 			.pipe(catchError(this.handleError));
 	}
 	protected _post(url: string, body?: any, options?: any): Observable<any> {
 		return this.http
-			.post(`${this.baseUrl}/${url}`, body, { ...options })
+			.post(`${this.baseUrl}/${url}`, body, { ...options, context: this.getContext() })
 			.pipe(catchError(this.handleError));
 	}
 	protected _put(url: string, body?: any, options?: any): Observable<any> {
 		return this.http
-			.put(`${this.baseUrl}/${url}`, body, { ...options })
+			.put(`${this.baseUrl}/${url}`, body, { ...options, context: this.getContext() })
 			.pipe(catchError(this.handleError));
 	}
 	protected _delete(url: string, options?: any): Observable<any> {
 		return this.http
-			.delete(`${this.baseUrl}/${url}`, { ...options })
+			.delete(`${this.baseUrl}/${url}`, { ...options, context: this.getContext() })
 			.pipe(catchError(this.handleError));
 	}
 
