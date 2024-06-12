@@ -187,10 +187,10 @@ export class DataService extends DataServiceBase {
 	}
 	
 	public userChangeSelfPassword(data: Models.ReqBodyChangePassword) {
-		return this._put(`edit/password`, data);
+		return this._put(`user/password/change`, data);
 	}
 	public userResetPassword(userId: number) {
-		return this._put(`reset/password/${userId}`);
+		return this._put(`user/password/reset/${userId}`);
 	}
 	
 	// -----------------------------------------------------
