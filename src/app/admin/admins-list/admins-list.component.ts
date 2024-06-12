@@ -15,6 +15,7 @@ import * as Models from 'app/service/data-models';
 import { Helpers } from 'app/helpers';
 
 import { CreateAdminModalComponent } from '../modals/create-admin/create-admin.component';
+import { EditUserModalComponent } from '../modals/edit-user/edit-user.component';
 
 @Component({
 	selector: 'app-admins-list',
@@ -24,7 +25,8 @@ import { CreateAdminModalComponent } from '../modals/create-admin/create-admin.c
 export class AdminsListComponent implements OnInit {
 	constructor(
 		private dataService: DataService,
-
+		private authService: AuthService,
+		
 		private modalService: NgbModal,
 		private notifier: NotifierService,
 	) {
@@ -58,6 +60,25 @@ export class AdminsListComponent implements OnInit {
 	}
 	
 	// -----------------------------------------------------
+	
+	isSelf(user: Models.RespUserData) {
+		return user.id == this.authService.getUserID();
+	}
+	
+	// -----------------------------------------------------
+	
+	callbackEditSelf(user: Models.RespUserData) {
+		const modalRef = this.modalService.open(EditUserModalComponent);
+		const inst = modalRef.componentInstance as EditUserModalComponent;
+		{
+			inst.user = user;
+		}
+		
+		inst.ok.subscribe(() => {
+			this.notifier.notify('success', 'Info edited!');
+			this.refresh();
+		})
+	}
 	
 	callbackAddAdmin() {
 		const modalRef = this.modalService.open(CreateAdminModalComponent);

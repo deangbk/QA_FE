@@ -1,19 +1,4 @@
 
-.btn {
-	margin: 0px;
-	padding: 0.5em;
-}
-
-.btn-inner {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-
-	.icon-edit {
-		font-size: 1em;
-	}
-}
-
 .table td {
 	vertical-align: middle;
 }
@@ -26,4 +11,24 @@
 	i {
 		padding: 0.5em;
 	}
+}
+
+.btn {
+	margin: 0px;
+	padding: 0.5em;
+}
+.btn-inner {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	.icon-edit {
+		font-size: 1em;
+	}
+}
+
+.icons-box {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
 }

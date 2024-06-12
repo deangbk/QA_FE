@@ -1,0 +1,62 @@
+
+<div class="modal-header">
+	<h2>Edit Info</h2>
+	<button type="button" class="btn-close" aria-label="Close" (click)="callbackAction(false)"></button>
+</div>
+<div class="modal-body">
+	<div class="m-form-group">
+		<form [formGroup]="form">
+			<div class="m-input-group">
+				<h4>Display Name</h4>
+				<input type="text" formControlName="name" class="form-control"
+					[class.invalid]="name.errors" />
+			</div>
+			
+			<br>
+			<div class="form-check m-input-group">
+				<input class="form-check-input" type="checkbox" id="checkEditPassword" 
+					(change)="togglePasswordEnable()">
+				<label class="form-check-label" for="checkEditPassword">
+					Change Password?
+				</label>
+			</div>
+			<div formGroupName="password" *ngIf="enablePassword">
+				<hr />
+				<div class="m-input-group">
+					<h4>Current Password</h4>
+					<input type="text" formControlName="old" class="form-control" 
+						[class.invalid]="passwordOld.errors" />
+				</div>
+				<div class="m-input-group">
+					<h4>New Password</h4>
+					<input type="text" formControlName="new" class="form-control" 
+						[class.invalid]="passwordNew.errors" />
+				</div>
+				<div class="m-input-group">
+					<h4>Confirm Password</h4>
+					<input type="text" formControlName="con" class="form-control" 
+						[class.invalid]="passwordCon.errors" />
+				</div>
+			</div>
+		</form>
+	</div>
+	
+	<div class="d-flex justify-content-center align-items-center" *ngIf="loading">
+		<div class="spinner-border" role="status"></div>
+	</div>
+	<div *ngIf="!loading">
+		<ng-container *ngIf="this.error">
+			<div class="alert alert-danger mt-0 mb-3">{{error}}</div>
+		</ng-container>
+		
+		<div class="d-flex justify-content-center">
+			<button type="button" class="btn btn-primary" (click)="callbackAction(true)"
+				[disabled]="form.invalid">
+				Confirm
+			</button>
+			<button type="button" class="btn btn-secondary" (click)="callbackAction(false)">
+				Cancel
+			</button>
+		</div>
+	</div>
+</div>

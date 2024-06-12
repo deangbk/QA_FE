@@ -15,12 +15,23 @@
 					<tr>
 						<th>Email</th>
 						<th>Name</th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr *ngFor="let i of listAdmin;">
 						<td>{{i.user_name}}</td>
 						<td>{{i.display_name}}</td>
+						<td>
+							<div *ngIf="isSelf(i)" class="icons-box">
+								<button class="btn btn-sm btn-primary" 
+									(click)="callbackEditSelf(i)">
+									<div class="btn-inner">
+										<i title="Edit info" class="feather icon-edit"></i>
+									</div>
+								</button>
+							</div>
+						</td>
 					</tr>
 				</tbody>
 			</table>
