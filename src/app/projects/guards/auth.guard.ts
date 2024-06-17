@@ -11,14 +11,14 @@ import { AuthService } from 'app/service';
 @Injectable()
 export class AuthGuard implements CanActivate {
 	constructor(
-		private router: Router, private route: ActivatedRoute, 
+		private router: Router, 
 		private authService: AuthService,
 	) { }
 
 	canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot):
 		Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
 	{
-		const project = this.route.snapshot.paramMap.get('project');
+		const project = next.paramMap.get('project');
 		//console.log('AuthGuard: ', project, this.route);
 		
 		if (this.authService.isAuthenticated()) {
