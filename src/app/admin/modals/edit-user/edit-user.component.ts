@@ -176,7 +176,7 @@ export class EditUserModalComponent implements OnInit {
 				})
 		];
 		if (this.enablePassword) {
-			obsJoins.push(this.dataService.userChangeSelfPassword(
+			obsJoins.push(this.dataService.changePassword(
 				{
 					old: this.passwordOld.value,
 					new: this.passwordNew.value,

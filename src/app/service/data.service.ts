@@ -94,6 +94,9 @@ export class DataService extends DataServiceBase {
 			this._post(route, body);
 	}
 	
+	public changePassword(data: Models.ReqBodyChangePassword) {
+		return this._post(`auth/password/change`, data);
+	}
 	// -----------------------------------------------------
 	// Admin
 	
@@ -185,13 +188,6 @@ export class DataService extends DataServiceBase {
 	}
 	public userDelete(userId: number) {
 		return this._delete(`user/${userId}`);
-	}
-	
-	public userChangeSelfPassword(data: Models.ReqBodyChangePassword) {
-		return this._put(`user/password/change`, data);
-	}
-	public userResetPassword(userId: number) {
-		return this._put(`user/password/reset/${userId}`);
 	}
 	
 	// -----------------------------------------------------

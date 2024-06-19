@@ -3,6 +3,10 @@ export interface ReqBodyLogin {
 	email: string,
 	password: string,
 }
+export interface ReqBodyChangePassword {
+	old: string,
+	new: string,
+}
 
 export interface ReqBodyCreateAdmin {
 	email: string,
@@ -43,10 +47,6 @@ export interface ReqBodyCreateUser {
 export interface ReqBodyEditUser {
 	display_name?: string,
 	tranches?: string[],
-}
-export interface ReqBodyChangePassword {
-	old: string,
-	new: string,
 }
 
 export interface ReqBodyAddNote {
