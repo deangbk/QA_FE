@@ -21,6 +21,8 @@ import { DataService } from 'app/service';
 import { UserRoutingModule } from './user-routing.module';
 import { LayoutUserComponent } from './user.component';
 
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+
 // -----------------------------------------------------
 
 @NgModule({
@@ -36,6 +38,7 @@ import { LayoutUserComponent } from './user.component';
 	],
 	declarations: [
 		LayoutUserComponent,
+		ResetPasswordComponent,
 	],
 	providers: [
 		DataService,

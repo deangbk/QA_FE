@@ -4,10 +4,16 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { LayoutUserComponent } from './user.component';
 
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+
 const routes: Routes = [
 	{
 		path: '',
 		component: LayoutUserComponent,
+		
+		children: [
+			{ path: 'reset/pass/:token', component: ResetPasswordComponent }
+		],
 	},
 ];
 
