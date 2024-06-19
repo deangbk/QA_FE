@@ -7,6 +7,14 @@ export interface ReqBodyChangePassword {
 	old: string,
 	new: string,
 }
+export interface ReqBodyResetPassword {
+	project?: string,
+	email: string,
+}
+export interface ReqBodyResetPasswordToken {
+	token: string,
+	password: string,
+}
 
 export interface ReqBodyCreateAdmin {
 	email: string,

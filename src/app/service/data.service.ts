@@ -97,6 +97,16 @@ export class DataService extends DataServiceBase {
 	public changePassword(data: Models.ReqBodyChangePassword) {
 		return this._post(`auth/password/change`, data);
 	}
+	public resetPassword(data: Models.ReqBodyResetPassword) {
+		return this._post(`auth/password/reset`, data);
+	}
+	public verifyResetPasswordToken(token: string) {
+		return this._get(`auth/password/reset2/${token}`);
+	}
+	public resetPasswordWithToken(data: Models.ReqBodyResetPasswordToken) {
+		return this._post(`auth/password/reset2`, data);
+	}
+	
 	// -----------------------------------------------------
 	// Admin
 	
