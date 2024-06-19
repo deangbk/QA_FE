@@ -70,6 +70,7 @@ export class DataServiceBase {
 	}
 }
 
+@Injectable()
 export class DataService extends DataServiceBase {
 	constructor(http: HttpClient) {
 		super(http);

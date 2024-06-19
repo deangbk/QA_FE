@@ -10,10 +10,16 @@ const routes: Routes = [
 		loadChildren: () => import('./admin/admin.module').then(x => x.AdminModule),
 	},
 	
-	// User portal
+	// Project portal
 	{
 		path: 'project',
 		loadChildren: () => import('./projects/projects.module').then(x => x.ProjectsModule),
+	},
+	
+	// User portal
+	{
+		path: 'user',
+		loadChildren: () => import('./user/user.module').then(x => x.UserModule),
 	},
 	
 	//{ path: '**', component: InvalidPageComponent },
