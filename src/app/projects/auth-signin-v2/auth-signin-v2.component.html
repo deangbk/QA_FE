@@ -56,7 +56,7 @@
 						/>
 						<div *ngIf="submitted && f?.['email'].errors" class="invalid-feedback"></div>
 					</div>
-					<div class="mb-4">
+					<div class="mb-2">
 						<!-- <label class="form-label">Password</label> -->
 						<h5>Password</h5>
 						<input
@@ -67,6 +67,10 @@
 						/>
 						<i class="ti ti-eye" id="togglePassword"></i>
 						<div *ngIf="submitted && f?.['password'].errors" class="invalid-feedback"></div>
+					</div>
+					
+					<div class="mb-4">
+						<a href="javascript:" (click)="forgotPassword()">Forgot password?</a>
 					</div>
 					
 					<div class="form-group text-left text-center">

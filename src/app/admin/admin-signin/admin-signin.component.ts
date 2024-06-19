@@ -8,9 +8,12 @@ import {
 	Validators, ValidatorFn, AbstractControl, ValidationErrors,
 } from '@angular/forms';
 
-import { DataService, AuthService } from 'app/service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
+import { DataService, AuthService } from 'app/service';
 import { Helpers } from 'app/helpers';
+
+import { ForgetPasswordModalComponent } from 'app/forget-password-modal/forget-password-modal.component';
 
 @Component({
 	selector: 'app-admin-signin',
@@ -32,6 +35,8 @@ export class AuthAdminComponent implements OnInit {
 		
 		private dataService: DataService,
 		private authService: AuthService,
+		
+		private modalService: NgbModal,
 	) {
 		
 	}
@@ -92,5 +97,13 @@ export class AuthAdminComponent implements OnInit {
 					this.error = err;
 				},
 			});
+	}
+	
+	forgotPassword() {
+		const modalRef = this.modalService.open(ForgetPasswordModalComponent);
+		const inst = modalRef.componentInstance as ForgetPasswordModalComponent;
+		{
+			inst.project = null;
+		}
 	}
 }

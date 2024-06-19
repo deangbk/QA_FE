@@ -63,7 +63,10 @@
   min-width: 100%;
   min-height: 100vh;
 }
-.auth-wrapper a,
+.auth-wrapper a {
+	cursor: pointer;
+	font-size: 12px;
+}
 .auth-wrapper p > a {
   color: #111;
   font-weight: 600;

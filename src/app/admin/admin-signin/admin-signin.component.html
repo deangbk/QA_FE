@@ -31,6 +31,10 @@
 						<div *ngIf="submitted && f?.['password'].errors" class="invalid-feedback"></div>
 					</div>
 					
+					<div class="mb-2">
+						<a href="javascript:" (click)="forgotPassword()">Forgot password?</a>
+					</div>
+					
 					<br>
 					<div>
 						<button *ngIf="!loading" class="btn btn-primary">

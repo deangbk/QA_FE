@@ -7,10 +7,14 @@ import {
 	Validators, ValidatorFn, AbstractControl, ValidationErrors,
 } from '@angular/forms';
 
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 import { DataService, AuthService } from 'app/service';
 import { ProjectService } from '../service/project.service';
 
 import { Helpers } from 'app/helpers';
+
+import { ForgetPasswordModalComponent } from 'app/forget-password-modal/forget-password-modal.component';
 
 interface LoginForm {
 	username: string,
@@ -27,6 +31,7 @@ export class AuthSigninV2Component implements OnInit {
 	targetProject: string;
 	projectStatus = 'load';
 	projectName: string;
+	projectActualId: string;
 	
 	static savedLogin: LoginForm = {
 		username: '',
@@ -50,6 +55,8 @@ export class AuthSigninV2Component implements OnInit {
 		private dataService: DataService,
 		private projectService: ProjectService,
 		public authService: AuthService,
+		
+		private modalService: NgbModal,
 	) {
 		
 	}
@@ -87,6 +94,7 @@ export class AuthSigninV2Component implements OnInit {
 				}
 				
 				this.projectName = x.display_name;
+				this.projectActualId = x.name;
 				
 				this.projectStatus = 'ok';
 			},
@@ -124,7 +132,7 @@ export class AuthSigninV2Component implements OnInit {
 		this.error = '';
 		this.loading = true;
 		this.dataService
-			.login(this.targetProject, this.loginData.username, this.loginData.password)
+			.login(this.projectActualId, this.loginData.username, this.loginData.password)
 			.subscribe({
 				next: x => {
 					this.authService.storeLoginToken(x);
@@ -142,5 +150,13 @@ export class AuthSigninV2Component implements OnInit {
 					this.error = err;
 				},
 			});
+	}
+	
+	forgotPassword() {
+		const modalRef = this.modalService.open(ForgetPasswordModalComponent);
+		const inst = modalRef.componentInstance as ForgetPasswordModalComponent;
+		{
+			inst.project = this.projectActualId;
+		}
 	}
 }
