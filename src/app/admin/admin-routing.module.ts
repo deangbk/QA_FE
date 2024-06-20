@@ -11,6 +11,7 @@ import { AdminHomeComponent } from './admin-home/admin-home.component';
 
 import { ProjectsListComponent } from './projects-list/projects-list.component';
 import { EditProjectComponent } from './projects-list/edit-project/edit-project.component';
+import { CreateProjectComponent } from './create-project/create-project.component';
 import { AdminsListComponent } from './admins-list/admins-list.component';
 
 const routes: Routes = [
@@ -36,6 +37,7 @@ const routes: Routes = [
 					
 					{ path: 'projects/manage', component: ProjectsListComponent },
 					{ path: 'projects/manage/:id', component: EditProjectComponent },
+					{ path: 'projects/create', component: CreateProjectComponent },
 					
 					{ path: 'site/admin', component: AdminsListComponent },
 					

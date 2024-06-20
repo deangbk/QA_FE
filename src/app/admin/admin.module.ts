@@ -37,6 +37,7 @@ import { AdminHomeComponent } from './admin-home/admin-home.component';
 
 import { ProjectsListComponent } from './projects-list/projects-list.component';
 import { EditProjectComponent } from './projects-list/edit-project/edit-project.component';
+import { CreateProjectComponent } from './create-project/create-project.component';
 
 import { AdminsListComponent } from './admins-list/admins-list.component';
 
@@ -72,6 +73,7 @@ import { ManageProjectModule } from '../projects/admin-section/manage-project/ma
 		AdminHomeComponent,
 		
 		ProjectsListComponent,
+		CreateProjectComponent,
 		AdminsListComponent,
 		EditProjectComponent,
 	],

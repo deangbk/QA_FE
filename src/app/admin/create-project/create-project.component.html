@@ -1,0 +1,88 @@
+
+<div *ngIf="topLoading">
+	<div class="d-flex justify-content-center">
+		<div class="spinner-border" role="status"></div>
+	</div>
+</div>
+<div class="container" *ngIf="!topLoading">
+	<div class="row">
+		<app-card cardTitle="Create New project" [options]="false" blockClass="table-border-style">
+			
+			<div class="m-form-group">
+				<form [formGroup]="form">
+					<div class="m-input-group">
+						<h4>Project ID (Required)</h4>
+						<input type="text" formControlName="id" class="form-control"
+							placeholder="Alphanumeric or underscore of at least length 4" 
+							[class.invalid]="fId.errors" />
+					</div>
+					
+					<div class="m-input-group">
+						<h4>Display Name (Required)</h4>
+						<input type="text" formControlName="name" class="form-control" 
+							[class.invalid]="fName.errors" />
+					</div>
+					
+					<div class="m-input-group">
+						<h4>Company Name</h4>
+						<input type="text" formControlName="company" class="form-control" 
+							[class.invalid]="fCompany.errors" />
+					</div>
+					
+					<!-- TODO: ngbDatepicker still broken, fix later -->
+					
+					<div formGroupName="date" class="row m-input-group">
+						<div class="col-6">
+							<h4>Start Date</h4>
+							<div class="input-group">
+								<input class="form-control" formControlName="start"
+									[minDate]="minStartDate" [maxDate]="maxStartDate"
+									[(ngModel)]="model.date_start" ngbDatepicker readonly
+									#ds="ngbDatepicker" />
+								<button class="btn btn-secondary bi bi-calendar3" 
+									(click)="ds.toggle()" type="button"></button>
+							</div>
+						</div>
+						
+						<div class="col-6">
+							<h4>End Date</h4>
+							<div class="input-group">
+								<input class="form-control" formControlName="end"
+									[minDate]="minEndDate"
+									[(ngModel)]="model.date_end" ngbDatepicker readonly
+									#de="ngbDatepicker" />
+								<button class="btn btn-secondary bi bi-calendar3" 
+									(click)="de.toggle()" type="button"></button>
+							</div>
+						</div>
+					</div>
+				</form>
+				
+			</div>
+			
+		</app-card>
+	</div> <!-- .row -->
+	
+	<div class="row">
+		<!-- TODO: Upload logo section -->
+	</div> <!-- .row -->
+	
+	<div class="row">
+		<!-- TODO: Create initial users section -->
+	</div> <!-- .row -->
+	
+	<div class="row submit-area">
+		<div *ngIf="!loading">
+			<button type="button" class="btn btn-primary" (click)="createProject()"
+				[disabled]="form.invalid">
+				Create project
+			</button>
+		</div>
+		<div *ngIf="loading">
+			<button class="btn btn-primary" type="button" disabled>
+				<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+				Creating project...
+			</button>
+		</div>
+	</div> <!-- .row .submit-area -->
+</div>
