@@ -35,15 +35,19 @@ export class CustomDateAdapter extends NgbDateAdapter<string> {
 }
 
 export class DateHelper {
+	static makeNeutral(date: Date): Date {
+		return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
+	}
+	
 	static fromDate(date: Date): NgbDateStruct {
 		return {
 			day: date.getUTCDate(),
-			month: date.getUTCMonth(),
+			month: date.getUTCMonth() + 1,
 			year: date.getUTCFullYear(),
 		};
 	}
 	static toDate(ngDate: NgbDateStruct): Date {
-		let date = new Date(ngDate.year, ngDate.month, ngDate.day);
+		let date = new Date(ngDate.year, ngDate.month - 1, ngDate.day);
 		return date;
 	}
 	
