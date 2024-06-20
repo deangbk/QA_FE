@@ -13,7 +13,6 @@ import { NgxEditorModule } from 'ngx-editor';
 
 // -----------------------------------------------------
 
-import { CreateProjectModalComponent } from './create-project/create-project.component';
 import { CreateAdminModalComponent } from './create-admin/create-admin.component';
 import { EditUserModalComponent } from './edit-user/edit-user.component';
 
@@ -33,7 +32,6 @@ import { EditUserModalComponent } from './edit-user/edit-user.component';
 		NgxEditorModule,
 	],
 	declarations: [
-		CreateProjectModalComponent,
 		CreateAdminModalComponent,
 		EditUserModalComponent,
 	],

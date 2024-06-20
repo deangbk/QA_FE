@@ -15,8 +15,6 @@ import * as Models from 'app/service/data-models';
 
 import { Helpers } from 'app/helpers';
 
-import { CreateProjectModalComponent } from '../modals/create-project/create-project.component';
-
 @Component({
   selector: 'app-projects-list',
   templateUrl: './projects-list.component.html',
@@ -74,18 +72,5 @@ export class ProjectsListComponent implements OnInit {
 		var url = this.router.serializeUrl(tree);
 		console.log(url);
 		window.open(url, '_blank');
-	}
-	
-	callbackCreateProject() {
-		const modalRef = this.modalService.open(CreateProjectModalComponent,
-			{
-				backdrop: 'static',
-			}
-		);
-		const inst = modalRef.componentInstance as CreateProjectModalComponent;
-		
-		inst.ok.subscribe(() => {
-			// TODO: Refresh view
-		});
 	}
 }
