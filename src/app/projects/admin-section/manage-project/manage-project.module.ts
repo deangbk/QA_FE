@@ -20,13 +20,15 @@ import { ProjectEditTranchesComponent } from './project-edit-tranches/project-ed
 		FormsModule, ReactiveFormsModule,
 
 		NgbModule, NgSelectModule, NgxEditorModule,
-
+		
 		SharedModule,
+		
+		ImageDisplayEditComponent,
 	],
 	declarations: [
 		ManageProjectComponent,
 		ProjectEditInfoComponent,
-		ProjectEditLogoComponent, ImageDisplayEditComponent,
+		ProjectEditLogoComponent,
 		ProjectEditTranchesComponent,
 	],
 	exports: [

@@ -4,6 +4,7 @@ import {
 	ViewChild, ElementRef,
 } from '@angular/core';
 import { Input, Output, EventEmitter } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -13,9 +14,14 @@ import * as Models from 'app/service/data-models';
 import { Helpers } from 'app/helpers';
 
 @Component({
-  selector: 'app-select-image-modal',
-  templateUrl: './select-image-modal.component.html',
-  styleUrls: ['./select-image-modal.component.scss']
+	selector: 'app-select-image-modal',
+	templateUrl: './select-image-modal.component.html',
+	styleUrls: ['./select-image-modal.component.scss'],
+	
+	standalone: true,
+	imports: [
+		CommonModule,
+	],
 })
 export class SelectImageModalComponent implements OnInit {
 	@Input() title: string = 'Select image';

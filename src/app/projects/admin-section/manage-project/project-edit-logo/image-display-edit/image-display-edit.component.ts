@@ -4,10 +4,13 @@ import {
 	Input, Output, EventEmitter,
 	SimpleChanges,
 } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotifierService } from 'angular-notifier';
+
+import { Observable } from 'rxjs';
 
 import { DataService, AuthService } from 'app/service';
 import * as Models from 'app/service/data-models';
@@ -21,11 +24,17 @@ import { SelectImageModalComponent } from 'app/projects/modals/select-image-moda
 @Component({
 	selector: 'image-display-edit',
 	templateUrl: './image-display-edit.component.html',
-	styleUrls: ['./image-display-edit.component.scss']
+	styleUrls: ['./image-display-edit.component.scss'],
+	
+	standalone: true,
+	imports: [
+		CommonModule,
+	],
 })
-export class ImageDisplayEditComponent implements OnInit, OnChanges {
-	@Input() project!: Models.RespProjectData;
-	@Input() logo: boolean = true;
+export class ImageDisplayEditComponent implements OnInit {
+	@Input() title: string;
+	@Input() initial: string = '';
+	@Output() upload = new EventEmitter<File>();
 	
 	// -----------------------------------------------------
 
@@ -38,8 +47,6 @@ export class ImageDisplayEditComponent implements OnInit, OnChanges {
 		private notifier: NotifierService,
 	) { }
 	
-	name: string;
-	
 	loading = true;
 	urlResource: string = '';
 	
@@ -48,20 +55,14 @@ export class ImageDisplayEditComponent implements OnInit, OnChanges {
 	ngOnInit(): void {
 		this.fetchData();
 	}
-	ngOnChanges(changes: SimpleChanges): void {
-		this.name = this.logo ? 'Logo' : 'Banner';
-	}
 	
 	async fetchData() {
 		this.loading = true;
 		
-		await this.projectService.waitForImagesLoad();
-		{
-			this.urlResource = this.logo ?
-				this.projectService.urlProjectLogo :
-				this.projectService.urlProjectBanner;
-			this.loading = false;
-		}
+		this.urlResource = this.initial;
+		this.loading = false;
+		
+		//console.log(this.urlResource);
 	}
 	
 	// -----------------------------------------------------
@@ -82,22 +83,7 @@ export class ImageDisplayEditComponent implements OnInit, OnChanges {
 					},
 				})
 				
-				//console.log(data);
-				{
-					const obsUpload = this.logo ?
-						this.dataService.projectEditLogo(file) :
-						this.dataService.projectEditBanner(file);
-					
-					const res = await Helpers.observableAsPromise(obsUpload);
-					if (res.ok) {
-						this.notifier.notify('success', `Image updated successfully!`);
-						this.projectService.reloadImages();
-					}
-					else {
-						console.log(res.val);
-						this.notifier.notify('error', 'Server Error: ' + Helpers.formatHttpError(res.val));
-					}
-				}
+				this.upload.emit(file);
 			}
 		});
 	}

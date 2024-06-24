@@ -1,9 +1,20 @@
 
 <app-card cardTitle="Project Logo" [options]="false">
 	
-	<image-display-edit [project]="project" [logo]="true"/>
-	
-	<hr />
-	<image-display-edit [project]="project" [logo]="false" />
+	<div *ngIf="loading">
+		<div class="d-flex justify-content-center">
+			<div class="spinner-border" role="status"></div>
+		</div>
+	</div>
+	<div *ngIf="!loading">
+		<image-display-edit [title]="'Logo'" 
+			[initial]="projectService.urlProjectLogo" 
+			(upload)="uploadFile($event, true)" />
+		
+		<hr />
+		<image-display-edit [title]="'Banner'" 
+			[initial]="projectService.urlProjectBanner"
+			(upload)="uploadFile($event, false)" />
+	</div>
 	
 </app-card>

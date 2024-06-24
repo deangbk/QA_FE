@@ -7,8 +7,12 @@ import {
 
 import { NotifierService } from 'angular-notifier';
 
+import * as Rx from 'rxjs';
+
 import { DataService, AuthService } from 'app/service';
 import * as Models from 'app/service/data-models';
+
+import { ProjectService } from 'app/projects/service';
 
 import { Helpers } from 'app/helpers';
 
@@ -22,21 +26,38 @@ export class ProjectEditLogoComponent implements OnInit {
 	@Output() onrefresh = new EventEmitter<void>();
 	
 	// -----------------------------------------------------
+	
+	loading = true;
 
 	constructor(
-		public dataService: DataService,
-		private authService: AuthService,
+		private dataService: DataService,
+		public projectService: ProjectService,
 		
 		private notifier: NotifierService,
 	) { }
 
 	// -----------------------------------------------------
 
-	ngOnInit(): void {
-		
+	async ngOnInit() {
+		await this.projectService.waitForImagesLoad();
+		this.loading = false;
 	}
-
+	
 	// -----------------------------------------------------
 	
-	
+	async uploadFile(file: File, logo: boolean) {
+		const obsUpload = logo ?
+			this.dataService.projectEditLogo(file) :
+			this.dataService.projectEditBanner(file);
+		
+		const res = await Helpers.observableAsPromise(obsUpload);
+		if (res.ok) {
+			this.notifier.notify('success', `Image updated successfully!`);
+			this.projectService.reloadImages();
+		}
+		else {
+			console.log(res.val);
+			this.notifier.notify('error', Helpers.formatHttpError(res.val));
+		}
+	}
 }

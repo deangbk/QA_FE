@@ -56,7 +56,6 @@ import { AddNoteModalComponent } from './modals/add-note-modal/add-note-modal.co
 import { ConfirmDeleteModalComponent } from './modals/confirm-delete-modal/confirm-delete-modal.component';
 import { EditUserModalComponent } from './modals/edit-user-modal/edit-user-modal.component';
 import { QuestionModalComponent } from './modals/question-modal/question-modal.component';
-import { SelectImageModalComponent } from './modals/select-image-modal/select-image-modal.component';
 import { TrancheEditModalComponent } from './modals/tranche-edit-modal/tranche-edit-modal.component';
 
 // -----------------------------------------------------
@@ -119,7 +118,6 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 		ConfirmDeleteModalComponent,
 		EditUserModalComponent,
 		QuestionModalComponent,
-		SelectImageModalComponent,
 		TrancheEditModalComponent,
 		
 		SearchPipe,

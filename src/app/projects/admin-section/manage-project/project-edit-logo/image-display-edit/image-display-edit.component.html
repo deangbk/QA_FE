@@ -1,6 +1,6 @@
 
 <div class="form-group">
-	<h4>{{name}}</h4>
+	<h4>{{title}}</h4>
 	
 	<div *ngIf="loading">
 		<div class="d-flex justify-content-center">
@@ -8,16 +8,19 @@
 		</div>
 	</div>
 	<div *ngIf="!loading">
-		<div *ngIf="urlResource.length > 0">
-			<img [src]="urlResource" alt="Project {{name}}" />
+		<div *ngIf="urlResource; else noImage">
+			<img [src]="urlResource" alt="{{title}}" />
+			
+			<button type="button" class="btn btn-secondary" (click)="callbackEditImage()">
+				Change
+			</button>
 		</div>
-		<div *ngIf="urlResource.length == 0">
+		<ng-template #noImage>
 			<p class="text-muted"><i>No image</i></p>
-		</div>
-		
-		<button type="button" class="btn btn-secondary" 
-			(click)="callbackEditImage()">
-			Edit {{name}}
-		</button>
+			
+			<button type="button" class="btn btn-secondary" (click)="callbackEditImage()">
+				Upload
+			</button>
+		</ng-template>
 	</div>
 </div>
