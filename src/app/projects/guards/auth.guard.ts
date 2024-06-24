@@ -19,12 +19,15 @@ export class AuthGuard implements CanActivate {
 		Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
 	{
 		const project = next.paramMap.get('project');
-		//console.log('AuthGuard: ', project, this.route);
 		
 		if (this.authService.isAuthenticated()) {
 			// Must have any of the provided roles to be granted access
 			const expectRoles = next.data['roles'] as string[];
-		
+			
+			// No expectRoles = access ok as long as authenticated
+			if (expectRoles.length == 0)
+				return true;
+			
 			for (let role of expectRoles) {
 				if (this.authService.hasRole(role))
 					return true;
