@@ -13,7 +13,7 @@ import * as Models from 'app/service/data-models';
 
 import { Helpers } from 'app/helpers';
 
-interface ExcelDataRow {
+export interface ExcelDataRow {
 	email: string;
 	name: string;
 	company: string;
