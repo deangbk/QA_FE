@@ -39,10 +39,6 @@ export class ImageDisplayEditComponent implements OnInit {
 	// -----------------------------------------------------
 
 	constructor(
-		private dataService: DataService,
-		private projectService: ProjectService,
-		private authService: AuthService,
-		
 		public modalService: NgbModal,
 		private notifier: NotifierService,
 	) { }
