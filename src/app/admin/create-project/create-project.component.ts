@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { Input, Output, EventEmitter } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 import {
 	FormBuilder, FormGroup,
 	Validators, ValidatorFn, AbstractControl, ValidationErrors,
@@ -48,6 +49,7 @@ export class CreateProjectComponent implements OnInit {
 	form: FormGroup;
 	
 	constructor(
+		private router: Router,
 		private formBuilder: FormBuilder,
 		
 		private dataService: DataService,
@@ -142,17 +144,20 @@ export class CreateProjectComponent implements OnInit {
 		return this.form.get('date.end');
 	}
 	
-	validateForm() {
-		this.error = '';
-		
+	validateForm(): string {
 		if (this.form.invalid) {
 			if (this.fId.errors) 
-				this.error = 'Invalid project ID';
+				return 'Invalid project ID';
 			if (this.fName.errors)
-				this.error = 'Invalid project name';
+				return 'Invalid project name';
 			if (this.fCompany.errors)
-				this.error = 'Company name is required';
+				return 'Company name is required';
 		}
+		
+		if (this.createTranches.length == 0)
+			return 'At least one tranche is required';
+		
+		return '';
 	}
 	
 	// -----------------------------------------------------
@@ -166,26 +171,61 @@ export class CreateProjectComponent implements OnInit {
 	}
 	
 	async createProject() {
-		this.validateForm();
+		this.error = this.validateForm();
 		if (this.error) {
 			this.raiseError();
 			return;
 		}
 		
 		await this.createProjectSub();
-		if (this.error) {
-			this.raiseError();
-			return;
-		}
 	}
 	
 	async createProjectSub() {
 		this.error = '';
 		this.loading = true;
 		
-		console.log(this.model);
+		{
+			this.model.name = this.fId.value;
+			this.model.display_name = this.fName.value;
+			this.model.company = this.fCompany.value;
+			
+			this.model.tranches = this.createTranches;
+			this.model.users = this.createUsers;
+			
+			console.log(this.model);
+		}
 		
-		// TODO: Send create project command to the server
+		let resProject = await Helpers.observableAsPromise(
+			this.dataService.projectCreate(this.model));
+		if (resProject.err) {
+			this.error = 'Create project failed: ' + Helpers.formatHttpError(resProject.val);
+			this.raiseError();
+			
+			console.log(resProject.val);
+			
+			this.loading = false;
+			return;
+		}
+		
+		// Create project ok, now upload images
+		
+		let resImages = await Helpers.observableAsPromise(
+			this.dataService.projectEditLogoAndBanner(this.fileLogo, this.fileBanner));
+		if (resImages.err) {
+			this.error = 'Create project succeeded, but images failed to upload';
+			this.raiseError();
+			
+			console.log(resImages.val);
+		}
+		else {
+			this.notifier.notify('success', 'Project created successfully!');
+		}
+		
+		setTimeout(() => {
+			// Redirect back to projects list
+			
+			this.router.navigate(['../', 'create']);
+		}, 300);
 	}
 	
 	// -----------------------------------------------------
