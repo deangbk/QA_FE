@@ -186,6 +186,11 @@ export class CreateProjectComponent implements OnInit {
 	
 	// -----------------------------------------------------
 	
+	fileLogo: File = null;
+	fileBanner: File = null;
+	
+	// -----------------------------------------------------
+	
 	createTranches: string[] = ['A', 'B', 'C', 'D', 'E', 'F'];
 	
 	updateTranches(tranches: string[]) {

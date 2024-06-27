@@ -64,7 +64,18 @@
 	</div> <!-- .row -->
 	
 	<div class="row">
-		<!-- TODO: Upload logo section -->
+		
+		<app-card cardTitle="Upload Logo" [options]="false">
+			<image-display-edit [title]="'Logo'" 
+				(upload)="fileLogo = $event" />
+			
+			<hr />
+			<image-display-edit [title]="'Banner'" 
+				(upload)="fileBanner = $event" />
+		</app-card>
+		
+	</div> <!-- .row -->
+	
 	<div class="row">
 		
 		<app-card cardTitle="Create Tranches" [options]="false" blockClass="table-border-style">

@@ -45,6 +45,7 @@ import { AdminsListComponent } from './admins-list/admins-list.component';
 import { ModalsModule } from './modals/modals.module';
 
 import { ManageProjectModule } from '../projects/admin-section/manage-project/manage-project.module';
+import { ImageDisplayEditComponent } from '../projects/admin-section/manage-project/project-edit-logo/image-display-edit/image-display-edit.component';
 
 // -----------------------------------------------------
 
@@ -66,6 +67,7 @@ import { ManageProjectModule } from '../projects/admin-section/manage-project/ma
 		ModalsModule,
 		
 		ManageProjectModule,
+		ImageDisplayEditComponent,
 	],
 	declarations: [
 		LayoutAdminComponent,
