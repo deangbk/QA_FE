@@ -73,7 +73,7 @@ export class AddUsersComponent implements OnInit {
 		this.addError = null;
 		
 		var reader = new FileReader();
-		reader.onloadend = (e: ProgressEvent<FileReader>) => {
+		reader.onload = (e: ProgressEvent<FileReader>) => {
 			var workbook = XLSX.read(e.target.result, { type: 'binary' });
 			
 			var sheet = workbook.Sheets[workbook.SheetNames[0]];
@@ -97,7 +97,7 @@ export class AddUsersComponent implements OnInit {
 			
 			//console.log(this.listUsersDTO);
 		};
-		setTimeout(() => reader.readAsDataURL(file), 400);
+		setTimeout(() => reader.readAsArrayBuffer(file), 400);
 	}
 	
 	async callbackAddUsers() {
