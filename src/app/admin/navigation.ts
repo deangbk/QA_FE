@@ -22,7 +22,7 @@ export class NavigationPreset {
 		
 		children: [
 			createItem('Manage Projects', 'projects/manage', 'bi bi-database'),
-			createItem('Create New Project', 'projects/create', 'bi bi-plus'),
+			//createItem('Create New Project', 'projects/create', 'bi bi-plus'),
 		],
 	};
 	private static _ITEMS_SITE: NavigationItem = {
