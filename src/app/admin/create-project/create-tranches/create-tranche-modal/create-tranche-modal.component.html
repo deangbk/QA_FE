@@ -1,0 +1,30 @@
+
+<div class="modal-header">
+	<h2 class="modal-title" id="modal-basic-title">
+		Create Tranche
+	</h2>
+	<button type="button" class="btn-close" aria-label="Close" (click)="callbackAction(false)"></button>
+</div>
+<div class="modal-body">
+	<div class="form-group">
+		<h3>Name</h3>
+		<input class="form-control" id="title-text-input"
+			[(ngModel)]="name" 
+			(input)="onChange()" />
+	</div>
+	<div *ngIf="!error">
+		<p class="small text-danger">Invalid name</p>
+	</div>
+	
+	<br />
+	
+	<div class="d-flex justify-content-center align-items-center">
+		<button type="button" class="btn btn-primary" (click)="callbackAction(true)"
+			[disabled]="!error">
+			Confirm
+		</button>
+		<button type="button" class="btn btn-secondary" (click)="callbackAction(false)">
+			Cancel
+		</button>
+	</div>
+</div>

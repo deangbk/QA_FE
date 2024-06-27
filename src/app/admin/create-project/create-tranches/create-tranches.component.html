@@ -1,0 +1,24 @@
+
+<table class="table table-hover" style="margin-bottom: 0px;">
+	<tbody>
+		<tr *ngFor="let i of tranches">
+			<td>{{i}}</td>
+			<td>
+				<div class="icons-box">
+					<i title="Delete tranche"
+						class="delete-button feather icon-x"
+						(click)="callbackDelete(i)"></i>
+				</div>
+			</td>
+		</tr>
+	</tbody>
+	
+	<br />
+	<a href="javascript:" (click)="callbackCreate()">
+		<p style="margin: 0px;">
+			<i title="Add another tranche"
+				class="fas fa-plus"></i>
+			<span>Add another tranche</span>
+		</p>
+	</a>
+</table>

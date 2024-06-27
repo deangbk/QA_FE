@@ -65,6 +65,15 @@
 	
 	<div class="row">
 		<!-- TODO: Upload logo section -->
+	<div class="row">
+		
+		<app-card cardTitle="Create Tranches" [options]="false" blockClass="table-border-style">
+			<app-create-tranches 
+				[tranches]="createTranches"
+				(tranchesChange)="updateTranches($event)" >
+			</app-create-tranches>
+		</app-card>
+		
 	</div> <!-- .row -->
 	
 	<div class="row">

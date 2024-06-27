@@ -182,7 +182,14 @@ export class CreateProjectComponent implements OnInit {
 		console.log(this.model);
 		
 		// TODO: Send create project command to the server
+	}
+	
+	// -----------------------------------------------------
+	
+	createTranches: string[] = ['A', 'B', 'C', 'D', 'E', 'F'];
+	
+	updateTranches(tranches: string[]) {
+		this.createTranches = tranches;
 		
-		this.loading = false;
 	}
 }
