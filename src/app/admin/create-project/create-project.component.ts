@@ -1,6 +1,9 @@
 import {
 	Component, OnInit, OnChanges,
-	SimpleChanges
+	SimpleChanges,
+	ViewChild,
+	ViewChildren,
+	QueryList
 } from '@angular/core';
 import { Input, Output, EventEmitter } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -23,6 +26,7 @@ import * as Models from 'app/service/data-models';
 import { Helpers } from 'app/helpers';
 
 import { DateHelper, CustomDateAdapter } from 'app/projects/admin-section/manage-project/project-edit-info/project-edit-info.component'
+import { AddUsersComponent } from './add-users/add-users.component'
 
 @Component({
 	selector: 'app-create-project',
@@ -192,9 +196,17 @@ export class CreateProjectComponent implements OnInit {
 	// -----------------------------------------------------
 	
 	createTranches: string[] = ['A', 'B', 'C', 'D', 'E', 'F'];
+	createUsers: Models.ReqBodyCreateUser[] = [];
+	
+	@ViewChildren(AddUsersComponent) chAddUsers!: QueryList<AddUsersComponent>;
+	
+	trancheExists(tranche: string): boolean {
+		return this.createTranches.findIndex(x => x == tranche) != -1;
+	}
 	
 	updateTranches(tranches: string[]) {
 		this.createTranches = tranches;
 		
+		this.chAddUsers.forEach(x => x.reset());
 	}
 }

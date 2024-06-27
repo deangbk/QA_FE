@@ -89,6 +89,15 @@
 	
 	<div class="row">
 		<!-- TODO: Create initial users section -->
+		 
+		<app-card cardTitle="Add Users" [options]="false">
+			<app-add-users 
+				[trancheCheck]="trancheExists.bind(this)" 
+				(update)="createUsers = $event">
+				#addUsers
+			</app-add-users>
+		</app-card>
+		
 	</div> <!-- .row -->
 	
 	<div class="row submit-area">

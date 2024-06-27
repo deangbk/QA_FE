@@ -39,6 +39,7 @@ import { ProjectsListComponent } from './projects-list/projects-list.component';
 import { EditProjectComponent } from './projects-list/edit-project/edit-project.component';
 import { CreateProjectComponent } from './create-project/create-project.component';
 import { CreateTranchesComponent } from './create-project/create-tranches/create-tranches.component';
+import { AddUsersComponent } from './create-project/add-users/add-users.component';
 
 import { AdminsListComponent } from './admins-list/admins-list.component';
 
@@ -77,6 +78,7 @@ import { ImageDisplayEditComponent } from '../projects/admin-section/manage-proj
 		
 		ProjectsListComponent,
 		CreateProjectComponent,
+		AddUsersComponent,
 		AdminsListComponent,
 		EditProjectComponent,
 		CreateTranchesComponent,
