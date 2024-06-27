@@ -27,6 +27,7 @@ export interface ReqBodyCreateProject {
 	date_start: string,
 	date_end: string,
 	tranches: string[],
+	users?: ReqBodyCreateUser[],
 }
 export interface ReqBodyEditProject {
 	name?: string,

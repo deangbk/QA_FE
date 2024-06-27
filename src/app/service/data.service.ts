@@ -270,17 +270,24 @@ export class DataService extends DataServiceBase {
 		};
 		return <Observable<Blob>>this._get(`project/banner`, options);
 	}
+	public projectEditLogoAndBanner(fileLogo: File, fileBanner: File) {
+		var form = new FormData();
+		form.append('file', fileLogo, fileLogo.name);
+		form.append('file', fileBanner, fileBanner.name);
+		
+		return this._post_as_form(`project/logo`, form);
+	}
 	public projectEditLogo(file: File) {
 		var form = new FormData();
 		form.set('file', file, file.name);
 		
-		return this._put_as_form(`project/logo/logo`, form);
+		return this._post_as_form(`project/logo/logo`, form);
 	}
 	public projectEditBanner(file: File) {
 		var form = new FormData();
 		form.set('file', file, file.name);
 		
-		return this._put_as_form(`project/logo/banner`, form);
+		return this._post_as_form(`project/logo/banner`, form);
 	}
 	
 	// -----------------------------------------------------
