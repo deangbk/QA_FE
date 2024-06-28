@@ -46,9 +46,10 @@ export class ProjectEditLogoComponent implements OnInit {
 	// -----------------------------------------------------
 	
 	async uploadFile(file: File, logo: boolean) {
+		const projectId = this.project.id;
 		const obsUpload = logo ?
-			this.dataService.projectEditLogo(file) :
-			this.dataService.projectEditBanner(file);
+			this.dataService.projectEditLogo(projectId, file) :
+			this.dataService.projectEditBanner(projectId, file);
 		
 		const res = await Helpers.observableAsPromise(obsUpload);
 		if (res.ok) {

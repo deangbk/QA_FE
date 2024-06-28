@@ -254,8 +254,8 @@ export class DataService extends DataServiceBase {
 		return <Observable<number>>
 			this._post(`project/create`, create);
 	}
-	public projectEdit(edit: Models.ReqBodyEditProject) {
-		return this._put(`project/edit`, edit);
+	public projectEdit(id: number, edit: Models.ReqBodyEditProject) {
+		return this._put(`project/${id}/edit`, edit);
 	}
 	
 	public projectGetLogo() {
@@ -270,24 +270,24 @@ export class DataService extends DataServiceBase {
 		};
 		return <Observable<Blob>>this._get(`project/banner`, options);
 	}
-	public projectEditLogoAndBanner(fileLogo: File, fileBanner: File) {
+	public projectEditLogoAndBanner(id: number, fileLogo: File, fileBanner: File) {
 		var form = new FormData();
 		form.append('file', fileLogo, fileLogo.name);
 		form.append('file', fileBanner, fileBanner.name);
 		
-		return this._post_as_form(`project/logo`, form);
+		return this._post_as_form(`project/${id}/logo`, form);
 	}
-	public projectEditLogo(file: File) {
+	public projectEditLogo(id: number, file: File) {
 		var form = new FormData();
 		form.set('file', file, file.name);
 		
-		return this._post_as_form(`project/logo/logo`, form);
+		return this._post_as_form(`project/${id}/logo/logo`, form);
 	}
-	public projectEditBanner(file: File) {
+	public projectEditBanner(id: number, file: File) {
 		var form = new FormData();
 		form.set('file', file, file.name);
 		
-		return this._post_as_form(`project/logo/banner`, form);
+		return this._post_as_form(`project/${id}/logo/banner`, form);
 	}
 	
 	// -----------------------------------------------------
@@ -300,13 +300,13 @@ export class DataService extends DataServiceBase {
 			this._get(`tranche/${trancheId}?${query}`);
 	}
 	
-	public trancheCreate(create: Models.ReqBodyCreateTranche) {
+	public trancheCreate(projectId: number, create: Models.ReqBodyCreateTranche) {
 		return <Observable<number>>
-			this._post(`tranche/add`, create);
+			this._post(`tranche/${projectId}/add`, create);
 	}
 	public trancheEdit(trancheId: number, edit: Models.ReqBodyEditTranche) {
 		return <Observable<number>>
-			this._put(`tranche/edit/${trancheId}`, edit);
+			this._put(`tranche/${trancheId}/edit`, edit);
 	}
 	public trancheDelete(trancheId: number) {
 		return <Observable<number>>

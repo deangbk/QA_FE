@@ -207,10 +207,12 @@ export class CreateProjectComponent implements OnInit {
 			return;
 		}
 		
+		let projectId: number = resProject.val;
+		
 		// Create project ok, now upload images
 		
 		let resImages = await Helpers.observableAsPromise(
-			this.dataService.projectEditLogoAndBanner(this.fileLogo, this.fileBanner));
+			this.dataService.projectEditLogoAndBanner(projectId, this.fileLogo, this.fileBanner));
 		if (resImages.err) {
 			this.error = 'Create project succeeded, but images failed to upload';
 			this.raiseError();

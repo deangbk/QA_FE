@@ -83,6 +83,7 @@ export class ProjectEditInfoComponent implements OnInit, OnDestroy {
 		private dateAdapter: NgbDateAdapter<string>,
 	) {}
 	
+	loading = false;
 	modelEdit: Models.ReqBodyEditProject = {};
 	
 	editorToolbar: Toolbar = [
@@ -161,12 +162,14 @@ export class ProjectEditInfoComponent implements OnInit, OnDestroy {
 	async callbackUpdateInfo() {
 		this.callbackEditTitle();
 		this.callbackEditorChange(null);
+	
+		this.loading = true;
 		
 		{
-			console.log(this.modelEdit);
+			//console.log(this.modelEdit);
 			
 			let res = await Helpers.observableAsPromise(
-				this.dataService.projectEdit(this.modelEdit));
+				this.dataService.projectEdit(this.project.id, this.modelEdit));
 			if (res.ok) {
 				this.notifier.notify('success', "Project edited!");
 				this.onrefresh.emit();
@@ -175,6 +178,8 @@ export class ProjectEditInfoComponent implements OnInit, OnDestroy {
 				let e = res.val;
 				this.notifier.notify('error', 'Server Error: ' + Helpers.formatHttpError(e));
 			}
+			
+			this.loading = false;
 		}
 	}
 }

@@ -23,6 +23,7 @@ import { TrancheEditModalComponent, FnCheckDuplicate } from 'app/projects/modals
 	styleUrls: ['./project-edit-tranches.component.scss']
 })
 export class ProjectEditTranchesComponent implements OnInit {
+	@Input() project!: Models.RespProjectData;
 	@Input() tranches: Models.RespTrancheDataEx[] = [];
 	@Output() onrefresh = new EventEmitter<void>();
 	
@@ -93,7 +94,7 @@ export class ProjectEditTranchesComponent implements OnInit {
 			if (result.some) {
 				let create = result.val as Models.ReqBodyCreateTranche;
 				
-				let obs = this.dataService.trancheCreate(create);
+				let obs = this.dataService.trancheCreate(this.project.id, create);
 				this.sendObservableAndResult(obs, "Tranche created!");
 			}
 		});

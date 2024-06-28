@@ -67,7 +67,8 @@
 	
 	<hr />
 	<button type="button" class="btn btn-primary"
-		(click)="callbackUpdateInfo()">
+		(click)="callbackUpdateInfo()"
+		[disabled]="loading">
 		Update Project Info
 	</button>
 	

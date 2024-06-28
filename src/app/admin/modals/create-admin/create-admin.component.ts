@@ -8,11 +8,7 @@ import {
 	Validators, ValidatorFn, AbstractControl, ValidationErrors,
 } from '@angular/forms';
 
-import {
-	NgbModal, NgbActiveModal,
-	NgbDate, NgbDateStruct, NgbDateAdapter, NgbDatepicker,
-} from '@ng-bootstrap/ng-bootstrap';
-import { NotifierService } from 'angular-notifier';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { Option, Some, None } from 'ts-results';
 
@@ -27,7 +23,7 @@ export interface CreateAdminModel {
 	templateUrl: './create-admin.component.html',
 	styleUrls: ['./create-admin.component.scss']
 })
-export class CreateAdminModalComponent {
+export class CreateAdminModalComponent implements OnInit {
 	@Output() result = new EventEmitter<Option<CreateAdminModel>>();
 	
 	// -----------------------------------------------------
